@@ -12,7 +12,7 @@ public class BannerDAO {
     public ArrayList<BannerDTO>listBanner(){
     	try {
     		con = com.db.wishJam.DbConn.getConn();
-    		String sql = "select * from banner";
+    		String sql = "select * from banner order by b_idx asc";
     		ps = con.prepareStatement(sql);
     		rs = ps.executeQuery();
     		ArrayList<BannerDTO> arr = new ArrayList<BannerDTO>();

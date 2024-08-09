@@ -104,7 +104,7 @@
             <a href="/wishJam/index.jsp">메인로고</a>
         </div>
         <div id="manageimg">
-        	<a href="#" data-content = "managerModify" class="dynamic-link">
+        	<a href="#" data-content = "/wishJam/management/manager/managerModify" class="dynamic-link">
             <img src="<%=imgSrc %>" class="pfimg" alt="img">
             </a>
             <div id = "managerExplane">관리자 이름 님</div>
@@ -113,16 +113,16 @@
             <a href="#" data-content="stats" class="dynamic-link">통계</a>
         </div>
         <div class="element">
-            <a href="#" data-content="memberManage" class="dynamic-link">회원관리</a>
+            <a href="#" data-content="/wishJam/management/member/memberManage" class="dynamic-link">회원관리</a>
         </div>
         <div class="element">
-            <a href="#" data-content="report" class="dynamic-link">신고 관리</a>
+            <a href="#" data-content="/wishJam/management/report/report" class="dynamic-link">신고 관리</a>
         </div>
         <div class="element">
-            <a href="#" data-content="banner" class="dynamic-link">배너 설정</a>
+            <a href="#" data-content="/wishJam/management/banner/banner" class="dynamic-link">배너 설정</a>
         </div>
         <div class="element">
-            <a href="#" data-content="grade" class="dynamic-link">등급 관리</a>
+            <a href="#" data-content="/wishJam/management/grade/grade" class="dynamic-link">등급 관리</a>
         </div>
         <div class="element">
             <a href="#" data-content="dd" class="dynamic-link">무슨기능넣을까요</a>
