@@ -7,7 +7,7 @@
 <jsp:useBean id="sgdao" class="com.wishJam.s_goods.S_goodsDAO"></jsp:useBean>
 
 <%
-int sellidx = 1;
+int sellidx = 23;
 DetailDTO sddto = ddao.viewSellDetail(sellidx);
 ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 %>

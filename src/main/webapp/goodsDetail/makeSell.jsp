@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%
-	int s_idx = 1;
+	int s_idx = 23;
 	String g_name = "Gadget";
 %>
 <!DOCTYPE html>
