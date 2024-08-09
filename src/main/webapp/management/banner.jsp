@@ -19,7 +19,7 @@
         cell3.innerHTML = '<input type="date" name="b_sdate" required="required" /> ~ <input type="date" name="b_edate" required="required" />';
 
         var cell4 = newRow.insertCell(3);
-        cell4.innerHTML = '<img src="/wishJam/img/banner/null.jpg" alt="Prev">';
+        cell4.innerHTML = '<img src="/wishJam/img/banner/default.jpg" alt="Prev">';
 
         var cell5 = newRow.insertCell(4);
         cell5.innerHTML = '<input type="checkbox" id="chkbox" name="chkbox" />';
@@ -78,13 +78,24 @@
         document.body.appendChild(form);
         form.submit();
     }
+    
+    function imgChange(ss){
+    	window.open('bannerImgsave.jsp?idx='+ss, 'gradeIconChange', 'width=400,height=200')
+    }
 
 </script>
 <div class="container">
+	<h2>배너 관리</h2>
     <div class="conTop">
-        <h2>배너 관리</h2>
-        <input type="text" placeholder="검색어를 입력해주세요.">
-        <button type="button">검색</button>
+	    <div class="search-area">
+	        <input type="text" placeholder="검색어를 입력해주세요.">
+	        <button type="button">검색</button>
+	    </div>
+	    <div class="button-area">
+	        <button class ="contopbtn" type="button" onclick="addRow()">추가</button>
+	        <button class ="contopbtn" type="button" onclick="saveData()">저장</button>
+	        <button type="button" onclick="deleteData()">선택 삭제</button>
+	    </div>
     </div>
     <table class="banner-management" id="bannerTable">
         <thead>
@@ -106,7 +117,7 @@
 								<td><%=dto.getB_idx() %></td>
 								<td><%=dto.getB_name() %></td>
 								<td><%=dto.getB_sdate() %> ~ <%=dto.getB_edate() %></td>
-								<td><img src="<%=dto.getB_src() %>" alt="image" /></td>
+								<td><img src="<%=dto.getB_src() %>" alt="image" onclick = 'imgChange("<%=dto.getB_idx() %>");'/></td>
 								<td><input type="checkbox" id="chkbox" name = "chkbox"/></td>
 							</tr>
 						<%
@@ -115,9 +126,4 @@
 			%>
         </tbody>
     </table>
-    <div>
-        <button type="button" onclick="addRow()">추가</button>
-        <button type="button" onclick="saveData()">저장</button>
-        <button type="submit">선택 삭제</button>
-    </div>
 </div>

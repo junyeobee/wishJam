@@ -39,7 +39,6 @@ String imageSrc = "";
 
 		function cancel() {
 			if (!editButton) {
-				console.error('Edit button not found.');
 				return;
 			}
 
@@ -58,8 +57,7 @@ String imageSrc = "";
 		}
 
 		window.editIcon = function() {
-			window.open('gradeIcon.jsp', 'gradeIconChange',
-					'width=400,height=200');
+			window.open('gradeIcon.jsp', 'gradeIconChange', 'width=400,height=200');
 		};
 	});
 </script>
