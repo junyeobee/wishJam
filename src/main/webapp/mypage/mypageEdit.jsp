@@ -6,6 +6,7 @@
 <%@ page import="javax.servlet.*"%>
 
 <jsp:useBean id="mdto" class="com.mypage.wishJam.MypageDTO" scope="session" />
+<jsp:useBean id="mdao" class="com.mypage.wishJam.MypageDAO" scope="session" />
 
 
 
@@ -123,7 +124,7 @@ section {
 
 .introduce input {
 	width: 360px;
-	height: 120px;
+	height: 38px;
 }
 
 .title {
@@ -137,9 +138,9 @@ section {
 }
 
 .addr input {
-	width: 257px;
+	width: 360px;
 	height: 38px;
-	margin-bottom: 6px;
+	
 }
 
 #bt {
@@ -162,6 +163,8 @@ section {
 	opacity: 0;
 	padding-top: 5px;
 }
+
+
 </style>
 
 <script>
@@ -171,9 +174,11 @@ section {
 </head>
 <%
 //로그인 세션 받아오기
-String id = (String) session.getAttribute("userId");
+String id = (String) session.getAttribute("userId"); //앞에 mypage에서 받은 userid 맞춰서
 
 if (id != null) {
+	mdto= mdao.memberGet(id);
+	
 %>
 <Script>
   //프로필 사진 변경 팝업
@@ -185,7 +190,7 @@ if (id != null) {
 <body>
 	<%@ include file="../header.jsp"%>
 	<section>
-		<form name="mypageedit" action="mypageEdit_of.jsp">
+		<form name="mypageedit" action="mypageEdit_ok.jsp">
 			<div class="title">
 				<h2>내 정보 수정하기</h2>
 			</div>
@@ -206,81 +211,62 @@ if (id != null) {
                     imgSrc = "/wishJam/img/member_profile/default.png";
                 }
             }
-				
 				%>
-
 				<div class="edit_item label">프로필 사진</div>
 				<div class="profileimg ">
-
 					<span class="edit">변경하기</span> <img src="<%=imgSrc%>" alt="mypageImg" onclick="modifyImg()">
-
-
 				</div>
 <%} %>
 			</article>
-
 			<article id="article_edit2">
-
 				<div class="edit_item label">닉네임</div>
 				<div class="input_wrap">
 					<div class="edit_item">
 						<div class="nickname">
-							<input type="text" name="nickname" placeholder="닉네임을 작성해주세요.">
-
+							<input type="text" name="m_nick" placeholder="<%=mdto.getM_nick() %>">
 						</div>
 					</div>
 					<div class=" edit_item limit">0/10</div>
-
 				</div>
-
 			</article>
+			<article id="article_edit2">
 
-
-			<article id="article_edit3">
-
-				<div class="edit_item label">소개글</div>
-				<div class="input_wrap2">
+				<div class="edit_item label">전화번호</div>
+				<div class="input_wrap">
 					<div class="edit_item">
 						<div class="introduce">
-							<input type="text" name="introduce" placeholder="소개글을 작성해주세요.">
+							<input type="text" name="m_tel" placeholder="'-'를 포함하여 입력해주세요.">
 						</div>
 					</div>
-
-					<div class=" edit_item limit">0/100</div>
-
+						<div class="edit_item limit">0/10</div>
 				</div>
-
 			</article>
+				<article id="article_edit2">
 
-
-			<article id="article_edit3">
+				<div class="edit_item label">이메일</div>
+				<div class="input_wrap">
+					<div class="edit_item">
+						<div class="introduce">
+							<input type="text" name="m_email" placeholder="이메일을 입력해주세요.">
+						</div>
+					</div>
+					<div class=" edit_item limit">0/10</div>
+				</div>
+			</article>
+			<article id="article_edit2">
 
 				<div class="edit_item label">주소 정보</div>
-				<div class="input_wrap2">
+				<div class="input_wrap">
 					<div class="edit_item">
-					
-					
 						<div class="addr">
-						<input type="text" id="sample6_postcode" placeholder="우편번호">
-<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="bt"><br>
-<input type="text" id="sample6_address" placeholder="주소"><br>
-<input type="text" id="sample6_detailAddress" placeholder="상세주소">
-<input type="text" id="sample6_extraAddress" placeholder="참고항목">
-						
-							<!--  <input type="text" name="addr"> 
-							<input type="button"vname="postalcode" value="우편번호 검색" id="bt"> 
-								<input type="text" name="addr"> <input type="text" name="addr">-->
+<input type="text" name="m_addr" placeholder="주소를 입력해주세요.">
 						</div>
 					</div>
-
-
 				</div>
-
 			</article>
-
 			<article id="article_edit4">
 				<div>
-					<input type="button" name="bt_save" value="저장하기" id="bt">
+					<input type="submit" name="bt_save" value="저장하기" id="bt">
 				</div>
 			</article>
 	</form>

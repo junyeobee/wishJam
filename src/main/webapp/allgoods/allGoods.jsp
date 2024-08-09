@@ -1,7 +1,6 @@
 <%@page import="com.allgoods.wishJam.AllgoodsDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@ page import="java.util.*"%>
 <%@ page import="com.allgoods.wishJam.AllgoodsDTO"%>
 <jsp:useBean id="gdao" class="com.allgoods.wishJam.AllgoodsDAO"></jsp:useBean>
@@ -9,6 +8,7 @@
 <%
 List<AllgoodsDTO> productList = gdao.allGoods();
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +21,7 @@ List<AllgoodsDTO> productList = gdao.allGoods();
 <meta charset="UTF-8">
 <style>
 section {
-	font-family: 'Pretendard-Regular';
+	y font-family: 'Pretendard-Regular';
 	width: 960px;
 	height: 2000px;
 	border: 1px solid black;
@@ -37,17 +37,14 @@ section {
 	display: flex;
 	flex-wrap: wrap;
 	border: 2px solid red;
-padding-top: 30px;
-		gap:1.2rem !important;
+	padding-top: 30px;
+	gap: 1.2rem !important;
 	row-gap: 1.2rem !important;
-
 }
 
 .item {
 	width: 223px;
 	height: 380px;
-	
-	
 	border: 1px solid blue;
 	position: relative;
 	border-radius: 20px;
@@ -127,27 +124,29 @@ jjimbt.src="/wishJam/img/"+on;
 			</div>
 		</article>
 		<div class="container">
-			<%
-			for (AllgoodsDTO products : productList) {
+		  <%
+    if (productList == null || productList.isEmpty()) {
+        out.println("상품이 없습니다.");
+    } else {
+        for (AllgoodsDTO products : productList) {
+        	System.out.println(products.getIdx());
 			%>
 			<div class="item ">
-				<div class="img"
-					onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
+				<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
 					<img src="<%=products.getThumbnail_url()%>" alt="썸네일">
 				</div>
 				<div class="inner">
 					<div class="writer"><%=products.getSeller()%></div>
 					<div><%=products.getName()%></div>
 					<div><%=products.getPrice()%></div>
-					<span class="heart" onclick="jjim(<%=products.getIdx()%>);"><img
-						src="/wishJam/img/heart_gray.png"
-						id="jjimimg_<%=products.getIdx()%>"></span>
+					<span class="heart" onclick="jjim(<%=products.getIdx()%>);"><img src="/wishJam/img/heart_gray.png" id="jjimimg_<%=products.getIdx()%>"></span>
 				</div>
 
 			</div>
 
 			<%
 			}
+    }
 			%>
 		</div>
 	</section>

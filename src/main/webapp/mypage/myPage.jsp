@@ -1,3 +1,4 @@
+<%@page import="com.member.wishJam.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
@@ -7,10 +8,10 @@
 <jsp:useBean id="mdao" class="com.mypage.wishJam.MypageDAO"></jsp:useBean>
 <%
 //아이디 세션 받기
-String id = "seller";
+String id = "sunny02";
 
 session.setAttribute("userId", id);
-
+System.out.println(id);
 String path = request.getRealPath("/");
 mdto.setHomepath(path);
 File file = new File(mdto.getHomepath() + mdto.getUrl());
@@ -150,10 +151,19 @@ section {
 				<div class="profileimg">
 					<img src="<%=imgSrc%>">
 				</div>
-				<div class="profile_item nickname">닉네임</div>
+				<% if(id!=null){
+					mdto= mdao.memberGet(id);
+
+					%>
+			
+				<div class="profile_item nickname"><%=mdto.getM_nick() %></div>
+				
+				
+			<% 
+			System.out.println(mdto.getM_nick());
+				}%>
 				<div class="profile_item edit"
-					onclick="location.href='/wishJam/mypage/mypageEdit.jsp'">정보
-					수정하기</div>
+					onclick="location.href='/wishJam/mypage/mypageEdit.jsp'">정보수정하기</div>
 
 			</div>
 
