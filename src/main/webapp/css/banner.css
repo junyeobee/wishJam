@@ -1,0 +1,32 @@
+@charset "UTF-8";
+.container {
+	margin: 0 auto;
+}
+
+.conTop {
+	margin-bottom: 20px;
+}
+
+.banner-management {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.banner-management th, .banner-management td {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+.banner-management th {
+	background-color: #f2f2f2;
+	text-align: center;
+}
+
+.banner-management td {
+	text-align: center;
+}
+
+.banner-management img {
+	width: 150px;
+	height: auto;
+}

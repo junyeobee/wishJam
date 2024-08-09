@@ -1,0 +1,37 @@
+@charset "UTF-8";
+header {
+	width: auto;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	position: sticky;
+	border-bottom: 2px solid black;
+	margin: 0px auto;
+  	top: 0;
+	left: 0;
+	right: 0;
+	padding-top: 75px;
+	background-color:white;
+}
+#top_left {
+	
+}
+
+#top_center {
+	
+}
+
+#top_right {
+	
+}
+
+#top_Search {
+	
+}
+
+
+footer {
+	height: 150px;
+	text-align: center;
+	font-size: 10px;
+}
