@@ -7,7 +7,13 @@
 <jsp:useBean id="sgdao" class="com.wishJam.s_goods.S_goodsDAO"></jsp:useBean>
 
 <%
-int sellidx = 23;
+String sellidx_s = request.getParameter("s_idx");
+
+int sellidx = 0;
+if (sellidx_s != null) {
+	sellidx = Integer.parseInt(sellidx_s);
+}
+
 DetailDTO sddto = ddao.viewSellDetail(sellidx);
 ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 %>
@@ -132,7 +138,7 @@ ul {
 </style>
 <script>
 	function openReport() {
-		window.open('/wishJam/goodsDetail/report.jsp', 'report',
+		window.open('/wishJam/goodsDetail/report.jsp?s_idx=<%=sellidx %>', 'report',
 				'width=400, height=500');
 	}
 

@@ -8,17 +8,17 @@ public class S_goodsDAO {
 	PreparedStatement ps;
 	ResultSet rs;
 
-	public int addGoods(S_goodsDTO dto) {
+	public int addGoods(int s_idx, String sg_name, int sg_price, int sg_count, int sg_limit, int sg_discnt) {
 		try {
 				conn=com.db.wishJam.DbConn.getConn();
 				String sql = "insert into s_goods values(s_goods_sg_idx.nextval,?,?,?,?,?,?)";
 				ps=conn.prepareStatement(sql);
-				ps.setInt(1, dto.getS_idx());
-				ps.setString(2, dto.getSg_name());
-				ps.setInt(3, dto.getSg_price());
-				ps.setInt(4, dto.getSg_count());
-				ps.setInt(5, dto.getSg_limit());
-				ps.setInt(6, dto.getSg_discnt());
+				ps.setInt(1, s_idx);
+				ps.setString(2, sg_name);
+				ps.setInt(3, sg_price);
+				ps.setInt(4, sg_count);
+				ps.setInt(5, sg_limit);
+				ps.setInt(6, sg_discnt);
 				
 				int count = ps.executeUpdate();
 				
@@ -28,7 +28,7 @@ public class S_goodsDAO {
 			return 0;
 		} finally {
 			try {
-					if(ps!=null)ps.close();
+					if(ps!=null) ps.close();
 					if(conn!=null) conn.close();
 			} catch (Exception e2) {
 			}
