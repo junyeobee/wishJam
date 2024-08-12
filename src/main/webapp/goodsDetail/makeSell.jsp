@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
+<jsp:useBean id = "idao" class="com.wishJam.detail.DetailImgDAO" scope="session"></jsp:useBean>
+
 <%
 int s_idx = Integer.parseInt(request.getParameter("s_idx"));
 String g_name = "Gadget";
+String imgsrc = idao.getHomePath()+idao.getEverypath()+"mapjpg.jpg";
+String m_nick="토마토";
 %>
 <!DOCTYPE html>
 <html>
@@ -80,14 +84,6 @@ ul {
 	width: 600px;
 }
 
-#uploadImg[type="file"] {
-	position: absolute;
-	width: 0;
-	height: 0;
-	padding: 0;
-	overflow: hidden;
-	border: 0;
-}
 
 .optbox {
 	justify-content: space-between;
@@ -147,15 +143,15 @@ ul {
 	outline: 0;
 }
 </style>
-<%@ include file="scriptDetail.jsp" %>
+<%@ include file="scriptDetail.jsp"%>
 </head>
 <body>
 	<section>
 		<h2>게시글 작성</h2>
 
-		<form name="makeSellfm" action="makeSell_ok.jsp">
+		<form name="makeSellfm" action="makeSell_ok.jsp" >
 			<input type="hidden" name="s_idx" value="<%=s_idx%>"> <input
-				type="hidden" name="m_nick" value="인뿌삐">
+				type="hidden" name="m_nick" value="<%=m_nick %>">
 			<article>
 				<ul>
 					<li>섬네일 <img src="../img/img1.jpg" class="selectimg"></li>
@@ -182,18 +178,18 @@ ul {
 									<li><input type="button" value="BC"
 										onclick="styleSelected(this.value)"></li>
 									<li>
-										<!-- <input type="file" id="uploadImg" accept="image/*"
-										onChange="upImage(this.value)"> --> <input type="button"
-										value="이미지">
+										<input type="button" value="이미지" onclick="openImgpop(<%=s_idx%>,<%=m_nick %>)">
 									</li>
 								</ul>
 							</div>
-							<div class="editbox">
+							<div class="editbox" onclick = "boxclick()">
 								<div style="text-align: left; cursor: text;">
-									<span id="txt" contenteditable="true" oninput="TXTtyping()"></span>
+									<span id="txt" contenteditable="true" oninput="TXTtyping()">
+									</span>
 								</div>
-								<input type="hidden" name="s_content" value="">
+
 							</div>
+							<input type="text" name="s_content" value="">
 						</div>
 					</li>
 					<li>
@@ -215,9 +211,14 @@ ul {
 								String ds = "";
 								if (m < 10) {
 									ms = "0" + m;
+								} else {
+									ms = m + "";
 								}
+
 								if (d < 10) {
 									ds = "0" + d;
+								} else {
+									ds = d + "";
 								}
 								%>
 								<option>2024</option>
@@ -293,8 +294,8 @@ ul {
 								}
 								%>
 							</select>
-						</div> <input type="hidden" name="s_start" id="s_start"
-						value="<%=y + "-" + ms + "-" + ds%>"> <input type="hidden"
+						</div> <input type="text" name="s_start" id="s_start"
+						value="<%=y + "-" + ms + "-" + ds%>"> <input type="text"
 						name="s_end" id="s_end"
 						value="<%=(y + 99) + "-" + ms + "-" + ds%>">
 					</li>
@@ -327,10 +328,10 @@ ul {
 									<img src="../img/img1.jpg" class="selectimg">
 									<div>
 										<ul>
-											<li>이름 <input type="text" name="sg_name" id="op_sg_name1"
-												onchange="getoptInfo(this)"></li>
-											<li>가격 <input type="text" name="sg_price" id="op_sg_price1"
-												onchange="getoptInfo(this)">원
+											<li>이름 <input type="text" name="sg_name"
+												id="op_sg_name1" onchange="getoptInfo(this)"></li>
+											<li>가격 <input type="text" name="sg_price"
+												id="op_sg_price1" onchange="getoptInfo(this)">원
 											</li>
 											<li>
 												<ul class="fbox">
@@ -407,12 +408,14 @@ ul {
 							<li><input type="checkbox" name="addsale"
 								onclick="addSale()">할인 기능
 								<div id="salebox" style="display: none;" class="bordbox">
-									<input type="checkbox" name="allSale" onclick="selectThem()">전체 선택
-									<ul id ="dislist">
+									<input type="checkbox" name="allSale" onclick="selectThem()">전체
+									선택
+									<ul id="dislist">
 										<li>
 											<div class="bordbox">
 												<ul class="fbox fcenter">
-													<li><input type="checkbox" name="sg_discnt" value="1" onclick="selectIt(this)"></li>
+													<li><input type="checkbox" name="sg_discnt" value="0"
+														onclick="selectIt(this)"></li>
 													<li name="op_sg_name1"></li>
 													<li name="op_sg_price1"></li>
 												</ul>
@@ -440,6 +443,7 @@ ul {
 					<tr>
 						<td><input type="reset" value="취소"></td>
 						<td><input type="submit" value="등록"></td>
+						</tr>
 				</table>
 			</article>
 		</form>

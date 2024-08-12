@@ -79,23 +79,14 @@
 		content.innerHTML = ad;
 	}
 
-	function upImage(v) {
-		var file = document.getElementById("uploadImg").files[0];
-		var reader = new FileReader();
-
-		reader.onload = function(e) {
-			var page = document.getElementById("page");
-			var content = document.getElementById("txt");
-
-			content.innerHTML += '<div><img class="txtimg" src="'+reader.result+'"></div>';
-		}
-
-		reader.readAsDataURL(file);
+	function openImgpop(idx,nick){
+		window.open('sellImgUp.jsp?s_idx='+idx+'&m_nick='+nick,'sellImgUp','width=700, height=600');
 	}
-
+	
 	function selectThem() {
 		var allSale = document.makeSellfm.allSale;
-		var saleGoods = document.makeSellfm.sg_discnt;
+		var saleGoods = document.getElementsByName("sg_discnt");
+		
 
 		if (allSale.checked) {
 			for (var i = 0; i < saleGoods.length; i++) {
@@ -443,7 +434,7 @@
 		var vwhenT = parseInt(fm.whenT.options[fm.whenT.selectedIndex].value);
 		var vapT2 = fm.apT2.options[fm.apT2.selectedIndex].value;
 		var vwhenT2 = parseInt(fm.whenT2.options[fm.whenT2.selectedIndex].value);
-		console.log(vwhenT + "/" + vwhenT2);
+		
 		if (vapT == vapT2) {
 			if (vwhenT > vwhenT2) {
 				fm.whenT2.options[fm.whenT.selectedIndex + 1].selected = "true";
@@ -500,6 +491,14 @@
 		} else if(t.checked==false){
 			t.value="0";
 		}
-		console.log(t.value);
+	}
+	
+	function clickAllsb(){
+		document.makeSellfm.submit();
+		document.uploadfm.submit();
+	}
+	
+	function boxclick(){
+		document.getElementById("txt").focus();
 	}
 </script>

@@ -266,9 +266,7 @@ ul {
 	<section class="explain">
 		<a name="detailpage"></a>
 		<article>
-			<img src="../img/img2.jpeg" class="conimg">
 			<div><%=sddto.getS_content()%></div>
-			<img src="../img/img1.jpg" class="conimg">
 		</article>
 		<article>
 			<div>

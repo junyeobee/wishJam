@@ -7,6 +7,7 @@
 <%
 String getstart = request.getParameter("s_start");
 String getend = request.getParameter("s_end");
+
 SimpleDateFormat fr = new SimpleDateFormat("yyyy-MM-dd");
 Date s_date = Date.valueOf(getstart);
 Date e_date = Date.valueOf(getend);
@@ -46,14 +47,13 @@ int detail_result = ddao.addSellPage(ddto);
 
 if (detail_result > 0) {
 	for (int i = 0; i < sg_names.length; i++) {
-		s_goods_result+=sgdao.addGoods(ddto.getS_idx(), sg_names[i], Integer.parseInt(sg_prices[i]), Integer.parseInt(sg_counts[i]), Integer.parseInt(sg_limits[i]), Integer.parseInt(sg_discnt[i]));
+		s_goods_result+=sgdao.addGoods(ddto.getS_idx(), sg_names[i], Integer.parseInt(sg_prices[i]), Integer.parseInt(sg_counts[i]), Integer.parseInt(sg_limits[i]), Integer.parseInt(sg_discnt!=null?sg_discnt[i]:"0"));
 	}
 
 	String msg = s_goods_result >= sg_names.length ? "성공" : "실패";
 %>
 <script>
-	window.alert('게시글 등록에 <%=msg%>
-	했습니다.');
+	window.alert('게시글 등록에 <%=msg%>했습니다.');
 	location.href = '/wishJam/goodsDetail/gets_idx.jsp';
 </script>
 <%
