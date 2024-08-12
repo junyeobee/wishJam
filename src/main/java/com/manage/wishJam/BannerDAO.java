@@ -1,6 +1,7 @@
 package com.manage.wishJam;
 import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 public class BannerDAO {
 	Connection con;
@@ -75,6 +76,34 @@ public class BannerDAO {
     	}catch(Exception e) {
     		e.printStackTrace();
     		return -1;
+    	}finally {
+    		try {
+    			if (ps != null) 
+                	ps.close();
+                if (con != null) 
+                	con.close();
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    }
+    
+    public ArrayList<String> getBannerList(){
+    	try {
+    		con = com.db.wishJam.DbConn.getConn();
+    		String sql = "select b_src from banner where b_edate > sysdate and b_edate < (select trunc(add_months(sysdate, 1), 'mm') from dual)";
+    		ps = con.prepareStatement(sql);
+    		rs = ps.executeQuery();
+    		ArrayList<String> arr = new ArrayList<String>();
+    		if(rs.next()) {
+    			do {
+    				arr.add(rs.getString(1));
+    			}while(rs.next());
+    		}
+    		return arr;
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		return null;
     	}finally {
     		try {
     			if (ps != null) 

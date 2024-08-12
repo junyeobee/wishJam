@@ -14,7 +14,6 @@
 	
 	File[] fileList = file.listFiles();
 	String imgSrc = "/wishJam/img/profile/default.jpg";
-	System.out.println(mdao.getHomePath());
 	for (File f : fileList) {
 		if (f.isFile() && f.getName().startsWith(id)) {
 			imgSrc = "/wishJam/img/profile/"+f.getName();	//관리자이름이랑 같으면 경로지정하고 break
@@ -23,7 +22,6 @@
 			imgSrc = "/wishJam/img/profile/default.jpg"; //아니면 default이미지
 		}
 	}
-	System.out.println(imgSrc);
 %>
 <html>
 <head>
@@ -120,16 +118,16 @@
         	<a href="#" data-content = "/wishJam/management/manager/managerModify" class="dynamic-link">
             <img src="<%=imgSrc %>" class="pfimg" alt="img">
             </a>
-            <div id = "managerExplane">관리자 이름 님</div>
+            <div id = "managerExplane"><%=id %> 님</div>
         </div>
         <div class="element">
-            <a href="#" data-content="stats" class="dynamic-link">통계</a>
+            <a href="#" data-content="/wishJam/management/stats/stats" class="dynamic-link">거래 통계</a>
         </div>
         <div class="element">
-            <a href="#" data-content="/wishJam/management/member/memberManage" class="dynamic-link">회원관리</a>
+            <a href="#" data-content="/wishJam/management/member/memberManage" class="dynamic-link">회원 관리</a>
         </div>
         <div class="element">
-            <a href="#" data-content="/wishJam/management/report/report" class="dynamic-link">신고 관리</a>
+            <a href="#" data-content="/wishJam/management/report/reports" class="dynamic-link">신고 관리</a>
         </div>
         <div class="element">
             <a href="#" data-content="/wishJam/management/banner/banner" class="dynamic-link">배너 설정</a>
@@ -138,18 +136,10 @@
             <a href="#" data-content="/wishJam/management/grade/grade" class="dynamic-link">등급 관리</a>
         </div>
         <div class="element">
-            <a href="#" data-content="dd" class="dynamic-link">무슨기능넣을까요</a>
+            <a href="#" data-content="dd" class="dynamic-link">카테고리 관리</a>
         </div>
     </div>
     <section id="manageArea">
-        <div id="manageTop">
-            <ul>
-                <li><a href="#" data-content="menu1" class="dynamic-link">menu1</a></li>
-                <li><a href="#" data-content="menu2" class="dynamic-link">menu2</a></li>
-                <li><a href="#" data-content="menu3" class="dynamic-link">menu3</a></li>
-            </ul>
-        </div>
-        <hr />
         <iframe id="contentFrame" src="main.jsp"></iframe>
     </section>
     <script>
