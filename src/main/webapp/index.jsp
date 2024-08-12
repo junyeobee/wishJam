@@ -1,6 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<jsp:useBean id = "mdao" class = "com.manage.wishJam.manageDAO"/>
+<jsp:useBean id = "bdao" class = "com.manage.wishJam.BannerDAO"/>
 <!DOCTYPE html>
+<%
+	ArrayList<String> arr = bdao.getBannerList();
+%>
 <html>
 <head>
 <link rel="stylesheet" href="/wishJam/css/burger.css" />
@@ -17,7 +22,19 @@
 			<div>
 				<h1 id = "test1">제목</h1>
 			</div>
-			<div id = "contentBox">배너들어갈곳</div>
+		<div class="slideshow-container">
+		  <div class="mySlideDiv fade active">
+		     <img src="img.jpg"> 
+		  </div>
+		  <div class="mySlideDiv fade">
+		      <img src="img.jpg"> 
+		  </div>
+		  <div class="mySlideDiv fade">
+		      <img src="img.jpg"> 
+		  </div>
+		  <a class="prev" onclick="prevSlide()">&#10094;</a>
+		<a class="next" onclick="nextSlide()">&#10095;</a>
+		</div>
 		</article>
 		<article>
 			<h2>인기상품</h2>

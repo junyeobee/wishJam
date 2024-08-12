@@ -27,7 +27,7 @@
 section {
 	width: 940px;
 	margin: 0 auto;
-	font-family: 'Pretendard-Regular';
+	font-family: 'Cafe24Ohsquareair';
 }
 
 .profileimg {
@@ -164,7 +164,10 @@ section {
 	padding-top: 5px;
 }
 
-
+.introduce2 input {
+	width: 360px;
+	height: 120px;
+}
 </style>
 
 <script>
@@ -229,6 +232,24 @@ if (id != null) {
 					<div class=" edit_item limit">0/10</div>
 				</div>
 			</article>
+			
+			<article id="article_edit3">
+
+				<div class="edit_item label">소개글</div>
+				<div class="input_wrap2">
+					<div class="edit_item">
+						<div class="introduce2">
+							<input type="text" name="profile" placeholder="소개글을 작성해주세요.">
+						</div>
+					</div>
+
+					<div class=" edit_item limit">0/100</div>
+
+				</div>
+
+			</article>
+			
+			
 			<article id="article_edit2">
 
 				<div class="edit_item label">전화번호</div>

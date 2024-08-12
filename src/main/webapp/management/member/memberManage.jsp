@@ -2,6 +2,7 @@
 <%@ page import = "java.util.*" %>
 <%@ page import = "com.manage.wishJam.MemberExDTO" %>
 <%@ page import = "com.manage.wishJam.MemberExDAO" %>
+<link rel="stylesheet" href="/wishJam/css/reports.css">
 <%
 	MemberExDAO mexdao = new MemberExDAO();
 	int e = mexdao.getTotalcnt();
@@ -28,11 +29,12 @@
 	if(cp%pagesize==0)usrgroup--;
 	
 %>
-
-<div>
-	<h1>회원 관리</h1>
-</div>
-<div>
+<div class="container">
+<h1>회원 관리</h1>
+        <div class="toolbar">
+            <button class="btn back-btn">뭐넣지</button>
+            <button class="btn ban-btn">회원 없애기</button>
+        </div>
 	<table>
 		<thead>
 			<tr>
@@ -48,9 +50,8 @@
 				<th>보유포인트</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="report-list">
 			<%
-				System.out.println(e);
 				ArrayList<MemberExDTO> arr = mexdao.allMember(cp,listsize);
 				if(arr!=null){
 					for(MemberExDTO dto : arr){
@@ -79,16 +80,18 @@
 			%>
 		</tbody>
 	</table>
+	<div class="pagination">
+<div class="pagination-controls">
 <%
 	if(usrgroup != 0) {
-		%><a href="memberManage.jsp?cp=<%=(usrgroup-1)*pagesize+pagesize %>">&lt;&lt;</a><%
+		%><button class="pagination-btn" onclick="navigateTo('<%=(usrgroup-1)*pagesize+pagesize %>')">Prev</button><%
 	}
 %>
 
 <%
 	for(int i = usrgroup*pagesize+1; i<=usrgroup*pagesize+pagesize; i++){
 		%>
-		&nbsp;&nbsp;<a href="memberManage.jsp?cp=<%=i%>"><%=i%></a>&nbsp;&nbsp;
+		&nbsp;<button class="pagination-btn" onclick="navigateTo('<%=i%>')"><%=i%></button>&nbsp;
 		<%
 		if(i==totalpage){
 			break;
@@ -97,8 +100,16 @@
 %>
 <%
 	if(usrgroup != (totalpage/pagesize-(totalpage%pagesize==0?1:0))) {
-		%><a href="memberManage.jsp?cp=<%=(usrgroup+1)*pagesize+1%>">&gt;&gt;</a><%
+		%><button class="pagination-btn" onclick="navigateTo('<%=(usrgroup+1)*pagesize+1%>')">Next</button><%
 	}
 
 %>
 </div>
+</div>
+</div>
+
+ 	<script>
+	function navigateTo(page) {
+	    window.location.href = 'memberManage.jsp?cp=' + page;
+	}
+	</script>
