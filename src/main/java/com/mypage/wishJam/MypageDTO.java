@@ -16,7 +16,7 @@ public class MypageDTO {
     private String thumbnail_url;
     
     
-    //member
+    //member mypage
 	private int m_idx;
 	private String m_nick;
 	private String g_name; 
@@ -29,9 +29,20 @@ public class MypageDTO {
 	private String m_point;
 	private Date joindate;
 	
+	private String profile;
+	
 	private String userid;
 	
 	
+	
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
     
 	public String getUserid() {
 		return userid;

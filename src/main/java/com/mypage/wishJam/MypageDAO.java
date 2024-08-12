@@ -17,7 +17,7 @@ public class MypageDAO {
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 			
-			String sql="select * from member where m_id=?";
+			String sql="select * from mypage where m_id=?";
 			ps=con.prepareStatement(sql);
 			ps.setString(1,id);
 			
@@ -29,6 +29,7 @@ public class MypageDAO {
 				
 				mypage.setUserid(id);
 				mypage.setM_nick(rs.getString("m_nick"));
+				mypage.setProfile(rs.getString("profile"));
 				
 			}
 			
@@ -41,19 +42,19 @@ public class MypageDAO {
 
 
 	//회원 정보 수정
-	
 	public int memberUpdate(MypageDTO dto, String id) {
 		
 		try {
 			con=com.db.wishJam.DbConn.getConn();
 			
-			String sql="update member set m_nick=?, m_tel=?, m_addr=?, m_email=? where m_id=?";
+			String sql="update mypage set m_nick=?, m_tel=?, m_addr=?, m_email=?, profile=? where m_id=?";
 			ps=con.prepareStatement(sql);
 		    ps.setString(1,dto.getM_nick());
 		    ps.setString(2, dto.getM_tel());
 		    ps.setString(3, dto.getM_addr());
 		    ps.setString(4, dto.getM_email());
-		    ps.setString(5, id);
+		    ps.setString(5, dto.getProfile());
+		    ps.setString(6, id);
 		    
 		    int count= ps.executeUpdate();
 		    
@@ -76,9 +77,7 @@ public class MypageDAO {
 		
 	}
 	
-	
-	
-	
+
 	
 	public List<MypageDTO> buyList(){
 		
@@ -87,7 +86,7 @@ public class MypageDAO {
 	try {
 		con = com.db.wishJam.DbConn.getConn();
 		
-		String sql = "select * from test_goods";
+		String sql = "select * from test_goods where tg_idx between 1 and 4";
 		ps=con.prepareStatement(sql);
 		rs=ps.executeQuery();
 		

@@ -1,27 +1,23 @@
 <%@page import="com.allgoods.wishJam.AllgoodsDTO"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.allgoods.wishJam.AllgoodsDTO"%>
 <jsp:useBean id="gdao" class="com.allgoods.wishJam.AllgoodsDAO"></jsp:useBean>
 
-<%
-List<AllgoodsDTO> productList = gdao.allGoods();
-%>
+
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="css/allFonts.css" />
 <link rel="stylesheet" href="/wishJam/css/burger.css" />
 <link rel="stylesheet" href="/wishJam/css/index.css" />
 <link rel="stylesheet" href="/wishJam/css/allFonts.css" />
 <meta charset="UTF-8">
 <style>
 section {
-	y font-family: 'Pretendard-Regular';
+  font-family: 'Cafe24Ohsquareair';
 	width: 960px;
 	height: 2000px;
 	border: 1px solid black;
@@ -62,7 +58,7 @@ section {
 	margin-bottom: 4px;
 }
 
-#select_2 {
+#sortOrder {
 	width: 130px;
 	height: 50px;
 }
@@ -109,6 +105,14 @@ jjimbt.src="/wishJam/img/"+on;
 }
 
 }
+
+
+function updateSortOrder() {
+    const selectElement = document.getElementById('sortOrder');
+    var selectedValue=selectElement.options[selectElement.selectedIndex].value;
+    window.location.href = '/wishJam/allgoods/allGoods.jsp?sortOrder='+selectedValue;
+}
+
 </script>
 </head>
 <body>
@@ -117,19 +121,27 @@ jjimbt.src="/wishJam/img/"+on;
 		<h2>전체 상품</h2>
 		<article>
 			<div id="filter">
-				<select name="select2" id="select_2">
-					<option value="all">인기순</option>
-					<option value="all">최신순</option>
-				</select>
+		<select name="sortOrder" id="sortOrder" onchange="updateSortOrder()">
+        <option value="popular" <%= request.getParameter("sortOrder") != null && request.getParameter("sortOrder").equals("popular") ? "selected" : "" %>>인기순</option>
+        <option value="latest" <%= request.getParameter("sortOrder") != null && request.getParameter("sortOrder").equals("latest") ? "selected" : "" %>>최신순</option>
+    </select>
 			</div>
 		</article>
 		<div class="container">
 		  <%
+
+		  String sortOrder=request.getParameter("sortOrder");
+		  
+		  System.out.println(sortOrder);	
+		  
+		  List<AllgoodsDTO> productList = gdao.allGoods(sortOrder);
+		  
+		  
     if (productList == null || productList.isEmpty()) {
         out.println("상품이 없습니다.");
     } else {
         for (AllgoodsDTO products : productList) {
-        	System.out.println(products.getIdx());
+
 			%>
 			<div class="item ">
 				<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
