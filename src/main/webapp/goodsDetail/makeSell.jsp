@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%
-	int s_idx = 23;
-	String g_name = "Gadget";
+int s_idx = Integer.parseInt(request.getParameter("s_idx"));
+String g_name = "Gadget";
 %>
 <!DOCTYPE html>
 <html>
@@ -11,6 +11,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
 <title>Insert title here</title>
 <style>
 body {
@@ -38,7 +39,7 @@ body {
 
 .fcenter {
 	justify-content: center;
-} 
+}
 
 ul {
 	text-decoration: none;
@@ -58,6 +59,7 @@ ul {
 .editbox {
 	border: 1px solid gray;
 	padding: 15px;
+	min-height: 100px;
 }
 
 .txtimg {
@@ -85,6 +87,11 @@ ul {
 	padding: 0;
 	overflow: hidden;
 	border: 0;
+}
+
+.optbox {
+	justify-content: space-between;
+	border: 1px solid gray;
 }
 
 .optbox:focus-within {
@@ -140,393 +147,15 @@ ul {
 	outline: 0;
 }
 </style>
-<script>
-	function addSale() {
-		var salebtn = document.makeSellfm.addsale;
-		var salebox = document.getElementById('salebox');
-
-		if (salebtn.checked) {
-			salebox.style.display = "block";
-		} else {
-			salebox.style.display = "none";
-		}
-
-	}
-
-	function addterm(v) {
-		var duebox = document.getElementById("duebox");
-
-		var fm = document.makeSellfm;
-		var end = document.makeSellfm.s_end;
-
-		if (v == "term") {
-			end.value = fm.e_year.options[fm.e_year.selectedIndex].value + "-"
-					+ fm.e_month.options[fm.e_month.selectedIndex].value + "-"
-					+ fm.e_date.options[fm.e_date.selectedIndex].value;
-
-			duebox.style.display = "block";
-		} else if (v == "every") {
-			end.value = (parseInt(fm.e_year.options[fm.e_year.selectedIndex].value) + 99)
-					+ "-"
-					+ fm.e_month.options[fm.e_month.selectedIndex].value
-					+ "-"
-					+ fm.e_date.options[fm.e_date.selectedIndex - 1].value;
-
-			duebox.style.display = "none";
-		}
-	}
-
-	function setTerm() {
-		var start = document.makeSellfm.s_start;
-		var end = document.makeSellfm.s_end;
-		nowdate = new Date();
-		var y = nowdate.getFullYear();
-		var m = nowdate.getMonth() + 1;
-		var d = nowdate.getDate();
-		if (m < 10) {
-			var ms = '0' + m;
-		}
-		if (d < 10) {
-			var ds = '0' + d;
-		}
-		start.value = y + "-" + ms + "-" + ds;
-		end.value = (y + 99) + "-" + ms + "-" + ds;
-	}
-
-	function styleSelected(v) {
-		var selected = document.getSelection().toString();
-		var s = document.getSelection();
-
-		var content = document.getElementById("txt");
-		var arr = (content.innerHTML).split(selected);
-		if (v == 'FS') {
-			var st = '<span style="font-size: 11px">' + selected + '</span>';
-		} else if (v == 'B') {
-			var st = '<span><b>' + selected + '</b></span>';
-		} else if (v == 'I') {
-			var st = '<span><i>' + selected + '</i></span>';
-		} else if (v == 'UL') {
-			var st = '<span><u>' + selected + '</u></span>';
-		} else if (v == 'C') {
-			var st = '<span style="color: red;">' + selected + '</span>';
-		} else if (v == 'BC') {
-			var st = '<span style="background-color: pink;">' + selected
-					+ '</span>';
-		}
-
-		var ad = arr[0] + st + arr[1];
-
-		content.innerHTML = ad;
-	}
-
-	function upImage(v) {
-		var file = document.getElementById("uploadImg").files[0];
-		var reader = new FileReader();
-
-		reader.onload = function(e) {
-			var page = document.getElementById("page");
-			var content = document.getElementById("txt");
-
-			content.innerHTML += '<div><img class="txtimg" src="'+reader.result+'"></div>';
-		}
-
-		reader.readAsDataURL(file);
-	}
-
-	function selectThem() {
-		var allSale = document.makeSellfm.allSale;
-		var saleGoods = document.makeSellfm.saleGoods;
-
-		if (allSale.checked) {
-			for (var i = 0; i < saleGoods.length; i++) {
-				saleGoods[i].checked = "checked";
-			}
-		} else {
-			for (var i = 0; i < saleGoods.length; i++) {
-				saleGoods[i].checked = false;
-			}
-		}
-	}
-
-	function addPlace() {
-		var placeCk = document.getElementById("place");
-		var placediv = document.getElementById("addplace");
-
-		if (placeCk.checked) {
-			placediv.style.display = "block";
-		} else {
-			placediv.style.display = "none";
-		}
-
-		var fm = document.makeSellfm;
-
-		fm.s_trade.value = fm.whereT.options[fm.whereT.selectedIndex].value
-				+ "," + fm.apT.options[fm.apT.selectedIndex].value + ","
-				+ fm.whenT.options[fm.whenT.selectedIndex].value + ","
-				+ fm.apT2.options[fm.apT2.selectedIndex].value + ","
-				+ fm.whenT2.options[fm.whenT2.selectedIndex].value;
-	}
-
-	function addOpt() {
-		var optsbox = document.getElementById("optsbox");
-
-		optsbox.innerHTML += '<div class="fbox optbox" style="justify-content: space-between; border: 1px solid gray;"><div class="fbox"><img src="../img/img1.jpg" class="selectimg"><div><ul><li>이름 <input type="text" name="sg_name"></li><li>가격 <input type="text" name="sg_price">원</li><li><ul class="fbox"><li>판매 수량 <input type="text" name="sg_count"></li><li>구매 제한 <input type="text" name="sg_limit" value="0"></li></ul></li></ul></div></div><span class="material-symbols-outlined icons" onclick="deleteOpt(this)">close</span></div>';
-	}
-
-	function deleteOpt(t) {
-		t.parentNode.remove();
-	}
-
-	function keySelect(v) {
-		var kword = document.getElementById("kw");
-
-		if ((kword.innerHTML).indexOf(v) == -1) {
-			kword.innerHTML += '<div class="fbox kwbtn"><span class="kword">'
-					+ v
-					+ '</span> <span class="material-symbols-outlined kwicon" onclick="deletekw(this)">close</span></div>';
-		}
-
-		var kwords = document.makeSellfm.s_hash;
-		kwords.value += v;
-	}
-
-	function clickBox() {
-		var kwedit = document.getElementById("kweditbox");
-
-		kwedit.focus();
-		kwedit.contentEditable = 'true';
-	}
-
-	function EnterforInput(e) {
-		var kwedit = document.getElementById("kweditbox");
-		var kword = document.getElementById("kw");
-
-		if (e.keyCode == 13) {
-			if (kwedit.innerText != '') {
-				kword.innerHTML += '<div class="fbox kwbtn"><span class="kword">#'
-						+ kwedit.innerText
-						+ '</span><span class="material-symbols-outlined kwicon" onclick="deletekw(this)">close</span></div>';
-
-				var kwords = document.makeSellfm.s_hash;
-				kwords.value += '#' + kwedit.innerText;
-
-				kwedit.innerHTML = '';
-				kwedit.blur();
-			} else {
-				kwedit.contentEditable = 'false';
-			}
-		}
-	}
-
-	function EnterforBr(e) {
-		var kwedit = document.getElementById("kweditbox");
-		if (e.keyCode == 13) {
-			kwedit.focus();
-		}
-	}
-
-	function deletekw(t) {
-		t.parentNode.remove();
-	}
-
-	function selectM(t) {
-		var m = parseInt(t.options[t.selectedIndex].value);
-
-		var lastday = 0;
-		switch (m) {
-		case 1:
-		case 3:
-		case 5:
-		case 7:
-		case 8:
-		case 10:
-		case 12:
-			lastday = 31;
-			break;
-		case 2:
-			lastday = 29;
-			break;
-		default:
-			lastday = 30;
-			break;
-		}
-
-		var dayselect = document.getElementById("dayselect");
-		dayselect.innerHTML = '';
-
-		for (var i = 1; i <= lastday; i++) {
-			if (i < 10) {
-				var j = '0' + i;
-			}
-			dayselect.innerHTML += '<option value='+j+'>' + i + '</option>';
-		}
-
-		var fm = document.makeSellfm;
-		var start = document.makeSellfm.s_start;
-		var end = document.makeSellfm.s_end;
-
-		start.value = fm.s_year.options[fm.s_year.selectedIndex].value + "-"
-				+ fm.s_month.options[fm.s_month.selectedIndex].value + "-"
-				+ fm.s_date.options[fm.s_date.selectedIndex].value;
-		end.value = fm.e_year.options[fm.e_year.selectedIndex].value + "-"
-				+ fm.e_month.options[fm.e_month.selectedIndex].value + "-"
-				+ fm.e_date.options[fm.e_date.selectedIndex].value;
-	}
-
-	function selectMM(t) {
-		var m = parseInt(t.options[t.selectedIndex].value);
-
-		var lastday = 0;
-		switch (m) {
-		case 1:
-		case 3:
-		case 5:
-		case 7:
-		case 8:
-		case 10:
-		case 12:
-			lastday = 31;
-			break;
-		case 2:
-			lastday = 29;
-			break;
-		default:
-			lastday = 30;
-			break;
-		}
-
-		var dayselect = document.getElementById("dayselectM");
-		dayselect.innerHTML = '';
-
-		for (var i = 1; i <= lastday; i++) {
-			if (i < 10) {
-				var j = '0' + i;
-			}
-			dayselect.innerHTML += '<option value='+j+'>' + i + '</option>';
-		}
-
-		var oms = document.getElementById("monthselect");
-		var om = parseInt(oms.options[oms.selectedIndex].value);
-		var nm = parseInt(t.options[t.selectedIndex].value);
-
-		var ods = document.getElementById("dayselect");
-		var nds = document.getElementById("dayselectM");
-		var od = parseInt(ods.options[ods.selectedIndex].value);
-
-		if (om > nm) {
-			window.alert('판매 시작 월 이후 숫자를 선택해주세요.');
-			t.options[oms.selectedIndex].selected = true;
-			nds.options[ods.selectedIndex + 1].selected = true;
-		}
-
-		var fm = document.makeSellfm;
-		var start = document.makeSellfm.s_start;
-		var end = document.makeSellfm.s_end;
-
-		start.value = fm.s_year.options[fm.s_year.selectedIndex].value + "-"
-				+ fm.s_month.options[fm.s_month.selectedIndex].value + "-"
-				+ fm.s_date.options[fm.s_date.selectedIndex].value;
-		end.value = fm.e_year.options[fm.e_year.selectedIndex].value + "-"
-				+ fm.e_month.options[fm.e_month.selectedIndex].value + "-"
-				+ fm.e_date.options[fm.e_date.selectedIndex].value;
-	}
-
-	function selectD(t) {
-		var oms = document.getElementById("monthselect");
-		var nms = document.getElementById("monthselect2")
-		var om = parseInt(oms.options[oms.selectedIndex].value);
-		var nm = parseInt(nms.options[nms.selectedIndex].value);
-
-		var ods = document.getElementById("dayselect");
-		var od = parseInt(ods.options[ods.selectedIndex].value);
-		var nd = parseInt(t.options[t.selectedIndex].value);
-
-		if (om == nm && od > nd) {
-			window.alert('판매 시작 일 이후 숫자를 선택해주세요.');
-			t.options[ods.selectedIndex + 1].selected = true;
-		}
-
-		var fm = document.makeSellfm;
-		var start = document.makeSellfm.s_start;
-		var end = document.makeSellfm.s_end;
-
-		start.value = fm.s_year.options[fm.s_year.selectedIndex].value + "-"
-				+ fm.s_month.options[fm.s_month.selectedIndex].value + "-"
-				+ fm.s_date.options[fm.s_date.selectedIndex].value;
-		end.value = fm.e_year.options[fm.e_year.selectedIndex].value + "-"
-				+ fm.e_month.options[fm.e_month.selectedIndex].value + "-"
-				+ fm.e_date.options[fm.e_date.selectedIndex].value;
-
-	}
-
-	function sellterm() {
-		var fm = document.makeSellfm;
-		var start = document.makeSellfm.s_start;
-		var end = document.makeSellfm.s_end;
-
-		start.value = fm.s_year.options[fm.s_year.selectedIndex].value + "-"
-				+ fm.s_month.options[fm.s_month.selectedIndex].value + "-"
-				+ fm.s_date.options[fm.s_date.selectedIndex].value;
-		end.value = fm.e_year.options[fm.e_year.selectedIndex].value + "-"
-				+ fm.e_month.options[fm.e_month.selectedIndex].value + "-"
-				+ fm.e_date.options[fm.e_date.selectedIndex].value;
-	}
-
-	function tradeTime() {
-		var fm = document.makeSellfm;
-
-		var vapT = fm.apT.options[fm.apT.selectedIndex].value;
-		var vwhenT = parseInt(fm.whenT.options[fm.whenT.selectedIndex].value);
-		var vapT2 = fm.apT2.options[fm.apT2.selectedIndex].value;
-		var vwhenT2 = parseInt(fm.whenT2.options[fm.whenT2.selectedIndex].value);
-		console.log(vwhenT + "/" + vwhenT2);
-		if (vapT == vapT2) {
-			if (vwhenT > vwhenT2) {
-
-				window.alert('이후 시간을 선택해주세요.');
-				fm.whenT2.options[fm.whenT.selectedIndex + 1].selected = "true";
-			}
-		} else if (vapT == "오후" && vapT2 == "오전") {
-			window.alert('마감 시간이 시작 시간보다 늦습니다.');
-			fm.apT2.options[fm.apT.selectedIndex].selected = "true";
-		}
-
-		fm.s_trade.value = fm.whereT.options[fm.whereT.selectedIndex].value
-				+ "," + fm.apT.options[fm.apT.selectedIndex].value + ","
-				+ fm.whenT.options[fm.whenT.selectedIndex].value + ","
-				+ fm.apT2.options[fm.apT2.selectedIndex].value + ","
-				+ fm.whenT2.options[fm.whenT2.selectedIndex].value;
-	}
-
-	function tradeway() {
-		var delivery = document.makeSellfm.delivery;
-		var s_type = document.makeSellfm.s_type;
-		
-		if (delivery[0].checked == true && delivery[1].checked == true) {
-			s_type.value="3";
-		} else if (delivery[0].checked == true && delivery[1].checked == false) {
-			s_type.value="1";
-		} else if (delivery[0].checked == false && delivery[1].checked == true) {
-			s_type.value="2";
-		} else {
-			s_type.value="0";
-		}
-	}
-	
-	function TXTtyping() {
-		var content = document.makeSellfm.s_content;
-		var txt = document.getElementById("txt");
-		content.value=txt.innerHTML;
-	}
-</script>
+<%@ include file="scriptDetail.jsp" %>
 </head>
 <body>
 	<section>
 		<h2>게시글 작성</h2>
 
 		<form name="makeSellfm" action="makeSell_ok.jsp">
-		<input type="hidden" name="s_idx" value="<%=s_idx %>">
-		<input type="hidden" name="m_nick" value="인뿌삐">
+			<input type="hidden" name="s_idx" value="<%=s_idx%>"> <input
+				type="hidden" name="m_nick" value="인뿌삐">
 			<article>
 				<ul>
 					<li>섬네일 <img src="../img/img1.jpg" class="selectimg"></li>
@@ -664,8 +293,8 @@ ul {
 								}
 								%>
 							</select>
-						</div> <input type="text" name="s_start" id="s_start"
-						value="<%=y + "-" + ms + "-" + ds%>"> <input type="text"
+						</div> <input type="hidden" name="s_start" id="s_start"
+						value="<%=y + "-" + ms + "-" + ds%>"> <input type="hidden"
 						name="s_end" id="s_end"
 						value="<%=(y + 99) + "-" + ms + "-" + ds%>">
 					</li>
@@ -673,18 +302,7 @@ ul {
 						<div class="fbox fcenter">
 							해시태그
 							<div class="kwbox fbox" onclick="clickBox()">
-								<div class="fbox" id="kw">
-									<div class="fbox kwbtn">
-										<span class="kword">#키워드</span> <span
-											class="material-symbols-outlined kwicon"
-											onclick="deletekw(this)">close</span>
-									</div>
-									<div class="fbox kwbtn">
-										<span class="kword">#팬시</span> <span
-											class="material-symbols-outlined kwicon"
-											onclick="deletekw(this)">close</span>
-									</div>
-								</div>
+								<div class="fbox" id="kw"></div>
 								<div class="kweditbox" id="kweditbox" contenteditable="true"
 									onkeypress="EnterforInput(event)"></div>
 							</div>
@@ -699,19 +317,20 @@ ul {
 								<li><input type="button" value="#c"
 									onclick="keySelect(this.value)"></li>
 							</ul>
-						</div> <input type="text" name="s_hash" value="#키워드#팬시">
+						</div> <input type="hidden" name="s_hash" value="">
 					</li>
 					<li>
 						<article id="optsbox">
 							옵션 등록 <input type="button" value="옵션 추가" onclick="addOpt()">
-							<div class="fbox optbox"
-								style="justify-content: space-between; border: 1px solid gray;">
+							<div class="fbox optbox">
 								<div class="fbox">
 									<img src="../img/img1.jpg" class="selectimg">
 									<div>
 										<ul>
-											<li>이름 <input type="text" name="sg_name"></li>
-											<li>가격 <input type="text" name="sg_price">원
+											<li>이름 <input type="text" name="sg_name" id="op_sg_name1"
+												onchange="getoptInfo(this)"></li>
+											<li>가격 <input type="text" name="sg_price" id="op_sg_price1"
+												onchange="getoptInfo(this)">원
 											</li>
 											<li>
 												<ul class="fbox">
@@ -764,10 +383,10 @@ ul {
 											</select>시부터
 										</ul>
 										<ul>
-											<li><select name="apT2" onchange="tradeTime()">
+											<li><select name="apT2" oninput="tradeTime()">
 													<option value="오전">오전</option>
 													<option value="오후">오후</option>
-											</select><select name="whenT2" onchange="tradeTime()">
+											</select><select name="whenT2" oninput="tradeTime()">
 													<%
 													for (int i = 1; i <= 12; i++) {
 													%>
@@ -778,7 +397,7 @@ ul {
 											</select>시까지
 										</ul>
 									</div>
-									<input type="text" name="s_trade" id="s_trade" value="">
+									<input type="hidden" name="s_trade" id="s_trade" value="">
 								</div>
 							</div>
 						</div>
@@ -788,35 +407,29 @@ ul {
 							<li><input type="checkbox" name="addsale"
 								onclick="addSale()">할인 기능
 								<div id="salebox" style="display: none;" class="bordbox">
-									<input type="checkbox" name="allSale" onclick="selectThem()">전체
-									선택
-									<ul>
-										<li><div class="bordbox">
-												<ul class="fbox fcenter">
-													<li><input type="checkbox" name="sg_discnt" value="1"></li>
-													<li>이름</li>
-													<li>가격</li>
-												</ul>
-											</div></li>
-										<li><div class="bordbox">
-												<ul class="fbox fcenter">
-													<li><input type="checkbox" name="sg_discnt" value="2"></li>
-													<li>이름</li>
-													<li>가격</li>
-												</ul>
-											</div></li>
+									<input type="checkbox" name="allSale" onclick="selectThem()">전체 선택
+									<ul id ="dislist">
 										<li>
-											<div>
-												할인률 <select name="s_discnt">
-													<option value="10">10%</option>
-													<option value="20">20%</option>
-													<option value="30">30%</option>
-													<option value="40">40%</option>
-													<option value="50">50%</option>
-												</select>
+											<div class="bordbox">
+												<ul class="fbox fcenter">
+													<li><input type="checkbox" name="sg_discnt" value="1" onclick="selectIt(this)"></li>
+													<li name="op_sg_name1"></li>
+													<li name="op_sg_price1"></li>
+												</ul>
 											</div>
 										</li>
 									</ul>
+									<div>
+										할인률 <select name="s_discnt">
+											<option value="10">10%</option>
+											<option value="20">20%</option>
+											<option value="30">30%</option>
+											<option value="40">40%</option>
+											<option value="50">50%</option>
+										</select>
+									</div>
+
+
 								</div></li>
 						</ul>
 					</li>

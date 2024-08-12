@@ -30,72 +30,85 @@
 <meta charset="UTF-8">
 <title>관리자 페이지</title>
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        display: flex;
-    }
-    #manageNavbar {
-        width: 200px;
-        height: auto;
-        background-color: #212121;
-        color: white;
-        padding: 10px;
-    }
-    #manageNavbar a{
-    	text-decoration: none;
-    	color:white;
-    }
-    #manageArea {
-        flex: 1;
-        padding: 10px;
-        background-color: #f4f4f4;
-    }
-    .element {
-        margin-bottom: 10px;
-    }
-    #manageimg {
+	body {
+		margin: 0;
+		padding: 0;
+		display: flex;
+	}
+	
+	#manageNavbar {
+		width: 200px;
+		height: auto;
+		background-color: #212121;
+		color: white;
+		padding: 10px;
+	}
+	
+	#manageNavbar a {
+		text-decoration: none;
+		color: white;
+	}
+	
+	#manageArea {
+		flex: 1;
+		padding: 10px;
+		background-color: #f4f4f4;
+	}
+	
+	.element {
+		margin-bottom: 10px;
+	}
+	
+	#manageimg {
 		height: 150px;
-	    width: 150px;
-	    border-radius: 50px;
-	    background-color: #4f4f4f;
-	    text-align: center;
-	    padding: 10px;
-    }
-    .pfimg {
+		width: 150px;
+		border-radius: 50px;
+		background-color: #4f4f4f;
+		text-align: center;
+		padding: 10px;
+	}
+	
+	.pfimg {
 		height: 100px;
 		width: 100px;
 		border-radius: 50px;
 		object-fit: cover;
 		border-top: 5px;
 		margin-top: 10px;
-    }
-    li {
-        list-style: none;
-    }
-    #manageTop ul {
-        padding: 0;
-    }
-    #manageTop li {
-        margin-bottom: 5px;
-    }
-    #manageTop a {
-        text-decoration: none;
-        color: black;
-    }
-    #manageTop a.active {
-        font-weight: bold;
-    }
-    iframe {
-        width: 100%;
-        height: calc(100vh - 20px);
-        border: none;
-    }
-    #managerExplane{
+	}
+	
+	li {
+		list-style: none;
+	}
+	
+	#manageTop ul {
+		padding: 0;
+	}
+	
+	#manageTop li {
+		margin-bottom: 5px;
+	}
+	
+	#manageTop a {
+		text-decoration: none;
+		color: black;
+	}
+	
+	#manageTop a.active {
+		font-weight: bold;
+	}
+	
+	iframe {
+		width: 100%;
+		height: calc(100vh - 20px);
+		border: none;
+	}
+	
+	#managerExplane {
 		text-align: center;
 		margin-top: 10px;
 		color: #FAFAFA;
-    }
+	}
 </style>
 </head>
 <body id = "body">
