@@ -20,7 +20,7 @@ public class BestsellerDAO {
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 
-			String sql = "select * from test_goods_b where tg_seller=? order by tg_jjim desc";
+			String sql = "SELECT * FROM ( SELECT * FROM s_goods WHERE tg_seller =? ORDER BY tg_jjim DESC) WHERE ROWNUM <= 4";
 
 			ps = con.prepareStatement(sql);
 

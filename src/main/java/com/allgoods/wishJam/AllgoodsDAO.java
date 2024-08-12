@@ -12,24 +12,30 @@ public class AllgoodsDAO {
 
 	}
 
-	public List<AllgoodsDTO> allGoods() {
+	public List<AllgoodsDTO> allGoods(String sortOrder) {
 
 		List<AllgoodsDTO> products = new ArrayList<>();
-
+		String sql;
+		
 		try {
-			
 			con = com.db.wishJam.DbConn.getConn();
-			String sql = "select * from test_goods_b";
-			ps = con.prepareStatement(sql);
+			
+			if("latest".equals(sortOrder)) {
+			sql = "select sell.m_nick,sell.s_title,sell.s_jjim,s_goods.sg_main,sell.s_img from sell join s_goods on sell.s_idx = s_goods.s_idx order by s_jjim desc";
+			}else {
+				sql = "select sell.m_nick,sell.s_title,sell.s_jjim,s_goods.sg_main,sell.s_img,sell.s_start from sell join s_goods on sell.s_idx = s_goods.s_idx order by sell.s_start desc";
+			}
+				
+		    ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				int idx = rs.getInt("tg_idx");
-				String name = rs.getString("tg_name");
-				int price = rs.getInt("tg_price");
-				String seller = rs.getString("tg_seller");
-				String thumbnail_url = rs.getString("thumbnail_url");
-				products.add(new AllgoodsDTO(idx, name, price, seller, thumbnail_url));
+				String seller= rs.getString("m_nick");
+				String name = rs.getString("s_title");
+				int jjim = rs.getInt("s_jjim");
+				int price = rs.getInt("sg_main");
+				String thumbnail_url = rs.getString("s_img");
+				products.add(new AllgoodsDTO(jjim, name, price, seller, thumbnail_url));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

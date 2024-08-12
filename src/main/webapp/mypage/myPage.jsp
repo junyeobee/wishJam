@@ -8,7 +8,7 @@
 <jsp:useBean id="mdao" class="com.mypage.wishJam.MypageDAO"></jsp:useBean>
 <%
 //아이디 세션 받기
-String id = "sunny02";
+String id = "user1_id";
 
 session.setAttribute("userId", id);
 System.out.println(id);
@@ -45,7 +45,7 @@ System.out.println(imgSrc);
 section {
 	width: 940px;
 	margin: 0 auto;
-	font-family: 'Pretendard-Regular';
+	font-family: 'Cafe24Ohsquare';
 }
 
 #mypage_section1 {
@@ -137,6 +137,17 @@ section {
 	font-size: 18px;
 	margin-top: 10%;
 }
+
+.edit{
+cursor : pointer;
+width:8em;
+height:30px;
+border: 1px solid lightgray;
+border-radius: 20px;
+font-size:13px;
+color: gray;
+line-height : 30px;
+}
 </style>
 </head>
 <body>
@@ -151,19 +162,20 @@ section {
 				<div class="profileimg">
 					<img src="<%=imgSrc%>">
 				</div>
-				<% if(id!=null){
-					mdto= mdao.memberGet(id);
+				<%
+				if (id != null) {
+					mdto = mdao.memberGet(id);
+				%>
 
-					%>
-			
-				<div class="profile_item nickname"><%=mdto.getM_nick() %></div>
-				
-				
-			<% 
-			System.out.println(mdto.getM_nick());
-				}%>
+				<div class="profile_item nickname"><%=mdto.getM_nick()%></div>
+
+
+				<%
+				System.out.println(mdto.getM_nick());
+				}
+				%>
 				<div class="profile_item edit"
-					onclick="location.href='/wishJam/mypage/mypageEdit.jsp'">정보수정하기</div>
+					onclick="location.href='/wishJam/mypage/mypageEdit.jsp'">수정하기  ></div>
 
 			</div>
 
@@ -171,7 +183,8 @@ section {
 
 
 		<article id="mypage_section2">
-			<div class="introduce">소개글을 작성해주세요 !</div>
+			<div class="introduce"><%=mdto.getProfile() %></div>
+			
 
 		</article>
 
@@ -185,6 +198,11 @@ section {
 				List<MypageDTO> buylist = mdao.buyList();
 
 				for (MypageDTO goods : buylist) {
+					
+					if(goods ==null){
+						
+						%> <p>판매 내역이 없습니다.<p> <%
+					}else{
 				%>
 				<div class="item">
 					<div class="img"
@@ -198,7 +216,7 @@ section {
 					</div>
 				</div>
 				<%
-				}
+				} }
 				%>
 			</div>
 		</article>
