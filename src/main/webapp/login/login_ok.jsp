@@ -1,12 +1,61 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="javax.servlet.http.Cookie" %>
+<jsp:useBean id="mdao" class="com.member.wishJam.MemberDAO"></jsp:useBean>
+<%
+   String userid = request.getParameter("user_id");
+   String userpwd = request.getParameter("user_pwd");
 
-</body>
-</html>
+   boolean keepLogIn = request.getParameter("keepLogIn") != null; 
+   
+   int result = mdao.loginCheck(userid, userpwd);
+   
+   if(result==mdao.LOGIN_OK){
+      String username = mdao.getUserInfo(userid);
+      session.setAttribute("sid", userid);
+      session.setAttribute("sname", username);
+      
+      if (keepLogIn) {
+          session.setMaxInactiveInterval(7 * 24 * 60 * 60);
+      } else {
+          session.setMaxInactiveInterval(30 * 60); 
+      }
+
+      if (keepLogIn) {
+          Cookie userCookie = new Cookie("user_id", userid);
+          userCookie.setMaxAge(7 * 24 * 60 * 60); 
+          response.addCookie(userCookie);
+      } else {
+          Cookie userCookie = new Cookie("user_id", "");
+          userCookie.setMaxAge(0);
+          response.addCookie(userCookie);
+      }
+      %>
+      <script>
+         window.alert('<%=username%>님 환영합니다!');
+         location.href='../index.jsp';
+         window.self.close();
+      </script>
+      <%
+   } else if(result==mdao.NOT_ID){
+      %>
+          <script>
+             window.alert('잘못된 아이디 및 비밀번호입니다.');
+             location.href='login.jsp';
+          </script> 
+      <%
+   } else if(result==mdao.NOT_PWD){
+      %>
+	      <script>
+	         window.alert('잘못된 아이디 및 비밀번호입니다.');
+	         location.href='login.jsp';
+	      </script> 
+      <%
+   } else{
+      %>
+       	  <script>
+	         window.alert('고객센터로 연락바랍니다.');
+	         location.href='login.jsp';
+	      </script> 
+      <%
+   }
+%>

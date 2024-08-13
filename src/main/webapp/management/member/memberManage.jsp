@@ -68,48 +68,47 @@
 							<td><%=dto.getM_email() %></td>
 							<td><%=dto.getM_point() %></td>
 						</tr>
-					<%
+				<%
 					}
 				}else {
-					%>
+				%>
 						<tr>
 							<td colspan="10">없음</td>
 						</tr>
-					<%
+			<%
 				}
 			%>
 		</tbody>
 	</table>
 	<div class="pagination">
-<div class="pagination-controls">
-<%
-	if(usrgroup != 0) {
-		%><button class="pagination-btn" onclick="navigateTo('<%=(usrgroup-1)*pagesize+pagesize %>')">Prev</button><%
-	}
-%>
-
-<%
-	for(int i = usrgroup*pagesize+1; i<=usrgroup*pagesize+pagesize; i++){
-		%>
-		&nbsp;<button class="pagination-btn" onclick="navigateTo('<%=i%>')"><%=i%></button>&nbsp;
-		<%
-		if(i==totalpage){
-			break;
-		}
-	}
-%>
-<%
-	if(usrgroup != (totalpage/pagesize-(totalpage%pagesize==0?1:0))) {
-		%><button class="pagination-btn" onclick="navigateTo('<%=(usrgroup+1)*pagesize+1%>')">Next</button><%
-	}
-
-%>
+		<div class="pagination-controls">
+			<%
+				if(usrgroup != 0) {
+					%><button class="pagination-btn" onclick="navigateTo('<%=(usrgroup-1)*pagesize+pagesize %>')">Prev</button><%
+				}
+			%>
+			
+			<%
+				for(int i = usrgroup*pagesize+1; i<=usrgroup*pagesize+pagesize; i++){
+					%>
+					&nbsp;<button class="pagination-btn" onclick="navigateTo('<%=i%>')"><%=i%></button>&nbsp;
+					<%
+					if(i==totalpage){
+						break;
+					}
+				}
+			%>
+			<%
+				if(usrgroup != (totalpage/pagesize-(totalpage%pagesize==0?1:0))) {
+					%><button class="pagination-btn" onclick="navigateTo('<%=(usrgroup+1)*pagesize+1%>')">Next</button><%
+				}
+			
+			%>
+		</div>
+	</div>
 </div>
-</div>
-</div>
-
- 	<script>
+ <script>
 	function navigateTo(page) {
 	    window.location.href = 'memberManage.jsp?cp=' + page;
 	}
-	</script>
+</script>
