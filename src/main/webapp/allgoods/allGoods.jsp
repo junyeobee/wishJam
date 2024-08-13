@@ -2,8 +2,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.allgoods.wishJam.AllgoodsDTO"%>
-<jsp:useBean id="gdao" class="com.allgoods.wishJam.AllgoodsDAO"></jsp:useBean>
+<jsp:useBean id="dao" class="com.allgoods.wishJam.AllgoodsDAO"></jsp:useBean>
+<%
 
+String id= "sunny02";
+session.setAttribute("userId", id);
+
+
+	String cp_s = request.getParameter("cp");
+	if(cp_s==null||cp_s.equals("")){
+		cp_s="1";
+	}
+	int cp = Integer.parseInt(cp_s);
+	
+	//총 게시물수
+	int totalcnt = dao.getTotalcnt();
+	//한번에 보여줄 리스트 수
+	int listsize = 10;
+	//페이지수
+	int pagesize = 5;
+	
+	//사용자 현재위치
+	//int cp=1;
+	
+	int totalpage = (totalcnt/listsize)+1;
+	if(totalcnt%listsize == 0)totalpage--;
+	
+	int usrgroup=cp/pagesize;
+	if(cp%pagesize==0)usrgroup--;
+	
+%>
 
 
 <!DOCTYPE html>
@@ -20,7 +48,6 @@ section {
   font-family: 'Cafe24Ohsquareair';
 	width: 960px;
 	height: 2000px;
-	border: 1px solid black;
 	margin: 0 auto;
 }
 
@@ -32,7 +59,6 @@ section {
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
-	border: 2px solid red;
 	padding-top: 30px;
 	gap: 1.2rem !important;
 	row-gap: 1.2rem !important;
@@ -41,15 +67,14 @@ section {
 .item {
 	width: 223px;
 	height: 380px;
-	border: 1px solid blue;
 	position: relative;
 	border-radius: 20px;
+	border: 1px solid gray;
 }
 
 .inner {
 	width: 100%;
 	height: 140px;
-	border: 1px solid red;
 	position: absolute;
 	bottom: 0;
 }
@@ -79,13 +104,25 @@ section {
 	display: block;
 }
 
-.discount {
-	color: #FF4900;
-}
+
 
 .writer {
 	font-size: 14px;
 	color: #747474;
+}
+
+.pagination{
+width:14em;
+height:60px;
+border:1px solid red;
+margin:0 auto;
+margin-top:30px;
+font-size:13px;
+}
+
+.discount{
+display:inline;
+color:orange;
 }
 </style>
 
@@ -93,16 +130,25 @@ section {
 //찜하기 버튼
 function jjim(productId){
 
+	
 	var jjimbt=document.getElementById("jjimimg_"+productId);
 	var on = "heart.png";
 	var off = "heart_gray.png";
+
+		if(jjimbt.src.endsWith(off)){ 
+            
+			jjimbt.src="/wishJam/img/"+on;
+
+			}else{
+				jjimbt.src="/wishJam/img/"+off;
+			}
+	
+	
 	
 
-if(jjimbt.src.endsWith(off)){
-jjimbt.src="/wishJam/img/"+on;
-}else{
-	jjimbt.src="/wishJam/img/"+off;
-}
+
+
+
 
 }
 
@@ -134,7 +180,7 @@ function updateSortOrder() {
 		  
 		  System.out.println(sortOrder);	
 		  
-		  List<AllgoodsDTO> productList = gdao.allGoods(sortOrder);
+		  List<AllgoodsDTO> productList = dao.allGoods(sortOrder);
 		  
 		  
     if (productList == null || productList.isEmpty()) {
@@ -143,14 +189,23 @@ function updateSortOrder() {
         for (AllgoodsDTO products : productList) {
 
 			%>
-			<div class="item ">
+			<div class="item">
 				<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
 					<img src="<%=products.getThumbnail_url()%>" alt="썸네일">
 				</div>
 				<div class="inner">
 					<div class="writer"><%=products.getSeller()%></div>
 					<div><%=products.getName()%></div>
-					<div><%=products.getPrice()%></div>
+					<div>
+					<% 
+					int dis=products.getDiscount();
+					
+					if(dis>0){
+						
+					  %><span class="discount"><%=dis +"%"%></span> <%
+					}else{ }%>
+					<%= products.getPrice()%></div>
+					
 					<span class="heart" onclick="jjim(<%=products.getIdx()%>);"><img src="/wishJam/img/heart_gray.png" id="jjimimg_<%=products.getIdx()%>"></span>
 				</div>
 
@@ -161,6 +216,34 @@ function updateSortOrder() {
     }
 			%>
 		</div>
+			 <div class="pagination">
+        	<span>Showing <%=(totalcnt/listsize)>=cp?cp*listsize:totalcnt %> to <%=totalcnt %> of <%=cp %> entries</span>
+			<div class="pagination-controls">
+			    <%
+			        if(usrgroup != 0) {
+			            %><button class="pagination-btn" onclick="navigateTo('<%=(usrgroup-1)*pagesize+pagesize %>')">Prev</button><%
+			        }
+			    %>
+			    
+			    <%
+			        for(int i = usrgroup*pagesize+1; i<=usrgroup*pagesize+pagesize; i++){
+			            %>
+			            &nbsp;<button class="pagination-btn" onclick="navigateTo('<%=i%>')"><%=i%></button>&nbsp;
+			            <%
+			            if(i==totalpage){
+			                break;
+			            }
+			        }
+			    %>
+			    <%
+			        if(usrgroup != (totalpage/pagesize-(totalpage%pagesize==0?1:0))) {
+			            %><button class="pagination-btn" onclick="navigateTo('<%=(usrgroup+1)*pagesize+1%>')">Next</button><%
+			        }
+			    %>
+			</div>
+    	</div>
 	</section>
+	
+
 </body>
 </html>

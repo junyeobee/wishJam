@@ -14,7 +14,7 @@ public class MypageDTO {
     private int price;
     private String seller;
     private String thumbnail_url;
-    
+    private int discount;
     
     //member mypage
 	private int m_idx;
@@ -35,6 +35,14 @@ public class MypageDTO {
 	
 	
 	
+	public int getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
+
 	public String getProfile() {
 		return profile;
 	}

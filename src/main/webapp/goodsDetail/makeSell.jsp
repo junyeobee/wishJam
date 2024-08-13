@@ -150,7 +150,8 @@ ul {
 }
 
 #colorWindow {
-	position: fixed;
+	position: absolute;
+	z-index:10;
 	margin-left: 25px;
 	width: 280px;
 	height: 200px;
@@ -247,28 +248,6 @@ ul {
 										onclick="styleSelected(this.value)"></li>
 									<li>
 										<div id="colorWindow">
-											<%-- <div class="colorPalette fbox">
-												<%
-												String colors[] = new String[16];
-												String colorP = "black,#9E9E9E,white,#FF3A3D,#FF771D,#FFE63E,#B3E31D,#4A9436,#54CEFF,#0053F5,#9656FA,#FA8EDC";
-												colors = colorP.split(",");
-												String colorname[] = new String[16];
-												String colorN = "black, gray, white, red, orange, yellow, green, dark green, skyblue, blue, purple, pink";
-												colorname = colorN.split(",");
-												%>
-												<ul>
-													<%
-													for (int i = 0; i < colors.length; i++) {
-													%>
-													<li>
-														<div class="colorsqr" id="<%=colorname[i]%>"
-															style="background-color:<%=colors[i]%>;"></div>
-													</li>
-													<%
-													}
-													%>
-												</ul>
-											</div> --%>
 											<div class="fbox">
 												<%
 												int colorr[] = { 255, 255, 255, 200, 50, 125, 0, 150, 255, 60 };
@@ -288,7 +267,7 @@ ul {
 													for (int i = 2; i > 0; i--) {
 													%>
 													<li><div class="psqr"
-															style="background-color: <%=cdao.colortoHex(colorr[j] - i * colord1[j], colorg[j]-i * colord2[j], colorb[j]-i * colord3[j])%>;"></div></li>
+															style="background-color: <%=cdao.colortoHex(colorr[j] - i * colord1[j], colorg[j]-i * colord2[j], colorb[j]-i * colord3[j])%>;" onclick="pickColor(this)"></div></li>
 													<%
 													}
 													%>
@@ -296,7 +275,7 @@ ul {
 													for (int i = 0; i < 5; i++) {
 													%>
 													<li><div class="psqr"
-															style="background-color: <%=cdao.colortoHex(colorr[j]+i * colorl1[j], colorg[j] + i * colorl2[j], colorb[j] + i * colorl3[j])%>;"></div></li>
+															style="background-color: <%=cdao.colortoHex(colorr[j]+i * colorl1[j], colorg[j] + i * colorl2[j], colorb[j] + i * colorl3[j])%>;" onclick="pickColor(this)"></div></li>
 													<%
 													}
 													%>
@@ -320,6 +299,7 @@ ul {
 
 							</div>
 							<input type="text" name="s_content" value="">
+							
 						</div>
 					</li>
 					<li>
