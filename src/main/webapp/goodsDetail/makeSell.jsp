@@ -149,58 +149,39 @@ ul {
 	padding: 5px;
 }
 
-#colorWindow {
+#cw1 {
 	position: absolute;
-	z-index:10;
+	z-index: 10;
 	margin-left: 25px;
 	width: 280px;
 	height: 200px;
 	border-radius: 5px;
 	border: 1px solid gray;
 	background-color: white;
+	margin-left: 25px
 }
 
-/* #colorWindow ul {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+#cw2 {
+	position: absolute;
+	z-index: 10;
+	margin-left: 25px;
+	width: 280px;
+	height: 200px;
+	border-radius: 5px;
+	border: 1px solid gray;
+	background-color: white;
+	margin-left: 25px
 }
 
-#colorWindow li {
-	width: 50px;
-	height: 50px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-} */
-#colorWindow li {
-	margin: 3px;
-}
-/* 
-.colorPalette {
-	width: 250px;
-	height: 180px;
-	margin: 0px auto;
+.colorWindow li {
+	margin: 3px 2px;
 }
 
-.colorsqr {
-	width: 35px;
-	height: 35px;
-	border-radius: 20px;
-	align: center;
-}
-
-.colorsqr:hover {
-	transform: scale(1.03, 1.03);
-	box-shadow: 0 0 10px black;
-	border-radius: 3px;
-	cursor: pointer;
-	border-radius: 20px;
-} */
 .psqr {
-	width: 25px;
-	height: 25px;
+	width: 23px;
+	height: 23px;
 	border-radius: 3px;
+	border: 0px solid white;
 }
 
 .psqr:hover {
@@ -208,6 +189,7 @@ ul {
 	transform: scale(1.04, 1.04);
 }
 </style>
+
 <%@ include file="scriptDetail.jsp"%>
 </head>
 <body>
@@ -246,47 +228,82 @@ ul {
 										onclick="styleSelected(this.value)"></li>
 									<li><input type="button" value="UL"
 										onclick="styleSelected(this.value)"></li>
-									<li>
-										<div id="colorWindow">
+									<li><input type="button" value="C"
+										onclick="openColorpicker(this.value)">
+									<div id="cw1" style="display: none;">
 											<div class="fbox">
 												<%
 												int colorr[] = { 255, 255, 255, 200, 50, 125, 0, 150, 255, 60 };
-												int colorg[] = { 20, 125, 240, 255, 200, 255, 50, 30, 100, 60};
-												int colorb[] = { 20, 0, 0, 0, 0, 255, 255, 255, 200, 60};
-												int colorl1[] = {0,0,0,10,30,25,50,25,0,48};
-												int colorl2[] = {50,25,0,0,13,0,50,45,30,48};
-												int colorl3[] ={50,50,50,50,45,0,0,0,5,48};
-												int colord1[] = {70,50,50,50,20,30,0,40,20,30};
-												int colord2[] = {10,25,50,50,70,60,10,5,40,30};
-												int colord3[] = {10,0,0,0,0,40,60,60,50,30};
-												
-												for(int j=0; j<colord1.length;j++){
+												int colorg[] = { 20, 125, 240, 255, 200, 255, 50, 30, 100, 60 };
+												int colorb[] = { 20, 0, 0, 0, 0, 255, 255, 255, 200, 60 };
+												int colorl1[] = { 0, 0, 0, 10, 40, 25, 50, 25, 0, 48 };
+												int colorl2[] = { 50, 25, 0, 0, 13, 0, 50, 45, 30, 48 };
+												int colorl3[] = { 50, 50, 50, 50, 45, 0, 0, 0, 5, 48 };
+												int colord1[] = { 70, 50, 50, 50, 20, 30, 0, 40, 20, 30 };
+												int colord2[] = { 10, 25, 50, 50, 70, 60, 10, 5, 40, 30 };
+												int colord3[] = { 10, 0, 0, 0, 0, 40, 60, 60, 50, 30 };
+
+												for (int j = 0; j < colord1.length; j++) {
 												%>
 												<ul>
 													<%
 													for (int i = 2; i > 0; i--) {
 													%>
-													<li><div class="psqr"
-															style="background-color: <%=cdao.colortoHex(colorr[j] - i * colord1[j], colorg[j]-i * colord2[j], colorb[j]-i * colord3[j])%>;" onclick="pickColor(this)"></div></li>
+													<li><input type="button" class="psqr"
+														style="background-color: <%=cdao.colortoHex(colorr[j] - i * colord1[j], colorg[j] - i * colord2[j], colorb[j] - i * colord3[j])%>;"
+														onclick="pickColorforC(this)"></li>
 													<%
 													}
 													%>
 													<%
 													for (int i = 0; i < 5; i++) {
 													%>
-													<li><div class="psqr"
-															style="background-color: <%=cdao.colortoHex(colorr[j]+i * colorl1[j], colorg[j] + i * colorl2[j], colorb[j] + i * colorl3[j])%>;" onclick="pickColor(this)"></div></li>
+													<li><input type="button" class="psqr"
+														style="background-color: <%=cdao.colortoHex(colorr[j] + i * colorl1[j], colorg[j] + i * colorl2[j], colorb[j] + i * colorl3[j])%>;"
+														onclick="pickColorforC(this)"></li>
 													<%
 													}
 													%>
+
 												</ul>
-												<%} %>
+												<%
+												}
+												%>
 											</div>
-										</div> <input type="button" value="C"
-										onclick="styleSelected(this.value)">
-									</li>
+										</div></li>
 									<li><input type="button" value="BC"
-										onclick="styleSelected(this.value)"></li>
+										onclick="openColorpicker(this.value)">
+									<div id="cw2" style="display: none;">
+											<div class="fbox">
+												<%
+												for (int j = 0; j < colord1.length; j++) {
+												%>
+												<ul>
+													<%
+													for (int i = 2; i > 0; i--) {
+													%>
+													<li><input type="button" class="psqr"
+														style="background-color: <%=cdao.colortoHex(colorr[j] - i * colord1[j], colorg[j] - i * colord2[j], colorb[j] - i * colord3[j])%>;"
+														onclick="pickColorforBC(this)"></li>
+													<%
+													}
+													%>
+													<%
+													for (int i = 0; i < 5; i++) {
+													%>
+													<li><input type="button" class="psqr"
+														style="background-color: <%=cdao.colortoHex(colorr[j] + i * colorl1[j], colorg[j] + i * colorl2[j], colorb[j] + i * colorl3[j])%>;"
+														onclick="pickColorforBC(this)"></li>
+													<%
+													}
+													%>
+
+												</ul>
+												<%
+												}
+												%>
+											</div>
+										</div></li>
 									<li><input type="button" value="이미지"
 										onclick="openImgpop(<%=s_idx%>,'<%=m_nick%>')"></li>
 								</ul>
@@ -299,7 +316,7 @@ ul {
 
 							</div>
 							<input type="text" name="s_content" value="">
-							
+
 						</div>
 					</li>
 					<li>

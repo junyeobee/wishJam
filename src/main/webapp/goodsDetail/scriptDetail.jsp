@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <script>
-
-var pickfc;
 	function addSale() {
 		var salebtn = document.makeSellfm.addsale;
 		var salebox = document.getElementById('salebox');
@@ -72,16 +70,31 @@ var pickfc;
 			var st = '<span><i>' + selected + '</i></span>';
 		} else if (v == 'UL') {
 			var st = '<span><u>' + selected + '</u></span>';
-		} else if (v == 'C') {
+		}
+		/* else if (v == 'C') {
 			var st = '<span style="color: '+pickfc+';">' + selected + '</span>';
 		} else if (v == 'BC') {
 			var st = '<span style="background-color: pink;">' + selected
 					+ '</span>';
-		}
+		} */
 
 		var ad = arr[0] + st + arr[1];
 
 		content.innerHTML = ad;
+	}
+
+	function openColorpicker(v) {
+		if (v == 'C') {
+			var picker = document.getElementById("cw1");
+		} else if (v == 'BC') {
+			var picker = document.getElementById("cw2");
+		}
+
+		if (picker.style.display == "none") {
+			picker.style.display = "block";
+		} else {
+			picker.style.display = "none";
+		}
 	}
 
 	function openImgpop(idx, nick) {
@@ -508,7 +521,10 @@ var pickfc;
 		document.getElementById("txt").focus();
 	}
 
-	function pickColor(t) {
+	function pickColorforC(t) {
+		var selected = document.getSelection().toString();
+		var s = document.getSelection();
+
 		var c = t.style.backgroundColor;
 		var rgb = c.replace(/[^%,.\d]/g, "").split(",");
 
@@ -523,7 +539,41 @@ var pickfc;
 			code += hex + "";
 		});
 
-		pickfc= "#"+code;
-	}
+		var content = document.getElementById("txt");
+		var arr = (content.innerHTML).split(selected);
 
+		var st = '<span style="color:#'+code+';">' + selected + '</span>';
+
+		var ad = arr[0] + st + arr[1];
+
+		content.innerHTML = ad;
+	}
+	
+	function pickColorforBC(t) {
+		var selected = document.getSelection().toString();
+		var s = document.getSelection();
+
+		var c = t.style.backgroundColor;
+		var rgb = c.replace(/[^%,.\d]/g, "").split(",");
+
+		var code = "";
+		rgb.forEach(function(str, hex) {
+			hex = parseInt(str).toString(16);
+
+			if (hex.length == 1) {
+				hex = "0" + hex;
+			}
+
+			code += hex + "";
+		});
+
+		var content = document.getElementById("txt");
+		var arr = (content.innerHTML).split(selected);
+
+		var st = '<span style="background-color:#'+code+';">' + selected + '</span>';
+
+		var ad = arr[0] + st + arr[1];
+
+		content.innerHTML = ad;
+	}
 </script>

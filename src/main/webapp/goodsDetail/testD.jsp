@@ -7,15 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	.co{
-		width: 300px;
-		height:300px;
-		background-color: #<%=cdao.colortoHex(200, 120, 9)%>;
+	input {
+		background-color: red;
 	}
 </style>
 </head>
 <body>
-	<input type="color">
-	<div class="co"></div>
+	<input type="button" value="df">
 </body>
 </html>
