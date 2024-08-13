@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<jsp:useBean id="mdao" class="com.cart.wishJam.CartDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,6 +41,10 @@
 	  position: relative;
 	  width: 300px;
 	  min-height: 942px;
+    }
+    
+    .cart_dtop{
+      font-family: 'Pretendard-Regular';
     }
     
     .detail_box{
@@ -192,10 +197,17 @@
       padding-top: 20px;
       position: sticky;
     }
+    
+    .ckdel_btn{
+      border: 1px solid #ff4900;
+      background: #fff;
+      color: #ff4900;
+      font-size: 15px;
+      font-family: 'Pretendard-Regular';
+    }
 </style>
 </head>
 <body>
-<!-- 품절상품 표시 -->
 <%@ include file="../header.jsp" %>
 <div class="cart_wrap">
 	<div class="cart_box">
@@ -204,11 +216,47 @@
 		<div class="cart_in_box">
 			<div class="cart_detail">
 				<div class="cart_dtop">
-					<input type="checkbox"><span>전체선택 |</span>
-					<button>선택삭제</button>
+					<input type="checkbox"><span style="padding-left: 5px;">전체선택 |</span>
+					<button class="ckdel_btn">선택삭제</button>
 				</div>
 				<hr>
 				<div class="cart_dbottom">
+					<div class="cart_detail">
+						<ul style="list-style-type: none;">
+							<!-- 이부분 반복 -->
+							<li class="detail_box">
+								<input type="checkbox" class="detail_btn">
+								<a href="../goodsDetail/detail.jsp" class="detail_img"><img src="../img/profile.png" style="width: 100px;height: 100px;"></a>
+								<div class="detail_alt">
+									<a href="../goodsDetail/detail.jsp" class="detail_alt" style="text-decoration: none;">
+										<span class="detail_info">상품명</span>
+										<!-- 부가상품설명 없으면 생성x -->
+										<span class="detail_altinfo">부가상품설명</span>
+									</a>
+									<input type="hidden" name="product" value="상품명">
+								</div>
+								<div class="detail_count">
+									<button class="count_css">-</button>
+									<div>1</div>
+									<input type="hidden" name="p_count" value="1">
+									<button class="count_css">+</button>
+								</div>
+								<div class="detail_cost"> 
+									<div class="detail_info">2,000원</div>
+									<input type="hidden" name="p_apay" value="2000">
+									<!-- 할인가격 없으면 생성x -->
+									<div class="detail_altcost">3,500원</div>
+									<input type="hidden" name="p_bpay" value="3500">
+								</div>
+								<button class="detail_del">x</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- 품절상품 -->
+				<div class="cart_dbottom" style="padding-top: 100px;">
+				<h4 style="color: #666;">품절 및 판매종료</h4>
+				<hr>
 					<div class="cart_detail">
 						<ul style="list-style-type: none;">
 							<!-- 이부분 반복 -->
