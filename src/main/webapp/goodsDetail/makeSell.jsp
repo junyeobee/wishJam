@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
-<jsp:useBean id = "idao" class="com.wishJam.detail.DetailImgDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="idao" class="com.wishJam.detail.DetailImgDAO"
+	scope="session"></jsp:useBean>
 
 <%
 int s_idx = Integer.parseInt(request.getParameter("s_idx"));
 String g_name = "Gadget";
-String imgsrc = idao.getHomePath()+idao.getEverypath()+"mapjpg.jpg";
-String m_nick="토마토";
+String imgsrc = idao.getHomePath() + idao.getEverypath() + "mapjpg.jpg";
+String m_nick = "토마토";
 %>
 <!DOCTYPE html>
 <html>
@@ -64,6 +65,7 @@ ul {
 	border: 1px solid gray;
 	padding: 15px;
 	min-height: 100px;
+	text-align: center;
 }
 
 .txtimg {
@@ -81,9 +83,8 @@ ul {
 
 .editor {
 	margin: 0 auto;
-	width: 600px;
+	width: 800px;
 }
-
 
 .optbox {
 	justify-content: space-between;
@@ -142,6 +143,47 @@ ul {
 .kweditbox:focus {
 	outline: 0;
 }
+
+.contentImg {
+	padding: 5px;
+}
+
+#colorWindow {
+	position: fixed;
+	margin-left: 25px;
+	width: 280px;
+	height: 190px;
+	border-radius: 5px;
+	border: 1px solid gray;
+	background-color: white;
+}
+
+#colorWindow table {
+	width: 250px;
+	height: 180px;
+	margin: 0px auto;
+	padding-top: 10px;
+}
+
+#colorWindow td {
+	border: 1px solid white;
+}
+
+#colorWindow td:hover {
+	border: 1px solid #E0E0E0;
+	box-shadow: 0 0 5px 2px #E0E0E0; 
+	border-radius: 3px;
+	cursor: pointer;
+	
+}
+
+.colorsqr {
+	width: 20px;
+	height: 20px;
+	border-radius: 1px;
+	margin-right: 20px;
+	margin-left: 10px;
+}
 </style>
 <%@ include file="scriptDetail.jsp"%>
 </head>
@@ -149,9 +191,9 @@ ul {
 	<section>
 		<h2>게시글 작성</h2>
 
-		<form name="makeSellfm" action="makeSell_ok.jsp" >
+		<form name="makeSellfm" action="makeSell_ok.jsp">
 			<input type="hidden" name="s_idx" value="<%=s_idx%>"> <input
-				type="hidden" name="m_nick" value="<%=m_nick %>">
+				type="hidden" name="m_nick" value="<%=m_nick%>">
 			<article>
 				<ul>
 					<li>섬네일 <img src="../img/img1.jpg" class="selectimg"></li>
@@ -165,7 +207,15 @@ ul {
 						<div class="editor">
 							<div>
 								<ul class="txtfunc">
-									<li><input type="button" value="FS"
+									<li><select id="f-size">
+											<%
+											for (int i = 8; i < 39; i++) {
+											%>
+											<option value="<%=i%>"><%=i%></option>
+											<%
+											}
+											%>
+									</select> <input type="button" value="FS"
 										onclick="styleSelected(this.value)"></li>
 									<li><input type="button" value="B"
 										onclick="styleSelected(this.value)"></li>
@@ -173,18 +223,62 @@ ul {
 										onclick="styleSelected(this.value)"></li>
 									<li><input type="button" value="UL"
 										onclick="styleSelected(this.value)"></li>
-									<li><input type="button" value="C"
-										onclick="styleSelected(this.value)"></li>
+									<li>
+										<div id="colorWindow">
+											<table>
+												<tr>
+													<td><div class="fbox">
+															<div class="colorsqr" style="background-color: #FF3A3D;"></div>
+															<span>빨강</span>
+														</div></td>
+													<td><div class="fbox">
+															<div class="colorsqr" style="background-color: #A74FF5;"></div>
+															<span>보라</span>
+														</div></td>
+												</tr>
+												<tr>
+													<td><div class="fbox">
+															<div class="colorsqr" style="background-color: #0063FF;"></div>
+															<span>파랑</span>
+														</div></td>
+													<td><div class="fbox">
+															<div class="colorsqr" style="background-color: #F088D0;"></div>
+															<span>분홍</span>
+														</div></td>
+												</tr>
+												<tr>
+													<td><div class="fbox">
+															<div class="colorsqr" style="background-color: #FFE63E;"></div>
+															<span>노랑</span>
+														</div></td>
+													<td><div class="fbox">
+															<div class="colorsqr" style="background-color: #4A9436;"></div>
+															<span>초록</span>
+														</div></td>
+												</tr>
+												<tr>
+													<td><div class="fbox">
+															<div class="colorsqr" style="background-color: black;"></div>
+															<span>검정</span>
+														</div></td>
+													<td><div class="fbox">
+															<div class="colorsqr" style="background-color: white; border: 1px solid #CFCFCF;"></div>
+															<span>하양</span>
+														</div></td>
+												</tr>
+											</table>
+										</div> <input type="button" value="C"
+										onclick="styleSelected(this.value)">
+									</li>
 									<li><input type="button" value="BC"
 										onclick="styleSelected(this.value)"></li>
-									<li>
-										<input type="button" value="이미지" onclick="openImgpop(<%=s_idx%>,<%=m_nick %>)">
-									</li>
+									<li><input type="button" value="이미지"
+										onclick="openImgpop(<%=s_idx%>,'<%=m_nick%>')"></li>
 								</ul>
 							</div>
-							<div class="editbox" onclick = "boxclick()">
+							<div class="editbox" onclick="boxclick()">
 								<div style="text-align: left; cursor: text;">
-									<span id="txt" contenteditable="true" oninput="TXTtyping()">
+									<span id="txt" contenteditable="true" onchange="TXTtyping()">
 									</span>
 								</div>
 
@@ -443,7 +537,7 @@ ul {
 					<tr>
 						<td><input type="reset" value="취소"></td>
 						<td><input type="submit" value="등록"></td>
-						</tr>
+					</tr>
 				</table>
 			</article>
 		</form>
