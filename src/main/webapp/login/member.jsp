@@ -206,6 +206,100 @@ function check_email() {
 	});
 }
 
+function endCheck_id() {
+    return new Promise((resolve, reject) => {
+        let formData = new URLSearchParams();
+        formData.append('m_id', document.getElementById("m_id").value);
+
+        fetch('idEndCheck_ok.jsp', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); 
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                resolve(); 
+            } else {
+                alert(data.message);
+                reject(new Error(data.message)); 
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            reject(error); 
+        });
+    });
+}
+
+function check_nick() {
+    return new Promise((resolve, reject) => {
+        let formData = new URLSearchParams();
+        formData.append('m_nick', document.getElementById("m_nick").value);
+
+        fetch('nickCheck_ok.jsp', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); 
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                resolve(); 
+            } else {
+                alert(data.message);
+                reject(new Error(data.message)); 
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            reject(error); 
+        });
+    });
+}
+
+
+function endCheck_email() {
+    return new Promise((resolve, reject) => {
+        let formData = new URLSearchParams();
+        formData.append('m_email', document.getElementById("m_email").value);
+
+        fetch('emailEndCheck_ok.jsp', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); 
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                resolve(); 
+            } else {
+                alert(data.message);
+                reject(new Error(data.message)); 
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            reject(error); 
+        });
+    });
+}
+
 let randomNumber;
 
 function send_tel() {
@@ -357,7 +451,6 @@ function send_ck() {
 			<div class="input_title">
 				<label>이용약관동의<span class="star_css">*</span></label>
 			</div>
-			<!-- 수정부분 -->
 			<div class="checkbox_group">
 				<div class="checkbox_top_line" style="color: blue;">
 			        <input type="checkbox" id="check_all" class="checkbox" onclick="noti_check();">
@@ -376,7 +469,6 @@ function send_ck() {
 			        <label for="check_3">개인정보 수집·이용 동의 (필수)</label>
 			    </div>
 		    </div>
-		    <!--  -->
 		</div>
 		<div style="margin:40px 275px 0px 275px;">
 			<button type="button" class="j_success" id="join_confirm">가입하기</button>
@@ -388,21 +480,18 @@ function send_ck() {
 </body>
 </html>
 <script>
-	// 아이디 정규식
 	function isId(ivalue) {
 		var regExp = /^[a-z][a-z0-9]{3,13}$/;
 		
 		return regExp.test(ivalue);
 	}
 	
-	// 비밀번호 정규식
 	function isPwd(pvalue) {
 		var regExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
 		
 		return regExp.test(pvalue);
 	}
 	
-	// 전화번호 정규식
 	function isPhoneNumber(pnValue) {
 		var cleanPhoneNumber = pnValue.replace(/-/g, '');
 		var regExp = /^01(?:0|1|[6-9])(?:\d{7}|\d{8})$/;
@@ -410,7 +499,6 @@ function send_ck() {
 		return regExp.test(cleanPhoneNumber);
 	}
 	
-	// 이메일 정규식
 	function isEmail(eValue) {
 		var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 	
@@ -446,54 +534,17 @@ function send_ck() {
 		} else if(!allck.checked){
 			window.alert("이용약관에 동의해주세요.");
 		} else {
-			/**이부분 수정: 아이디 & 이메일 중복체크 알람창 안뜨게하기*/
-			// ID와 이메일 체크를 수행하고 폼 제출 결정
-	        Promise.allSettled([check_id(), check_email()])
-            .then(results => {
-                let idError = false;
-                let emailError = false;
 
-                // 결과를 체크하고 각 상태에 따라 오류를 설정
-                results.forEach((result, index) => {
-                    if (result.status === 'rejected') {
-                        if (index === 0) {
-                            idError = true; // ID 체크가 실패한 경우
-                        } else if (index === 1) {
-                            emailError = true; // 이메일 체크가 실패한 경우
-                        }
-                    } else {
-                        if (index === 0) {
-                            idError = false; 
-                        } else if (index === 1) {
-                            emailError = false; 
-                        }
-                    }
-                });
-
-                if (idError && emailError) {
-                    // ID와 이메일 체크 모두 실패한 경우
-                    window.alert("아이디와 이메일 중복확인을 해주세요.");
-                } else if (idError) {
-                    // ID 체크 실패한 경우
-                    window.alert("아이디 중복확인을 해주세요.");
-                } else if (emailError) {
-                    // 이메일 체크 실패한 경우
-                    window.alert("이메일 중복확인을 해주세요.");
-                } else {
-                    // 두 체크 모두 성공적일 경우
-                    document.getElementById("m_ckpwd").remove(); // 비밀번호 확인 요소 제거
-                    document.getElementById("join_form").submit(); // 폼 제출
-                }
-               ////////////////////////////////
-            }).catch(error => {
-	            // 체크가 실패할 경우
+	        Promise.all([endCheck_id(), check_nick(), endCheck_email()]).then(() => {
+				document.getElementById("m_ckpwd").remove();	
+				document.getElementById("join_form").submit();	
+			}).catch(error => {
 	            console.error('Check failed:', error);
 	        });
 	    }
 	});
 </script>
 <script>
-	// 휴대전화 하이픈 자동생성
 	const autoHyphen = (number) => {
 	    number = number.replace(/[^0-9]/g, '');
 	    let temp = '';
@@ -522,7 +573,6 @@ function send_ck() {
 	var altid = document.getElementById("alt_id");
 	var altpwd = document.getElementById("alt_pwd");
 	
-	// 아이디 유효성 검사
 	inputid.addEventListener('keyup', ()=>{
 		if(inputid.value.trim() != "" && !isId(inputid.value)) {
 			altid.innerText = "4~20자의 영문/숫자 조합으로 입력해주세요.";
@@ -539,7 +589,6 @@ function send_ck() {
 		}
 	});	
 	
-	// 비밀번호 유효성 검사
 	inputpwd.addEventListener('keyup', ()=>{
 		if(inputpwd.value.trim() != "" && !isPwd(inputpwd.value)) {
 			altpwd.innerText = "비밀번호는 8자리 이상 20자리 이하의 영문/숫자/특수문자 조합으로 입력해주세요.";
@@ -557,7 +606,6 @@ function send_ck() {
 	});	
 </script>
 <script>
-	// 전체동의 확인 후 개별동의
 	function noti_check() {
 		var allck = document.getElementById("check_all");
 		var ck1 = document.getElementById("check_1");
@@ -569,7 +617,6 @@ function send_ck() {
         ck3.checked = allck.checked;
 	}
 	
-	// 개별상태 확인 후 전체동의
 	function noti_indicheck() {
         var allck = document.getElementById("check_all");
         var ck1 = document.getElementById("check_1");

@@ -54,11 +54,11 @@
                 </tr>
             </thead>
             <tbody id="report-list">
-                			<%
+            <%
 				ArrayList<M_ReportDTO> arr = rdao.allReports(cp,listsize);
 				if(arr!=null){
 					for(M_ReportDTO dto : arr){
-					%>
+				%>
 						<tr>
 							<td><input type="checkbox"></td>
 							<td><%=dto.getRp_idx()%> </td>

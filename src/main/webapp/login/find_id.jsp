@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>위시잼 - 아이디찾기</title>
 <style>
-	.find_wrap {
+   .find_wrap {
       width: 500px;
       padding: 20px 0;
       margin: 0 auto;
@@ -28,6 +28,12 @@
       padding: 10px 10px;
     }
     
+    .find_ck_box{
+      display: none;
+      width: 100%;
+      padding: 10px 10px;
+    }
+    
     .find_title{
       width: 12%;
       padding-top: 12px;
@@ -36,6 +42,12 @@
     
     .find_val{
       width: 70%;
+      height: 46px;
+      border-radius: 4px;
+    }
+    
+    .find_ckbtn{
+      width: 18%;
       height: 46px;
       border-radius: 4px;
       padding: 0px 0px 1px 10px;
@@ -68,34 +80,115 @@
       cursor: pointer;
       font-family: 'Cafe24Ohsquareair';
     }
+    
+    .find_ck{
+      width: 130px;
+      height: 46px;
+      border: 2px solid #ff4900;
+      border-radius: 10px;
+      background: #ff4900;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 400;
+      -webkit-appearance: none;
+      cursor: pointer;
+      font-family: 'Cafe24Ohsquareair';
+    }
 </style>
+<script>
+let randomNumber;
+
+   function find_ck() {
+      randomNumber = Math.floor(Math.random() * 9000) + 1000;
+      var user_name = document.getElementById("user_name");
+      var user_tel = document.getElementById("user_tel");
+      
+      if(user_name.value != "" && user_tel.value != ""){
+         alert(randomNumber);
+         document.getElementById("ck_box").style.display = 'inline-flex';
+      } else{
+         alert("이름 및 휴대폰번호를 입력해주세요.");
+      }
+   }
+   
+   function find_inv() {
+      var find_idck = document.getElementById("find_idck");
+      var find_invi = document.getElementById("find_invi");
+      var user_telck = document.getElementById("user_telck");
+      
+      if(randomNumber == user_telck.value){
+         alert("인증이 완료되었습니다.");
+         find_idck.disabled = true;
+         find_invi.disabled = true;
+         user_telck.disabled = true;
+         user_telck.remove();
+         document.getElementById("fid_form").submit();
+      } else{
+         alert("인증에 실패하였습니다.")
+      }
+   }
+</script>
 </head>
 <body>
 <%@ include file="../header.jsp" %>
 <div class="find_wrap">
-	<div class="find_box">
-		<h2 style="color:#ff4900;">아이디 찾기</h2>
-		<div class="find_in_box">
-			<div class="find_title">
-				<label>이름</label>
-			</div>
-			<div class="find_val">
-				<input type="text" class="find_input" name="user_name" value="이름을 입력해주세요" onfocus="this.value='';">
-			</div>
-		</div>
-		<div class="find_in_box">
-			<div class="find_title">
-				<label>휴대폰</label>
-			</div>
-			<div class="find_val">
-				<input type="text" class="find_input" name="user_tel" value="번호를 입력해주세요" onfocus="this.value='';">
-			</div>
-		</div>
-		<div style="margin:20px 100px 0px 100px;">
-			<input type="button" class="find_send" value="인증번호 받기">
-		</div>
-	</div>
+   <div class="find_box">
+      <h2 style="color:#ff4900;">아이디 찾기</h2>
+      <form class="fid_form" id="fid_form" method="post" action="idFind_ok.jsp">
+      <div class="find_in_box">
+         <div class="find_title">
+            <label>이름</label>
+         </div>
+         <div class="find_val">
+            <input type="text" class="find_input" id="user_name" name="user_name" placeholder="이름을 입력해주세요" onfocus="this.placeholder='';">
+         </div>
+      </div>
+      <div class="find_in_box">
+         <div class="find_title">
+            <label>휴대폰</label>
+         </div>
+         <div class="find_val">
+            <input type="text" class="find_input" id="user_tel" name="user_tel" maxlength="13" placeholder="번호를 입력해주세요" onfocus="this.placeholder='';" onkeyup="autoHyphen(value)">
+         </div>
+      </div>
+      <div class="find_ck_box" id="ck_box">
+         <div class="find_title"></div>
+         <div class="find_val">
+            <input type="text" class="find_input" id="user_telck" name="user_telck" maxlength="4" placeholder="인증번호를 입력해주세요" onfocus="this.placeholder='';">
+         </div>
+         <div class="find_ckbtn">
+         <button type="button" class="find_ck" id="find_invi" onclick="find_inv();">인증번호 확인</button>
+         </div>
+      </div>
+      <div style="margin:20px 100px 0px 100px;">
+         <button type="button" class="find_send" id="find_idck" onclick="find_ck();">인증번호 받기</button>
+      </div>
+      </form>
+   </div>
 </div>
 <%@ include file="../footer.jsp" %>
 </body>
 </html>
+<script>
+   const autoHyphen = (number) => {
+       number = number.replace(/[^0-9]/g, '');
+       let temp = '';
+       if (number.length < 4) {
+         temp = number;
+       } else if (number.length < 8) {
+         temp += number.substr(0, 3);
+         temp += '-';
+         temp += number.substr(3, 4);
+       } else if (number.length < 12) {
+         temp += number.substr(0, 3);
+         temp += '-';
+         temp += number.substr(3, 4);
+         temp += '-';
+         temp += number.substr(7);
+       }
+       const PHONE_NUMBER_WITH_HYPHEN = temp;
+       const PHONE_INPUT_BOX = document.querySelector('#user_tel');
+       PHONE_INPUT_BOX.value = PHONE_NUMBER_WITH_HYPHEN;
+       PHONE_INPUT_BOX.setAttribute('value', PHONE_NUMBER_WITH_HYPHEN);
+     };
+</script>

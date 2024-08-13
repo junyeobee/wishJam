@@ -93,7 +93,7 @@
 <div class="login_wrap">
 	<div class="login_box">
 		<h2 style="color:#ff4900;">L O G I N</h2>
-		<form class="login_form" action=login_ok.jsp">
+		<form class="login_form" method="post" action="login_ok.jsp">
 		<div style="margin-top:50px;">
 			<input type="text" class="input_txt" name="user_id" value="" placeholder="아이디를 입력해주세요" onfocus="this.placeholder='';">
 		</div>
@@ -101,7 +101,7 @@
 			<input type="password" class="input_txt" name="user_pwd" value="" placeholder="비밀번호를 입력해주세요" onfocus="this.placeholder='';">
 		</div>
 		<div style="margin-top:10px;margin-right:130px;text-align:right;">
-			<input type="checkbox" class="l_saveid" value="on"><span style="color: #696969;">로그인 상태 유지</span>
+			<input type="checkbox" class="l_saveid" name="keepLogIn" value="on"><span style="color: #696969;">로그인 상태 유지</span>
 		</div>
 		<div style="margin-top:25px;">
 			<input type="submit" class="l_check" value="로그인">
