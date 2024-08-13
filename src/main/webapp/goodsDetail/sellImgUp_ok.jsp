@@ -21,6 +21,9 @@ String imgname= mr.getFilesystemName("sellImg");
 %>
 <script>
 	var txt = opener.document.getElementById("txt");
-	txt.innerHTML += '<img src="/wishJam/img/sellgoods/<%=imgname %>">';
+	var imgE = document.createElement("img");
+	imgE.className = "contentImg";
+	imgE.setAttribute("src","/wishJam/img/sellgoods/<%=imgname %>");
+	txt.append(imgE);
 	window.self.close();
 </script>

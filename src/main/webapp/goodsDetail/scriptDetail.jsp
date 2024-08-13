@@ -60,7 +60,10 @@
 		var content = document.getElementById("txt");
 		var arr = (content.innerHTML).split(selected);
 		if (v == 'FS') {
-			var st = '<span style="font-size: 11px">' + selected + '</span>';
+			var fsize = document.getElementById("f-size");
+			var selectsize = fsize.options[fsize.options.selectedIndex].value;
+			console.log(selectsize);
+			var st = '<span style="font-size: '+selectsize+'px">' + selected + '</span>';
 		} else if (v == 'B') {
 			var st = '<span><b>' + selected + '</b></span>';
 		} else if (v == 'I') {
