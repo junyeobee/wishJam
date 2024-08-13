@@ -9,9 +9,12 @@
 <%
 //아이디 세션 받기
 String id = "user1_id";
+String nick="user1";
 
 session.setAttribute("userId", id);
-System.out.println(id);
+session.setAttribute("nick", nick);
+System.out.println(id+nick);
+
 String path = request.getRealPath("/");
 mdto.setHomepath(path);
 File file = new File(mdto.getHomepath() + mdto.getUrl());
@@ -167,7 +170,7 @@ line-height : 30px;
 					mdto = mdao.memberGet(id);
 				%>
 
-				<div class="profile_item nickname"><%=mdto.getM_nick()%></div>
+				<div class="profile_item nickname" ><%=mdto.getM_nick()%></div>
 
 
 				<%
@@ -195,7 +198,7 @@ line-height : 30px;
 
 			<div class="container">
 				<%
-				List<MypageDTO> buylist = mdao.buyList();
+				List<MypageDTO> buylist =  mdao.buyList(nick);
 
 				for (MypageDTO goods : buylist) {
 					

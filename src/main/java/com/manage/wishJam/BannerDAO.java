@@ -41,6 +41,7 @@ public class BannerDAO {
     }
     public int insertBanner(String b_name, java.sql.Date b_sdate, java.sql.Date b_edate){
         try {
+        	System.out.println(b_edate);
             con = com.db.wishJam.DbConn.getConn();
             String insertQuery = "INSERT INTO banner (b_idx, b_name, b_sdate, b_edate, b_src) VALUES (b_seq.nextval, ?, ?, ?, '/wishJam/img/banner/default.jpg')";
             ps = con.prepareStatement(insertQuery);

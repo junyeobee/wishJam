@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.*;
 
+import com.allgoods.wishJam.AllgoodsDTO;
+
 public class MypageDAO {
 	Connection con;
 	PreparedStatement ps;
@@ -70,7 +72,7 @@ public class MypageDAO {
 				if(ps!=null)ps.close();
 			} catch (Exception e2) {
 				e2.printStackTrace();
-			}
+			}  
 			
 			
 		}
@@ -79,25 +81,25 @@ public class MypageDAO {
 	
 
 	
-	public List<MypageDTO> buyList(){
+	public List<MypageDTO> buyList(String nick){
 		
 	List<MypageDTO> bl = new ArrayList();
 	
 	try {
 		con = com.db.wishJam.DbConn.getConn();
 		
-		String sql = "select * from test_goods where tg_idx between 1 and 4";
+		String sql = "select sell.*,s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx where sell.s_idx between 1 and 4 and sell.m_nick=?";
 		ps=con.prepareStatement(sql);
+		ps.setString(1, nick);
 		rs=ps.executeQuery();
 		
 		while(rs.next()) {
-			int idx = rs.getInt("tg_idx");
-			String name= rs.getString("tg_name");
-			int price = rs.getInt("tg_price");
-			String seller = rs.getString("tg_seller");
-			String thumbnail_url=rs.getString("thumbnail_url");
-			
-			bl.add(new MypageDTO(idx, name, price, seller, thumbnail_url));
+			String seller= rs.getString("m_nick");
+			String name = rs.getString("s_title");
+			int jjim = rs.getInt("s_jjim");
+			int price = rs.getInt("sg_main");
+			String thumbnail_url = rs.getString("s_img");
+			bl.add(new MypageDTO(jjim, name, price, seller, thumbnail_url));
 			
 		}
 		
