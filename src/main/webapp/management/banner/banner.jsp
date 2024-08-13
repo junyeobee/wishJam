@@ -27,7 +27,6 @@
 
         var cell5 = newRow.insertCell(4);
         cell5.innerHTML = '<input type="checkbox" id="chkbox" name="chkbox" />';
-        
         seq++;
     }
 
@@ -43,7 +42,6 @@
             var b_nameInput = row.cells[1].getElementsByTagName('input')[0];
             var b_sdateInput = row.cells[2].getElementsByTagName('input')[0];
             var b_edateInput = row.cells[2].getElementsByTagName('input')[1];
-            console.log(b_edateInput);
 
             // 각 입력 필드가 존재하는지 확인하고 값을 추출
             var b_name = b_nameInput ? b_nameInput.value : '';
