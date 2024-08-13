@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <jsp:useBean id="idao" class="com.wishJam.detail.DetailImgDAO"
 	scope="session"></jsp:useBean>
+<jsp:useBean id="cdao" class="com.wishJam.detail.ColorDAO"></jsp:useBean>
 
 <%
 int s_idx = Integer.parseInt(request.getParameter("s_idx"));
@@ -152,37 +153,58 @@ ul {
 	position: fixed;
 	margin-left: 25px;
 	width: 280px;
-	height: 190px;
+	height: 200px;
 	border-radius: 5px;
 	border: 1px solid gray;
 	background-color: white;
 }
 
-#colorWindow table {
+/* #colorWindow ul {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+#colorWindow li {
+	width: 50px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+} */
+#colorWindow li {
+	margin: 3px;
+}
+/* 
+.colorPalette {
 	width: 250px;
 	height: 180px;
 	margin: 0px auto;
-	padding-top: 10px;
-}
-
-#colorWindow td {
-	border: 1px solid white;
-}
-
-#colorWindow td:hover {
-	border: 1px solid #E0E0E0;
-	box-shadow: 0 0 5px 2px #E0E0E0; 
-	border-radius: 3px;
-	cursor: pointer;
-	
 }
 
 .colorsqr {
-	width: 20px;
-	height: 20px;
-	border-radius: 1px;
-	margin-right: 20px;
-	margin-left: 10px;
+	width: 35px;
+	height: 35px;
+	border-radius: 20px;
+	align: center;
+}
+
+.colorsqr:hover {
+	transform: scale(1.03, 1.03);
+	box-shadow: 0 0 10px black;
+	border-radius: 3px;
+	cursor: pointer;
+	border-radius: 20px;
+} */
+.psqr {
+	width: 25px;
+	height: 25px;
+	border-radius: 3px;
+}
+
+.psqr:hover {
+	cursor: pointer;
+	transform: scale(1.04, 1.04);
 }
 </style>
 <%@ include file="scriptDetail.jsp"%>
@@ -225,48 +247,62 @@ ul {
 										onclick="styleSelected(this.value)"></li>
 									<li>
 										<div id="colorWindow">
-											<table>
-												<tr>
-													<td><div class="fbox">
-															<div class="colorsqr" style="background-color: #FF3A3D;"></div>
-															<span>빨강</span>
-														</div></td>
-													<td><div class="fbox">
-															<div class="colorsqr" style="background-color: #A74FF5;"></div>
-															<span>보라</span>
-														</div></td>
-												</tr>
-												<tr>
-													<td><div class="fbox">
-															<div class="colorsqr" style="background-color: #0063FF;"></div>
-															<span>파랑</span>
-														</div></td>
-													<td><div class="fbox">
-															<div class="colorsqr" style="background-color: #F088D0;"></div>
-															<span>분홍</span>
-														</div></td>
-												</tr>
-												<tr>
-													<td><div class="fbox">
-															<div class="colorsqr" style="background-color: #FFE63E;"></div>
-															<span>노랑</span>
-														</div></td>
-													<td><div class="fbox">
-															<div class="colorsqr" style="background-color: #4A9436;"></div>
-															<span>초록</span>
-														</div></td>
-												</tr>
-												<tr>
-													<td><div class="fbox">
-															<div class="colorsqr" style="background-color: black;"></div>
-															<span>검정</span>
-														</div></td>
-													<td><div class="fbox">
-															<div class="colorsqr" style="background-color: white; border: 1px solid #CFCFCF;"></div>
-															<span>하양</span>
-														</div></td>
-												</tr>
-											</table>
+											<%-- <div class="colorPalette fbox">
+												<%
+												String colors[] = new String[16];
+												String colorP = "black,#9E9E9E,white,#FF3A3D,#FF771D,#FFE63E,#B3E31D,#4A9436,#54CEFF,#0053F5,#9656FA,#FA8EDC";
+												colors = colorP.split(",");
+												String colorname[] = new String[16];
+												String colorN = "black, gray, white, red, orange, yellow, green, dark green, skyblue, blue, purple, pink";
+												colorname = colorN.split(",");
+												%>
+												<ul>
+													<%
+													for (int i = 0; i < colors.length; i++) {
+													%>
+													<li>
+														<div class="colorsqr" id="<%=colorname[i]%>"
+															style="background-color:<%=colors[i]%>;"></div>
+													</li>
+													<%
+													}
+													%>
+												</ul>
+											</div> --%>
+											<div class="fbox">
+												<%
+												int colorr[] = { 255, 255, 255, 200, 50, 125, 0, 150, 255, 60 };
+												int colorg[] = { 20, 125, 240, 255, 200, 255, 50, 30, 100, 60};
+												int colorb[] = { 20, 0, 0, 0, 0, 255, 255, 255, 200, 60};
+												int colorl1[] = {0,0,0,10,30,25,50,25,0,48};
+												int colorl2[] = {50,25,0,0,13,0,50,45,30,48};
+												int colorl3[] ={50,50,50,50,45,0,0,0,5,48};
+												int colord1[] = {70,50,50,50,20,30,0,40,20,30};
+												int colord2[] = {10,25,50,50,70,60,10,5,40,30};
+												int colord3[] = {10,0,0,0,0,40,60,60,50,30};
+												
+												for(int j=0; j<colord1.length;j++){
+												%>
+												<ul>
+													<%
+													for (int i = 2; i > 0; i--) {
+													%>
+													<li><div class="psqr"
+															style="background-color: <%=cdao.colortoHex(colorr[j] - i * colord1[j], colorg[j]-i * colord2[j], colorb[j]-i * colord3[j])%>;"></div></li>
+													<%
+													}
+													%>
+													<%
+													for (int i = 0; i < 5; i++) {
+													%>
+													<li><div class="psqr"
+															style="background-color: <%=cdao.colortoHex(colorr[j]+i * colorl1[j], colorg[j] + i * colorl2[j], colorb[j] + i * colorl3[j])%>;"></div></li>
+													<%
+													}
+													%>
+												</ul>
+												<%} %>
+											</div>
 										</div> <input type="button" value="C"
 										onclick="styleSelected(this.value)">
 									</li>

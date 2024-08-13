@@ -62,7 +62,6 @@
 		if (v == 'FS') {
 			var fsize = document.getElementById("f-size");
 			var selectsize = fsize.options[fsize.options.selectedIndex].value;
-			console.log(selectsize);
 			var st = '<span style="font-size: '+selectsize+'px">' + selected + '</span>';
 		} else if (v == 'B') {
 			var st = '<span><b>' + selected + '</b></span>';
