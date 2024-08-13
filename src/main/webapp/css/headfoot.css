@@ -12,6 +12,7 @@ header {
 	right: 0;
 	padding-top: 75px;
 	background-color:white;
+	z-index:50;	/*배너때매 걍 널널하게 줬습니다*/
 }
 #top_left {
 	

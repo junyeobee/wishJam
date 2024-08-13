@@ -15,7 +15,7 @@
             break;
         }
         java.sql.Date date1 = java.sql.Date.valueOf(b_sdate);
-        java.sql.Date date2 = java.sql.Date.valueOf(b_sdate);
+        java.sql.Date date2 = java.sql.Date.valueOf(b_edate);
         int a = bannerDAO.insertBanner(b_name, date1, date2);
         if (a <= 0) {
             hasError = true;

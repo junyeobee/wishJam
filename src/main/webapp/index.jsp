@@ -5,31 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="/wishJam/css/burger.css" />
-    <link rel="stylesheet" href="/wishJam/css/index.css" />
-    <link rel="stylesheet" href="/wishJam/css/allFonts.css" />
-    <link rel="stylesheet" href="/wishJam/css/headfoot.css" />
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
-    <script src="slider.js" defer></script>
-    <style>
-        .slider {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        .slide {
-            min-width: 100%;
-            transition: transform 1s;
-        }
-        .box {
-            text-align: center;
-            line-height: 100px;
-            font-size: 60px;
-            color: #fff;
-            font-weight: bold;
-        }
-    </style>
+<link rel="stylesheet" href="/wishJam/css/burger.css" />
+<link rel="stylesheet" href="/wishJam/css/index.css" />
+<link rel="stylesheet" href="/wishJam/css/allFonts.css" />
+<link rel="stylesheet" href="/wishJam/css/headfoot.css" />
+<link rel="stylesheet" href="/wishJam/css/slide.css" />
+<script src="slider.js" defer></script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+</style>
 </head>
 <body>
     <%@ include file="header.jsp" %>
@@ -38,19 +23,22 @@
             <div>
                 <h1 id="test1">제목</h1>
             </div>
-            <div id="slider1" class="slider">
+            <div class="slide slide_wrap">
                 <%
                     ArrayList<String> arr = bdao.getBannerList();
-                    if (arr != null) {
-                        for (String a : arr) {
-                            %>
-                            <div class="slide">
-                                <img class="box" src="<%= a %>" alt="image">
-                            </div>
-                            <%
-                        }
-                    }
+                	if(arr!=null){
+                		for(int i = 0; i < arr.size(); i++) {
+                			%>
+                				<div class="slide_item item<%=i%>">
+                					<img src="<%=arr.get(i)%>" alt="" />
+                				</div>
+                			<%
+                		}
+                	}
                 %>
+            	      <div class="slide_prev_button slide_button">&lt;</div>
+				      <div class="slide_next_button slide_button">&gt;</div>
+				      <ul class="slide_pagination"></ul>
             </div>
         </article>
         <article>

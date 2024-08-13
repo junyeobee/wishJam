@@ -115,4 +115,30 @@ public class BannerDAO {
     		}
     	}
     }
+    
+    public int getBIdx() {
+    	try {
+    		int a = 0;
+    		con = com.db.wishJam.DbConn.getConn();
+    		String sql = "select b_seq.nextval from dual";
+    		ps = con.prepareStatement(sql);
+    		rs = ps.executeQuery();
+    		if(rs.next()) {
+    			a = rs.getInt(1);
+    		}
+    		return a;
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		return -1;
+    	}finally {
+    		try {
+    			if (ps != null) 
+                	ps.close();
+                if (con != null) 
+                	con.close();
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    }
 }
