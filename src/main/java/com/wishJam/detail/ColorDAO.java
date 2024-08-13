@@ -3,7 +3,7 @@ package com.wishJam.detail;
 import java.text.*;
 
 public class ColorDAO {
-	
+	 
 	public String colortoHex(int r, int g, int b) {
 		String r_s = Integer.toHexString(r);
 		String g_s = Integer.toHexString(g);

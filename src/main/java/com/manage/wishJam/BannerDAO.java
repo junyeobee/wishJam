@@ -10,6 +10,8 @@ public class BannerDAO {
     public BannerDAO() {
 		// TODO Auto-generated constructor stub
 	}
+    
+    //배너 리스트 뽑는 메소드
     public ArrayList<BannerDTO>listBanner(){
     	try {
     		con = com.db.wishJam.DbConn.getConn();
@@ -39,6 +41,8 @@ public class BannerDAO {
     		}
     	}
     }
+    
+    //배너 추가 메소드
     public int insertBanner(String b_name, java.sql.Date b_sdate, java.sql.Date b_edate){
         try {
             con = com.db.wishJam.DbConn.getConn();
@@ -63,11 +67,11 @@ public class BannerDAO {
         	}
         }
     }
-    
+    //다음 시퀀스출력메소드
     public int getNextVal() {
     	try {
     		con = com.db.wishJam.DbConn.getConn();
-    		String sql = "SELECT b_seq.NEXTVAL FROM dual";
+    		String sql = "select b_seq.currval from dual";
     		ps = con.prepareStatement(sql);
     		rs = ps.executeQuery();
     		rs.next();
@@ -87,7 +91,7 @@ public class BannerDAO {
     		}
     	}
     }
-    
+    //배너이미지 경로 뽑는 시퀀스(이번달에 해당하는)
     public ArrayList<String> getBannerList(){
     	try {
     		con = com.db.wishJam.DbConn.getConn();
@@ -120,12 +124,36 @@ public class BannerDAO {
     	try {
     		int a = 0;
     		con = com.db.wishJam.DbConn.getConn();
-    		String sql = "select b_seq.nextval from dual";
+    		String sql = "select last_number from all_sequences where sequence_name = 'B_SEQ'";
     		ps = con.prepareStatement(sql);
     		rs = ps.executeQuery();
     		if(rs.next()) {
     			a = rs.getInt(1);
     		}
+    		return a;
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		return -1;
+    	}finally {
+    		try {
+    			if (ps != null) 
+                	ps.close();
+                if (con != null) 
+                	con.close();
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    }
+    //배너삭제메소드
+    public int deleteBanner(int idx) {
+    	try {
+    		int a = 0;
+    		con = com.db.wishJam.DbConn.getConn();
+    		String sql = "delete from banner where b_idx = ?";
+    		ps = con.prepareStatement(sql);
+    		ps.setInt(1, idx);
+    		a = ps.executeUpdate();
     		return a;
     	}catch(Exception e) {
     		e.printStackTrace();
