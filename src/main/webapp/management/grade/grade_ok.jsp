@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
-<%@ page import="com.manage.wishJam.ExampleDTO" %>
-<jsp:useBean id = "edao" class = "com.manage.wishJam.ExampleDAO" />
 <%
     request.setCharacterEncoding("UTF-8");
-
-
     String msg = "실패";
+    /*
     ArrayList<ExampleDTO> updatedGrades = new ArrayList<ExampleDTO>();
     for (String paramName : request.getParameterMap().keySet()) {
     	System.out.println(paramName);
@@ -22,6 +19,7 @@
     }
     int result = edao.updateGrade(updatedGrades);
     msg = result < 0 ? "저장완료" : "실패";
+	*/
 %>
 <script>
     window.alert('<%=msg %>');
