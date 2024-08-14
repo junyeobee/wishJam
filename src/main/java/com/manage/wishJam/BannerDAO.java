@@ -43,16 +43,22 @@ public class BannerDAO {
     }
     
     //배너 추가 메소드
-    public int insertBanner(String b_name, java.sql.Date b_sdate, java.sql.Date b_edate){
+    public int insertBanner(int b_idx, String b_name, String b_src,java.sql.Date b_sdate, java.sql.Date b_edate){
         try {
         	System.out.println(b_edate);
             con = com.db.wishJam.DbConn.getConn();
-            String insertQuery = "INSERT INTO banner (b_idx, b_name, b_sdate, b_edate, b_src) VALUES (b_seq.nextval, ?, ?, ?, '/wishJam/img/banner/default.jpg')";
-            ps = con.prepareStatement(insertQuery);
-            ps.setString(1, b_name);
-            ps.setDate(2, b_sdate);
-            ps.setDate(3, b_edate);
+            String sql = "insert into banner(b_idx, b_name, b_src, b_sdate, b_edate) values (?, ?, ?, ?, ?)";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, b_idx);
+            ps.setString(2, b_name);
+            ps.setString(3, b_src);
+            ps.setDate(4, b_sdate);
+            ps.setDate(5, b_edate);
             int a = ps.executeUpdate();
+            
+            sql = "select b_seq.nextval from dual";
+            ps = con.prepareStatement(sql);
+            ps.executeQuery();
             return a;
         } catch(Exception e){
         	e.printStackTrace();
