@@ -1,7 +1,6 @@
 package com.manage.wishJam;
 import java.sql.*;
 import java.util.*;
-import java.util.Date;
 
 public class BannerDAO {
 	Connection con;
@@ -10,19 +9,57 @@ public class BannerDAO {
     public BannerDAO() {
 		// TODO Auto-generated constructor stub
 	}
+    public int getTotalcnt() {
+		try {
+			con = com.db.wishJam.DbConn.getConn();
+			String sql = "select count(*) from banner";
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			rs.next();
+			int cnt = rs.getInt(1);			
+			return cnt==0?1:cnt;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return 1;
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+    }
     
     //배너 리스트 뽑는 메소드
-    public ArrayList<BannerDTO>listBanner(){
+    public ArrayList<BannerDTO>listBanner(int cp, int ls){
     	try {
     		con = com.db.wishJam.DbConn.getConn();
-    		String sql = "select * from banner order by b_idx asc";
+    		int start = (cp - 1) * ls + 1;
+			int end = cp * ls;
+			String sql = "select * from "
+					+ "(select rownum as rnm,a.* from  "
+					+ "(select * from banner order by b_idx asc) a)b "
+					+ "where rnm >=? and rnm <= ?";
     		ps = con.prepareStatement(sql);
+			ps.setInt(1, start);
+			ps.setInt(2, end);
     		rs = ps.executeQuery();
     		ArrayList<BannerDTO> arr = new ArrayList<BannerDTO>();
     		
     		if (rs.next()) {
     			do {
-        			BannerDTO dto = new BannerDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDate(4),rs.getDate(5),rs.getString(6));
+    				int a = rs.getInt(2);
+    				String b = rs.getString(3);
+    				String c = rs.getString(4);
+    				java.sql.Date d = rs.getDate(5);
+    				java.sql.Date e = rs.getDate(6);
+    				String f = rs.getString(7);
+        			BannerDTO dto = new BannerDTO(a,b,c,d,e,f);
         			arr.add(dto);
     			}while(rs.next());
     		}
@@ -141,6 +178,28 @@ public class BannerDAO {
     	}catch(Exception e) {
     		e.printStackTrace();
     		return -1;
+    	}finally {
+    		try {
+    			if (ps != null) 
+                	ps.close();
+                if (con != null) 
+                	con.close();
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    }
+    
+    public void imgUpload(int idx, String url) {
+    	try {
+    		con = com.db.wishJam.DbConn.getConn();
+    		String sql = "update banner set b_src=? where b_idx = ?";
+    		ps = con.prepareStatement(sql);
+    		ps.setString(1, url);
+    		ps.setInt(2, idx);
+    		ps.executeQuery();
+    	}catch(Exception e) {
+    		e.printStackTrace();
     	}finally {
     		try {
     			if (ps != null) 

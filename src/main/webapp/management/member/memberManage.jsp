@@ -30,6 +30,7 @@
 	
 %>
 <div class="container">
+<div style = "padding:10px">
 <h1>회원 관리</h1>
         <div class="toolbar">
             <button class="btn back-btn">뭐넣지</button>
@@ -105,6 +106,7 @@
 			
 			%>
 		</div>
+	</div>
 	</div>
 </div>
  <script>

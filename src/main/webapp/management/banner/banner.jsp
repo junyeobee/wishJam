@@ -5,7 +5,27 @@
 <jsp:useBean id="badd" class="com.manage.wishJam.BannerDAO"/>
 <%
 	int idx = badd.getBIdx()+1;
-	System.out.println(idx);
+	String cp_s = request.getParameter("cp");
+	if(cp_s==null||cp_s.equals("")){
+		cp_s="1";
+	}
+	int cp = Integer.parseInt(cp_s);
+	
+	//총 게시물수
+	int totalcnt = badd.getTotalcnt();
+	//한번에 보여줄 리스트 수
+	int listsize = 10;
+	//페이지수
+	int pagesize = 5;
+	
+	//사용자 현재위치
+	//int cp=1;
+	
+	int totalpage = (totalcnt/listsize)+1;
+	if(totalcnt%listsize == 0)totalpage--;
+	
+	int usrgroup=cp/pagesize;
+	if(cp%pagesize==0)usrgroup--;
 %>
 <script>
 	//Nav에서 선택한거 출력
@@ -29,7 +49,7 @@
 	    evt.currentTarget.classList.add("active");
 	}
     
-    function imgChange(ss){
+    function imgedit(ss){
     	window.open('bannerImgsave.jsp?idx='+ss, 'gradeIconChange', 'width=400,height=200')
     }
     
@@ -78,10 +98,11 @@
 </script>
 <style>
 	.container {
-	    width: 100%;
-	    height: calc(100% - 20vh);
-	    margin: auto;
-	}
+    position: relative;
+    width: 100%;
+    height: calc(100% - 20vh);
+    margin: auto;
+}
 	.topNavLink {
 	    display: flex;
 	}
@@ -199,11 +220,29 @@
     margin-bottom: 10px;
     cursor: pointer;
 }	
+.pagination {
+	position:absolute;
+	bottom:0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination-controls {
+    display: flex;
+}
+
+.pagination-btn {
+    background-color: #f8f9fc;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}
 </style>
 </head>
 <body>
     <div class="container">
-        <h2>배너 설정</h2>
         <div class="topNavLink">	<!-- topNavLink에 있는 a링크중 active인 친구가 선택될시에 해당 topNav내용 출력 -->
             <a onclick="openTab(event, 'manage')" class = "active">전체 배너</a>
             <a onclick="openTab(event, 'upload')">배너 업로드</a>
@@ -211,10 +250,6 @@
         </div>
         <div id="manage" class="topNav active">	<!-- active클래스가 있다면 display허용 -->
             <div class="conTop">
-                <div class="search-area">
-                    <input type="text" placeholder="검색">
-                    <button type="button">검색</button>
-                </div>
                 <div class="button-area">
                     <button type="button" onclick="deleteData()">선택 삭제</button>
                 </div>
@@ -231,7 +266,7 @@
                 </thead>
 				<tbody>
                     <%
-                        ArrayList<BannerDTO> arr = badd.listBanner();
+                        ArrayList<BannerDTO> arr = badd.listBanner(cp,listsize);
                         if(arr!=null){
                             for(BannerDTO dto : arr){
                     %>
@@ -239,7 +274,7 @@
                         <td><%=dto.getB_idx() %></td>
                         <td><%=dto.getB_name() %></td>
                         <td><%=dto.getB_sdate() %> ~ <%=dto.getB_edate() %></td>
-                        <td><img src="<%=dto.getB_src() %>" alt="image" onclick="imgChange('<%=dto.getB_idx() %>');"></td>
+                        <td><img src="<%=dto.getB_src() %>" alt="image" onclick="imgedit('<%=dto.getB_idx() %>');"></td>
                         <td><input type="checkbox" name="chkbox"></td>
                     </tr>
                     <%
@@ -248,6 +283,32 @@
                     %>
 			</tbody>
         </table>
+        <div class="pagination">
+		<div class="pagination-controls">
+			<%
+				if(usrgroup != 0) {
+					%><button class="pagination-btn" onclick="navigateTo('<%=(usrgroup-1)*pagesize+pagesize %>')">Prev</button><%
+				}
+			%>
+			
+			<%
+				for(int i = usrgroup*pagesize+1; i<=usrgroup*pagesize+pagesize; i++){
+					%>
+					&nbsp;<button class="pagination-btn" onclick="navigateTo('<%=i%>')"><%=i%></button>&nbsp;
+					<%
+					if(i==totalpage){
+						break;
+					}
+				}
+			%>
+			<%
+				if(usrgroup != (totalpage/pagesize-(totalpage%pagesize==0?1:0))) {
+					%><button class="pagination-btn" onclick="navigateTo('<%=(usrgroup+1)*pagesize+1%>')">Next</button><%
+				}
+			
+			%>
+		</div>
+	</div>
     </div>
 	<script>
 		//팝업창으로 이미지 받아옵니다
@@ -273,6 +334,9 @@
             var inputElement = document.getElementById('imagePath');
             inputElement.addEventListener('input', imgChange);
         });
+    	function navigateTo(page) {
+    	    window.location.href = 'banner.jsp?cp=' + page;
+    	}
     </script>
 	<div id="upload" class="topNav">
 	    <form action="bannerUpload.jsp">
