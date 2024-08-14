@@ -1,28 +1,34 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.io.File" %>
 <%@ page import="com.oreilly.servlet.MultipartRequest" %>
 <%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
+<%@ page import="com.manage.wishJam.MyFileRenamePolicy" %>
+<jsp:useBean id="mdao" class="com.manage.wishJam.manageDAO"/>
+
 <%
-    String realPath = "C:/student_java/semi2_wishjam/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps";
-    String imgPath = "/wishJam/img/profile/";
-    String savePath = realPath+imgPath;
-    int sizeLimit = 10 * 1024 * 1024; // 10MB 크기 제한
+    request.setCharacterEncoding("UTF-8");
+    String idx_s = request.getParameter("idx");
     String imagePath = "";
 
     if ("POST".equalsIgnoreCase(request.getMethod())) {
         try {
-            MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "UTF-8", new DefaultFileRenamePolicy());
-            File uploadedFile = multi.getFile("image");
+            if (idx_s != null) {
+                int idx = Integer.parseInt(idx_s);
+                String path = request.getRealPath("/") + "/img/banner/";
+                mdao.setHomePath(path);
+                MyFileRenamePolicy renamePolicy = new MyFileRenamePolicy(idx_s);
+                int size = 10 * 1024 * 1024; // 10MB
+                String encoding = "UTF-8";
 
-            if (uploadedFile != null) {
-                imagePath = imgPath + File.separator + uploadedFile.getName();
+                MultipartRequest mr = new MultipartRequest(request, path, size, encoding, renamePolicy);
+                imagePath = "/wishJam/img/banner/" + idx + ".jpg";
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,9 +41,13 @@
                 if (window.opener && typeof window.opener.setImagePath === 'function') {
                     window.opener.setImagePath(imagePath);
                 }
-                window.close(); // 자식 창 닫기
+                window.close();
             }
         }
+
+        window.onload = function() {
+            setTimeout(returnImagePath, 1000); // 1초 대기 후 실행
+        };
     </script>
 </head>
 <body>
@@ -46,7 +56,7 @@
             returnImagePath();
         </script>
     <% } %>
-    <form action="uploadImage.jsp" method="post" enctype="multipart/form-data">
+    <form action="uploadImage.jsp?idx=<%=idx_s %>" method="post" enctype="multipart/form-data">
         <div>
             <label for="image">이미지 선택:</label>
             <input type="file" id="image" name="image">

@@ -4,9 +4,9 @@ import java.io.*;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 public class MyFileRenamePolicy implements FileRenamePolicy {  
-    private String userId;	// 사용자 ID
+    private String userId;
 
-    // 생성자 또는 설정 메서드를 통해 userId를 설정
+    //userId는 session등에서 받아오는 걸 인자로 넣어주시면 됩니다.
     public MyFileRenamePolicy(String userId) {
         this.userId = userId;
     }
@@ -23,7 +23,6 @@ public class MyFileRenamePolicy implements FileRenamePolicy {
         }  
 
         //인자의 userId를 이미지파일의 값으로 세팅
-        System.out.println(ext);
         String newName = userId + ".jpg";	//뭔 이미지파일올려도 jpg로 세팅하는걸로 합니다~~
         File newFile = new File(f.getParent(), newName);
 

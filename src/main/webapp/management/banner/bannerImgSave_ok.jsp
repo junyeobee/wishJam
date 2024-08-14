@@ -12,9 +12,9 @@
 		mdao.setHomePath(path);
 		MyFileRenamePolicy renamePolicy = new MyFileRenamePolicy(idx_s);
 		String savepath = mdao.getHomePath() + mdao.getBanner();
-		int maxPostSize = 10 * 1024 * 1024;
+		int size = 10 * 1024 * 1024;
 		String encoding = "UTF-8";
-		MultipartRequest mr = new MultipartRequest(request, savepath, maxPostSize, encoding, renamePolicy);
+		MultipartRequest mr = new MultipartRequest(request, savepath, size, encoding, renamePolicy);
 		mdao.imgUpload(idx, "/wishJam/img/banner/"+idx+".jpg");
 		%>
 			<script>

@@ -6,20 +6,16 @@
 <%
 	int idx = badd.getBIdx()+1;
 %>
-
 <script>
+	//Nav에서 선택한거 출력
 	function openTab(evt, tabName) {
 	    var i, tabcontent, tablinks;
-
-	    // 모든 탭 콘텐츠 숨기기
-	    tabcontent = document.getElementsByClassName("tab-content");
+	    tabcontent = document.getElementsByClassName("topNav");
 	    for (i = 0; i < tabcontent.length; i++) {
 	        tabcontent[i].style.display = "none";
 	        tabcontent[i].classList.remove("active");
 	    }
-
-	    // 모든 탭 링크에서 active 클래스 제거
-	    tablinks = document.getElementsByClassName("nav-tabs")[0].getElementsByTagName("a");
+	    tablinks = document.getElementsByClassName("topNavLink")[0].getElementsByTagName("a");
 	    for (i = 0; i < tablinks.length; i++) {
 	        tablinks[i].classList.remove("active");
 	    }
@@ -85,10 +81,10 @@
 	    height: calc(100% - 20vh);
 	    margin: auto;
 	}
-	.nav-tabs {
+	.topNavLink {
 	    display: flex;
 	}
-	.nav-tabs a {
+	.topNavLink a {
 	    padding: 10px 20px;
 	    text-decoration: none;
 	    color: #333;
@@ -98,7 +94,7 @@
 	    margin-right: 5px;
 	    cursor: pointer;
 	}
-	.nav-tabs a.active {
+	.topNavLink a.active {
 	    background-color: white;
 	    font-weight: bold;
 	    border-top: 2px solid #007bff;
@@ -106,14 +102,14 @@
 	    border-left: 2px solid #ccc;
 	    border-bottom: 1px solid white;
 	}
-	.tab-content {
+	.topNav {
 	    border: 1px solid #ccc;
 	    height:100%;
 	    padding: 20px;
 	    margin-top: -1px;
 	    display: none;
 	}
-	.tab-content.active {
+	.topNav.active {
 	    display: block;
 	    background-color:white;
 	}
@@ -142,12 +138,12 @@
 <body>
     <div class="container">
         <h2>배너 설정</h2>
-        <div class="nav-tabs">	<!-- nav-tab에 있는 a링크중 active인 친구가 선택될시에 해당 tab-content내용 출력 -->
+        <div class="topNavLink">	<!-- topNavLink에 있는 a링크중 active인 친구가 선택될시에 해당 topNav내용 출력 -->
             <a onclick="openTab(event, 'manage')" class = "active">전체 배너</a>
             <a onclick="openTab(event, 'upload')">배너 업로드</a>
             <a onclick="openTab(event, 'settings')">배너 설정</a>
         </div>
-        <div id="manage" class="tab-content active">	<!--tab-content, active만 출력 -->
+        <div id="manage" class="topNav active">	<!-- active클래스가 있다면 display허용 -->
             <div class="conTop">
                 <div class="search-area">
                     <input type="text" placeholder="검색">
@@ -187,39 +183,55 @@
 			</tbody>
         </table>
     </div>
+	<script>
+		//팝업창으로 이미지 받아옵니다
+        function uploadImage() {
+            window.open('uploadImage.jsp?idx=<%=idx%>', 'ImageUpload', 'width=400,height=200');
+        }
+		//imgPath의 경로를 previewImg에 기입해 화면에 출력되는 이미지의 링크를 바꿔서 이미지 변경 
+        function imgChange() {
+            var imgpath = document.getElementById('imagePath').value;
+            var previewImg = document.getElementById('previewImg');
+            if (previewImg) {
+                previewImg.src = imgpath;
+            }
+        }
 
-    <div id="upload" class="tab-content">          
-      	<form action="">
-      		<div>
-      			<label>배너 번호??</label><label><%=idx %></label>
-      		</div>
-      		
-      		<div>
-      			<label>제목</label><input type="text" required="required" name = "b_name"/>
-      		</div>
-			
-      		<div>
-      			<label>이미지</label>
-      			<button>사진 올리기</button>
-      		</div>
-      		
-      		<div>
-      			<label>시작 날짜</label>
-      			<input type="date" name = "b_sdate"/>
-      		</div>
-      		<div>
-      			<label>종료 날짜</label>
-      			<input type="date" name = "b_edate"/>
-      		</div>
-      		<div>
-      			<label>공지사항 링크</label>
-      			<button></button>
-      		</div>
-      		<input type="submit" />
+        function setImagePath(value) {
+            var input = document.getElementById('imagePath');
+            input.value = value;
+            imgChange(); // 값 변경 후 바로 imgChange 호출
+        }
+		//imgPath에 값이 들어오면 이벤트처리
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var inputElement = document.getElementById('imagePath');
+            inputElement.addEventListener('input', imgChange);
+        });
+    </script>
+    <div id="upload" class="topNav">
+      	<form action="bannerUpload.jsp">
+        <div>
+        	<input type="text" name="b_idx" value = "<%=idx%>" readonly="readonly" hidden="hidden">
+            <label for="title">배너 제목</label><br />
+            <input type="text" id="title" name="title" required="required" placeholder="배너 관리용 제목">
+        </div>
+        <div>
+            <label>배너 이미지</label><br />
+            <img src="/wishJam/img/profile/default.jpg" onclick="uploadImage()" id="previewImg">
+            <input type="text" id="imagePath" name="imagePath" readonly="readonly" hidden="hidden">
+        </div>
+        <div class="form-group">
+                <label for="date-from">기간</label><br />
+                <input type="date" id="b_sdate" name="b_sdate" value="2022-12-02">
+                <input type="date" id="b_edate" name="b_edate">
+            </div>
+        <div>
+            <input type="reset" value="재작성"/><input type="submit" value="등록하기"/>
+        </div>
       	</form>
     </div>
 
-    <div id="settings" class="tab-content">
+    <div id="settings" class="topNav">
         <h3>배너 설정</h3>
     </div>
 </div>

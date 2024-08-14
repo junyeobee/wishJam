@@ -68,30 +68,6 @@ public class BannerDAO {
         	}
         }
     }
-    //다음 시퀀스출력메소드
-    public int getNextVal() {
-    	try {
-    		con = com.db.wishJam.DbConn.getConn();
-    		String sql = "select b_seq.currval from dual";
-    		ps = con.prepareStatement(sql);
-    		rs = ps.executeQuery();
-    		rs.next();
-    		int result = rs.getInt(1);
-    		return result;
-    	}catch(Exception e) {
-    		e.printStackTrace();
-    		return -1;
-    	}finally {
-    		try {
-    			if (ps != null) 
-                	ps.close();
-                if (con != null) 
-                	con.close();
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
-    	}
-    }
     //배너이미지 경로 뽑는 시퀀스(이번달에 해당하는)
     public ArrayList<String> getBannerList(){
     	try {
