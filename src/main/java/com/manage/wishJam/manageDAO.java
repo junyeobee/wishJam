@@ -8,10 +8,7 @@ public class manageDAO {
 	//4. 공통경로
 	private String url = "img/profile/";
 	private String banner = "img/banner/";
-	
-	private Connection con;
-	private PreparedStatement ps;
-	private ResultSet rs;
+	private String grade = "img/grade/";
 	
 	public String getHomePath() {
 		return homePath;
@@ -25,28 +22,9 @@ public class manageDAO {
 	public String getBanner() {
 		return banner;
 	}
-	public manageDAO() {
+	public String getGrade() {
+		return grade;
 	}
-	
-	public void imgUpload(int idx, String url) {
-		try {
-			con = com.db.wishJam.DbConn.getConn();
-			String sql = "update banner set b_src = ? where b_idx = ?";
-			ps = con.prepareStatement(sql);
-			ps.setString(1, url);
-			ps.setInt(2, idx);
-			ps.executeQuery();			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				if(ps!=null) 
-					ps.close();
-				if(con!=null) 
-					con.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+	public manageDAO() {
 	}
 }

@@ -33,7 +33,6 @@
                     File file = new File(mdao.getHomePath() + mdao.getUrl());
                     File[] fileList = file.listFiles();
                     String imgSrc = "";
-                    System.out.println(mdao.getHomePath());	
                     for (File f : fileList) {
                         if (f.isFile() && f.getName().startsWith(id)) {
                             imgSrc = "/wishJam/img/profile/"+f.getName();	//관리자이름이랑 같으면 경로지정하고 break
@@ -42,7 +41,6 @@
                         	imgSrc = "/wishJam/img/profile/default.jpg"; //아니면 default이미지
                         }
                     }
-                    System.out.println(imgSrc);
                 %>
                 <div>
                     <label>프로필 사진 변경</label>
