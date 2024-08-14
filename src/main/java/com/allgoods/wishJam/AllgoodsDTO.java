@@ -38,7 +38,8 @@ private String name;
 private int price;
 private String seller;
 private String thumbnail_url;
-
+private int jjim;
+private int discount;
 private String user_id;
 
 
@@ -49,10 +50,12 @@ private String user_id;
 }
  
 
-public AllgoodsDTO(int idx, String name, int price, String seller, String thumbnail_url) {
+public AllgoodsDTO(int idx,int jjim, String name, int price, String seller, String thumbnail_url, int discount) {
 	super();
-	this.idx = idx;
+	this.idx= idx;
+	this.jjim = jjim;
 	this.name = name;
+	this.discount=discount;
 	this.price = price;
 	this.seller = seller;
 	this.thumbnail_url = thumbnail_url;
@@ -88,6 +91,26 @@ public String getThumbnail_url() {
 }
 public void setThumbnail_url(String thumbnail_url) {
 	this.thumbnail_url = thumbnail_url;
+}
+
+
+public int getJjim() {
+	return jjim;
+}
+
+
+public void setJjim(int jjim) {
+	this.jjim = jjim;
+}
+
+
+public int getDiscount() {
+	return discount;
+}
+
+
+public void setDiscount(int discount) {
+	this.discount = discount;
 }
 
 

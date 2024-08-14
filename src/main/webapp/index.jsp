@@ -20,9 +20,6 @@
     <%@ include file="header.jsp" %>
     <section>
         <article>
-            <div>
-                <h1 id="test1">제목</h1>
-            </div>
             <div class="slide slide_wrap">
                 <%
                     ArrayList<String> arr = bdao.getBannerList();

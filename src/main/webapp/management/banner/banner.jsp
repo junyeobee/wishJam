@@ -4,131 +4,222 @@
 <link rel="stylesheet" href="/wishJam/css/banner.css" />
 <jsp:useBean id="badd" class="com.manage.wishJam.BannerDAO"/>
 <%
-	int a = badd.getBIdx();
+	int idx = badd.getBIdx()+1;
 %>
+
 <script>
-	var seq = <%=a%>;
-    function addRow() {
-        var table = document.getElementById('bannerTable').getElementsByTagName('tbody')[0];
-        var rowCount = table.rows.length;
-        var newRow = table.insertRow(rowCount);
+	function openTab(evt, tabName) {
+	    var i, tabcontent, tablinks;
 
-        var cell1 = newRow.insertCell(0);
-        cell1.innerHTML = seq;
+	    // 모든 탭 콘텐츠 숨기기
+	    tabcontent = document.getElementsByClassName("tab-content");
+	    for (i = 0; i < tabcontent.length; i++) {
+	        tabcontent[i].style.display = "none";
+	        tabcontent[i].classList.remove("active");
+	    }
 
-        var cell2 = newRow.insertCell(1);
-        cell2.innerHTML = '<input type="text" name="b_name" required="required" />';
+	    // 모든 탭 링크에서 active 클래스 제거
+	    tablinks = document.getElementsByClassName("nav-tabs")[0].getElementsByTagName("a");
+	    for (i = 0; i < tablinks.length; i++) {
+	        tablinks[i].classList.remove("active");
+	    }
 
-        var cell3 = newRow.insertCell(2);
-        cell3.innerHTML = '<input type="date" name="b_sdate" required="required" /> ~ <input type="date" name="b_edate" required="required" />';
+	    // 선택된 탭 콘텐츠 표시
+	    document.getElementById(tabName).style.display = "block";
+	    document.getElementById(tabName).classList.add("active");
 
-        var cell4 = newRow.insertCell(3);
-        cell4.innerHTML = '<img src="/wishJam/img/banner/default.jpg" alt="Prev">';
-
-        var cell5 = newRow.insertCell(4);
-        cell5.innerHTML = '<input type="checkbox" id="chkbox" name="chkbox" />';
-        seq++;
-    }
-
-    function saveData() {
-        var table = document.getElementById('bannerTable').getElementsByTagName('tbody')[0];
-        var rows = table.rows;
-        var data = [];
-
-        for (var i = 0; i < rows.length; i++) {
-            var row = rows[i];
-            
-            // 각 셀에서 입력 필드를 안전하게 가져오는 코드
-            var b_nameInput = row.cells[1].getElementsByTagName('input')[0];
-            var b_sdateInput = row.cells[2].getElementsByTagName('input')[0];
-            var b_edateInput = row.cells[2].getElementsByTagName('input')[1];
-
-            // 각 입력 필드가 존재하는지 확인하고 값을 추출
-            var b_name = b_nameInput ? b_nameInput.value : '';
-            var b_sdate = b_sdateInput ? b_sdateInput.value : '';
-            var b_edate = b_edateInput ? b_edateInput.value : '';
-
-            // 필드 값이 모두 채워졌는지 확인
-            if (b_name && b_sdate && b_edate) {
-                data.push({ b_name: b_name, b_sdate: b_sdate, b_edate: b_edate });
-            }
-        }
-
-        // 폼 데이터를 만들어서 서버에 전송
-        var form = document.createElement('form');
-        form.method = 'post';
-        form.action = 'banner_save.jsp';
-
-        for (var i = 0; i < data.length; i++) {
-            var inputName = document.createElement('input');
-            inputName.type = 'hidden';
-            inputName.name = 'b_name_' + i; // 수정된 이름
-            inputName.value = data[i].b_name;
-
-            var inputSDate = document.createElement('input');
-            inputSDate.type = 'hidden';
-            inputSDate.name = 'b_sdate_' + i; // 수정된 이름
-            inputSDate.value = data[i].b_sdate;
-
-            var inputEDate = document.createElement('input');
-            inputEDate.type = 'hidden';
-            inputEDate.name = 'b_edate_' + i; // 수정된 이름
-            inputEDate.value = data[i].b_edate;
-
-            form.appendChild(inputName);
-            form.appendChild(inputSDate);
-            form.appendChild(inputEDate);
-        }
-
-        document.body.appendChild(form);
-        form.submit();
-    }
+	    // 선택된 탭 링크에 active 클래스 추가
+	    evt.currentTarget.classList.add("active");
+	}
     
     function imgChange(ss){
     	window.open('bannerImgsave.jsp?idx='+ss, 'gradeIconChange', 'width=400,height=200')
     }
+    
+    function deleteData() {
+        // 확인 대화 상자 표시
+        var confirmDelete = confirm('정말 삭제하시겠습니까?');
+        if (confirmDelete) {
+        	//bannerTable tbody 선택
+            var table = document.getElementById('bannerTable').getElementsByTagName('tbody')[0];
+            var rows = table.rows;
+            var selectedIds = [];
 
+            //체크박스 선택된 행 
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                var checkbox = row.cells[4].getElementsByTagName('input')[0];
+
+                if (checkbox.checked) {
+                    var idCell = row.cells[0];
+                    selectedIds.push(idCell.innerText.trim());
+                }
+            }
+
+            // 선택된 ID가 있는 경우에만 요청 전송
+            if (selectedIds.length > 0) {
+                var form = document.createElement('form');
+                form.method = 'post';
+                form.action = 'bannerDelete.jsp';
+
+                // 선택된 ID를 폼에 추가
+                for (var i = 0; i < selectedIds.length; i++) {
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'b_idx_' + i;
+                    input.value = selectedIds[i];
+                    form.appendChild(input);
+                }
+
+                document.body.appendChild(form);
+                form.submit();
+            } else {
+                alert('삭제할 항목을 선택해주세요.');
+            }
+        }
+    }
 </script>
-<div class="container">
-	<h2>배너 관리</h2>
-    <div class="conTop">
-	    <div class="search-area">
-	        <input type="text" placeholder="검색어를 입력해주세요.">
-	        <button type="button">검색</button>
-	    </div>
-	    <div class="button-area">
-	        <button class ="contopbtn" type="button" onclick="addRow()">추가</button>
-	        <button class ="contopbtn" type="button" onclick="saveData()">저장</button>
-	        <button type="button" onclick="deleteData()">선택 삭제</button>
-	    </div>
+<style>
+	.container {
+	    width: 100%;
+	    height: calc(100% - 20vh);
+	    margin: auto;
+	}
+	.nav-tabs {
+	    display: flex;
+	}
+	.nav-tabs a {
+	    padding: 10px 20px;
+	    text-decoration: none;
+	    color: #333;
+	    border: 1px solid #ccc;
+	    border-bottom: none;
+	    background-color: #f1f1f1;
+	    margin-right: 5px;
+	    cursor: pointer;
+	}
+	.nav-tabs a.active {
+	    background-color: white;
+	    font-weight: bold;
+	    border-top: 2px solid #007bff;
+	    border-right: 2px solid #ccc;
+	    border-left: 2px solid #ccc;
+	    border-bottom: 1px solid white;
+	}
+	.tab-content {
+	    border: 1px solid #ccc;
+	    height:100%;
+	    padding: 20px;
+	    margin-top: -1px;
+	    display: none;
+	}
+	.tab-content.active {
+	    display: block;
+	    background-color:white;
+	}
+	.conTop {
+	    display: flex;
+	    justify-content: space-between;
+	    margin-bottom: 20px;
+	}
+	.search-area input {
+		margin-right: 10px;
+	}
+	.banner-management {
+	    width: 100%;
+	    border-collapse: collapse;
+	}
+	.banner-management th, .banner-management td {
+	    border: 1px solid #ddd;
+	    padding: 8px;
+	    text-align: center;
+	}
+	.banner-management th {
+	    background-color: #f2f2f2;
+	}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h2>배너 설정</h2>
+        <div class="nav-tabs">	<!-- nav-tab에 있는 a링크중 active인 친구가 선택될시에 해당 tab-content내용 출력 -->
+            <a onclick="openTab(event, 'manage')" class = "active">전체 배너</a>
+            <a onclick="openTab(event, 'upload')">배너 업로드</a>
+            <a onclick="openTab(event, 'settings')">배너 설정</a>
+        </div>
+        <div id="manage" class="tab-content active">	<!--tab-content, active만 출력 -->
+            <div class="conTop">
+                <div class="search-area">
+                    <input type="text" placeholder="검색">
+                    <button type="button">검색</button>
+                </div>
+                <div class="button-area">
+                    <button type="button" onclick="deleteData()">선택 삭제</button>
+                </div>
+            </div>
+            <table class="banner-management" id="bannerTable">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>이름</th>
+                        <th>기간</th>
+                        <th>미리보기</th>
+                        <th>선택</th>
+                    </tr>
+                </thead>
+				<tbody>
+                    <%
+                        ArrayList<BannerDTO> arr = badd.listBanner();
+                        if(arr!=null){
+                            for(BannerDTO dto : arr){
+                    %>
+                    <tr>
+                        <td><%=dto.getB_idx() %></td>
+                        <td><%=dto.getB_name() %></td>
+                        <td><%=dto.getB_sdate() %> ~ <%=dto.getB_edate() %></td>
+                        <td><img src="<%=dto.getB_src() %>" alt="image" onclick="imgChange('<%=dto.getB_idx() %>');"></td>
+                        <td><input type="checkbox" name="chkbox"></td>
+                    </tr>
+                    <%
+                            }
+                        }
+                    %>
+			</tbody>
+        </table>
     </div>
-    <table class="banner-management" id="bannerTable">
-        <thead>
-            <tr>
-                <th width="30px">번호</th>
-                <th width="200px">배너명</th>
-                <th width="150px">기간</th>
-                <th width="180px">미리보기</th>
-                <th width="50px">선택</th>
-            </tr>
-        </thead>
-        <tbody>
-			<%
-				ArrayList<BannerDTO> arr = badd.listBanner();
-				if(arr!=null){
-					for(BannerDTO dto : arr){
-						%>
-							<tr>
-								<td><%=dto.getB_idx() %></td>
-								<td><%=dto.getB_name() %></td>
-								<td><%=dto.getB_sdate() %> ~ <%=dto.getB_edate() %></td>
-								<td><img src="<%=dto.getB_src() %>" alt="image" onclick = 'imgChange("<%=dto.getB_idx() %>");'/></td>
-								<td><input type="checkbox" id="chkbox" name = "chkbox"/></td>
-							</tr>
-						<%
-					}
-				}
-			%>
-        </tbody>
-    </table>
+
+    <div id="upload" class="tab-content">          
+      	<form action="">
+      		<div>
+      			<label>배너 번호??</label><label><%=idx %></label>
+      		</div>
+      		
+      		<div>
+      			<label>제목</label><input type="text" required="required" name = "b_name"/>
+      		</div>
+			
+      		<div>
+      			<label>이미지</label>
+      			<button>사진 올리기</button>
+      		</div>
+      		
+      		<div>
+      			<label>시작 날짜</label>
+      			<input type="date" name = "b_sdate"/>
+      		</div>
+      		<div>
+      			<label>종료 날짜</label>
+      			<input type="date" name = "b_edate"/>
+      		</div>
+      		<div>
+      			<label>공지사항 링크</label>
+      			<button></button>
+      		</div>
+      		<input type="submit" />
+      	</form>
+    </div>
+
+    <div id="settings" class="tab-content">
+        <h3>배너 설정</h3>
+    </div>
 </div>
