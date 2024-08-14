@@ -32,14 +32,14 @@ public class AllgoodsDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				String m_nick= rs.getString("m_nick");
-				String s_title = rs.getString("s_title");
-				int s_idx=rs.getInt("s_idx");
-				int s_jjim = rs.getInt("s_jjim");
-				int s_discnt= rs.getInt("s_discnt");
-				int sg_main = rs.getInt("sg_main");
-				String s_img = rs.getString("s_img");
-				products.add(new AllgoodsDTO(m_nick,s_title,s_idx,s_jjim ,s_discnt, sg_main, s_img));
+				String seller= rs.getString("m_nick");
+				String name = rs.getString("s_title");
+				int idx=rs.getInt("s_idx");
+				int jjim = rs.getInt("s_jjim");
+				int discount= rs.getInt("s_discnt");
+				int price = rs.getInt("sg_main");
+				String thumbnail_url = rs.getString("s_img");
+				products.add(new AllgoodsDTO(idx,jjim, name, price, seller, thumbnail_url,discount));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,56 +59,35 @@ public class AllgoodsDAO {
 	}
 	
 	
-	
-	//찜하기 메서드
-	public boolean addJjim(AllgoodsDTO jjim) {
+	public int JjimPlus(String id) {
 		
 	
+		
 		try {
 			
 			con=com.db.wishJam.DbConn.getConn();
-
-			String sql="insert into jjim (m_idx, s_idx, s_title) values (?, ?, ?)";
+			
+			
+			String sql="update sell set s_jjim  = s_jjim+1 ";
 			
 			ps=con.prepareStatement(sql);
-			ps.setInt(1, jjim.getM_idx());
-			ps.setInt(2, jjim.getS_idx());
-			ps.setString(3, jjim.getS_title());
 			
-			return ps.executeUpdate() >0;
+			
+			int count = ps.executeUpdate();
+			
+			return count;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return -1;
+		}finally {
+			
 			
 		}
 		
-		return false;
+	
 		
 	}
-	
-	// 찜 갯수 증가
-	public boolean incrementJjim(int s_idx) {
-		
-		try {
-			con=com.db.wishJam.DbConn.getConn();
-			
-			String sql="Update sell set s_jjim=s_jjim+1 where s_idx=?";
-			
-			ps=con.prepareStatement(sql);
-			ps.setInt(1, s_idx);
-			
-			return ps.executeUpdate() >0;
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return false;
-	}
-	
-	
-	
 	
 	//페이징 처리
 	

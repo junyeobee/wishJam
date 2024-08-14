@@ -3,83 +3,12 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.allgoods.wishJam.AllgoodsDTO"%>
 <jsp:useBean id="dao" class="com.allgoods.wishJam.AllgoodsDAO"></jsp:useBean>
-<jsp:useBean id="dto" class="com.allgoods.wishJam.AllgoodsDTO"></jsp:useBean>
 <%
 
 String id= "sunny02";
 session.setAttribute("userId", id);
 
-session.setAttribute("m_idx", dto.getM_idx());
-Integer memberId = (Integer) session.getAttribute("m_idx");
-Integer s_idx=(Integer) session.getAttribute("s_idx");
 
-if(request.getMethod().equalsIgnoreCase("POST")){
-	int productId = Integer.parseInt(request.getParameter("productId"));
-	String s_title = request.getParameter("s_title");
-	
-	if(id == null){
-		%>
-		
-		<script>
-		window.alert('로그인이 필요합니다.');
-		</script>
-		
-		<%
-	}else{
-		
-		AllgoodsDTO adto= new AllgoodsDTO();
-		adto.setM_idx(memberId);
-		adto.setS_idx(productId);
-		adto.setS_title(s_title);
-		
-		boolean added = dao.addJjim(adto);
-		
-		if(added){
-			
-			dao.incrementJjim(productId);
-			%>
-			
-			<script>
-			//찜하기 버튼
-			 function jjim(productId){
-
-				
-				var jjimbt=document.getElementById("jjimimg_"+productId);
-				var on = "heart.png";
-				var off = "heart_gray.png";
-
-					if(jjimbt.src.endsWith(off)){ 
-			            
-						jjimbt.src="/wishJam/img/"+on;
-
-						}else{
-							jjimbt.src="/wishJam/img/"+off;
-						}
-			}
-			
-			</script>
-			
-			<% 
-			
-			
-		}else{
-			
-			
-		}
-		
-		
-		
-		
-		
-	}
-	
-
-	
-}
-
-
-
-//페이징
 	String cp_s = request.getParameter("cp");
 	if(cp_s==null||cp_s.equals("")){
 		cp_s="1";
@@ -114,7 +43,6 @@ if(request.getMethod().equalsIgnoreCase("POST")){
 <link rel="stylesheet" href="/wishJam/css/index.css" />
 <link rel="stylesheet" href="/wishJam/css/allFonts.css" />
 <meta charset="UTF-8">
-
 <style>
 section {
   font-family: 'Cafe24Ohsquareair';
@@ -199,7 +127,30 @@ color:orange;
 </style>
 
 <script>
+//찜하기 버튼
+function jjim(productId){
 
+	
+	var jjimbt=document.getElementById("jjimimg_"+productId);
+	var on = "heart.png";
+	var off = "heart_gray.png";
+
+		if(jjimbt.src.endsWith(off)){ 
+            
+			jjimbt.src="/wishJam/img/"+on;
+
+			}else{
+				jjimbt.src="/wishJam/img/"+off;
+			}
+	
+	
+	
+
+
+
+
+
+}
 
 
 function updateSortOrder() {
@@ -227,7 +178,7 @@ function updateSortOrder() {
 
 		  String sortOrder=request.getParameter("sortOrder");
 		  
-		  System.out.println("sortorder"+sortOrder);	
+		  System.out.println(sortOrder);	
 		  
 		  List<AllgoodsDTO> productList = dao.allGoods(sortOrder);
 		  
@@ -240,31 +191,22 @@ function updateSortOrder() {
 			%>
 			<div class="item">
 				<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
-					<img src="<%=products.getS_img()%>" alt="썸네일">
+					<img src="<%=products.getThumbnail_url()%>" alt="썸네일">
 				</div>
 				<div class="inner">
-					<div class="writer"><%=products.getM_nick()%></div>
-					<div><%=products.getS_title()%></div>
+					<div class="writer"><%=products.getSeller()%></div>
+					<div><%=products.getName()%></div>
 					<div>
 					<% 
-					int dis=products.getS_discnt();
+					int dis=products.getDiscount();
 					
 					if(dis>0){
 						
 					  %><span class="discount"><%=dis +"%"%></span> <%
 					}else{ }%>
-					<%= products.getSg_main()%></div>
+					<%= products.getPrice()%></div>
 					
-					
-					   <!-- 찜하기 폼 -->
-            <form action="allGoods.jsp" method="post" style="display:inline;">
-                <input type="hidden" name="productId" value="<%= products.getS_idx() %>">
-                <input type="hidden" name="m_idx" value="<%= session.getAttribute("m_idx") %>"> <!-- 회원 ID 세션에서 가져오기 -->
-                <span class="heart" onclick="this.closest('form').submit();">
-                    <img src="/wishJam/img/heart_gray.png" id="jjimimg_<%=products.getS_idx()%>">
-                </span>
-            </form>
-					<span class="heart" onclick="jjim();"><img src="/wishJam/img/heart_gray.png" id="jjimimg_<%=products.getS_idx()%>"></span>
+					<span class="heart" onclick="jjim(<%=products.getIdx()%>);"><img src="/wishJam/img/heart_gray.png" id="jjimimg_<%=products.getIdx()%>"></span>
 				</div>
 
 			</div>

@@ -30,183 +30,88 @@ CREATE TABLE s_goods (
     sg_discnt number(5, 0), 
     sg_main number(10,0)
 );
-
-CREATE TABLE jjim (
-    m_idx number,
-    s_idx number,
-    g_name varchar2(50)
-);
  */
 
 public class AllgoodsDTO {
-private int s_idx;
-private String s_title;
-private int sg_main; //상품가격
-private String m_nick;
-private String s_img;
-private int s_jjim;
-private int s_discnt;
-private String userid;
-
-
-private int m_idx;
-
-
-public String getUserid() {
-	return userid;
-}
-
-
-
-public void setUserid(String userid) {
-	this.userid = userid;
-}
-
+private int idx;
+private String name;
+private int price;
+private String seller;
+private String thumbnail_url;
+private int jjim;
+private int discount;
+private String user_id;
 
 
 
 
  public AllgoodsDTO() {
-	
+	// TODO Auto-generated constructor stub
 }
  
 
- 
-
-
-
-
-
-
-
-public int getM_idx() {
-	return m_idx;
+public AllgoodsDTO(int idx,int jjim, String name, int price, String seller, String thumbnail_url, int discount) {
+	super();
+	this.idx= idx;
+	this.jjim = jjim;
+	this.name = name;
+	this.discount=discount;
+	this.price = price;
+	this.seller = seller;
+	this.thumbnail_url = thumbnail_url;
 }
 
 
-
-public void setM_idx(int m_idx) {
-	this.m_idx = m_idx;
+public int getIdx() {
+	return idx;
+}
+public void setIdx(int idx) {
+	this.idx = idx;
+}
+public String getName() {
+	return name;
+}
+public void setName(String name) {
+	this.name = name;
+}
+public int getPrice() {
+	return price;
+}
+public void setPrice(int price) {
+	this.price = price;
+}
+public String getSeller() {
+	return seller;
+}
+public void setSeller(String seller) {
+	this.seller = seller;
+}
+public String getThumbnail_url() {
+	return thumbnail_url;
+}
+public void setThumbnail_url(String thumbnail_url) {
+	this.thumbnail_url = thumbnail_url;
 }
 
 
-
-
-
-
-
-public int getS_idx() {
-	return s_idx;
+public int getJjim() {
+	return jjim;
 }
 
 
-
-public void setS_idx(int s_idx) {
-	this.s_idx = s_idx;
+public void setJjim(int jjim) {
+	this.jjim = jjim;
 }
 
 
-
-public String getS_title() {
-	return s_title;
+public int getDiscount() {
+	return discount;
 }
 
 
-
-public void setS_title(String s_title) {
-	this.s_title = s_title;
+public void setDiscount(int discount) {
+	this.discount = discount;
 }
-
-
-
-public int getSg_main() {
-	return sg_main;
-}
-
-
-
-public void setSg_main(int sg_main) {
-	this.sg_main = sg_main;
-}
-
-
-
-
-
-
-
-public String getS_img() {
-	return s_img;
-}
-
-
-
-public void setS_img(String s_img) {
-	this.s_img = s_img;
-}
-
-
-
-public int getS_jjim() {
-	return s_jjim;
-}
-
-
-
-public void setS_jjim(int s_jjim) {
-	this.s_jjim = s_jjim;
-}
-
-
-
-public int getS_discnt() {
-	return s_discnt;
-}
-
-
-
-public void setS_discnt(int s_discnt) {
-	this.s_discnt = s_discnt;
-}
-
-
-
-public String getM_nick() {
-	return m_nick;
-}
-
-
-
-public void setM_nick(String m_nick) {
-	this.m_nick = m_nick;
-}
-
-
-
-public AllgoodsDTO(String m_nick, String s_title, int s_idx, int s_jjim, int s_discnt, int sg_main,
-		String s_img) {
-	this.s_idx = s_idx;
-	this.s_title = s_title;
-	this.sg_main = sg_main;
-	this.m_nick = m_nick;
-	this.s_img = s_img;
-	this.s_jjim = s_jjim;
-	this.s_discnt = s_discnt;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
  
