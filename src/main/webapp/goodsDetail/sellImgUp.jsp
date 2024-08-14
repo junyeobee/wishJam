@@ -4,6 +4,7 @@
 <%
 String s_idx_s = request.getParameter("s_idx");
 String m_nick = request.getParameter("m_nick");
+String select_id = request.getParameter("select_id");
 
 int s_idx = 0;
 
@@ -13,6 +14,7 @@ if (s_idx_s != null) {
 
 idao.setS_idx(s_idx);
 idao.setM_nick(m_nick);
+idao.setSelect_id(select_id);
 %>
 <!DOCTYPE html>
 <html>
@@ -23,7 +25,7 @@ idao.setM_nick(m_nick);
 <body>
 	<form name="uploadfm" action="sellImgUp_ok.jsp" method="post"
 		enctype="multipart/form-data">
-		<input type="file" name="sellImg"><input type="submit" value="확인">
+		<input type="file" name="uploadImg"><input type="submit" value="확인">
 	</form>
 </body>
 </html>

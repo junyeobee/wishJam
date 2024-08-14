@@ -18,7 +18,7 @@ Date e_date = Date.valueOf(getend);
 ddto.setS_start(s_date);
 ddto.setS_end(e_date);
 
-int s_goods_result = 0;
+int s_goods_result = 0;String a[]= new String[2];
 String sg_names[] = request.getParameterValues("sg_name");
 String sg_prices[] = request.getParameterValues("sg_price");
 String sg_counts[] = request.getParameterValues("sg_count");
@@ -39,17 +39,15 @@ String sg_discnt[] = request.getParameterValues("sg_discnt");
 <jsp:setProperty property="s_type" name="ddto"></jsp:setProperty>
 <jsp:setProperty property="s_trade" name="ddto"></jsp:setProperty>
 <jsp:useBean id="ddao" class="com.wishJam.detail.DetailDAO"></jsp:useBean>
-
 <jsp:useBean id="sgdao" class="com.wishJam.s_goods.S_goodsDAO"></jsp:useBean>
-
 <%
 int detail_result = ddao.addSellPage(ddto);
 
 if (detail_result > 0) {
-	for (int i = 0; i < sg_names.length; i++) {
+	 for (int i = 0; i < sg_names.length; i++) {
 		s_goods_result+=sgdao.addGoods(ddto.getS_idx(), sg_names[i], Integer.parseInt(sg_prices[i]), Integer.parseInt(sg_counts[i]), Integer.parseInt(sg_limits[i]), Integer.parseInt(sg_discnt!=null?sg_discnt[i]:"0"));
-	}
-
+	 }
+	
 	String msg = s_goods_result >= sg_names.length ? "성공" : "실패";
 %>
 <script>

@@ -1,14 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <script>
+	function outClick(e) {
+		var cw1 = document.getElementById("cw1");
+		var cw2 = document.getElementById("cw2");
+
+		if (cw1.style.display == "block") {
+			if (e.target.className != "psqr") {
+				cw1.style.display = "none";
+			}
+		} else if (cw2.style.display == "block") {
+			if (e.target.className != "psqr") {
+				cw2.style.display = "none";
+			}
+		}
+	}
+
 	function addSale() {
 		var salebtn = document.makeSellfm.addsale;
 		var salebox = document.getElementById('salebox');
+		var Dcgoods = document.getElementsByName("discnt_box");
+		var dcr = document.makeSellfm.s_discnt;
+		var selectdcr = document.makeSellfm.select_discnt;
 
 		if (salebtn.checked) {
 			salebox.style.display = "block";
+			dcr.value=selectdcr.options[selectdcr.selectedIndex].value;
 		} else {
 			salebox.style.display = "none";
+			document.makeSellfm.s_discnt.value="0";
+			
+			for(var i=0; i<Dcgoods.length;i++){
+				Dcgoods[i].checked=false;
+				document.makeSellfm.allSale.checked=false;
+			}
 		}
 
 	}
@@ -71,48 +96,48 @@
 		} else if (v == 'UL') {
 			var st = '<span><u>' + selected + '</u></span>';
 		}
-		/* else if (v == 'C') {
-			var st = '<span style="color: '+pickfc+';">' + selected + '</span>';
-		} else if (v == 'BC') {
-			var st = '<span style="background-color: pink;">' + selected
-					+ '</span>';
-		} */
 
 		var ad = arr[0] + st + arr[1];
 
 		content.innerHTML = ad;
+		document.makeSellfm.s_content.value=content.innerHTML;
 	}
 
 	function openColorpicker(v) {
 		if (v == 'C') {
 			var picker = document.getElementById("cw1");
+			var otherp = document.getElementById("cw2");
 		} else if (v == 'BC') {
 			var picker = document.getElementById("cw2");
+			var otherp = document.getElementById("cw1");
 		}
 
 		if (picker.style.display == "none") {
 			picker.style.display = "block";
+			otherp.style.display = "none";
 		} else {
 			picker.style.display = "none";
 		}
 	}
 
-	function openImgpop(idx, nick) {
-		window.open('sellImgUp.jsp?s_idx=' + idx + '&m_nick=' + nick,
+	function openImgpop(idx, nick, tid) {
+		window.open('sellImgUp.jsp?s_idx=' + idx + '&m_nick=' + nick+'&select_id='+tid,
 				'sellImgUp', 'width=700, height=600');
 	}
 
 	function selectThem() {
 		var allSale = document.makeSellfm.allSale;
-		var saleGoods = document.getElementsByName("sg_discnt");
+		var saleGoods = document.getElementsByName("discnt_box");
 
 		if (allSale.checked) {
 			for (var i = 0; i < saleGoods.length; i++) {
 				saleGoods[i].checked = "checked";
+				saleGoods[i].nextSibling.value="1";
 			}
 		} else {
 			for (var i = 0; i < saleGoods.length; i++) {
 				saleGoods[i].checked = false;
+				saleGoods[i].nextSibling.value="0";
 			}
 		}
 	}
@@ -136,12 +161,12 @@
 				+ fm.whenT2.options[fm.whenT2.selectedIndex].value;
 	}
 
-	function addOpt() {
+	function addOpt(sidx, mnick) {
 		var optsbox = document.getElementById("optsbox");
 		var dislist = document.getElementById("dislist");
 		var cnt = optsbox.childElementCount;
 
-		makeOptbox(cnt);
+		makeOptbox(cnt, sidx, mnick);
 		makeListbox(cnt);
 	}
 
@@ -160,11 +185,16 @@
 
 		var li2 = document.createElement("li");
 		var input1 = document.createElement("input");
+		input1.name="discnt_box";
 		input1.setAttribute("type", "checkbox");
-		input1.name = "sg_discnt";
-		input1.value = "1";
 		input1.setAttribute("onclick", "selectIt(this)");
 		li2.append(input1);
+		
+		var input2 = document.createElement("input");
+		input2.setAttribute("type","hidden");
+		input2.name = "sg_discnt";
+		input2.value = "0";
+		li2.append(input2);
 
 		var li3 = document.createElement("li");
 		li3.setAttribute("name", "op_sg_name" + cnt);
@@ -175,7 +205,7 @@
 		ul1.append(li2, li3, li4);
 	}
 
-	function makeOptbox(cnt) {
+	function makeOptbox(cnt,sidx, mnick) {
 		var optbox = document.createElement("div");
 		optbox.className = "fbox optbox";
 
@@ -183,11 +213,18 @@
 		div1.className = "fbox";
 		optbox.append(div1);
 
-		var img1 = document.createElement("img");
-		img1.src = "../img/img1.jpg";
-		img1.className = "selectimg";
+		var div3 = document.createElement("div");
+		div3.id="option_img"+cnt;
+		div3.className="options fbox";
+		div3.setAttribute("onclick","openImgpop("+sidx+", '"+mnick+"', this.id)");
+		
+		var label1 = document.createElement("label");
+		label1.append(document.createTextNode("이미지 등록"));
+		
+		div3.append(label1);
+
 		var div2 = document.createElement("div");
-		div1.append(img1, div2);
+		div1.append(div3, div2);
 
 		var ul1 = document.createElement("ul");
 		div2.append(ul1);
@@ -506,9 +543,9 @@
 
 	function selectIt(t) {
 		if (t.checked) {
-			t.value = "1";
+			t.nextSibling.value = "1";
 		} else if (t.checked == false) {
-			t.value = "0";
+			t.nextSibling.value = "0";
 		}
 	}
 
@@ -521,59 +558,49 @@
 		document.getElementById("txt").focus();
 	}
 
-	function pickColorforC(t) {
-		var selected = document.getSelection().toString();
+	function pickColor(t) {
+
 		var s = document.getSelection();
 
-		var c = t.style.backgroundColor;
-		var rgb = c.replace(/[^%,.\d]/g, "").split(",");
+		if (s.isCollapsed == false) {
+			var selected = document.getSelection().toString();
 
-		var code = "";
-		rgb.forEach(function(str, hex) {
-			hex = parseInt(str).toString(16);
+			var c = t.style.backgroundColor;
+			var rgb = c.replace(/[^%,.\d]/g, "").split(",");
 
-			if (hex.length == 1) {
-				hex = "0" + hex;
-			}
+			var code = "";
+			rgb.forEach(function(str, hex) {
+				hex = parseInt(str).toString(16);
 
-			code += hex + "";
-		});
+				if (hex.length == 1) {
+					hex = "0" + hex;
+				}
 
-		var content = document.getElementById("txt");
-		var arr = (content.innerHTML).split(selected);
+				code += hex + "";
+			});
 
-		var st = '<span style="color:#'+code+';">' + selected + '</span>';
+			var content = document.getElementById("txt");
 
-		var ad = arr[0] + st + arr[1];
+			var arr = (content.innerHTML).split(selected);
+			var cbox = t.parentNode.parentNode.parentNode.parentNode;
+			
+			if(cbox.id=="cw1"){
+				var st = '<span style="color:#'+code+';">' + selected + '</span>';
+			} else if (cbox.id == "cw2") {
+				var st = '<span style="background-color:#'+code+';">'
+						+ selected + '</span>';
+			} 
+			
+			var ad = arr[0] + st + arr[1];
 
-		content.innerHTML = ad;
+			content.innerHTML = ad;
+			document.makeSellfm.s_content.value=content.innerHTML;
+		}
 	}
-	
-	function pickColorforBC(t) {
-		var selected = document.getSelection().toString();
-		var s = document.getSelection();
 
-		var c = t.style.backgroundColor;
-		var rgb = c.replace(/[^%,.\d]/g, "").split(",");
-
-		var code = "";
-		rgb.forEach(function(str, hex) {
-			hex = parseInt(str).toString(16);
-
-			if (hex.length == 1) {
-				hex = "0" + hex;
-			}
-
-			code += hex + "";
-		});
-
-		var content = document.getElementById("txt");
-		var arr = (content.innerHTML).split(selected);
-
-		var st = '<span style="background-color:#'+code+';">' + selected + '</span>';
-
-		var ad = arr[0] + st + arr[1];
-
-		content.innerHTML = ad;
+	function selectDC(t){
+		var dcr = document.makeSellfm.s_discnt;
+		
+		dcr.value=t.options[t.selectedIndex].value;
 	}
 </script>

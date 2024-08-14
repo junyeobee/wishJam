@@ -26,11 +26,6 @@ body {
 	text-align: center;
 }
 
-.selectimg {
-	width: 150px;
-	height: 150px;
-}
-
 .fbox {
 	display: flex;
 }
@@ -149,50 +144,94 @@ ul {
 	padding: 5px;
 }
 
-#cw1 {
+.cPalette {
 	position: absolute;
 	z-index: 10;
-	margin-left: 25px;
-	width: 280px;
-	height: 200px;
+	width: 256px;
+	height: 176px;
 	border-radius: 5px;
-	border: 1px solid gray;
+	border: 1px solid #D1D1D1;
 	background-color: white;
-	margin-left: 25px
 }
 
-#cw2 {
-	position: absolute;
-	z-index: 10;
-	margin-left: 25px;
-	width: 280px;
-	height: 200px;
-	border-radius: 5px;
-	border: 1px solid gray;
-	background-color: white;
-	margin-left: 25px
+.cPalette div {
+	margin: 3px;
 }
 
-.colorWindow li {
-	margin: 3px 2px;
+.cPalette li {
+	margin: 0px 1px;
 }
 
 .psqr {
 	width: 23px;
 	height: 23px;
 	border-radius: 3px;
-	border: 0px solid white;
+	border: 1px solid #E6E6E6;
+	margin: 0px 0px;
 }
 
 .psqr:hover {
 	cursor: pointer;
 	transform: scale(1.04, 1.04);
+	box-shadow: 0 0 0 1px #E6E6E6;
+}
+
+.thumbs {
+	width: 215px;
+	height: 215px;
+	border: 1px solid gray;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+}
+
+.thumbs:hover {
+	cursor: pointer;
+}
+
+.thumbs label {
+	font-size: 20px;
+}
+
+.thumbs label:hover {
+	cursor: pointer;
+}
+
+.thumbImg {
+	width: 215px;
+	height: 215px;
+	object-fit: cover;
+	border-radius: 10px;
+}
+
+.options {
+	width: 150px;
+	height: 150px;
+	border: 1px solid gray;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+}
+
+.options:hover {
+	cursor: pointer;
+}
+
+.options label:hover {
+	cursor: pointer;
+}
+
+.optionimg {
+	width: 150px;
+	height: 150px;
+	object-fit: cover;
+	border-radius: 10px;
 }
 </style>
 
 <%@ include file="scriptDetail.jsp"%>
 </head>
-<body>
+<body onmousedown="outClick(event)">
 	<section>
 		<h2>게시글 작성</h2>
 
@@ -201,7 +240,12 @@ ul {
 				type="hidden" name="m_nick" value="<%=m_nick%>">
 			<article>
 				<ul>
-					<li>섬네일 <img src="../img/img1.jpg" class="selectimg"></li>
+					<li class="fbox" style="justify-content: center;">
+						<div id="thumb_img" class="thumbs fbox"
+							onclick="openImgpop(<%=s_idx%>, '<%=m_nick%>',this.id)">
+							<label>섬네일</label>
+						</div>
+					</li>
 					<li>카테고리 <select name="c_idx">
 							<option value="1">팬시</option>
 							<option value="2">문구</option>
@@ -220,40 +264,30 @@ ul {
 											<%
 											}
 											%>
-									</select> <input type="button" value="FS"
+									</select> <input type="button" value="FS" name="styleFS"
 										onclick="styleSelected(this.value)"></li>
-									<li><input type="button" value="B"
+									<li><input type="button" value="B" name="styleB"
 										onclick="styleSelected(this.value)"></li>
-									<li><input type="button" value="I"
+									<li><input type="button" value="I" name="styleI"
 										onclick="styleSelected(this.value)"></li>
-									<li><input type="button" value="UL"
+									<li><input type="button" value="UL" name="styleUL"
 										onclick="styleSelected(this.value)"></li>
-									<li><input type="button" value="C"
+									<li><input type="button" value="C" name="styleC"
 										onclick="openColorpicker(this.value)">
-									<div id="cw1" style="display: none;">
+										<div class="cPalette" id="cw1" style="display: none;">
 											<div class="fbox">
 												<%
 												int colorr[] = { 255, 255, 255, 200, 50, 125, 0, 150, 255, 60 };
 												int colorg[] = { 20, 125, 240, 255, 200, 255, 50, 30, 100, 60 };
 												int colorb[] = { 20, 0, 0, 0, 0, 255, 255, 255, 200, 60 };
 												int colorl1[] = { 0, 0, 0, 10, 40, 25, 50, 25, 0, 48 };
-												int colorl2[] = { 50, 25, 0, 0, 13, 0, 50, 45, 30, 48 };
-												int colorl3[] = { 50, 50, 50, 50, 45, 0, 0, 0, 5, 48 };
+												int colorl2[] = { 50, 25, 0, 0, 13, 0, 50, 45, 31, 48 };
+												int colorl3[] = { 50, 50, 50, 50, 45, 0, 0, 0, 8, 48 };
 												int colord1[] = { 70, 50, 50, 50, 20, 30, 0, 40, 20, 30 };
 												int colord2[] = { 10, 25, 50, 50, 70, 60, 10, 5, 40, 30 };
 												int colord3[] = { 10, 0, 0, 0, 0, 40, 60, 60, 50, 30 };
 
 												for (int j = 0; j < colord1.length; j++) {
-												int colorg[] = { 20, 125, 240, 255, 200, 255, 50, 30, 100, 60};
-												int colorb[] = { 20, 0, 0, 0, 0, 255, 255, 255, 200, 60};
-												int colorl1[] = {0,0,0,10,30,25,50,25,0,48};
-												int colorl2[] = {50,25,0,0,13,0,50,45,30,48};
-												int colorl3[] = {50,50,50,50,45,0,0,0,5,48};
-												int colord1[] = {70,50,50,50,20,30,0,40,20,30};
-												int colord2[] = {10,25,50,50,70,60,10,5,40,30};
-												int colord3[] = {10,0,0,0,0,40,60,60,50,30};
-												
-												for(int j=0; j<colord1.length;j++){
 												%>
 												<ul>
 													<%
@@ -261,7 +295,7 @@ ul {
 													%>
 													<li><input type="button" class="psqr"
 														style="background-color: <%=cdao.colortoHex(colorr[j] - i * colord1[j], colorg[j] - i * colord2[j], colorb[j] - i * colord3[j])%>;"
-														onclick="pickColorforC(this)"></li>
+														onclick="pickColor(this)"></li>
 													<%
 													}
 													%>
@@ -270,7 +304,7 @@ ul {
 													%>
 													<li><input type="button" class="psqr"
 														style="background-color: <%=cdao.colortoHex(colorr[j] + i * colorl1[j], colorg[j] + i * colorl2[j], colorb[j] + i * colorl3[j])%>;"
-														onclick="pickColorforC(this)"></li>
+														onclick="pickColor(this)"></li>
 													<%
 													}
 													%>
@@ -281,9 +315,9 @@ ul {
 												%>
 											</div>
 										</div></li>
-									<li><input type="button" value="BC"
+									<li><input type="button" value="BC" name="styleBC"
 										onclick="openColorpicker(this.value)">
-									<div id="cw2" style="display: none;">
+										<div class="cPalette" id="cw2" style="display: none;">
 											<div class="fbox">
 												<%
 												for (int j = 0; j < colord1.length; j++) {
@@ -294,7 +328,7 @@ ul {
 													%>
 													<li><input type="button" class="psqr"
 														style="background-color: <%=cdao.colortoHex(colorr[j] - i * colord1[j], colorg[j] - i * colord2[j], colorb[j] - i * colord3[j])%>;"
-														onclick="pickColorforBC(this)"></li>
+														onclick="pickColor(this)"></li>
 													<%
 													}
 													%>
@@ -303,7 +337,7 @@ ul {
 													%>
 													<li><input type="button" class="psqr"
 														style="background-color: <%=cdao.colortoHex(colorr[j] + i * colorl1[j], colorg[j] + i * colorl2[j], colorb[j] + i * colorl3[j])%>;"
-														onclick="pickColorforBC(this)"></li>
+														onclick="pickColor(this)"></li>
 													<%
 													}
 													%>
@@ -314,14 +348,13 @@ ul {
 												%>
 											</div>
 										</div></li>
-									<li><input type="button" value="이미지"
-										onclick="openImgpop(<%=s_idx%>,'<%=m_nick%>')"></li>
+									<li><input id="content_img" type="button" value="이미지"
+										onclick="openImgpop(<%=s_idx%>,'<%=m_nick%>',this.id)"></li>
 								</ul>
 							</div>
 							<div class="editbox" onclick="boxclick()">
 								<div style="text-align: left; cursor: text;">
-									<span id="txt" contenteditable="true" onchange="TXTtyping()">
-									</span>
+									<span id="txt" contenteditable="true" oninput="TXTtyping()"></span>
 								</div>
 
 							</div>
@@ -431,8 +464,8 @@ ul {
 								}
 								%>
 							</select>
-						</div> <input type="text" name="s_start" id="s_start"
-						value="<%=y + "-" + ms + "-" + ds%>"> <input type="text"
+						</div> <input type="hidden" name="s_start" id="s_start"
+						value="<%=y + "-" + ms + "-" + ds%>"> <input type="hidden"
 						name="s_end" id="s_end"
 						value="<%=(y + 99) + "-" + ms + "-" + ds%>">
 					</li>
@@ -459,10 +492,13 @@ ul {
 					</li>
 					<li>
 						<article id="optsbox">
-							옵션 등록 <input type="button" value="옵션 추가" onclick="addOpt()">
+							옵션 등록 <input type="button" value="옵션 추가" onclick="addOpt(<%=s_idx%>,'<%=m_nick%>')">
 							<div class="fbox optbox">
 								<div class="fbox">
-									<img src="../img/img1.jpg" class="selectimg">
+									<div id="option_img1" class="options fbox"
+										onclick="openImgpop(<%=s_idx%>, '<%=m_nick%>',this.id)">
+										<label>이미지 등록</label>
+									</div>
 									<div>
 										<ul>
 											<li>이름 <input type="text" name="sg_name"
@@ -551,8 +587,9 @@ ul {
 										<li>
 											<div class="bordbox">
 												<ul class="fbox fcenter">
-													<li><input type="checkbox" name="sg_discnt" value="0"
-														onclick="selectIt(this)"></li>
+													<li><input type="checkbox" onclick="selectIt(this)"
+														name="discnt_box"><input type="hidden"
+														name="sg_discnt" value="0"></li>
 													<li name="op_sg_name1"></li>
 													<li name="op_sg_price1"></li>
 												</ul>
@@ -560,13 +597,13 @@ ul {
 										</li>
 									</ul>
 									<div>
-										할인률 <select name="s_discnt">
+										할인률 <select name="select_discnt" onchange="selectDC(this)">
 											<option value="10">10%</option>
 											<option value="20">20%</option>
 											<option value="30">30%</option>
 											<option value="40">40%</option>
 											<option value="50">50%</option>
-										</select>
+										</select> <input type="hidden" name="s_discnt" value="0">
 									</div>
 
 
