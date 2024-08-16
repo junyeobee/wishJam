@@ -7,6 +7,7 @@ public class DetailImgDAO {
 	private int s_idx;
 	private String m_nick;
 	private String select_id;
+	private int imgcnt;
 	private String everypath = "img/sellgoods/";
 	
 	Connection conn;
@@ -74,6 +75,14 @@ public class DetailImgDAO {
 
 	public void setSelect_id(String select_id) {
 		this.select_id = select_id;
+	}
+
+	public int getImgcnt() {
+		return imgcnt;
+	}
+
+	public void setImgcnt(int imgcnt) {
+		this.imgcnt = imgcnt;
 	}
 	
 }

@@ -1,5 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.wishJam.category.CategoryDTO"%>
+<jsp:useBean id="ctdao" class="com.wishJam.category.CategoryDAO"></jsp:useBean>
+
+<%
+	ArrayList<CategoryDTO> clist = ctdao.list_C();
+	ArrayList<Integer> cnt = ctdao.B_num();
+	ArrayList<Integer> nlist = new ArrayList<Integer>();
+	
+	for(int i=0; i<cnt.size(); i++){
+		nlist.add(ctdao.C_num(cnt.get(i)));
+		System.out.println(nlist.get(i));
+	}
+	
+	
+%>
+
 <script>
 	function outClick(e) {
 		var cw1 = document.getElementById("cw1");
@@ -25,14 +42,14 @@
 
 		if (salebtn.checked) {
 			salebox.style.display = "block";
-			dcr.value=selectdcr.options[selectdcr.selectedIndex].value;
+			dcr.value = selectdcr.options[selectdcr.selectedIndex].value;
 		} else {
 			salebox.style.display = "none";
-			document.makeSellfm.s_discnt.value="0";
-			
-			for(var i=0; i<Dcgoods.length;i++){
-				Dcgoods[i].checked=false;
-				document.makeSellfm.allSale.checked=false;
+			document.makeSellfm.s_discnt.value = "0";
+
+			for (var i = 0; i < Dcgoods.length; i++) {
+				Dcgoods[i].checked = false;
+				document.makeSellfm.allSale.checked = false;
 			}
 		}
 
@@ -100,7 +117,7 @@
 		var ad = arr[0] + st + arr[1];
 
 		content.innerHTML = ad;
-		document.makeSellfm.s_content.value=content.innerHTML;
+		document.makeSellfm.s_content.value = content.innerHTML;
 	}
 
 	function openColorpicker(v) {
@@ -121,8 +138,16 @@
 	}
 
 	function openImgpop(idx, nick, tid) {
-		window.open('sellImgUp.jsp?s_idx=' + idx + '&m_nick=' + nick+'&select_id='+tid,
-				'sellImgUp', 'width=700, height=600');
+		if (tid == "content_img") {
+			var cnt = document.getElementsByTagName("img").length+1;
+			window.open('sellImgUp.jsp?s_idx=' + idx + '&m_nick=' + nick
+					+ '&select_id=' + tid + '&imgcnt=' + cnt, 'sellImgUp',
+					'width=700, height=600');
+		} else {
+			window.open('sellImgUp.jsp?s_idx=' + idx + '&m_nick=' + nick
+							+ '&select_id=' + tid, 'sellImgUp',
+							'width=700, height=600');
+		}
 	}
 
 	function selectThem() {
@@ -132,12 +157,12 @@
 		if (allSale.checked) {
 			for (var i = 0; i < saleGoods.length; i++) {
 				saleGoods[i].checked = "checked";
-				saleGoods[i].nextSibling.value="1";
+				saleGoods[i].nextSibling.value = "1";
 			}
 		} else {
 			for (var i = 0; i < saleGoods.length; i++) {
 				saleGoods[i].checked = false;
-				saleGoods[i].nextSibling.value="0";
+				saleGoods[i].nextSibling.value = "0";
 			}
 		}
 	}
@@ -185,13 +210,13 @@
 
 		var li2 = document.createElement("li");
 		var input1 = document.createElement("input");
-		input1.name="discnt_box";
+		input1.name = "discnt_box";
 		input1.setAttribute("type", "checkbox");
 		input1.setAttribute("onclick", "selectIt(this)");
 		li2.append(input1);
-		
+
 		var input2 = document.createElement("input");
-		input2.setAttribute("type","hidden");
+		input2.setAttribute("type", "hidden");
 		input2.name = "sg_discnt";
 		input2.value = "0";
 		li2.append(input2);
@@ -205,26 +230,44 @@
 		ul1.append(li2, li3, li4);
 	}
 
-	function makeOptbox(cnt,sidx, mnick) {
+	function makeOptbox(cnt, sidx, mnick) {
 		var optbox = document.createElement("div");
 		optbox.className = "fbox optbox";
 
 		var div1 = document.createElement("div");
 		div1.className = "fbox";
 		optbox.append(div1);
+		
+		var input6 = document.createElement("input");
+		input6.setAttribute("type","radio");
+		input6.name="select_main";
+		input6.className="main_op";
+		input6.setAttribute("onclick","selectMainopt(this)");
+		
+		var input7 = document.createElement("input");
+		input7.setAttribute("type","hidden");
+		input7.name="sg_main";
+		input7.value="0";
 
 		var div3 = document.createElement("div");
-		div3.id="option_img"+cnt;
-		div3.className="options fbox";
-		div3.setAttribute("onclick","openImgpop("+sidx+", '"+mnick+"', this.id)");
-		
+		div3.id = "option_img" + cnt;
+		div3.className = "options fbox";
+		div3.setAttribute("onclick", "openImgpop(" + sidx + ", '" + mnick
+				+ "', this.id)");
+
+		var input5 = document.createElement("input");
+		input5.setAttribute("type", "hidden");
+		input5.name = "sg_img"
+		input5.id = "sg_img" + cnt;
+		input5.value = "이미지없음";
+
 		var label1 = document.createElement("label");
 		label1.append(document.createTextNode("이미지 등록"));
-		
+
 		div3.append(label1);
 
 		var div2 = document.createElement("div");
-		div1.append(div3, div2);
+		div1.append(input6, input7 ,div3, input5, div2);
 
 		var ul1 = document.createElement("ul");
 		div2.append(ul1);
@@ -583,24 +626,41 @@
 
 			var arr = (content.innerHTML).split(selected);
 			var cbox = t.parentNode.parentNode.parentNode.parentNode;
-			
-			if(cbox.id=="cw1"){
-				var st = '<span style="color:#'+code+';">' + selected + '</span>';
+
+			if (cbox.id == "cw1") {
+				var st = '<span style="color:#'+code+';">' + selected
+						+ '</span>';
 			} else if (cbox.id == "cw2") {
 				var st = '<span style="background-color:#'+code+';">'
 						+ selected + '</span>';
-			} 
-			
+			}
+
 			var ad = arr[0] + st + arr[1];
 
 			content.innerHTML = ad;
-			document.makeSellfm.s_content.value=content.innerHTML;
+			document.makeSellfm.s_content.value = content.innerHTML;
 		}
 	}
 
-	function selectDC(t){
+	function selectDC(t) {
 		var dcr = document.makeSellfm.s_discnt;
+
+		dcr.value = t.options[t.selectedIndex].value;
+	}
+	
+	function selectMainopt(t){
+		var mains = document.makeSellfm.sg_main;
 		
-		dcr.value=t.options[t.selectedIndex].value;
+		for(var i=0; i<mains.length; i++){
+			mains[i].value="0";
+		}
+		
+		t.nextSibling.value="1";
+	}
+	
+	function select_bc(t){
+		var select_b = t.options[t.selectedIndex].value;
+	
+		
 	}
 </script>

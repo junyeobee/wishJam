@@ -5,16 +5,23 @@
 String s_idx_s = request.getParameter("s_idx");
 String m_nick = request.getParameter("m_nick");
 String select_id = request.getParameter("select_id");
+String imgcnt_s = request.getParameter("imgcnt");
 
 int s_idx = 0;
-
 if (s_idx_s != null) {
 	s_idx = Integer.parseInt(s_idx_s);
+}
+
+int imgcnt=0;
+if(imgcnt_s !=null){
+	imgcnt =Integer.parseInt(imgcnt_s);
 }
 
 idao.setS_idx(s_idx);
 idao.setM_nick(m_nick);
 idao.setSelect_id(select_id);
+idao.setImgcnt(imgcnt);
+
 %>
 <!DOCTYPE html>
 <html>

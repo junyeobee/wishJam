@@ -8,6 +8,8 @@ public class S_goodsDTO {
 	private int sg_count;
 	private int sg_limit;
 	private int sg_discnt;
+	private String sg_img;
+	private int sg_main;
 	
 	public S_goodsDTO() {}
 
@@ -67,7 +69,24 @@ public class S_goodsDTO {
 		this.sg_discnt = sg_discnt;
 	}
 
-	public S_goodsDTO(int sg_idx, int s_idx, String sg_name, int sg_price, int sg_count, int sg_limit, int sg_discnt) {
+	public String getSg_img() {
+		return sg_img;
+	}
+
+	public void setSg_img(String sg_img) {
+		this.sg_img = sg_img;
+	}
+
+	public int getSg_main() {
+		return sg_main;
+	}
+
+	public void setSg_main(int sg_main) {
+		this.sg_main = sg_main;
+	}
+
+	public S_goodsDTO(int sg_idx, int s_idx, String sg_name, int sg_price, int sg_count, int sg_limit, int sg_discnt,
+			String sg_img, int sg_main) {
 		super();
 		this.sg_idx = sg_idx;
 		this.s_idx = s_idx;
@@ -76,6 +95,8 @@ public class S_goodsDTO {
 		this.sg_count = sg_count;
 		this.sg_limit = sg_limit;
 		this.sg_discnt = sg_discnt;
+		this.sg_img = sg_img;
+		this.sg_main = sg_main;
 	}
 
 }

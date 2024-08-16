@@ -18,11 +18,13 @@ public class DetailDTO {
 	private int s_discnt;
 	private int s_type;
 	private String s_trade;
+	private String s_img;
 	
 	public DetailDTO() {}
 
 	public DetailDTO(int s_idx, String m_nick, int c_idx, String g_name, String s_title, String s_content,
-			String s_hash, int s_view, int s_jjim, Date s_start, Date s_end, int s_discnt, int s_type, String s_trade) {
+			String s_hash, int s_view, int s_jjim, Date s_start, Date s_end, int s_discnt, int s_type, String s_trade,
+			String s_img) {
 		super();
 		this.s_idx = s_idx;
 		this.m_nick = m_nick;
@@ -38,7 +40,9 @@ public class DetailDTO {
 		this.s_discnt = s_discnt;
 		this.s_type = s_type;
 		this.s_trade = s_trade;
+		this.s_img = s_img;
 	}
+
 
 	public String getS_trade() {
 		return s_trade;
@@ -152,5 +156,12 @@ public class DetailDTO {
 		this.s_type = s_type;
 	}
 
+	public String getS_img() {
+		return s_img;
+	}
+
+	public void setS_img(String s_img) {
+		this.s_img = s_img;
+	}
 	
 }

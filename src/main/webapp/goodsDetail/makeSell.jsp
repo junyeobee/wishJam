@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.wishJam.category.CategoryDTO"%>
 <jsp:useBean id="idao" class="com.wishJam.detail.DetailImgDAO"
 	scope="session"></jsp:useBean>
 <jsp:useBean id="cdao" class="com.wishJam.detail.ColorDAO"></jsp:useBean>
+<jsp:useBean id="cgdao" class="com.wishJam.category.CategoryDAO"></jsp:useBean>
 
 <%
 int s_idx = Integer.parseInt(request.getParameter("s_idx"));
@@ -100,6 +102,7 @@ ul {
 	font-size: 30px;
 	color: gray;
 	float: left;
+	height: 30px;
 }
 
 .icons:hover {
@@ -207,10 +210,11 @@ ul {
 .options {
 	width: 150px;
 	height: 150px;
-	border: 1px solid gray;
+	border: 1px solid #C4C4C4;
 	align-items: center;
 	justify-content: center;
 	border-radius: 10px;
+	margin: 5px;
 }
 
 .options:hover {
@@ -226,6 +230,11 @@ ul {
 	height: 150px;
 	object-fit: cover;
 	border-radius: 10px;
+}
+
+.main_op {
+	align-self: flex-start;
+	margin: 10px 0 0 8px;
 }
 </style>
 
@@ -244,12 +253,20 @@ ul {
 						<div id="thumb_img" class="thumbs fbox"
 							onclick="openImgpop(<%=s_idx%>, '<%=m_nick%>',this.id)">
 							<label>섬네일</label>
-						</div>
+						</div> <input type="hidden" name="s_img">
 					</li>
-					<li>카테고리 <select name="c_idx">
-							<option value="1">팬시</option>
-							<option value="2">문구</option>
-							<option value="3">액세서리</option>
+					<li>카테고리<label>대분류</label> <select name="c_big" onchange="select_bc(this)">
+							<%
+							ArrayList<CategoryDTO> blist = cgdao.list_bicC();
+
+							for (int i = 0; i < blist.size(); i++) {
+							%>
+							<option value="<%=blist.get(i).getC_big()%>"><%=blist.get(i).getC_name()%></option>
+							<%
+							}
+							%>
+					</select> <label>소분류</label><select name="c_small">
+							<option></option>
 					</select>
 					<li>제목<input type="text" name="s_title">
 					<li>상세 설명
@@ -358,7 +375,7 @@ ul {
 								</div>
 
 							</div>
-							<input type="text" name="s_content" value="">
+							<input type="hidden" name="s_content" value="">
 
 						</div>
 					</li>
@@ -492,13 +509,20 @@ ul {
 					</li>
 					<li>
 						<article id="optsbox">
-							옵션 등록 <input type="button" value="옵션 추가" onclick="addOpt(<%=s_idx%>,'<%=m_nick%>')">
+							<div class="fbox" style="justify-content: space-between;">
+								<span>대표 상품 선택</span><label>옵션 등록</label> <input type="button"
+									value="옵션 추가" onclick="addOpt(<%=s_idx%>,'<%=m_nick%>')">
+							</div>
 							<div class="fbox optbox">
 								<div class="fbox">
+									<input type="radio" name="select_main" class="main_op"
+										onclick="selectMainopt(this)"> <input type="hidden"
+										name="sg_main" value="0">
 									<div id="option_img1" class="options fbox"
 										onclick="openImgpop(<%=s_idx%>, '<%=m_nick%>',this.id)">
 										<label>이미지 등록</label>
 									</div>
+									<input type="hidden" id="sg_img1" name="sg_img" value="이미지없음">
 									<div>
 										<ul>
 											<li>이름 <input type="text" name="sg_name"
@@ -519,6 +543,7 @@ ul {
 									onclick="deleteOpt(this)">close</span>
 							</div>
 						</article>
+						<div style="text-align: left;">대표 상품으로 등록된 상품의 가격이 노출됩니다.</div>
 					</li>
 					<li>
 						<div>
