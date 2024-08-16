@@ -1,4 +1,5 @@
 package com.manage.wishJam;
+
 import java.sql.*;
 
 public class BannerDTO {

@@ -3,7 +3,7 @@
 <%@ page import="com.oreilly.servlet.MultipartRequest" %>
 <%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
 <%@ page import="com.manage.wishJam.MyFileRenamePolicy" %>
-<jsp:useBean id="mdao" class="com.manage.wishJam.manageDTO"/>
+<jsp:useBean id="mdao" class="com.manage.wishJam.manageDTO"/> 
 
 <%
     request.setCharacterEncoding("UTF-8");
@@ -14,14 +14,14 @@
         try {
             if (idx_s != null) {
                 int idx = Integer.parseInt(idx_s);
-                String path = request.getRealPath("/") + "/img/banner/";
+                String path = request.getRealPath("/") + "/img/grade/";
                 mdao.setHomePath(path);
                 MyFileRenamePolicy renamePolicy = new MyFileRenamePolicy(idx_s);
-                int size = 10 * 1024 * 1024;
+                int size = 10 * 1024 * 1024; // 10MB
                 String encoding = "UTF-8";
 
                 MultipartRequest mr = new MultipartRequest(request, path, size, encoding, renamePolicy);
-                imagePath = "/wishJam/img/banner/" + idx + ".jpg";
+                imagePath = "/wishJam/img/grade/" + idx + ".jpg";
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -37,9 +37,6 @@
     <script>
         function returnImagePath() {
             var imagePath = '<%= imagePath %>';
-            <%
-            	System.out.println(imagePath);
-            %>
             if (imagePath) {
                 if (window.opener && typeof window.opener.setImagePath === 'function') {
                     window.opener.setImagePath(imagePath);
@@ -49,7 +46,7 @@
         }
 
         window.onload = function() {
-            setTimeout(returnImagePath, 1000);
+            setTimeout(returnImagePath, 1000); // 1초 대기 후 실행
         };
     </script>
 </head>

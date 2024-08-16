@@ -50,9 +50,11 @@
 	}
     
     function imgedit(ss){
-    	window.open('bannerImgsave.jsp?idx='+ss, 'gradeIconChange', 'width=400,height=200')
+    	window.open('bannerImgsave.jsp?idx='+ss, 'bannerChange', 'width=400,height=200');
     }
-    
+    function bannerEdit(i){
+    	window.open('bannerEdit.jsp?idx='+i, 'gradeIconChange', 'width=800,height=300');
+    }
     function deleteData() {
         // 확인 대화 상자 표시
         var confirmDelete = confirm('정말 삭제하시겠습니까?');
@@ -102,7 +104,7 @@
     width: 100%;
     height: calc(100% - 20vh);
     margin: auto;
-}
+	}
 	.topNavLink {
 	    display: flex;
 	}
@@ -246,7 +248,6 @@
         <div class="topNavLink">	<!-- topNavLink에 있는 a링크중 active인 친구가 선택될시에 해당 topNav내용 출력 -->
             <a onclick="openTab(event, 'manage')" class = "active">전체 배너</a>
             <a onclick="openTab(event, 'upload')">배너 업로드</a>
-            <a onclick="openTab(event, 'settings')">배너 설정</a>
         </div>
         <div id="manage" class="topNav active">	<!-- active클래스가 있다면 display허용 -->
             <div class="conTop">
@@ -272,7 +273,7 @@
                     %>
                     <tr>
                         <td><%=dto.getB_idx() %></td>
-                        <td><%=dto.getB_name() %></td>
+                        <td><a onclick="bannerEdit(<%=dto.getB_idx()%>);"><%=dto.getB_name() %></a></td>
                         <td><%=dto.getB_sdate() %> ~ <%=dto.getB_edate() %></td>
                         <td><img src="<%=dto.getB_src() %>" alt="image" onclick="imgedit('<%=dto.getB_idx() %>');"></td>
                         <td><input type="checkbox" name="chkbox"></td>
@@ -311,7 +312,7 @@
 	</div>
     </div>
 	<script>
-		//팝업창으로 이미지 받아옵니다
+		//팝업창으로 이미지 업로드
         function uploadImage() {
             window.open('uploadImage.jsp?idx=<%=idx%>', 'ImageUpload', 'width=400,height=200');
         }
@@ -327,7 +328,7 @@
         function setImagePath(value) {
             var input = document.getElementById('imagePath');
             input.value = value;
-            imgChange(); // 값 변경 후 바로 imgChange 호출
+            imgChange();
         }
 		//imgPath에 값이 들어오면 이벤트처리
         document.addEventListener('DOMContentLoaded', (event) => {
@@ -369,7 +370,4 @@
 	        </div>
 	    </form>
 	</div>
-    <div id="settings" class="topNav">
-        <h3>배너 설정</h3>
-    </div>
 </div>

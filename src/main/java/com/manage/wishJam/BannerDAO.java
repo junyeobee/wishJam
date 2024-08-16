@@ -1,4 +1,5 @@
 package com.manage.wishJam;
+
 import java.sql.*;
 import java.util.*;
 
@@ -50,7 +51,6 @@ public class BannerDAO {
 			ps.setInt(2, end);
     		rs = ps.executeQuery();
     		ArrayList<BannerDTO> arr = new ArrayList<BannerDTO>();
-    		
     		if (rs.next()) {
     			do {
     				int a = rs.getInt(2);
@@ -82,7 +82,6 @@ public class BannerDAO {
     //배너 추가 메소드
     public int insertBanner(int b_idx, String b_name, String b_src,java.sql.Date b_sdate, java.sql.Date b_edate){
         try {
-        	System.out.println(b_edate);
             con = com.db.wishJam.DbConn.getConn();
             String sql = "insert into banner(b_idx, b_name, b_src, b_sdate, b_edate) values (?, ?, ?, ?, ?)";
             ps = con.prepareStatement(sql);
@@ -211,4 +210,65 @@ public class BannerDAO {
     		}
     	}
     }
+    
+    public BannerDTO editBannerForm(int idx) {
+    	try {
+    		con = com.db.wishJam.DbConn.getConn();
+    		String sql = "select * from banner where b_idx = ?";
+    		ps = con.prepareStatement(sql);
+    		ps.setInt(1, idx);
+    		rs = ps.executeQuery();
+    		BannerDTO dto = new BannerDTO();
+    		if(rs!=null) {
+    			rs.next();
+    			String b_name = rs.getString(2);
+    			String b_src = rs.getString(3);
+    			java.sql.Date sdt = rs.getDate(4);
+    			java.sql.Date edt = rs.getDate(5);
+    			String b_link = rs.getString(6);
+    			dto = new BannerDTO(idx,b_name,b_src,sdt,edt,b_link);
+    		}
+    		return dto;
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		return null;
+    	}finally {
+    		try {
+    			if (ps != null) 
+                	ps.close();
+                if (con != null) 
+                	con.close();
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    }
+    public int editBanner(int idx, String name, String src, java.sql.Date sdate, java.sql.Date edate) {
+    	try {
+    		con = com.db.wishJam.DbConn.getConn();
+    		String sql = "update banner set b_name = ?, b_src = ? , b_sdate = ? , b_edate = ? where b_idx = ?";
+    		ps = con.prepareStatement(sql);
+    		ps.setString(1, name);
+    		ps.setString(2, src);
+    		ps.setDate(3, sdate);
+    		ps.setDate(4, edate);
+    		ps.setInt(5, idx);
+    		int a = 0;
+    		a = ps.executeUpdate();
+    		return a;
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		return -1;
+    	}finally {
+    		try {
+    			if (ps != null) 
+                	ps.close();
+                if (con != null) 
+                	con.close();
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    }
+    
 }

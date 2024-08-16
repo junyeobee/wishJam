@@ -1,14 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import ="com.manage.wishJam.BannerDTO" %>
-<jsp:useBean id = "bdao" class = "com.manage.wishJam.BannerDAO"/>
+<%@ page import ="com.manage.wishJam.GradeDTO" %>
+<jsp:useBean id = "gdao" class = "com.manage.wishJam.GradeDAO"/>
 <%
 	String idx = request.getParameter("idx");
 	if(idx!=null){
-		int b_idx = Integer.parseInt(idx);
-		BannerDTO bdto = bdao.editBannerForm(b_idx);
-
-    	String msg = "없음";
-    	if(!(bdto.getB_link() == null)) msg = bdto.getB_link();
+		int g_idx = Integer.parseInt(idx);
+		GradeDTO gdto = gdao.editGradeForm(g_idx);
 		%>
 			<style>
 				.image-upload-container {
@@ -16,7 +13,6 @@
 				    flex-direction: column;
 				    align-items: center;
 				}
-				
 				.image-preview {
 				    width: 600px;
 				    height: 100px;
@@ -24,11 +20,11 @@
 				    padding: 5px;
 				    margin-bottom: 10px;
 				    cursor: pointer;
-				}	
+				}
 			</style>
 			<script>
 		    function imgedit(idx){
-		    	window.open('uploadImage.jsp?idx='+idx, 'bannerChange', 'width=400,height=200');
+		    	window.open('uploadImage.jsp?idx='+idx, 'gradeChange', 'width=400,height=200');
 		    }
 		    function imgChange() {
 	            var imgpath = document.getElementById('imagePath').value;
@@ -49,24 +45,20 @@
 	            inputElement.addEventListener('input', imgChange);
 	        });
 			</script>
-			<form action="bannerEdit_ok.jsp">
+			<form action="gradeEdit_ok.jsp">
 			<input type="hidden" name = "idx" value ="<%=idx%>"/>
 			<div>
 				<div>
-					<label>제목:</label><input type="text" id = "b_name" name = "b_name" value="<%=bdto.getB_name()%>"/>
+					<label>제목:</label><input type="text" id = "g_name" name = "g_name" value="<%=gdto.getG_name()%>"/>
 				</div>
 				<div>
 					<label>이미지</label>
-					<img src="<%=bdto.getB_src()%>" alt="<%=idx%>bannerimage" onclick="imgedit('<%=bdto.getB_idx() %>');" id="previewImg" class="image-preview"/>
+					<img src="<%=gdto.getG_src()%>" alt="<%=idx%>gradeimage" onclick="imgedit('<%=gdto.getG_idx() %>');" id="previewImg" class="image-preview"/>
 	                <input type="text" id="imagePath" name="imagePath" readonly="readonly" hidden="hidden">
 				</div>
 				<div>
-					<label>배너 노출 기간</label>
-					<input type="date" name = "b_sdate" value="<%=bdto.getB_sdate()%>"/> ~ <input type="date" name = "b_edate" value="<%=bdto.getB_edate()%>"/>
-				</div>
-				<div>
-					<label>공지사항 링크</label>
-					<input type="text" value="<%=msg%>"/>
+					<label>요구포인트</label>
+					<input type="number" name = "g_point" value="<%=gdto.getG_point()%>"/>
 				</div>
 				<div>
 					<input type="button" value = "취소하기" onclick="window.close();"/> <input type="submit" value="수정하기"/>
@@ -78,7 +70,7 @@
 		%>
 		<script>
 			window.alert('잘못된 접근입니다.');
-			window.location.href='banner.jsp';
+			window.location.href='grade.jsp';
 		</script>
 		<%
 	}

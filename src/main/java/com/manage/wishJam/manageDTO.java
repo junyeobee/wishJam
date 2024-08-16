@@ -2,7 +2,7 @@ package com.manage.wishJam;
 import java.io.*;
 import java.sql.*;
 
-public class manageDAO {
+public class manageDTO {
 	//1. 실제 파일 및 폴더가 있는 절대 경로
 	private String homePath;
 	//4. 공통경로
@@ -25,6 +25,6 @@ public class manageDAO {
 	public String getGrade() {
 		return grade;
 	}
-	public manageDAO() {
+	public manageDTO() {
 	}
 }
