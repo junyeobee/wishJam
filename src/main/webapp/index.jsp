@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
-<jsp:useBean id="mdao" class="com.manage.wishJam.manageDAO"/>
-<jsp:useBean id="bdao" class="com.manage.wishJam.BannerDAO"/>
+<jsp:useBean id="mdao" class="com.manage.wishJam.manageDTO"/>
+<jsp:useBean id="bdao" class="com.manage.wishJam.BannerDAO"/> 
 <!DOCTYPE html>
 <html>
 <head>

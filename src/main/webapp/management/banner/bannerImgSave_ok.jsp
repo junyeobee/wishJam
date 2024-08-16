@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "com.manage.wishJam.MyFileRenamePolicy" %>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
-<jsp:useBean id="mdao" class="com.manage.wishJam.manageDAO"/>
+<jsp:useBean id="mdao" class="com.manage.wishJam.manageDTO"/>
 <jsp:useBean id = "badd" class ="com.manage.wishJam.BannerDAO"/>
 <%
 	request.setCharacterEncoding("UTF-8");

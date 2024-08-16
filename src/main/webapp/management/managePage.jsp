@@ -2,7 +2,7 @@
 <%@ page import = "java.util.*" %>
 <%@page import="java.io.*"%>
 <!DOCTYPE html>
-<jsp:useBean id = "mdao" class="com.manage.wishJam.manageDAO"/>
+<jsp:useBean id = "mdao" class="com.manage.wishJam.manageDTO"/>
 <%
 	String id = "bonobono";
 	String pwd = "1234";

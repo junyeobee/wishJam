@@ -14,7 +14,7 @@
 		</label>
 	</div>
 	<div id = "top_left">
-		<a href="index.jsp">메인</a>
+		<a href="/wishJam/index.jsp">메인</a>
 	</div>
 	<div id = "top_center">
 		<form action="">
