@@ -2,22 +2,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.allgoods.wishJam.AllgoodsDTO"%>
+<%@ page import="com.allgoods.wishJam.JjimDTO" %>
 <jsp:useBean id="dao" class="com.allgoods.wishJam.AllgoodsDAO"></jsp:useBean>
-<jsp:useBean id="dto" class="com.allgoods.wishJam.AllgoodsDTO"></jsp:useBean>
+<jsp:useBean id="jdto" class="com.allgoods.wishJam.AllgoodsDTO"></jsp:useBean>
+<jsp:useBean id="jdao" class="com.allgoods.wishJam.JjimDAO"></jsp:useBean>
+
+
+
 <%
 
-String id= "sunny02";
-session.setAttribute("userId", id);
+int Id= 4; //임시 멤버번호 
+session.setAttribute("m_idx", Id);
+Integer memberId = (Integer)session.getAttribute("m_idx");
 
-session.setAttribute("m_idx", dto.getM_idx());
-Integer memberId = (Integer) session.getAttribute("m_idx");
-Integer s_idx=(Integer) session.getAttribute("s_idx");
 
 if(request.getMethod().equalsIgnoreCase("POST")){
-	int productId = Integer.parseInt(request.getParameter("productId"));
-	String s_title = request.getParameter("s_title");
-	
-	if(id == null){
+int productId = Integer.parseInt(request.getParameter("productId"));
+String s_title = request.getParameter("s_title");
+
+if(memberId == null){
+		
 		%>
 		
 		<script>
@@ -25,56 +29,37 @@ if(request.getMethod().equalsIgnoreCase("POST")){
 		</script>
 		
 		<%
+		
 	}else{
 		
-		AllgoodsDTO adto= new AllgoodsDTO();
-		adto.setM_idx(memberId);
-		adto.setS_idx(productId);
-		adto.setS_title(s_title);
+		JjimDTO jjdto= new JjimDTO();
+		jjdto.setM_idx(memberId);
+		jjdto.setS_idx(productId);
+		jjdto.setS_title(s_title);
 		
-		boolean added = dao.addJjim(adto);
+		
+		boolean added = jdao.addJjim(jjdto);
 		
 		if(added){
 			
-			dao.incrementJjim(productId);
+			jdao.incrementJjim(productId);
+			
 			%>
 			
 			<script>
-			//찜하기 버튼
-			 function jjim(productId){
-
-				
-				var jjimbt=document.getElementById("jjimimg_"+productId);
-				var on = "heart.png";
-				var off = "heart_gray.png";
-
-					if(jjimbt.src.endsWith(off)){ 
-			            
-						jjimbt.src="/wishJam/img/"+on;
-
-						}else{
-							jjimbt.src="/wishJam/img/"+off;
-						}
-			}
 			
-			</script>
+				window.alert('찜하기에 추가되었습니다❤️');
+			</script>			
 			
 			<% 
 			
-			
 		}else{
-			
-			
+
 		}
-		
-		
-		
-		
+
 		
 	}
-	
 
-	
 }
 
 
@@ -196,6 +181,17 @@ font-size:13px;
 display:inline;
 color:orange;
 }
+
+.jjimbt{
+
+border:none;
+background-color:white;
+font-family: 'Cafe24Ohsquareair';
+position: absolute;
+	right: 8;
+	bottom: 10;
+cursor: pointer;
+}
 </style>
 
 <script>
@@ -238,13 +234,16 @@ function updateSortOrder() {
         for (AllgoodsDTO products : productList) {
 
 			%>
-			<div class="item">
+			<form action="allGoods.jsp" method="post" >
+			<div class="item" >
 				<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
 					<img src="<%=products.getS_img()%>" alt="썸네일">
 				</div>
-				<div class="inner">
+				<div class="inner"> 	
 					<div class="writer"><%=products.getM_nick()%></div>
-					<div><%=products.getS_title()%></div>
+			<input type="hidden" name="s_title" value="<%=products.getS_title()%>"> <!-- 상품 제목 -->
+            <input type="hidden" name="productId" value="<%=products.getS_idx()%>"> <!-- 상품 ID -->
+					<div name="s_title"><%=products.getS_title()%></div>
 					<div>
 					<% 
 					int dis=products.getS_discnt();
@@ -254,26 +253,24 @@ function updateSortOrder() {
 					  %><span class="discount"><%=dis +"%"%></span> <%
 					}else{ }%>
 					<%= products.getSg_main()%></div>
+
+
+                  <button type="submit" onclick="jjim();" class="jjimbt">찜하기🧡</button> <!-- 제출 버튼 -->
+              
+          
 					
-					
-					   <!-- 찜하기 폼 -->
-            <form action="allGoods.jsp" method="post" style="display:inline;">
-                <input type="hidden" name="productId" value="<%= products.getS_idx() %>">
-                <input type="hidden" name="m_idx" value="<%= session.getAttribute("m_idx") %>"> <!-- 회원 ID 세션에서 가져오기 -->
-                <span class="heart" onclick="this.closest('form').submit();">
-                    <img src="/wishJam/img/heart_gray.png" id="jjimimg_<%=products.getS_idx()%>">
-                </span>
-            </form>
-					<span class="heart" onclick="jjim();"><img src="/wishJam/img/heart_gray.png" id="jjimimg_<%=products.getS_idx()%>"></span>
 				</div>
 
 			</div>
-
+  </form>
 			<%
 			}
     }
 			%>
 		</div>
+		
+		
+		<!-- 페이징처리  -->
 			 <div class="pagination">
         	<span>Showing <%=(totalcnt/listsize)>=cp?cp*listsize:totalcnt %> to <%=totalcnt %> of <%=cp %> entries</span>
 			<div class="pagination-controls">
