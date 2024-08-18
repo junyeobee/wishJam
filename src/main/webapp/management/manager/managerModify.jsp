@@ -3,7 +3,7 @@
 <%@page import="javax.servlet.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:useBean id="mdao" class="com.manage.wishJam.manageDAO" scope="session"/>
+<jsp:useBean id="mdao" class="com.manage.wishJam.manageDTO" scope="session"/>
 <head>
 <style>
 	#imgbox{

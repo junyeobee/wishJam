@@ -69,4 +69,69 @@ public class M_ReportDAO {
     		}
 		}
 	}
+	
+	public M_ReportDTO getDetail(int idx) {
+		try {
+			con = com.db.wishJam.DbConn.getConn();
+			String sql = "select * from report where rp_idx = ?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, idx);
+			rs = ps.executeQuery();
+			M_ReportDTO dto = null;
+			if (rs.next()) {
+				dto = new M_ReportDTO(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7)
+				);
+			}
+			return dto;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+    			if (ps != null) 
+                	ps.close();
+                if (con != null) 
+                	con.close();
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+		}
+	}
+	
+	public ArrayList<M_ReportDTO> getReportsBySeller(int rid) {
+		try {
+			ArrayList<M_ReportDTO> list = new ArrayList<M_ReportDTO>();
+			String sql = "select * from report where reported_idx = ?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, rid);
+	        rs = ps.executeQuery();
+	        if(rs.next()) {
+	        	do {
+	        		M_ReportDTO dto = new M_ReportDTO();
+					dto.setRp_idx(rs.getInt("rp_idx"));
+					dto.setS_idx(rs.getInt("s_idx"));
+					dto.setC_idx(rs.getInt("c_idx"));
+					dto.setRp_reason(rs.getString("rp_reason"));
+					dto.setReported_idx(rs.getInt("reported_idx"));
+					dto.setReporter_idx(rs.getInt("reporter_idx"));
+					list.add(dto);
+	        	}while(rs.next());
+	        }
+	        return list;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }finally {
+			try {
+    			if (ps != null) 
+                	ps.close();
+                if (con != null) 
+                	con.close();
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+		}
+	}
+	
+
 }
