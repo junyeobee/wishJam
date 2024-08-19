@@ -252,6 +252,7 @@ function updateSortOrder() {
 						
 					  %><span class="discount"><%=dis +"%"%></span> <%
 					}else{ }%>
+					
 					<%= products.getSg_main()%></div>
 
 

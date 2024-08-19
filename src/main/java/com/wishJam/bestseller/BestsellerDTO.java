@@ -5,23 +5,34 @@ public class BestsellerDTO {
     private int idx;
     private String name;
     private int price;
-    private String seller;
+    private String m_nick;
     private String thumbnail_url;
     private int jjim;
     
     
     
-	public BestsellerDTO(int idx, String name, int price, String seller, String thumbnail_url, int jjim) {
+    
+	public BestsellerDTO() {
+		
+	}
+
+
+	public BestsellerDTO(int idx, String name, int price, String  m_nick, String thumbnail_url, int jjim) {
 		
 		this.idx = idx;
 		this.name = name;
 		this.price = price;
-		this.seller = seller;
+		this. m_nick = m_nick;
 		this.thumbnail_url = thumbnail_url;
 		this.jjim = jjim;
 	}
 	
 	
+	public BestsellerDTO(String m_nick) {
+		this.m_nick=m_nick;
+	}
+
+
 	public int getIdx() {
 		return idx;
 	}
@@ -40,11 +51,11 @@ public class BestsellerDTO {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public String getSeller() {
-		return seller;
+	public String getM_nick() {
+		return  m_nick;
 	}
-	public void setSeller(String seller) {
-		this.seller = seller;
+	public void setM_nick(String  m_nick) {
+		this. m_nick =  m_nick;
 	}
 	public String getThumbnail_url() {
 		return thumbnail_url;
@@ -52,6 +63,8 @@ public class BestsellerDTO {
 	public void setThumbnail_url(String thumbnail_url) {
 		this.thumbnail_url = thumbnail_url;
 	}
+
+
 	
     
     

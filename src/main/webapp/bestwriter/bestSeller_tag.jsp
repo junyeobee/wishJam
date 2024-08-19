@@ -1,5 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="com.wishJam.bestseller.BestsellerDTO" %>
+<%@ page import="com.wishJam.bestseller.BestsellerDAO" %>
+<jsp:useBean id="dao" class="com.wishJam.bestseller.BestsellerDAO"></jsp:useBean>
+
+<%
+String nick=request.getParameter("nick");
+System.out.println("이거"+nick);
+List<BestsellerDTO> sellerproducts = dao.bestSellersOne(nick);
+
+
+
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +23,7 @@
 
 <style>
 section {
-	font-family: 'Pretendard-Regular';
+	
 	width: 920px;
 	height: 1500px;
 	margin: 0 auto;
@@ -23,7 +38,7 @@ article div {
 }
 
 h2 {
-	font-family: 'Cafe24Ssurround';
+
 	margin-bottom: 50px;
 }
 
@@ -39,7 +54,6 @@ h2 {
 	width: 210px;
 	height: 210px;
 	border: 1px solid gray;
-	background-image: url("/wishJam/img/img1.jpg");
 	background-size: cover;
 }
 
@@ -89,37 +103,39 @@ h3 {
 	text-align: center;
 }
 
-.rightbox {
-	margin-right: 0;
-}
+
 </style>
+
+
 </head>
 <body>
 	<Section>
 		<article>
 			<div class="seller_pf_wrap">
 				<img src="/wishJam/img/seller.jpeg" class="seller_pf">
-				<h3>작가 이름2222</h3>
-			</div>
-
+				
+				<h3><%=nick%></h3>
+             <% 
+             if(sellerproducts!=null && !sellerproducts.isEmpty()){
+				for(BestsellerDTO dto :sellerproducts ){
+					
+					%>
+							
 			<div id="selllist_wrap">
-				<div class="bw_item"></div>
-				<div class="bw_item"></div>
-				<div class="bw_item"></div>
-				<div class="bw_item rightbox"></div>
-				<div class="bw_item"></div>
-				<div class="bw_item"></div>
-				<div class="bw_item"></div>
-				<div class="bw_item rightbox"></div>
-				<div class="bw_item"></div>
-				<div class="bw_item"></div>
-				<div class="bw_item"></div>
-				<div class="bw_item rightbox"></div>
-				<div class="bw_item"></div>
-				<div class="bw_item"></div>
-				<div class="bw_item"></div>
-				<div class="bw_item rightbox"></div>
+				<div class="bw_item"><%=dto.getThumbnail_url() %></div>
+		
 			</div>
+			
+			
+					<%
+				} }else{
+				%> <p>작품이 없습니다.<p> <%} %>
+				
+			
+				
+				
+				
+		
 		</article>
 	</Section>
 </body>

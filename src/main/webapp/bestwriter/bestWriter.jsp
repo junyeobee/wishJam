@@ -1,8 +1,9 @@
+<%@page import="com.wishJam.bestseller.BestsellerDAO"%>
+<%@page import="com.allgoods.wishJam.AllgoodsDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.wishJam.bestseller.BestsellerDTO" %>
 <%@ page import="java.util.*" %>
-
 <jsp:useBean id="bdao" class="com.wishJam.bestseller.BestsellerDAO"></jsp:useBean>
 
 
@@ -17,7 +18,7 @@
 
 <style>
 section {
-	font-family: 'Pretendard-Regular';
+	
 	width: 940px;
 	height: 1500px;
 	border: 1px solid black;
@@ -92,38 +93,28 @@ h3 {
 	margin-right: 7px;
 	margin-bottom: 5px;
 	text-align: center;
+	font-family: 'Cafe24Ohsquareair';
 }
 
 .hidden{
 display:none;
 }
 
-   iframe {
-        width: 100%;
-        height:100%;
-        border: none;
-       overflow:hidden;
+iframe {
+ width: 100%;
+height:100%;
+border: none;
+overflow:hidden;
     }
+   
+   
+   
+    
 </style>
-
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const dynamicLinks = document.querySelectorAll('.dynamic-link');
-    dynamicLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            const content = this.getAttribute('data-content');
-            if (content) {
-                loadContent(content);
-            }
-        });
-    });
-});
-
-function loadContent(content) {
-    const fileName = content + '.jsp';
-    document.getElementById('contentFrame').src = fileName;
-}
+	function sellerTag(nick){
+		document.getElementById('contentFrame').src = 'bestSeller_tag.jsp?nick='+nick;
+	}
 </script>
 </head>
 
@@ -136,21 +127,21 @@ function loadContent(content) {
 		<!-- 상단 태그 -->
 		<h2>베스트 작가</h2>
 		<article id="seller_tg">
-			<div >작가이름</div>
-			<div><a href="#" data-content="bestSeller_tag" class="dynamic-link">작가이름</a></div>
-			<div>작가이름</div>
-			<div>작가이름</div>
-			<div>작가이름</div>
-			<div>작가이름</div>
-			<div>작가이름</div>
-			<div>작가이름</div>
-			<div>작가이름</div>
-			<div>작가이름</div>
+		<% 
+		List<BestsellerDTO> goldsellers = bdao.goldSeller();
+		
+		for(BestsellerDTO nicks : goldsellers){ 
+		System.out.println(nicks.getM_nick());
+		%>
+			
+		
+			<div><a onclick="sellerTag('<%=nicks.getM_nick()%>')"  class="dynamic-link"><%=nicks.getM_nick()%></a></div>
+	<%} %>
+		
 		</article>
-
-
-
+		
   <iframe scrolling="no" id="contentFrame" src="test.jsp"></iframe>
+  
 	</section>
 	
 
