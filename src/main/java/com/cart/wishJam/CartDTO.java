@@ -3,7 +3,7 @@ package com.cart.wishJam;
 import java.util.Date;
 
 public class CartDTO {
-	
+
 	// cart
 	private int ct_idx;   
 	private int m_idx;
@@ -36,7 +36,7 @@ public class CartDTO {
 	}
 	
 	public CartDTO(int ct_idx, String m_id, String s_title, String sg_name, String sg_img, int ct_count,
-			int ct_price, int ct_dispr, int ct_sale, Date s_start, Date s_end) {
+			int ct_price, int ct_dispr, int ct_sale, int sg_count, int sg_limit, Date s_start, Date s_end) {
 		super();
 		this.ct_idx = ct_idx;
 		this.ct_count = ct_count;
@@ -47,6 +47,8 @@ public class CartDTO {
 		this.sg_name = sg_name;
 		this.sg_img = sg_img;
 		this.s_title = s_title;
+		this.sg_count = sg_count;
+		this.sg_limit = sg_limit;
 		this.s_start = s_start;
 		this.s_end = s_end;
 	}
