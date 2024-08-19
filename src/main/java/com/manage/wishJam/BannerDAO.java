@@ -69,6 +69,8 @@ public class BannerDAO {
     		return null;
     	}finally {
     		try {
+    			if (rs != null)
+    				rs.close();
     			if (ps != null) 
                 	ps.close();
                 if (con != null) 
@@ -129,6 +131,8 @@ public class BannerDAO {
     		return null;
     	}finally {
     		try {
+    			if (rs != null)
+    				rs.close();
     			if (ps != null) 
                 	ps.close();
                 if (con != null) 
@@ -155,6 +159,8 @@ public class BannerDAO {
     		return -1;
     	}finally {
     		try {
+    			if (rs != null)
+    				rs.close();
     			if (ps != null) 
                 	ps.close();
                 if (con != null) 
@@ -234,6 +240,8 @@ public class BannerDAO {
     		return null;
     	}finally {
     		try {
+    			if (rs != null)
+    				rs.close();
     			if (ps != null) 
                 	ps.close();
                 if (con != null) 

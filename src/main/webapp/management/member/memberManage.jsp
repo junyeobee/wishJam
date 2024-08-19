@@ -33,7 +33,6 @@
 <div style = "padding:10px">
 <h1>회원 관리</h1>
         <div class="toolbar">
-            <button class="btn back-btn">뭐넣지</button>
             <button class="btn ban-btn">회원 없애기</button>
         </div>
 	<table>
@@ -85,14 +84,14 @@
 		<div class="pagination-controls">
 			<%
 				if(usrgroup != 0) {
-					%><button class="pagination-btn" onclick="navigateTo('<%=(usrgroup-1)*pagesize+pagesize %>')">Prev</button><%
+					%><button class="pagination-btn" onclick="pagemove('<%=(usrgroup-1)*pagesize+pagesize %>')">Prev</button><%
 				}
 			%>
 			
 			<%
 				for(int i = usrgroup*pagesize+1; i<=usrgroup*pagesize+pagesize; i++){
 					%>
-					&nbsp;<button class="pagination-btn" onclick="navigateTo('<%=i%>')"><%=i%></button>&nbsp;
+					&nbsp;<button class="pagination-btn" onclick="pagemove('<%=i%>')"><%=i%></button>&nbsp;
 					<%
 					if(i==totalpage){
 						break;
@@ -101,7 +100,7 @@
 			%>
 			<%
 				if(usrgroup != (totalpage/pagesize-(totalpage%pagesize==0?1:0))) {
-					%><button class="pagination-btn" onclick="navigateTo('<%=(usrgroup+1)*pagesize+1%>')">Next</button><%
+					%><button class="pagination-btn" onclick="pagemove('<%=(usrgroup+1)*pagesize+1%>')">Next</button><%
 				}
 			
 			%>
@@ -110,7 +109,7 @@
 	</div>
 </div>
  <script>
-	function navigateTo(page) {
+	function pagemove(page) {
 	    window.location.href = 'memberManage.jsp?cp=' + page;
 	}
 </script>
