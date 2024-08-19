@@ -50,12 +50,15 @@ th {
     background-color: #f8f9fc;
 }
 
-.status-change-btn {
+.Cbtn {
     background-color: #1cc88a;
     color: #fff;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+}
+.Cbtn:hover {
+	background-color: #45a049;
 }
 
 .pagination {

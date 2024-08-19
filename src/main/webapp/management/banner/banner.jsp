@@ -271,9 +271,9 @@
                         if(arr!=null){
                             for(BannerDTO dto : arr){
                     %>
-                    <tr>
+                    <tr onclick="bannerEdit(<%=dto.getB_idx()%>);">
                         <td><%=dto.getB_idx() %></td>
-                        <td><a onclick="bannerEdit(<%=dto.getB_idx()%>);"><%=dto.getB_name() %></a></td>
+                        <td><%=dto.getB_name() %></a></td>
                         <td><%=dto.getB_sdate() %> ~ <%=dto.getB_edate() %></td>
                         <td><img src="<%=dto.getB_src() %>" alt="image" onclick="imgedit('<%=dto.getB_idx() %>');"></td>
                         <td><input type="checkbox" name="chkbox"></td>
