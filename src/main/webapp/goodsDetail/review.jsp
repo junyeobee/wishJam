@@ -1,5 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.wishJam.review.*"%>
+<jsp:useBean id="rdao" class="com.wishJam.review.ReviewDAO"></jsp:useBean>
+
+<%
+ArrayList<ReviewDTO> rlist = rdao.viewReview();
+
+if (rlist.size() == 0) {
+	System.out.println("d");
+} else {
+	for (int i = 0; i < rlist.size(); i++) {
+		System.out.println(rlist.get(i).getM_idx());
+	}
+}
+%>
+
 <style>
 .review {
 	width: 630px;
@@ -31,6 +47,24 @@
 	object-fit: cover;
 	border-radius: 50px;
 }
+
+.material-symbols-outlined {
+	font-variation-settings: 'FILL' 100, 'wght' 400, 'GRAD' 0, 'opsz' 24
+}
+
+.rebox {
+	padding: 5px 5px;
+	border-bottom: 1px solid #DBDBDB;
+}
+
+.rebox:hover {
+	cursor: pointer;
+	background-color: #D1E7FD;
+}
+
+.rstar {
+	color: pink;
+}
 </style>
 <section class="review">
 	<h2>리뷰</h2>
@@ -47,13 +81,18 @@
 		</ul>
 	</article>
 	<section>
-		<h2><a name="reviewpage"> 리뷰 보기</a></h2>
+		<h2>
+			<a name="reviewpage"> 리뷰 보기</a>
+		</h2>
 		<article>
 			<ul class="reviewul fbox">
-				<li><a href="#"><img src="../img/img2.jpeg"></a></li>
-				<li><a href="#"><img src="../img/img2.jpeg"></a></li>
-				<li><a href="#"><img src="../img/img2.jpeg"></a></li>
-				<li><a href="#"><img src="../img/img2.jpeg"></a></li>
+				<%
+				for (int i = 0; i < rlist.size(); i++) {
+				%>
+				<li><a href="#"><img src="<%=rlist.get(i).getR_img()%>"></a></li>
+				<%
+				}
+				%>
 			</ul>
 		</article>
 		<article>
@@ -71,32 +110,42 @@
 						</ul></td>
 			</table>
 		</article>
-		<section>
+		<section class="fbox" style="flex-direction: column;">
+			<%
+			for (int i = 0; i < rlist.size(); i++) {
+			%>
 			<article>
-				<div style="height: 100px;" class="lfloat">
-					<div class="fbox">
-						<img src="../img/img1.jpg" class="smallimg">
-						<div>*****</div>
+				<div class="rebox fbox" style="justify-content: space-between;">
+					<div style="height: 100px; flex-direction: column;" class="fbox">
+						<div class="fbox">
+							<div>
+								<img src="<%=rlist.get(i).getM_img()%>" class="smallimg">
+							</div>
+							<div>
+								<div class="fbox">
+									<%=rlist.get(i).getM_nick()%>
+									<%
+									for (int j = 0; j < rlist.get(i).getR_star(); j++) {
+									%>
+									<span class="material-symbols-outlined rstar">kid_star</span>
+									<%
+									}
+									%>
+								</div>
+								<span><%=rlist.get(i).getR_content()%></span>
+							</div>
+						</div>
 					</div>
-					이것은 리뷰글!
-					<div>ㄴ답글</div>
-				</div>
-				<img src="../img/img2.jpeg" class="boximg rfloat">
-			</article>
-			<article class="fclear">
-				<div style="height: 100px;" class="lfloat">
-					<div class="fbox">
-						<img src="../img/img1.jpg" class="smallimg">
-						<div>*****</div>
+					<div class="fbox" style="flex-direction: column;">
+						<img src="<%=rlist.get(i).getR_img()%>" class="boximg rfloat">
+						<div class="fbox" style="justify-content: right; font-size: 13px;"><%=rlist.get(i).getR_date()%></div>
 					</div>
-					이것은 리뷰글!
-					<div>ㄴ답글</div>
 				</div>
-				<img src="../img/img2.jpeg" class="boximg rfloat">
 			</article>
+			<%
+			}
+			%>
 		</section>
-		<div class="fclear">
-			더보기
-		</div>
+		<div class="fclear">더보기</div>
 	</section>
 </section>

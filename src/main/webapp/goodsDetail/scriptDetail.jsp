@@ -2,20 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.wishJam.category.CategoryDTO"%>
-<jsp:useBean id="ctdao" class="com.wishJam.category.CategoryDAO"></jsp:useBean>
-
-<%
-	ArrayList<CategoryDTO> clist = ctdao.list_C();
-	ArrayList<Integer> cnt = ctdao.B_num();
-	ArrayList<Integer> nlist = new ArrayList<Integer>();
-	
-	for(int i=0; i<cnt.size(); i++){
-		nlist.add(ctdao.C_num(cnt.get(i)));
-		System.out.println(nlist.get(i));
-	}
-	
-	
-%>
+<jsp:useBean id="ctdao" class="com.wishJam.category.CategoryDAO" scope="session"></jsp:useBean>
 
 <script>
 	function outClick(e) {
@@ -659,8 +646,65 @@
 	}
 	
 	function select_bc(t){
-		var select_b = t.options[t.selectedIndex].value;
-	
+		select_b = t.selectedIndex;
+
+		var cs = document.makeSellfm.c_small;
+		var catev = document.makeSellfm.c_idx;
+		var kwv = document.makeSellfm.hashkw;
+		var kwords = cs[select_b].options[cs[select_b].selectedIndex].id;
 		
+		for(var i=0; i<cs.length; i++){
+			cs[i].style.display="none";
+		}
+
+		cs[select_b].style.display="inline-block";
+		
+		catev.value=cs[select_b].options[cs[select_b].selectedIndex].value;
+		kwv.value=cs[select_b].options[cs[select_b].selectedIndex].id;
+		
+		var ul1 = document.getElementById("recomm");
+		while(ul1.firstChild){
+			ul1.removeChild(ul1.firstChild);
+		}
+		
+		var keys = kwords.split("#");
+
+		for(var i=1; i<keys.length; i++){
+			makeRecomm(keys[i]);
+		}
+	}
+	
+	function select_cate(t){
+		var catev = document.makeSellfm.c_idx;
+		var kwv = document.makeSellfm.hashkw;
+		var kwords = t.options[t.selectedIndex].id;
+		
+		catev.value=t.options[t.selectedIndex].value;
+		kwv.value=kwords;
+		
+		var ul1 = document.getElementById("recomm");
+		while(ul1.firstChild){
+			ul1.removeChild(ul1.firstChild);
+		}
+		
+		var keys = kwords.split("#");
+
+		for(var i=1; i<keys.length; i++){
+			makeRecomm(keys[i]);
+		}
+	}
+	
+	function makeRecomm(k){
+		var ul1 = document.getElementById("recomm");
+		
+		var li1 = document.createElement("li");
+		
+		var input1 = document.createElement("input");
+		input1.setAttribute("type","button");
+		input1.value="#"+k;
+		input1.setAttribute("onclick","keySelect(this.value)");
+		
+		li1.append(input1);
+		ul1.append(li1);
 	}
 </script>

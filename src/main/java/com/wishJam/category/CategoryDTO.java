@@ -6,12 +6,19 @@ public class CategoryDTO {
 	private int c_big;
 	private int c_small;
 	private String c_name;
+	private String c_hash;
 	
-	public CategoryDTO(int c_idx, int c_big, int c_small, String c_name) {
+	public CategoryDTO(int c_idx, int c_big, int c_small, String c_name, String c_hash) {
 		super();
 		this.c_idx = c_idx;
 		this.c_big = c_big;
 		this.c_small = c_small;
+		this.c_name = c_name;
+		this.c_hash = c_hash;
+	}
+	
+	public CategoryDTO(int c_big, String c_name) {
+		this.c_big = c_big;
 		this.c_name = c_name;
 	}
 
@@ -46,4 +53,13 @@ public class CategoryDTO {
 	public void setC_name(String c_name) {
 		this.c_name = c_name;
 	}
+
+	public String getC_hash() {
+		return c_hash;
+	}
+
+	public void setC_hash(String c_hash) {
+		this.c_hash = c_hash;
+	}
+	
 }

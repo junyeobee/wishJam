@@ -5,13 +5,14 @@
 <jsp:useBean id="idao" class="com.wishJam.detail.DetailImgDAO"
 	scope="session"></jsp:useBean>
 <jsp:useBean id="cdao" class="com.wishJam.detail.ColorDAO"></jsp:useBean>
-<jsp:useBean id="cgdao" class="com.wishJam.category.CategoryDAO"></jsp:useBean>
+<jsp:useBean id="cgdao" class="com.wishJam.category.CategoryDAO"
+	scope="session"></jsp:useBean>
 
 <%
 int s_idx = Integer.parseInt(request.getParameter("s_idx"));
-String g_name = "Gadget";
+String m_nick = request.getParameter("m_nick");
+String g_name = request.getParameter("g_name");
 String imgsrc = idao.getHomePath() + idao.getEverypath() + "mapjpg.jpg";
-String m_nick = "토마토";
 %>
 <!DOCTYPE html>
 <html>
@@ -236,6 +237,11 @@ ul {
 	align-self: flex-start;
 	margin: 10px 0 0 8px;
 }
+
+.c_small	{
+	width: 70px;
+}
+
 </style>
 
 <%@ include file="scriptDetail.jsp"%>
@@ -246,16 +252,19 @@ ul {
 
 		<form name="makeSellfm" action="makeSell_ok.jsp">
 			<input type="hidden" name="s_idx" value="<%=s_idx%>"> <input
-				type="hidden" name="m_nick" value="<%=m_nick%>">
+				type="hidden" name="m_nick" value="<%=m_nick%>"> <input type="hidden" name="g_name" value=<%=g_name %>>
 			<article>
 				<ul>
-					<li class="fbox" style="justify-content: center;">
+					<li class="fbox" style="align-items: center; flex-direction: column;">
 						<div id="thumb_img" class="thumbs fbox"
 							onclick="openImgpop(<%=s_idx%>, '<%=m_nick%>',this.id)">
 							<label>섬네일</label>
-						</div> <input type="hidden" name="s_img">
+						</div>
+						<span style="font-size: 12px;">섬네일 권장 규격은 215x215px입니다.</span>
+						 <input type="hidden" name="s_img">
 					</li>
-					<li>카테고리<label>대분류</label> <select name="c_big" onchange="select_bc(this)">
+					<li><div style="justify-content: space-between;">카테고리<label>대분류</label> <select name="c_big"
+						onchange="select_bc(this)">
 							<%
 							ArrayList<CategoryDTO> blist = cgdao.list_bicC();
 
@@ -265,9 +274,23 @@ ul {
 							<%
 							}
 							%>
-					</select> <label>소분류</label><select name="c_small">
-							<option></option>
-					</select>
+					</select> <label>소분류</label>
+					<%
+						ArrayList<CategoryDTO> clist = cgdao.list_C();
+						ArrayList<Integer> s_num  = cgdao.S_num();
+						
+						int ccnt = 0;
+						for(int i=0; i<blist.size(); i++){
+					%>
+							<select class="c_small" name="c_small" style="display: <%=i==0?"inline-block":"none"%>" onchange="select_cate(this)">
+							<% for(int j=0; j<s_num.get(i); j++){ %>
+								<option id="<%=clist.get(ccnt).getC_hash() %>" value=<%=clist.get(ccnt).getC_idx() %>><%=clist.get(ccnt).getC_name() %></option>
+							<%
+								ccnt++; 
+							} %>
+							</select>
+					<%} %>
+					</div><input type="hidden" name="c_idx" value="<%=clist.get(0).getC_idx() %>">
 					<li>제목<input type="text" name="s_title">
 					<li>상세 설명
 						<div class="editor">
@@ -495,17 +518,17 @@ ul {
 									onkeypress="EnterforInput(event)"></div>
 							</div>
 						</div>
-						<div>
-							<ul class="fbox fcenter">
-								<li>추천</li>
-								<li><input type="button" value="#a"
-									onclick="keySelect(this.value)"></li>
-								<li><input type="button" value="#b"
-									onclick="keySelect(this.value)"></li>
-								<li><input type="button" value="#c"
-									onclick="keySelect(this.value)"></li>
+						<div class="fbox" style="justify-content: center;">
+						<span>추천</span>
+							<ul class="fbox fcenter" id="recomm">
+								<%
+								String kw[] = clist.get(0).getC_hash().split("#");
+								for(int i=1; i<kw.length;i++){ %>
+								<li><input type="button" value="#<%=kw[i] %>" onclick="keySelect(this.value)"></li>
+								<%} %>
 							</ul>
 						</div> <input type="hidden" name="s_hash" value="">
+						<input type="hidden" name="hashkw" value="<%=clist.get(0).getC_hash() %>">
 					</li>
 					<li>
 						<article id="optsbox">

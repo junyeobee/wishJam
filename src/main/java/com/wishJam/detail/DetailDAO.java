@@ -34,9 +34,10 @@ public class DetailDAO {
 				int s_type = rs.getInt("s_type");
 				String s_trade = rs.getString("s_trade");
 				String s_img = rs.getString("s_img");
+				int s_stat = rs.getInt("s_stat");
 
 				DetailDTO dto = new DetailDTO(s_idx, m_nick, c_idx, g_name, s_title, s_content, s_hash, s_idx, c_idx,
-						s_start, s_end, s_discnt, s_type, s_trade, s_img);
+						s_start, s_end, s_discnt, s_type, s_trade, s_img, s_stat);
 
 				return dto;
 			} else {
@@ -62,8 +63,8 @@ public class DetailDAO {
 	public int addSellPage(DetailDTO dto) {
 		try {
 			conn = com.db.wishJam.DbConn.getConn();
-			String sql = "insert into sell(s_idx, m_nick, c_idx, g_name, s_title, s_content, s_hash, s_start, s_end, s_discnt, s_type, s_trade,s_img)"
-					+" values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into sell(s_idx, m_nick, c_idx, g_name, s_title, s_content, s_hash, s_start, s_end, s_discnt, s_type, s_trade,s_img, s_stat)"
+					+" values(?,?,?,?,?,?,?,?,?,?,?,?,?,0)";
 			
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, dto.getS_idx());

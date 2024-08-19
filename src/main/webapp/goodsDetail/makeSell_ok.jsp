@@ -13,7 +13,6 @@ Date s_date = Date.valueOf(getstart);
 Date e_date = Date.valueOf(getend);
 %>
 <jsp:useBean id="ddto" class="com.wishJam.detail.DetailDTO"></jsp:useBean>
-
 <%
 ddto.setS_start(s_date);
 ddto.setS_end(e_date);
@@ -28,6 +27,7 @@ String sg_img[] = request.getParameterValues("sg_img");
 String sg_main[] = request.getParameterValues("sg_main");
 %>
 
+
 <jsp:setProperty property="s_idx" name="ddto"></jsp:setProperty>
 <jsp:setProperty property="m_nick" name="ddto"></jsp:setProperty>
 <jsp:setProperty property="c_idx" name="ddto"></jsp:setProperty>
@@ -41,8 +41,11 @@ String sg_main[] = request.getParameterValues("sg_main");
 <jsp:setProperty property="s_type" name="ddto"></jsp:setProperty>
 <jsp:setProperty property="s_trade" name="ddto"></jsp:setProperty>
 <jsp:setProperty property="s_img" name="ddto"></jsp:setProperty>
+<jsp:setProperty property="s_stat" name="ddto"></jsp:setProperty>
+
 <jsp:useBean id="ddao" class="com.wishJam.detail.DetailDAO"></jsp:useBean>
 <jsp:useBean id="sgdao" class="com.wishJam.s_goods.S_goodsDAO"></jsp:useBean>
+
 <%
 int detail_result = ddao.addSellPage(ddto);
 

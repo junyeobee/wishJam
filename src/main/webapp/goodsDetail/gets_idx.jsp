@@ -14,6 +14,8 @@
 	</form>
 	<form name="idx_gfm2" action="makeSell.jsp">
 		<input type="text" name="s_idx">
+		<input type="text" name="m_nick" value="당근">
+		<input type="text" name="g_name" value="딸기잼">
 		<input type="submit" value="제출">
 	</form>
 </body>
