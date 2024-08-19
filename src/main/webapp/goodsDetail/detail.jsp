@@ -33,9 +33,6 @@ body {
 	margin: 0px auto;
 }
 
-section {
-	text-align: center;
-}
 
 .pfimg {
 	height: 100px;
@@ -58,6 +55,7 @@ section {
 .explain {
 	width: 630px;
 	border: 1px solid green;
+	text-align: center;
 }
 
 .boximg {
