@@ -221,7 +221,7 @@
 <%@ include file="../header.jsp" %>
 <div class="cart_wrap">
 	<div class="cart_box">
-	<form class="cart_form" action="" method="post">
+	<form class="cart_form" id="cart_form" action="gopay.jsp" method="post">
 		<h2>장 바 구 니</h2>
 		<div class="cart_in_box">
 			<div class="cart_detail">
@@ -244,14 +244,34 @@
 									   if((clist.get(i).getS_start().compareTo(today) <= 0 ) && (clist.get(i).getS_end().compareTo(today) >= 0) && clist.get(i).getSg_count() > 0){
 							%>
 							<li class="detail_box">
-								<input type="checkbox" id="check_<%=i+1 %>" class="detail_btn" data-idx="<%=clist.get(i).getCt_idx() %>" checked="checked" onclick="goods_indick();">
-								<a href="../goodsDetail/detail.jsp" class="detail_img"><img src="../img/profile.png" style="width: 100px;height: 100px;"></a>
+							    <%
+							    	if(clist.get(i).getCt_ckbox() == 1){
+							    %>
+								<input type="checkbox" id="check_<%=i+1 %>" class="detail_btn" data-idx="<%=clist.get(i).getCt_idx() %>" checked="checked" onclick="goods_indick();" onchange="goods_costcg(this);">
+								<%
+							    	} else if(clist.get(i).getCt_ckbox() == 0) {
+								%>
+								<input type="checkbox" id="check_<%=i+1 %>" class="detail_btn" data-idx="<%=clist.get(i).getCt_idx() %>" onclick="goods_indick();" onchange="goods_costcg(this);">
+								<%
+							    	}
+								%>
+								<a href="../goodsDetail/detail.jsp?s_idx=<%=clist.get(i).getS_idx() %>" class="detail_img"><img src="../img/profile.png" style="width: 100px;height: 100px;"></a>
 								<div class="detail_alt">
-									<a href="../goodsDetail/detail.jsp" class="detail_alt" style="text-decoration: none;">
+									<a href="../goodsDetail/detail.jsp?s_idx=<%=clist.get(i).getS_idx() %>" class="detail_alt" style="text-decoration: none;">
 										<span class="detail_info"><%=clist.get(i).getS_title() %></span>
 										<span class="detail_altinfo"><%=clist.get(i).getSg_name() %></span>
 									</a>
-									<input type="hidden" name="product" value="<%=clist.get(i).getCt_idx()%>">
+									<% 
+										if(clist.get(i).getCt_ckbox() == 1){
+									%>
+									<input type="hidden" id="product" name="product" value="<%=clist.get(i).getCt_idx()%>">
+									<%
+										} else {
+									%>
+									<input type="hidden" id="product" name="product" value="">
+									<%
+										}
+									%>
 								</div>
 								<div class="detail_count">
 									<button class="count_css" data-idx="<%=clist.get(i).getCt_idx() %>" onclick="goods_minus(this);"><img src="../img/minus2.png" style="width: 8px;height: 8px;padding-top: 8px;padding-left: 3px;"></button>
@@ -261,13 +281,11 @@
 								</div>
 								<div class="detail_cost"> 
 									<div class="detail_info"><%=formatter.format(clist.get(i).getCt_sale()) %>원</div>
-									<input type="hidden" name="p_apay" value="<%=clist.get(i).getCt_sale() %>">
 									<!-- 할인가격 없으면 생성x -->
 									<% 
 										if(clist.get(i).getCt_dispr() != 0){
 									%>
 									<div class="detail_altcost"><%=formatter.format(clist.get(i).getCt_price()) %>원</div>
-									<input type="hidden" name="p_bpay" value="<%=clist.get(i).getCt_price() %>">
 									<%
 										}
 									%>
@@ -310,30 +328,36 @@
 										if(!(clist.get(i).getS_start().compareTo(today) <= 0 && clist.get(i).getS_end().compareTo(today) >= 0) || clist.get(i).getSg_count() <= 0){
 							%>
 							<li class="detail_box">
-								<input type="checkbox" id="check_<%=i+1 %>" class="detail_btn" data-idx="<%=clist.get(i).getCt_idx() %>" onclick="goods_indick();">
-								<a href="../goodsDetail/detail.jsp" class="detail_img"><img src="../img/profile.png" style="width: 100px;height: 100px;"></a>
+								<%
+							    	if(clist.get(i).getCt_ckbox() == 1){
+							    %>
+								<input type="checkbox" id="check_<%=i+1 %>" class="detail_btn" data-idx="<%=clist.get(i).getCt_idx() %>" checked="checked" onclick="goods_indick();" onchange="goods_costcg(this);">
+								<%
+							    	} else if(clist.get(i).getCt_ckbox() == 0) {
+								%>
+								<input type="checkbox" id="check_<%=i+1 %>" class="detail_btn" data-idx="<%=clist.get(i).getCt_idx() %>" onclick="goods_indick();" onchange="goods_costcg(this);">
+								<%
+							    	}
+								%>
+								<a href="../goodsDetail/detail.jsp?s_idx=<%=clist.get(i).getS_idx() %>" class="detail_img"><img src="../img/profile.png" style="width: 100px;height: 100px;"></a>
 								<div class="detail_alt">
-									<a href="../goodsDetail/detail.jsp" class="detail_alt" style="text-decoration: none;">
+									<a href="../goodsDetail/detail.jsp?s_idx=<%=clist.get(i).getS_idx() %>" class="detail_alt" style="text-decoration: none;">
 										<span class="detail_info"><%=clist.get(i).getS_title() %></span>
 										<span class="detail_altinfo"><%=clist.get(i).getSg_name() %></span>
 									</a>
-									<input type="hidden" name="product" value="<%=clist.get(i).getCt_idx()%>">
 								</div>
 								<div class="detail_count">
 									<button class="count_css" disabled><img src="../img/minus.png" style="width: 10px;height: 10px;padding-top: 8px;padding-left: 3px;"></button>
 									<div style="width: 35px; text-align: center; color: rgb(153, 153, 153);"><%=clist.get(i).getCt_count() %></div>
-									<input type="hidden" name="p_count" value="<%=clist.get(i).getCt_count() %>">
 									<button class="count_css" disabled><img src="../img/add.png" style="width: 8px;height: 8px;padding-top: 8px;padding-left: 4px;"></button>
 								</div>
 								<div class="detail_cost"> 
 									<div class="detail_info"><%=formatter.format(clist.get(i).getCt_sale()) %>원</div>
-									<input type="hidden" name="p_apay" value="<%=clist.get(i).getCt_sale() %>">
 									<!-- 할인가격 없으면 생성x -->
 									<% 
 										if(clist.get(i).getCt_dispr() != 0){
 									%>
 									<div class="detail_altcost"><%=formatter.format(clist.get(i).getCt_price()) %>원</div>
-									<input type="hidden" name="p_bpay" value="<%=clist.get(i).getCt_price() %>">
 									<%
 										}
 									%>
@@ -364,7 +388,7 @@
 					  		   int gross_value = 0;
 								if(clist != null && !clist.isEmpty()){
 									for (int i = 0; i < clist.size(); i++) {
-										if((clist.get(i).getS_start().compareTo(today) <= 0 ) && (clist.get(i).getS_end().compareTo(today) >= 0) && clist.get(i).getSg_count() > 0){
+										if((clist.get(i).getS_start().compareTo(today) <= 0 ) && (clist.get(i).getS_end().compareTo(today) >= 0) && clist.get(i).getSg_count() > 0 && clist.get(i).getCt_ckbox() == 1){
 											origin_sum += (clist.get(i).getCt_price() * clist.get(i).getCt_count());
 											sale_sum += (clist.get(i).getCt_dispr() * clist.get(i).getCt_count());
 										}
@@ -388,7 +412,6 @@
 					  	<div class="cost_detail">
 					  		<span class="cost_name">배송비</span>
 					  		<span class="cost_money">+ <%= formatter.format(ship_sum) %>
-					  		<input type="hidden" name="p_ship" value="ship_sum">
 					  			<span class="cost_alt">원</span>
 					  		</span>
 					  	</div>
@@ -396,13 +419,12 @@
 					  	<div class="cost_detail">
 					  		<span class="cost_name">결제예정금액</span>
 					  		<span class="cost_money"><%= formatter.format(gross_value) %>
-					  		<input type="hidden" name="p_fpay" value="gross_value">
 					  			<span class="cost_alt">원</span>
 					  		</span>
 					  	</div>
 					</div>
 					<div style="margin-top:25px;">
-						<input type="button" class="cart_pay" value="결제하기">
+						<button class="cart_pay" id="cart_confirm">결제하기</button>
 						<ul class="cart_noti">
 							<li class="noti_detail">[주문완료]상태일 경우만 주문 취소가 가능합니다.</li>
 							<li class="noti_detail">[마이페이지 > 구매내역 상세페이지]에서 취소하실 수 있습니다.</li>
@@ -418,33 +440,38 @@
 </body>
 </html>
 <script>
+	window.onload = function() {
+	    goods_indick(); // 페이지가 로드될 때 전체 체크 상태를 업데이트
+	};
+
 	function goods_ck() {
-		var allck = document.getElementById("check_all");
-		
-		for (var i = 0; i < <%=count%>; i++) {
-			var ck = document.getElementById("check_"+(i+1));
-			ck.checked = allck.checked;
-		}
+	    var allck = document.getElementById("check_all");
+	    var allCheckboxes = document.querySelectorAll(".detail_btn"); // 모든 체크박스 선택
+	
+	 	// 체크박스 상태 설정
+	    for (var i = 0; i < allCheckboxes.length; i++) {
+	        allCheckboxes[i].checked = allck.checked;
+	        // 상태 변경 시 이벤트 처리
+	        goods_costcg(allCheckboxes[i]);
+	    }
 	}
 	
 	function goods_indick() {
-		var allck = document.getElementById("check_all");
-		
-		var allChecked = true;
-		
-		for (var i = 0; i < <%=count%>; i++) {
-			var ck = document.getElementById("check_"+(i+1));
-			
-			if (!ck.checked) {
-                allChecked = false; // 하나라도 체크되지 않으면 전체 체크가 아니라고 판단
-                break;
-            }
-		}
-		
-		allck.checked = allChecked;
+	    var allck = document.getElementById("check_all");
+	    var allCheckboxes = document.querySelectorAll(".detail_btn"); // 모든 체크박스 선택
+	    var allChecked = true;
+
+	    for (var i = 0; i < allCheckboxes.length; i++) {
+	        if (!allCheckboxes[i].checked) {
+	            allChecked = false; // 하나라도 체크되지 않으면 전체 체크가 아니라고 판단
+	            break;
+	        }
+	    }
+
+	    allck.checked = allChecked;
 	}
 </script>
-<script>
+<script>	
 	function goods_ckdel() {
 		var selectedIds = [];
 		
@@ -459,6 +486,7 @@
 		
         if (selectedIds.length === 0) {
             alert("선택된 항목이 없습니다.");
+            event.preventDefault();
             return;
         }
         
@@ -476,6 +504,43 @@
 	            }
 	        };
 	        xhr.send(JSON.stringify({ ctidx: selectedIds })); // 선택된 ID를 JSON 객체로 서버에 전송
+	        event.preventDefault();
+	}
+	
+	function goods_costcg(checkbox) {
+	    // 체크박스의 data-idx 값과 체크 상태를 가져옵니다.
+	    var ckIds = [];
+	    var ckinvi = [];
+	    
+	    // 체크박스 상태에 따라 ctidx와 ctckbox를 설정합니다.
+	    var ckidx = checkbox.getAttribute("data-idx");
+	    var ckinviValue = checkbox.checked ? 1 : 0;
+	    
+	    // 현재 체크박스의 상태를 배열에 추가합니다.
+	    ckIds.push(ckidx);
+	    ckinvi.push(ckinviValue);
+
+	    // AJAX 요청을 보냅니다.
+	    var xhr = new XMLHttpRequest();
+	    xhr.open("POST", "ckChange.jsp", true);
+	    xhr.setRequestHeader("Content-Type", "application/json");
+	    xhr.onload = function() {
+	        if (xhr.status === 200) {
+	        	var response = JSON.parse(xhr.responseText);
+	            location.reload(); // 페이지 새로고침
+	        } else {
+	            alert("오류가 발생했습니다.");
+	        }
+	    };
+
+	    // 두 개의 데이터를 하나의 JSON 객체로 결합하여 전송
+	    var data = {
+	        ctidx: ckIds,
+	        ctckbox: ckinvi
+	    };
+	    
+	    xhr.send(JSON.stringify(data));
+	    event.preventDefault();
 	}
 	
 	function goods_del(button) {
@@ -494,7 +559,7 @@
             }
         };
         xhr.send(JSON.stringify({ "ctidx": ct_idx })); // 선택된 ID를 JSON 문자열로 서버에 전송
-    
+        event.preventDefault();
 	}
 	
 	function goods_plus(pbutton) {
@@ -518,6 +583,7 @@
 		} else{
 			alert("1인 구매개수를 초과하였습니다.");
 		}
+		event.preventDefault();
 	}
 	
 	function goods_minus(mbutton) {
@@ -540,7 +606,46 @@
 		} else if( p_count <= 1 ){
 			alert("상품을 원하지 않는다면 장바구니에서 삭제해주세요.");
 		}
+		event.preventDefault();
 	}
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	document.getElementById("cart_confirm").addEventListener('click', (event) => {
+	    var product = document.getElementById("product");
+	    var elements = document.getElementsByName("p_count");
+	    var pelements = document.getElementsByName("product");
+	    
+	    // 상품 요소가 없거나 장바구니가 비어있는 경우 처리
+	    if (!product) {
+	        alert("장바구니가 비었습니다.");
+	        event.preventDefault();
+	        return; // 함수 종료
+	    }
+	    
+	    // 선택된 상품이 없을 경우 처리
+	    var hasValidProduct = Array.from(pelements).some(product => product.value.trim() !== "");
+	    if (!hasValidProduct) {
+	        alert("구매할 상품을 선택해주세요.");
+	        event.preventDefault();
+	        return; // 함수 종료
+	    }
+	
+	    // 'p_count' 요소를 역방향으로 제거
+	    for (var i = elements.length - 1; i >= 0; i--) {
+	        elements[i].remove();
+	    }
+	    
+	    // 유효하지 않은 'product' 요소를 제거
+	    for (var i = pelements.length - 1; i >= 0; i--) {
+	        if (pelements[i].value.trim() === "") {
+	            pelements[i].remove();
+	        }
+	    }
+	    
+	    document.getElementById("cart_form").submit();
+	});
+});
 </script>
 <script>
 // 스크롤 위치저장

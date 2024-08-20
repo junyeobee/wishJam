@@ -20,7 +20,7 @@ public class CartDAO {
 		try {
 			conn = com.db.wishJam.DbConn.getConn();
 			
-			String sql = " select ct_idx, m_id, s_title, sg_name, sg_img, ct_count, ct_price, ct_dispr, (ct_price-ct_dispr) as ct_sale, sg_count, sg_limit, s_start, s_end+1 as s_end "
+			String sql = " select ct_idx, m_id, se.s_idx, s_title, sg_name, sg_img, ct_count, ct_price, ct_dispr, (ct_price-ct_dispr) as ct_sale, sg_count, sg_limit, s_start, s_end+1 as s_end, ct_ckbox "
 					+ " from cart ca join s_goods sg on ca.sg_idx = sg.sg_idx "
 					+ " join member me on ca.m_idx = me.m_idx "
 					+ " join sell se on sg.s_idx = se.s_idx "
@@ -32,6 +32,7 @@ public class CartDAO {
 			while(rs.next()) {
 				int ct_idx = rs.getInt("ct_idx");
 				String m_id = rs.getString("m_id");
+				int s_idx = rs.getInt("s_idx");
 				String s_title = rs.getString("s_title");
 				String sg_name = rs.getString("sg_name");
 				String sg_img = rs.getString("sg_img");
@@ -43,8 +44,9 @@ public class CartDAO {
 				int sg_limit = rs.getInt("sg_limit");
 				Date s_start = rs.getDate("s_start");
 				Date s_end = rs.getDate("s_end");
+				int ct_ckbox = rs.getInt("ct_ckbox");
 				
-				ctlist.add(new CartDTO(ct_idx, m_id, s_title, sg_name, sg_img, ct_count, ct_price, ct_dispr, ct_sale, sg_count, sg_limit, s_start, s_end));
+				ctlist.add(new CartDTO(ct_idx, m_id, s_idx, s_title, sg_name, sg_img, ct_count, ct_price, ct_dispr, ct_sale, sg_count, sg_limit, s_start, s_end, ct_ckbox));
 			}
 			
 			return ctlist;
@@ -131,6 +133,76 @@ public class CartDAO {
 			
 			return count;
 		} catch (Exception e) {
+			e.printStackTrace();
+	        return -1;
+		} finally {
+	           try {
+	               if(ps!=null) ps.close();
+	               if(conn!=null) conn.close();
+	            } catch (Exception e2) {
+	               
+	            }
+	    }
+	}
+	
+	/** 체크박스 변경 */
+	public int costchange(int ct_idxck, int ct_ckchange) {
+		try {
+			conn = com.db.wishJam.DbConn.getConn();
+			
+			String sql = " UPDATE cart "
+					+ " SET ct_ckbox = ? "
+					+ " WHERE ct_idx = ? ";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, ct_ckchange);
+			ps.setInt(2, ct_idxck);
+			
+			int count = ps.executeUpdate();
+			
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+	        return -1;
+		} finally {
+	           try {
+	               if(ps!=null) ps.close();
+	               if(conn!=null) conn.close();
+	            } catch (Exception e2) {
+	               
+	            }
+	    }
+	}
+	
+	/** 결제진행시 체크박스 상태복구 */
+	public int ckchange(CartDTO cdto) {
+		try {
+			conn = com.db.wishJam.DbConn.getConn();
+			
+			String sql = " UPDATE cart "
+					+ " SET ct_ckbox = 1 "
+					+ " WHERE sg_idx IN (SELECT sg_idx "
+					+ "					 FROM s_goods "
+					+ "					 WHERE s_idx IN (SELECT s_idx FROM sell "
+					+ "									 WHERE sysdate BETWEEN s_start AND s_end) AND sg_count > 0) ";
+			
+			String sql2 = " UPDATE cart "
+					+ " SET ct_ckbox = 0 "
+					+ " WHERE sg_idx IN (SELECT sg_idx "
+					+ "					 FROM s_goods "
+					+ "					 WHERE s_idx IN (SELECT s_idx FROM sell "
+					+ "									 WHERE sysdate NOT BETWEEN s_start AND s_end) OR sg_count <= 0) ";
+			
+			ps = conn.prepareStatement(sql);
+			PreparedStatement ps2 = conn.prepareStatement(sql2);
+			
+			int count = ps.executeUpdate();
+			int count2 = ps2.executeUpdate();
+			int result = count + count2;
+			
+			if(ps2!=null) ps2.close();
+			return result;
+		} catch (Exception e) {
+			
 			e.printStackTrace();
 	        return -1;
 		} finally {
