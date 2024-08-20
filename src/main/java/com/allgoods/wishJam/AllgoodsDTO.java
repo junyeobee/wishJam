@@ -46,6 +46,14 @@ public class AllgoodsDTO {
 	private int s_jjim;
 	private int s_discnt;
 	private String userid;
+	private int sg_price;
+
+	public int getSg_price() {
+		return sg_price;
+	}
+	public void setSg_price(int sg_price) {
+		this.sg_price = sg_price;
+	}
 
 	private int m_idx;
 	public AllgoodsDTO() {
@@ -133,15 +141,17 @@ public class AllgoodsDTO {
 		this.s_discnt = s_discnt;
 	}
 
-	public AllgoodsDTO(String m_nick,String s_title, int s_idx, int s_jjim, int s_discnt, int sg_main,  String s_img  ) {
+	public AllgoodsDTO(String m_nick,String s_title, int s_idx, int s_jjim, int s_discnt, int sg_main, int sg_price,  String s_img  ) {
 		
 		this.s_idx = s_idx;
 		this.s_title = s_title;
 		this.sg_main = sg_main;
+		this.sg_price =sg_price;
 		this.m_nick = m_nick;
 		this.s_img = s_img;
 		this.s_jjim = s_jjim;
 		this.s_discnt = s_discnt;
+		
 	}
 	
 	

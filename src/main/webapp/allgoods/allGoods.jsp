@@ -260,7 +260,7 @@ function updateSortOrder() {
 					  %><span class="discount"><%=dis +"%"%></span> <%
 					}else{ }%>
 					
-					<%= products.getSg_main()%></div>
+					<%= products.getSg_price()%></div>
 
 
                   <button type="submit" onclick="jjim(this);" id="jbt_<%= products.getS_idx() %>" class="jbt">찜🤍</button> <!--제출 버튼 -->

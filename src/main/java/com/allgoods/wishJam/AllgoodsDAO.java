@@ -38,8 +38,9 @@ public class AllgoodsDAO {
 				int s_jjim = rs.getInt("s_jjim");
 				int s_discnt= rs.getInt("s_discnt");
 				int sg_main = rs.getInt("sg_main");
+				int sg_price = rs.getInt("sg_price");
 				String s_img = rs.getString("s_img");
-				products.add(new AllgoodsDTO(m_nick,s_title,s_idx,s_jjim ,s_discnt, sg_main, s_img));
+				products.add(new AllgoodsDTO(m_nick,s_title,s_idx,s_jjim ,s_discnt, sg_main, sg_price,s_img));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
