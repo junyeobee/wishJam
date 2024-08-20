@@ -7,6 +7,17 @@ public class CategoryDTO {
 	private int c_small;
 	private String c_name;
 	private String c_hash;
+	private String c_img;
+	
+	public CategoryDTO(int c_idx, int c_big, int c_small, String c_name, String c_hash, String c_img) {
+		super();
+		this.c_idx = c_idx;
+		this.c_big = c_big;
+		this.c_small = c_small;
+		this.c_name = c_name;
+		this.c_hash = c_hash;
+		this.c_img = c_img;
+	}
 	
 	public CategoryDTO(int c_idx, int c_big, int c_small, String c_name, String c_hash) {
 		super();
@@ -16,7 +27,15 @@ public class CategoryDTO {
 		this.c_name = c_name;
 		this.c_hash = c_hash;
 	}
-	
+
+	public String getC_img() {
+		return c_img;
+	}
+
+	public void setC_img(String c_img) {
+		this.c_img = c_img;
+	}
+
 	public CategoryDTO(int c_big, String c_name) {
 		this.c_big = c_big;
 		this.c_name = c_name;

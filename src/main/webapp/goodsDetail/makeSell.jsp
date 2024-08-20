@@ -146,6 +146,7 @@ ul {
 
 .contentImg {
 	padding: 5px;
+width:750px;
 }
 
 .cPalette {
@@ -240,6 +241,15 @@ ul {
 
 .c_small	{
 	width: 70px;
+}
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
 }
 
 </style>
@@ -562,7 +572,7 @@ ul {
 										</ul>
 									</div>
 								</div>
-								<span class="material-symbols-outlined icons"
+								<span class="material-symbols-outlined icons" id="delbtn1"
 									onclick="deleteOpt(this)">close</span>
 							</div>
 						</article>
@@ -635,11 +645,10 @@ ul {
 										<li>
 											<div class="bordbox">
 												<ul class="fbox fcenter">
-													<li><input type="checkbox" onclick="selectIt(this)"
-														name="discnt_box"><input type="hidden"
-														name="sg_discnt" value="0"></li>
+													<li><input type="checkbox" id="dcbox_ck1" onclick="selectIt(this)" name="discnt_box"><input type="hidden" name="sg_discnt" value="0"></li>
 													<li name="op_sg_name1"></li>
 													<li name="op_sg_price1"></li>
+													<li name="op_sg_dcprice1"></li>
 												</ul>
 											</div>
 										</li>
