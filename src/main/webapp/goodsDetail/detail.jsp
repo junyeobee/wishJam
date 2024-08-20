@@ -107,7 +107,7 @@ ul {
 
 .btnli {
 	border: 1px solid gray;
-	width: 49%;
+	width: 50%;
 }
 
 .colortobox {
@@ -128,10 +128,28 @@ ul {
 .detailnav {
 	position: sticky;
 	top: 0;
+	width: 635px;
+	text-align: center;
 }
 
 .kwicon {
 	cursor: default;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.detailnav div {
+	background-color: white;
+}
+
+.detailnav ul {
+	background-color: white;
 }
 </style>
 <script>
@@ -227,11 +245,18 @@ ul {
 			<form name="option">
 				<%
 				for (int i = 0; i < sglist.size(); i++) {
-				%>
+					%>
 				<div class="fclear">
 					<img class="boximg lfloat" src="../img/img2.jpeg">
 					<div id="sg_idx<%=i%>_name"><%=sglist.get(i).getSg_name()%></div>
-					<div class="detail_price" id="sg_idx<%=i%>_p"><%=sglist.get(i).getSg_price()%></div>
+					<div class="fbox" style="justify-content: space-evenly;">
+						<div style="display:<%=sglist.get(i).getSg_discnt()==1?"block":"none"%>">할인중</div>
+						<div class="fbox">
+							<div class="detail_price" style="text-decoration:<%=sglist.get(i).getSg_discnt()==1?"line-through":"none"%>;"><%=sglist.get(i).getSg_price()%></div>
+							<span class="material-symbols-outlined" style="display:<%=sglist.get(i).getSg_discnt()==1?"block":"none"%>;">trending_flat</span>
+							<div id="sg_idx<%=i%>_p" style="display:<%=sglist.get(i).getSg_discnt()==1?"block":"none"%>;"><%=sglist.get(i).getSg_discnt()==1?(int)(sglist.get(i).getSg_price()*(1-(double)sddto.getS_discnt()/100)):sglist.get(i).getSg_price() %></div>
+						</div>
+					</div>
 					<input type="button" value="-" name="sg_idx<%=i%>"
 						onclick="minusBtn(this)"> <input type="text"
 						name="sg_idx<%=i%>" value="0"> <input type="button"
@@ -270,15 +295,14 @@ ul {
 			<div>
 				<ul class="fbox fcenter">
 					<%
-					String hash_arr[] = (sddto.getS_hash()).split("#");
-					for (int i = 1; i < hash_arr.length; i++) {
-					%>
-
-					<li>#<%=hash_arr[i]%></li>
-
-					<%
-					}
-					%>
+					if(sddto.getS_hash()!=null){
+						String hash_arr[] = (sddto.getS_hash()).split("#");
+						for (int i = 1; i < hash_arr.length; i++) {
+						%>
+						<li>#<%=hash_arr[i]%></li>
+						<%
+						}}
+						%>
 				</ul>
 			</div>
 		</article>

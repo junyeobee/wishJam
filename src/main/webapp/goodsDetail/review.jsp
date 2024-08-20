@@ -1,32 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.text.*"%>
 <%@ page import="com.wishJam.review.*"%>
 <jsp:useBean id="rdao" class="com.wishJam.review.ReviewDAO"></jsp:useBean>
 
 <%
-ArrayList<ReviewDTO> rlist = rdao.viewReview();
+DecimalFormat df = new DecimalFormat("#.##");
 
-double total_s = 0;
+int s_idx = Integer.parseInt(request.getParameter("s_idx"));
 
-for(int i=0; i<rlist.size();i++){
-	total_s +=rlist.get(i).getR_star();
+int totalCnt = rdao.countReview(s_idx);
+int tiCnt = rdao.countimgReview(s_idx);
+int rSize = 5;
+int pageSize = 5;
+
+String rp_s = request.getParameter("rp");
+if (rp_s == null || rp_s.equals("")) {
+	rp_s = "1";
 }
+int rp = Integer.parseInt(rp_s);
 
-double avg_s = total_s/rlist.size();
+ArrayList<ReviewDTO> rlist = rdao.viewReview(s_idx, rp, rSize);
+ArrayList<ReviewDTO> ilist = rdao.viewImgReview(s_idx);
+
+int totalPage = totalCnt / rSize + 1;
+int total_s = rdao.sumRstar(s_idx);
+double avg_s = (double) total_s / totalCnt;
+
+int nowGroup = rp / pageSize;
+if (rp % pageSize == 0) {
+	nowGroup--;
+}
 %>
 
 <style>
+h2 {
+	text-align: center;
+}
+
+.th2 {
+	margin: 20px auto;
+	padding-bottom: 20px;
+	width: 90%;
+	border-bottom: 1px solid #BDBDBD;
+	width: 90%;
+}
+
 .review {
 	width: 630px;
 	border: 1px solid gray;
+}
+
+.reviewul {
+	justify-content: space-around;
 }
 
 .reviewul img {
 	width: 100px;
 	height: 100px;
 	object-fit: cover;
-	margin-right: 50px;
 }
 
 .sleft {
@@ -39,6 +72,10 @@ double avg_s = total_s/rlist.size();
 	padding: 5px;
 	border-radius: 50px;
 	margin-right: 20px;
+}
+
+.keyword a:hover {
+	box-shadow: 0px 0px 10px 0px #BDBDBD;
 }
 
 .smallimg {
@@ -54,7 +91,6 @@ double avg_s = total_s/rlist.size();
 
 .rebox {
 	padding: 5px 5px;
-	
 }
 
 .rebox:hover {
@@ -69,23 +105,54 @@ double avg_s = total_s/rlist.size();
 .reply {
 	border-bottom: 1px solid #DBDBDB;
 }
+
+.totalrv {
+	font-size: 23px;
+	font-weight: bold;
+}
+
+.totalrs {
+	font-size: 20px;
+}
+
+.rvul li {
+	margin: 0 10px;
+}
+
+.pageA {
+	text-decoration: none;
+	color: black;
+}
+
+.moreArrow {
+	align-items: center;
+	display: flex;
+}
+
+.moreArrow:hover {
+	cursor: pointer;
+}
 </style>
 <section class="review">
-	<h2>리뷰</h2>
-	<article>
-		<ul class="fbox">
+	<h2 class="th2">리뷰</h2>
+	<%
+	if (totalCnt == 0) {
+	%>
+	<div style="text-align: center; margin-bottom: 30px;">작성된 리뷰가
+		없습니다.</div>
+	<%
+	} else {
+	%>
+	<article class="fbox">
+		<ul class="fbox rvul">
 			<li><div>
-					총 별점
-					<div>
-						<%-- <%for(int i=0; i<avg_s;i++){ %>
-						<span class="material-symbols-outlined rstar">kid_star</span>
-						<%} %> --%>
-						<%=avg_s %>
-					</div>
+					<div class="totalrv">총 별점</div>
+					<div class="totalrs"><%=totalCnt > 0 ? df.format(avg_s) : "별점 없음"%></div>
 				</div></li>
 			<li><div>
-					리뷰 수
-					<div><%=rlist.size() %>건</div>
+					<div class="totalrv">리뷰 수</div>
+					<div class="totalrs"><%=totalCnt%>건
+					</div>
 				</div></li>
 		</ul>
 	</article>
@@ -96,9 +163,23 @@ double avg_s = total_s/rlist.size();
 		<article>
 			<ul class="reviewul fbox">
 				<%
-				for (int i = 0; i < rlist.size(); i++) {
+				if (ilist.size() != 0) {
+
+					for (int i = 0; i < rSize; i++) {
 				%>
-				<li><a href="#"><img src="<%=rlist.get(i).getR_img()%>"></a></li>
+				<li><a href="#"><img src="<%=ilist.get(i).getR_img()%>"></a></li>
+				<%
+				if (rdao.countimgReview(s_idx) > rSize && i==rSize-1) {
+				%>
+				<li class="moreArrow">
+					<span class="material-symbols-outlined">arrow_forward_ios</span>
+				</li>
+				<%
+				}
+				}
+
+				} else {
+				%><li>리뷰 이미지 없음</li>
 				<%
 				}
 				%>
@@ -146,18 +227,51 @@ double avg_s = total_s/rlist.size();
 						</div>
 					</div>
 					<div class="fbox" style="flex-direction: column;">
+						<%
+						if (rlist.get(i).getR_img() != null) {
+						%>
 						<img src="<%=rlist.get(i).getR_img()%>" class="boximg rfloat">
+						<%
+						}
+						%>
 						<div class="fbox" style="justify-content: right; font-size: 13px;"><%=rlist.get(i).getR_date()%></div>
 					</div>
 				</div>
-				<div>
-					ㄴ답글
-				</div>
+				<div>ㄴ답글</div>
 			</article>
 			<%
 			}
 			%>
 		</section>
-		<div class="fclear">더보기</div>
+		<div class="fclear" style="text-align: center;">
+			<%
+			if (nowGroup != 0) {
+			%>
+			<span><a
+				href="detail.jsp?s_idx=<%=s_idx%>&rp=<%=(nowGroup - 1) * pageSize + pageSize%>#reviewpage">[&lt;이전]</a></span>
+			<%
+			}
+
+			for (int i = nowGroup * pageSize + 1; i <= pageSize * nowGroup + pageSize; i++) {
+			%>
+			<span><a class="pageA"
+				href="detail.jsp?s_idx=<%=s_idx%>&rp=<%=i%>#reviewpage"
+				style="color:<%=rp == i ? "blue" : "black"%>;">[<%=i%>]
+			</a></span>
+			<%
+			if (i == totalPage) {
+				break;
+			}
+			}
+
+			if (nowGroup != (totalPage / pageSize) - (totalPage % pageSize == 0 ? 1 : 0)) {
+			%>
+			<span><a
+				href="detail.jsp?s_idx=<%=s_idx%>&rp=<%=(nowGroup + 1) * pageSize + 1%>#reviewpage">[다음&gt;]</a></span>
+			<%
+			}
+			}
+			%>
+		</div>
 	</section>
 </section>
