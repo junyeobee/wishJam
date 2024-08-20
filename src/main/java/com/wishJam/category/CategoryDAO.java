@@ -73,7 +73,7 @@ public class CategoryDAO {
 	public ArrayList<CategoryDTO> list_C() {
 		try {
 			conn = com.db.wishJam.DbConn.getConn();
-			String sql = "select * from category where c_small is not null order by c_big, c_small asc";
+			String sql = "select c_idx, c_big, c_small, c_name, c_hash from category where c_small is not null order by c_big, c_small asc";
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 

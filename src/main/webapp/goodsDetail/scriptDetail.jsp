@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.wishJam.category.CategoryDTO"%>
-<jsp:useBean id="ctdao" class="com.wishJam.category.CategoryDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="ctdao" class="com.wishJam.category.CategoryDAO"
+	scope="session"></jsp:useBean>
 
 <script>
 	function outClick(e) {
@@ -126,12 +127,13 @@
 
 	function openImgpop(idx, nick, tid) {
 		if (tid == "content_img") {
-			var cnt = document.getElementsByTagName("img").length+1;
+			var cnt = document.getElementsByTagName("img").length + 1;
 			window.open('sellImgUp.jsp?s_idx=' + idx + '&m_nick=' + nick
 					+ '&select_id=' + tid + '&imgcnt=' + cnt, 'sellImgUp',
 					'width=700, height=600');
 		} else {
-			window.open('sellImgUp.jsp?s_idx=' + idx + '&m_nick=' + nick
+			window
+					.open('sellImgUp.jsp?s_idx=' + idx + '&m_nick=' + nick
 							+ '&select_id=' + tid, 'sellImgUp',
 							'width=700, height=600');
 		}
@@ -140,16 +142,35 @@
 	function selectThem() {
 		var allSale = document.makeSellfm.allSale;
 		var saleGoods = document.getElementsByName("discnt_box");
+		var select_discnt = document.makeSellfm.select_discnt;
+		var dcrate = parseInt(select_discnt.options[select_discnt.selectedIndex].value) / 100;
 
 		if (allSale.checked) {
 			for (var i = 0; i < saleGoods.length; i++) {
 				saleGoods[i].checked = "checked";
 				saleGoods[i].nextSibling.value = "1";
+
+				var dcsib = parseInt(saleGoods[i].parentElement.nextElementSibling.nextElementSibling.innerText);
+				var dcprice = dcsib - dcsib * dcrate;
+				var dcli = saleGoods[i].parentElement.nextElementSibling.nextElementSibling.nextElementSibling;
+
+				var arrow = document.createElement("span");
+				arrow.className = "material-symbols-outlined";
+				arrow.append(document.createTextNode("trending_flat"));
+
+				saleGoods[i].parentElement.parentElement.insertBefore(arrow,
+						dcli);
+				dcli.innerHTML = dcprice;
 			}
+
 		} else {
 			for (var i = 0; i < saleGoods.length; i++) {
 				saleGoods[i].checked = false;
 				saleGoods[i].nextSibling.value = "0";
+				
+				var dcli = saleGoods[i].parentElement.nextElementSibling.nextElementSibling.nextElementSibling;
+				dcli.nextElementSibling.innerHTML = "";
+				dcli.remove();
 			}
 		}
 	}
@@ -176,10 +197,12 @@
 	function addOpt(sidx, mnick) {
 		var optsbox = document.getElementById("optsbox");
 		var dislist = document.getElementById("dislist");
-		var cnt = optsbox.childElementCount;
+		var cntid = optsbox.lastElementChild.lastElementChild.id;
+		var cnt = parseInt(cntid.slice(-1)) + 1;
 
 		makeOptbox(cnt, sidx, mnick);
 		makeListbox(cnt);
+
 	}
 
 	function makeListbox(cnt) {
@@ -198,6 +221,7 @@
 		var li2 = document.createElement("li");
 		var input1 = document.createElement("input");
 		input1.name = "discnt_box";
+		input1.id = "dcbox_ck" + cnt;
 		input1.setAttribute("type", "checkbox");
 		input1.setAttribute("onclick", "selectIt(this)");
 		li2.append(input1);
@@ -214,7 +238,10 @@
 		var li4 = document.createElement("li");
 		li4.setAttribute("name", "op_sg_price" + cnt);
 
-		ul1.append(li2, li3, li4);
+		var li5 = document.createElement("li");
+		li5.setAttribute("name", "op_sg_dcprice" + cnt);
+
+		ul1.append(li2, li3, li4, li5);
 	}
 
 	function makeOptbox(cnt, sidx, mnick) {
@@ -224,17 +251,17 @@
 		var div1 = document.createElement("div");
 		div1.className = "fbox";
 		optbox.append(div1);
-		
+
 		var input6 = document.createElement("input");
-		input6.setAttribute("type","radio");
-		input6.name="select_main";
-		input6.className="main_op";
-		input6.setAttribute("onclick","selectMainopt(this)");
-		
+		input6.setAttribute("type", "radio");
+		input6.name = "select_main";
+		input6.className = "main_op";
+		input6.setAttribute("onclick", "selectMainopt(this)");
+
 		var input7 = document.createElement("input");
-		input7.setAttribute("type","hidden");
-		input7.name="sg_main";
-		input7.value="0";
+		input7.setAttribute("type", "hidden");
+		input7.name = "sg_main";
+		input7.value = "0";
 
 		var div3 = document.createElement("div");
 		div3.id = "option_img" + cnt;
@@ -254,7 +281,7 @@
 		div3.append(label1);
 
 		var div2 = document.createElement("div");
-		div1.append(input6, input7 ,div3, input5, div2);
+		div1.append(input6, input7, div3, input5, div2);
 
 		var ul1 = document.createElement("ul");
 		div2.append(ul1);
@@ -306,6 +333,7 @@
 		span1.className = "material-symbols-outlined icons";
 		span1.setAttribute("onclick", "deleteOpt(this)");
 		span1.append(document.createTextNode("close"));
+		span1.id = "delbtn" + cnt;
 
 		optbox.append(span1);
 
@@ -314,7 +342,17 @@
 	}
 
 	function deleteOpt(t) {
-		t.parentNode.remove();
+		var cnt = document.getElementsByName("select_main").length;
+
+		if (cnt > 1) {
+			var num = t.id.slice(-1);
+			var totalli = document.getElementById("dcbox_ck" + num).parentElement.parentElement.parentElement.parentElement;
+
+			t.parentElement.remove();
+			totalli.remove();
+		} else {
+			window.alert('최소 1개 이상의 상품을 등록해야 합니다.');
+		}
 	}
 
 	function keySelect(v) {
@@ -367,7 +405,7 @@
 	function deletekw(t) {
 		var shash = document.makeSellfm.s_hash;
 
-		t.parentNode.remove();
+		t.parentElement.remove();
 	}
 
 	function selectM(t) {
@@ -572,11 +610,30 @@
 	}
 
 	function selectIt(t) {
+		var dcli = t.parentElement.nextElementSibling.nextElementSibling.nextElementSibling;
+
 		if (t.checked) {
 			t.nextSibling.value = "1";
+
+			var select_discnt = document.makeSellfm.select_discnt;
+			var dcrate = parseInt(select_discnt.options[select_discnt.selectedIndex].value) / 100;
+
+			var dcsib = parseInt(dcli.previousElementSibling.innerText);
+			var dcprice = dcsib - dcsib * dcrate;
+
+			var arrow = document.createElement("span");
+			arrow.className = "material-symbols-outlined";
+			arrow.append(document.createTextNode("trending_flat"));
+
+			t.parentElement.parentElement.insertBefore(arrow, dcli);
+			dcli.innerHTML = dcprice;
 		} else if (t.checked == false) {
 			t.nextSibling.value = "0";
+
+			dcli.nextElementSibling.innerHTML = "";
+			dcli.remove();
 		}
+
 	}
 
 	function clickAllsb() {
@@ -612,7 +669,7 @@
 			var content = document.getElementById("txt");
 
 			var arr = (content.innerHTML).split(selected);
-			var cbox = t.parentNode.parentNode.parentNode.parentNode;
+			var cbox = t.parentElement.parentElement.parentElement.parentElement;
 
 			if (cbox.id == "cw1") {
 				var st = '<span style="color:#'+code+';">' + selected
@@ -634,76 +691,76 @@
 
 		dcr.value = t.options[t.selectedIndex].value;
 	}
-	
-	function selectMainopt(t){
+
+	function selectMainopt(t) {
 		var mains = document.makeSellfm.sg_main;
-		
-		for(var i=0; i<mains.length; i++){
-			mains[i].value="0";
+
+		for (var i = 0; i < mains.length; i++) {
+			mains[i].value = "0";
 		}
-		
-		t.nextSibling.value="1";
+
+		t.nextSibling.value = "1";
 	}
-	
-	function select_bc(t){
+
+	function select_bc(t) {
 		select_b = t.selectedIndex;
 
 		var cs = document.makeSellfm.c_small;
 		var catev = document.makeSellfm.c_idx;
 		var kwv = document.makeSellfm.hashkw;
 		var kwords = cs[select_b].options[cs[select_b].selectedIndex].id;
-		
-		for(var i=0; i<cs.length; i++){
-			cs[i].style.display="none";
+
+		for (var i = 0; i < cs.length; i++) {
+			cs[i].style.display = "none";
 		}
 
-		cs[select_b].style.display="inline-block";
-		
-		catev.value=cs[select_b].options[cs[select_b].selectedIndex].value;
-		kwv.value=cs[select_b].options[cs[select_b].selectedIndex].id;
-		
+		cs[select_b].style.display = "inline-block";
+
+		catev.value = cs[select_b].options[cs[select_b].selectedIndex].value;
+		kwv.value = cs[select_b].options[cs[select_b].selectedIndex].id;
+
 		var ul1 = document.getElementById("recomm");
-		while(ul1.firstChild){
+		while (ul1.firstChild) {
 			ul1.removeChild(ul1.firstChild);
 		}
-		
+
 		var keys = kwords.split("#");
 
-		for(var i=1; i<keys.length; i++){
+		for (var i = 1; i < keys.length; i++) {
 			makeRecomm(keys[i]);
 		}
 	}
-	
-	function select_cate(t){
+
+	function select_cate(t) {
 		var catev = document.makeSellfm.c_idx;
 		var kwv = document.makeSellfm.hashkw;
 		var kwords = t.options[t.selectedIndex].id;
-		
-		catev.value=t.options[t.selectedIndex].value;
-		kwv.value=kwords;
-		
+
+		catev.value = t.options[t.selectedIndex].value;
+		kwv.value = kwords;
+
 		var ul1 = document.getElementById("recomm");
-		while(ul1.firstChild){
+		while (ul1.firstChild) {
 			ul1.removeChild(ul1.firstChild);
 		}
-		
+
 		var keys = kwords.split("#");
 
-		for(var i=1; i<keys.length; i++){
+		for (var i = 1; i < keys.length; i++) {
 			makeRecomm(keys[i]);
 		}
 	}
-	
-	function makeRecomm(k){
+
+	function makeRecomm(k) {
 		var ul1 = document.getElementById("recomm");
-		
+
 		var li1 = document.createElement("li");
-		
+
 		var input1 = document.createElement("input");
-		input1.setAttribute("type","button");
-		input1.value="#"+k;
-		input1.setAttribute("onclick","keySelect(this.value)");
-		
+		input1.setAttribute("type", "button");
+		input1.value = "#" + k;
+		input1.setAttribute("onclick", "keySelect(this.value)");
+
 		li1.append(input1);
 		ul1.append(li1);
 	}
