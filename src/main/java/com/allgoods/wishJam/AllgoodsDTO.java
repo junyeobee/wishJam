@@ -123,7 +123,7 @@ public class AllgoodsDTO {
 		this.m_nick = m_nick;
 	}
 
-	public AllgoodsDTO(String m_nick, String s_title, int s_idx, int s_jjim, int s_discnt, int sg_main, String s_img) {
+	public AllgoodsDTO(int i, int j, int s_idx, String string, int s_discnt, int sg_main, int k) {
 		this.s_idx = s_idx;
 		this.s_title = s_title;
 		this.sg_main = sg_main;
@@ -133,7 +133,7 @@ public class AllgoodsDTO {
 		this.s_discnt = s_discnt;
 	}
 
-	public AllgoodsDTO(int s_idx, String s_title, int sg_main, String m_nick, String s_img, int s_jjim, int s_discnt) {
+	public AllgoodsDTO(String m_nick,String s_title, int s_idx, int s_jjim, int s_discnt, int sg_main,  String s_img  ) {
 		
 		this.s_idx = s_idx;
 		this.s_title = s_title;
@@ -145,5 +145,6 @@ public class AllgoodsDTO {
 	}
 	
 	
+
 
 }

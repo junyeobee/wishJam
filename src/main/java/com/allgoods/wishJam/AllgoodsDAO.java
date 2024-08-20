@@ -65,7 +65,7 @@ public class AllgoodsDAO {
 	
 	//페이징 처리
 	
-	public ArrayList<M_ReportDTO> allReports(int cp, int ls) {
+	public ArrayList<AllgoodsDTO> allGoods(int cp, int ls) {
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 			int start = (cp - 1) * ls + 1;
@@ -79,10 +79,10 @@ public class AllgoodsDAO {
 			ps.setInt(1, start);
 			ps.setInt(2, end);
 			rs = ps.executeQuery();
-			ArrayList<M_ReportDTO> arr = new ArrayList<M_ReportDTO>();
+			ArrayList<AllgoodsDTO> arr = new ArrayList<AllgoodsDTO>();
 			if(rs.next()) {
 				do {
-					M_ReportDTO dto = new M_ReportDTO(rs.getInt(2),rs.getInt(3),rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getInt(7),rs.getInt(8));
+					AllgoodsDTO dto = new AllgoodsDTO(rs.getInt(2),rs.getInt(3),rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getInt(7),rs.getInt(8));
 					arr.add(dto);
 				}while(rs.next());
 			}

@@ -42,20 +42,6 @@ h2 {
 	margin-bottom: 50px;
 }
 
-#selllist_wrap {
-	width: 100%;
-	height: 900px;
-	border: 1px solid gray;
-	display: flex;
-	flex-wrap: wrap;
-}
-
-.bw_item {
-	width: 210px;
-	height: 210px;
-	border: 1px solid gray;
-	background-size: cover;
-}
 
 .seller_pf_wrap {
 	width: 150px;
@@ -104,6 +90,27 @@ h3 {
 }
 
 
+#selllist_wrap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4열 설정 */
+    gap: 16px; /* 각 아이템 간의 간격 설정 */
+    margin-top: 20px; /* 상단 여백 설정 */
+}
+
+
+.img {
+    cursor: pointer; /* 클릭할 수 있음을 나타내는 커서 */
+}
+
+.img img {
+    width: 215px; /* 이미지가 아이템 크기에 맞게 조정 */
+    height: 215px; /* 비율 유지 */
+}
+.title{
+
+text-align:center;
+}
+
 </style>
 
 
@@ -114,24 +121,29 @@ h3 {
 			<div class="seller_pf_wrap">
 				<img src="/wishJam/img/seller.jpeg" class="seller_pf">
 				
-				<h3><%=nick%></h3>
+				<h3><%=nick%></h3> </div>
+				
+					<div id="selllist_wrap">
              <% 
-             if(sellerproducts!=null && !sellerproducts.isEmpty()){
-				for(BestsellerDTO dto :sellerproducts ){
+             if(sellerproducts!=null && ! sellerproducts.isEmpty()){
+            	 
+				for(BestsellerDTO goods :sellerproducts ){
 					
 					%>
-							
-			<div id="selllist_wrap">
-				<div class="bw_item"><%=dto.getThumbnail_url() %></div>
+
+				 <div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">				
+                        <img src="<%= goods.getThumbnail_url() %>" alt="썸네일">
+                        <div class="title"><%=goods.getName() %></div>
+                    </div>
 		
-			</div>
+		
 			
 			
 					<%
 				} }else{
 				%> <p>작품이 없습니다.<p> <%} %>
 				
-			
+				</div>
 				
 				
 				

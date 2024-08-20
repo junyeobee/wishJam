@@ -48,13 +48,19 @@ if(memberId == null){
 			
 			<script>
 			
-				window.alert('찜하기에 추가되었습니다❤️');
+			    function jjim(button){
+			    	window.alert('찜하기에 추가되었습니다❤️');
+
+
+					button.innerText= '🧡';
+			    }
+				
+			jjim(button);
+				
 			</script>			
 			
 			<% 
 			
-		}else{
-
 		}
 
 		
@@ -171,7 +177,6 @@ section {
 .pagination{
 width:14em;
 height:60px;
-border:1px solid red;
 margin:0 auto;
 margin-top:30px;
 font-size:13px;
@@ -182,17 +187,18 @@ display:inline;
 color:orange;
 }
 
-.jjimbt{
-
+.jbt{
 border:none;
 background-color:white;
-font-family: 'Cafe24Ohsquareair';
 position: absolute;
-	right: 8;
-	bottom: 10;
+right: 8;
+bottom: 10;
 cursor: pointer;
+font-size:1em;
 }
+
 </style>
+
 
 <script>
 
@@ -234,6 +240,7 @@ function updateSortOrder() {
         for (AllgoodsDTO products : productList) {
 
 			%>
+			
 			<form action="allGoods.jsp" method="post" >
 			<div class="item" >
 				<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
@@ -256,7 +263,7 @@ function updateSortOrder() {
 					<%= products.getSg_main()%></div>
 
 
-                  <button type="submit" onclick="jjim();" class="jjimbt">찜하기🧡</button> <!-- 제출 버튼 -->
+                  <button type="submit" onclick="jjim(this);" id="jbt_<%= products.getS_idx() %>" class="jbt">찜🤍</button> <!--제출 버튼 -->
               
           
 					
@@ -266,7 +273,7 @@ function updateSortOrder() {
   </form>
 			<%
 			}
-    }
+    } 
 			%>
 		</div>
 		

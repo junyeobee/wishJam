@@ -23,6 +23,7 @@ if(sellerProducts !=null){
 	bestsellerlist.addAll(sellerProducts);
 }
 
+
 	
 }
 
@@ -110,7 +111,7 @@ height:35px;
                 
                 // 현재 작가명과 이미지 업데이트
                 currentNick = goods.getM_nick();
-                currentImage = goods.getThumbnail_url(); // 작가 이미지 URL을 사용하거나 고정된 이미지로 설정할 수 있습니다.
+                currentImage = goods.getThumbnail_url(); // 작가 이미지 URL을 사용하거나 고정된 이미지로 설정
         %>
                 <h3>
                     <img src="/wishJam/img/seller.jpeg" class="seller_pf"> <!-- 작가 프로필 이미지 -->
