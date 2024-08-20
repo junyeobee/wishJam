@@ -143,7 +143,5 @@ public class CategoryDAO {
 			} catch (Exception e2) {
 			}
 		}
-	}
-	
-	
+	}	
 }

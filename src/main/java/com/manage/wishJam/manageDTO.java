@@ -9,6 +9,7 @@ public class manageDTO {
 	private String url = "img/profile/";
 	private String banner = "img/banner/";
 	private String grade = "img/grade/";
+	private String category = "img/category/";
 	
 	public String getHomePath() {
 		return homePath;
@@ -24,6 +25,9 @@ public class manageDTO {
 	}
 	public String getGrade() {
 		return grade;
+	}
+	public String getCategory() {
+		return category;
 	}
 	public manageDTO() {
 	}
