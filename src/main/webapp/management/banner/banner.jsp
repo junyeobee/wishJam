@@ -99,110 +99,110 @@
     }
 </script>
 <style>
-	.container {
-    position: relative;
+.container {
+   position: relative;
+   width: 100%;
+   height: calc(100% - 20vh);
+   margin: auto;
+}
+.topNavLink {
+    display: flex;
+}
+.topNavLink a {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: #f1f1f1;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.topNavLink a.active {
+    background-color: white;
+    font-weight: bold;
+    border-top: 2px solid #007bff;
+    border-right: 2px solid #ccc;
+    border-left: 2px solid #ccc;
+    border-bottom: 1px solid white;
+}
+.topNav {
+    border: 1px solid #ccc;
+    height:100%;
+    padding: 20px;
+    margin-top: -1px;
+    display: none;
+}
+.topNav.active {
+    display: block;
+    background-color:white;
+}
+.conTop {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.search-area input {
+	margin-right: 10px;
+}
+.banner-management {
     width: 100%;
-    height: calc(100% - 20vh);
-    margin: auto;
-	}
-	.topNavLink {
-	    display: flex;
-	}
-	.topNavLink a {
-	    padding: 10px 20px;
-	    text-decoration: none;
-	    color: #333;
-	    border: 1px solid #ccc;
-	    border-bottom: none;
-	    background-color: #f1f1f1;
-	    margin-right: 5px;
-	    cursor: pointer;
-	}
-	.topNavLink a.active {
-	    background-color: white;
-	    font-weight: bold;
-	    border-top: 2px solid #007bff;
-	    border-right: 2px solid #ccc;
-	    border-left: 2px solid #ccc;
-	    border-bottom: 1px solid white;
-	}
-	.topNav {
-	    border: 1px solid #ccc;
-	    height:100%;
-	    padding: 20px;
-	    margin-top: -1px;
-	    display: none;
-	}
-	.topNav.active {
-	    display: block;
-	    background-color:white;
-	}
-	.conTop {
-	    display: flex;
-	    justify-content: space-between;
-	    margin-bottom: 20px;
-	}
-	.search-area input {
-		margin-right: 10px;
-	}
-	.banner-management {
-	    width: 100%;
-	    border-collapse: collapse;
-	}
-	.banner-management th, .banner-management td {
-	    border: 1px solid #ddd;
-	    padding: 8px;
-	    text-align: center;
-	}
-	.banner-management th {
-	    background-color: #f2f2f2;
-	}
-	input[type='date']{
-		/* 캘린더 아이콘을 클릭해야만 달력이 보이는데 캘린더의 영역을 조절하기위함*/
-		position: relative;
-		/* 배경에 원하는 아이콘 삽입*/
-		background: url('') no-repeat;
-		padding-right: 10px;
-		/*글자색 변경*/
-		color: #858585;                        
-	}
-	/*기본으로 제공되는 달력 이모지 display 없애기 기본 값으론 캘린더를 눌러야만 달력이 나왔는데 이 기능도 무력화*/
-	input[type="date"]::-webkit-clear-button,
-	input[type="date"]::-webkit-inner-spin-button { 
-		display: none;
-	} 
-  
-        
-	/*input date의 날짜를 선택할 때, 캘린더 모양을 클릭해야 설정할 수 있다. 이걸 해제하고 어느곳을 클릭하든 날짜 설정할 수 있도록 변경해*/
-	input[type='date']::-webkit-calendar-picker-indicator {
-	    position:absolute;
-	    /*왼쪽위에 위치시키고 클릭 영역을 부모(input)의 크기만큼 가짐*/
-	    left: 0;
-	    top: 0;
-	    width: 100%;
-	    height: 100%;
-	    /*배경과 글자를 투명하게 하여 기존의 아이콘이 없는 것처럼 보여줌*/
-	    background: transparent;
-	    color: transparent;
-	}
-          
-	input[type='date']::before {
-    content: attr(data-placeholder);
-    text-align: left;
-    display: inline;
-	}
-        
-        
-	/* 유효값이 입력된 경우 before에 있는 것을 없애준다.*/
-	input[type='date']:valid::before {
-	    display: none;
-	}
-	#b_sdate{
-		width:200px;
-	}
-	#b_edate{
-		width:200px;
-	}/* Form group spacing */
+    border-collapse: collapse;
+}
+.banner-management th, .banner-management td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+.banner-management th {
+    background-color: #f2f2f2;
+}
+input[type='date']{
+	/* 캘린더 아이콘을 클릭해야만 달력이 보이는데 캘린더의 영역을 조절하기위함*/
+	position: relative;
+	/* 배경에 원하는 아이콘 삽입*/
+	background: url('') no-repeat;
+	padding-right: 10px;
+	/*글자색 변경*/
+	color: #858585;                        
+}
+/*기본으로 제공되는 달력 이모지 display 없애기 기본 값으론 캘린더를 눌러야만 달력이 나왔는데 이 기능도 무력화*/
+input[type="date"]::-webkit-clear-button,
+input[type="date"]::-webkit-inner-spin-button { 
+	display: none;
+} 
+ 
+       
+/*input date의 날짜를 선택할 때, 캘린더 모양을 클릭해야 설정할 수 있다. 이걸 해제하고 어느곳을 클릭하든 날짜 설정할 수 있도록 변경해*/
+input[type='date']::-webkit-calendar-picker-indicator {
+    position:absolute;
+    /*왼쪽위에 위치시키고 클릭 영역을 부모(input)의 크기만큼 가짐*/
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /*배경과 글자를 투명하게 하여 기존의 아이콘이 없는 것처럼 보여줌*/
+    background: transparent;
+    color: transparent;
+}
+         
+input[type='date']::before {
+   content: attr(data-placeholder);
+   text-align: left;
+   display: inline;
+}
+       
+       
+/* 유효값이 입력된 경우 before에 있는 것을 없애준다.*/
+input[type='date']:valid::before {
+    display: none;
+}
+#b_sdate{
+	width:200px;
+}
+#b_edate{
+	width:200px;
+}/* Form group spacing */
 .form-group {
     margin-bottom: 20px;
 }

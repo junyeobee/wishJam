@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="/wishJam/css/reports.css">
 <%
 String cp_s = request.getParameter("cp");
+//listType : topNav에서 선택할 요소
 String listType = request.getParameter("listType");
 if (listType == null || listType.equals("")) listType = "allList";
 if (cp_s == null || cp_s.equals("")) {
@@ -31,6 +32,7 @@ if (cp % pagesize == 0)
     usrgroup--;
 %>
     <style>
+    	/*모달창*/
         .modal {
             display: none;
             position: fixed;
@@ -42,6 +44,7 @@ if (cp % pagesize == 0)
             overflow: auto;
             background-color: rgba(0, 0, 0, 0.5);
         }
+        /*모달창 컨텐츠*/
         .modal-content {
             background-color: #fefefe;
             margin: 15% auto;
@@ -52,6 +55,7 @@ if (cp % pagesize == 0)
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        /*모달창 닫기 버튼*/
         .close {
             color: #aaa;
             float: right;
@@ -67,6 +71,7 @@ if (cp % pagesize == 0)
         .modal-content h2 {
             margin-top: 0;
         }
+        /*모달창 기능버튼*/
         .gbtn {
             background-color: #4CAF50;
             color: white;
@@ -80,6 +85,7 @@ if (cp % pagesize == 0)
         .gbtn:hover {
             background-color: #45a049;
         }
+        /*상단 네비게이션바*/
         .topNavLink {
 		    display: flex;
 		}
@@ -114,70 +120,69 @@ if (cp % pagesize == 0)
 		}
     </style>
     <script>
-        function showdetail(idx) {
-            var modal = document.getElementById('report-modal');
-            var content = document.getElementById('modal-content');
-            var allReports = document.querySelectorAll('.detaildata');
-            var selectedReport;
-            allReports.forEach(function(report) {
-                if (report.dataset.idx === idx) {
-                    selectedReport = report;
-                }
-            });
-            if (selectedReport) {
-                var s_idx = selectedReport.querySelector('.s_idx').textContent.trim();
-                content.innerHTML = selectedReport.innerHTML;
-                modal.style.display = 'block';
-            }
-        }
+		function showdetail(idx) {
+			var modal = document.getElementById('report-modal');
+			var content = document.getElementById('modal-content');
+			var allReports = document.querySelectorAll('.detaildata');
+			var selectedReport;
+			allReports.forEach(function(report) {
+			    if (report.dataset.idx === idx) {
+			        selectedReport = report;
+			    }
+			});
+		    if (selectedReport) {
+		        var s_idx = selectedReport.querySelector('.s_idx').textContent.trim();
+		        content.innerHTML = selectedReport.innerHTML;
+		        modal.style.display = 'block';
+		    }
+		}
+		
+		function closeModal() {
+		    var modal = document.getElementById('report-modal');
+		    modal.style.display = 'none';
+		}
+		
+		function pagemove(page,listType) {
+		    window.location.href = 'reports.jsp?cp=' + page + '&listType=' + listType;
+		}
 
-        function closeModal() {
-            var modal = document.getElementById('report-modal');
-            modal.style.display = 'none';
-        }
-
-        function pagemove(page,listType) {
-            window.location.href = 'reports.jsp?cp=' + page + '&listType=' + listType;
-        }
-
-        function doban(rp_idx, s_idx){
-        	window.location.href = 'reports_ok.jsp?rp_idx='+rp_idx+'&s_idx='+s_idx;
-        }
+		function doban(rp_idx, s_idx){
+			window.location.href = 'reports_ok.jsp?rp_idx='+rp_idx+'&s_idx='+s_idx;
+		}
         
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            
-            // 모든 탭 콘텐츠를 숨김
-            tabcontent = document.getElementsByClassName("topNav");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-                tabcontent[i].classList.remove("active");
-            }
-
-            // 모든 탭 링크에서 active 클래스 제거
-            tablinks = document.getElementsByClassName("topNavLink")[0].getElementsByTagName("a");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
-
-            // 선택된 탭 콘텐츠 표시
-            document.getElementById(tabName).style.display = "block";
-            document.getElementById(tabName).classList.add("active");
-
-            // 선택된 탭 링크에 active 클래스 추가
-            evt.currentTarget.classList.add("active");
-            
-            // 페이지 이동 시 listType 파라미터 추가
-            var currentPage = document.querySelector('.pagination-controls .pagination-btn.active');
-            var page = currentPage ? currentPage.innerText : 1; // 현재 페이지 번호 가져오기
-
-            window.location.href = 'reports.jsp?cp=' + page + '&listType=' + tabName;
+		function openTab(evt, tabName) {
+			var i, tabcontent, tablinks;
+			//topNav요소선택
+			tabcontent = document.getElementsByClassName("topNav");
+			
+			//활성화 삭제
+			for (i = 0; i < tabcontent.length; i++) {
+			    tabcontent[i].style.display = "none";
+			    tabcontent[i].classList.remove("active");
+			}
+			//topNav의 a태그요소선택 활성화 삭제
+			tablinks = document.getElementsByClassName("topNavLink")[0].getElementsByTagName("a");
+			for (i = 0; i < tablinks.length; i++) {
+			    tablinks[i].classList.remove("active");
+			}
+			
+			document.getElementById(tabName).style.display = "block";
+			document.getElementById(tabName).classList.add("active");
+			evt.currentTarget.classList.add("active");
+			
+			
+			var currentPage = document.querySelector('.pagination-controls .pagination-btn.active');
+			//현재 페이지 번호 가져오기
+			var page = currentPage ? currentPage.innerText : 1;
+			
+			window.location.href = 'reports.jsp?cp=' + page + '&listType=' + tabName;
         }
     </script>
 </head>
 <body>
     <div class="container">
-    <div class="topNavLink">	<!-- topNavLink에 있는 a링크중 active인 친구가 선택될시에 해당 topNav내용 출력 -->
+    <!-- topNavLink에 있는 a링크중 active인 친구가 선택될시에 해당 topNav내용 출력 -->
+    <div class="topNavLink">
         <a onclick="openTab(event, 'allList')" class="<%= listType == null || listType.equals("allList") ? "active" : "" %>">전체 리스트</a>
         <a onclick="openTab(event, 'compList')" class="<%= "compList".equals(listType) ? "active" : "" %>">완료된 항목</a>
         <a onclick="openTab(event, 'incompList')" class="<%= "incompList".equals(listType) ? "active" : "" %>">미완료된 항목</a>
@@ -374,7 +379,7 @@ if (cp % pagesize == 0)
                         <td>
                             <button class="Cbtn" onclick="showdetail('<%=dto.getRp_idx()%>')">변경</button>
                             <div class="detaildata" data-idx="<%=dto.getRp_idx()%>" style="display:none;">
-                            	<h3>상세보기</h3><button class="gbtn" onclick="doban('<%=dto.getRp_idx() %>','<%=dto.getS_idx() %>');" style="float:right;">죽이기</button>
+                            	<h3>상세보기</h3><button class="gbtn" onclick="doban('<%=dto.getRp_idx() %>','<%=dto.getS_idx() %>');" style="float:right;">제제하기</button>
                                 <p class="s_idx">ID: <%=dto.getRp_idx()%></p>
                                 <p>판매자: <%=dto.getReported_nick()%></p>
                                 <p>신고자: <%=dto.getReporter_nick()%></p>
@@ -434,5 +439,10 @@ if (cp % pagesize == 0)
         <div class="modal-content">
             <span class="close" onclick="closeModal();">&times;</span>
             <div id="modal-content"></div>
+            <div id = "banReason" style="display:none;">
+				<label>제재 사유</label>
+				<textarea name="reason" id="reason" cols="70" rows="10" ></textarea>
+				<button onclick = "">제재하기</button>
+			</div>
         </div>
     </div>
