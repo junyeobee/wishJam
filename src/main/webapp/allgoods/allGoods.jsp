@@ -16,16 +16,14 @@ session.setAttribute("m_idx", Id);
 Integer memberId = (Integer)session.getAttribute("m_idx");
 
 
-
-
 if(request.getMethod().equalsIgnoreCase("POST")){
 int productId = Integer.parseInt(request.getParameter("productId"));
 String s_title = request.getParameter("s_title");
 
+
 if(memberId == null){
-		
+	
 		%>
-		
 		<script>
 		window.alert('로그인이 필요합니다.');
 		</script>
@@ -38,7 +36,6 @@ if(memberId == null){
 		jjdto.setM_idx(memberId);
 		jjdto.setS_idx(productId);
 		jjdto.setS_title(s_title);
-		
 		
 		boolean added = jdao.addJjim(jjdto);
 		

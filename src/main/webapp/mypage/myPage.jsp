@@ -7,13 +7,24 @@
 <jsp:useBean id="mdto" class="com.mypage.wishJam.MypageDTO"></jsp:useBean>
 <jsp:useBean id="mdao" class="com.mypage.wishJam.MypageDAO"></jsp:useBean>
 <%
-//아이디 세션 받기
+//m_idx 세션 받기
+
+
+String idx = (String)session.getAttribute("m_idx");
+int m_idx = Integer.parseInt(idx);
+
 String id = "user1_id";
+
 String nick="user1";
 
+session.setAttribute("m_idx", idx);
+Integer m_idx_obj = (Integer) session.getAttribute("m_idx");
+
 session.setAttribute("userId", id);
+
 session.setAttribute("nick", nick);
-System.out.println(id+nick);
+session = request.getSession();
+
 
 String path = request.getRealPath("/");
 mdto.setHomepath(path);
@@ -30,7 +41,7 @@ for (File f : fileList) {
 		imgSrc = "/wishJam/img/member_profile/default.png";
 	}
 }
-System.out.println(imgSrc);
+
 %>
 
 
@@ -130,6 +141,8 @@ margin-bottom:10px;
 	height: 240px;
 	background-color:#F2F2F2;
 	text-align: center;
+	border-radius: 10px;
+	margin-bottom: 60px;
 	
 }
 
@@ -141,7 +154,7 @@ margin-bottom:10px;
 .introduce {
 	font-weight: 500;
 	font-size: 18px;
-	margin-top:30px;
+	line-height : 240px;
 
 }
 
@@ -171,32 +184,29 @@ line-height : 30px;
 				</div>
 				<%
 			
-				if (id != null) {
-					mdto = mdao.memberGet(id);
-					String grade=mdto.getM_grade();
+				if (m_idx != 0) {
+					MypageDTO mmdto = new MypageDTO();
+					mmdto= mdao.memberGet(m_idx);
+					
+					
 			
 				%>
 
-				<div class="profile_item"><%=mdto.getM_grade() %></div>
-				<div class="profile_item nickname" ><%=mdto.getM_nick()%></div>
-				<%
-				System.out.println(mdto.getM_nick());
-				}
-				%>
+				<div class="profile_item"><%=mmdto.getM_grade() %></div>
+				<div class="profile_item nickname" ><%=mmdto.getM_nick()%></div>
+			
 				<div class="profile_item edit"
 					onclick="location.href='/wishJam/mypage/mypageEdit.jsp'">수정하기  ></div>
 
 			</div>
 
-		</article>
-
-
+	</article>
 		<article id="mypage_section2">
-			<div class="introduce"><%=mdto.getProfile() %></div>
-			
-
+			<div class="introduce"><%=mmdto.getProfile()%></div>
 		</article>
-
+	<%
+				}
+				%>
 
 		<article>
 			<h3>판매내역</h3>
@@ -204,7 +214,7 @@ line-height : 30px;
 
 			<div class="container">
 				<%
-				List<MypageDTO> buylist =  mdao.buyList(nick);
+				List<MypageDTO> buylist =  mdao.buyList(m_idx);
 
 				for (MypageDTO goods : buylist) {
 					
@@ -216,12 +226,12 @@ line-height : 30px;
 				<div class="item">
 					<div class="img"
 						onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
-						<img src="<%=goods.getThumbnail_url()%>" alt="썸네일">
+						<img src="<%=goods.getS_img()%>" alt="썸네일">
 					</div>
 
 					<div class="inner">
-						<div><%=goods.getName()%></div>
-						<div><%=goods.getPrice()%></div>
+						<div><%=goods.getS_title()%></div>
+						<div><%=goods.getSg_price()%></div>
 					</div>
 				</div>
 				<%

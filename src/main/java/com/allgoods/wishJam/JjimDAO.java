@@ -44,6 +44,7 @@ public class JjimDAO {
 		}
 		
 		
+		
 		// 찜 갯수 증가
 		public boolean incrementJjim(int s_idx) {
 			
@@ -64,6 +65,7 @@ public class JjimDAO {
 			
 			return false;
 		}
+		
 		
 		
 		
@@ -93,9 +95,7 @@ public class JjimDAO {
 					if(ps!=null)ps.close();
 				} catch (Exception e) {
 					e.printStackTrace();
-					 
-				}
-				
+			}
 			}
 			return jjimProductIds;
 			

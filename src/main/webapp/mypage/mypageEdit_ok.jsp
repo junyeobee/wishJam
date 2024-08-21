@@ -3,14 +3,14 @@
     
 <jsp:useBean id="dto" class="com.mypage.wishJam.MypageDTO"></jsp:useBean>
 <jsp:setProperty property="*" name="dto"/>
-<jsp:useBean id="dao" class="com.mypage.wishJam.MypageDAO"></jsp:useBean>
+<jsp:useBean id="mdao" class="com.mypage.wishJam.MypageDAO"></jsp:useBean>
 
     <%
     request.setCharacterEncoding("utf-8");
-    String id = (String) session.getAttribute("userId");
-    int result = dao.memberUpdate(dto,id);
+    Integer m_idx = (Integer) session.getAttribute("m_idx");
+    int result = mdao.memberUpdate(dto,m_idx);
     
-    String msg= result >0 ?"회원 정보가 수정되었습니다!" : "회원정보 수정이 실패했습니다.";
+    String msg= result > 0 ?"회원 정보가 수정되었습니다!" : "회원정보 수정이 실패했습니다.";
     %>
     
     <script>
