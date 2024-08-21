@@ -8,10 +8,8 @@
 <%
 DecimalFormat df = new DecimalFormat("#.##");
 
-int s_idx = Integer.parseInt(request.getParameter("s_idx"));
+int s_idx = (Integer) session.getAttribute("s_idx");
 
-int totalCnt = rdao.countReview(s_idx);
-int tiCnt = rdao.countimgReview(s_idx);
 int rSize = 5;
 int pageSize = 5;
 
@@ -23,6 +21,15 @@ int rp = Integer.parseInt(rp_s);
 
 ArrayList<ReviewDTO> rlist = rdao.viewReview(s_idx, rp, rSize);
 ArrayList<ReviewDTO> ilist = rdao.viewImgReview(s_idx);
+
+int totalCnt = 0;
+int tiCnt = 0;
+if (rlist != null) {
+	totalCnt = rdao.countReview(s_idx);
+}
+if (ilist != null) {
+	tiCnt = rdao.countimgReview(s_idx);
+}
 
 int totalPage = totalCnt / rSize + 1;
 int total_s = rdao.sumRstar(s_idx);
@@ -136,7 +143,7 @@ h2 {
 <section class="review">
 	<h2 class="th2">리뷰</h2>
 	<%
-	if (totalCnt == 0) {
+	if (rlist == null) {
 	%>
 	<div style="text-align: center; margin-bottom: 30px;">작성된 리뷰가
 		없습니다.</div>
@@ -163,16 +170,15 @@ h2 {
 		<article>
 			<ul class="reviewul fbox">
 				<%
-				if (ilist.size() != 0) {
+				if (ilist != null) {
 
 					for (int i = 0; i < rSize; i++) {
 				%>
 				<li><a href="#"><img src="<%=ilist.get(i).getR_img()%>"></a></li>
 				<%
-				if (rdao.countimgReview(s_idx) > rSize && i==rSize-1) {
+				if (rdao.countimgReview(s_idx) > rSize && i == rSize - 1) {
 				%>
-				<li class="moreArrow">
-					<span class="material-symbols-outlined">arrow_forward_ios</span>
+				<li class="moreArrow"><span class="material-symbols-outlined">arrow_forward_ios</span>
 				</li>
 				<%
 				}
@@ -202,7 +208,7 @@ h2 {
 		</article>
 		<section class="fbox" style="flex-direction: column;">
 			<%
-			for (int i = 0; i < rlist.size(); i++) {
+			for (int i = 0; i < totalCnt; i++) {
 			%>
 			<article class="reply">
 				<div class="rebox fbox" style="justify-content: space-between;">
@@ -229,15 +235,25 @@ h2 {
 					<div class="fbox" style="flex-direction: column;">
 						<%
 						if (rlist.get(i).getR_img() != null) {
+							String gal[] = rlist.get(i).getR_img().split("\\*");
 						%>
-						<img src="<%=rlist.get(i).getR_img()%>" class="boximg rfloat">
+						<img src="<%=gal[0]%>" class="boximg rfloat">
 						<%
 						}
 						%>
 						<div class="fbox" style="justify-content: right; font-size: 13px;"><%=rlist.get(i).getR_date()%></div>
 					</div>
 				</div>
-				<div>ㄴ답글</div>
+				<div id="moreImg">
+					<%
+					String gal[] = rlist.get(i).getR_img().split("\\*");
+
+					%>
+					<img src="<%=gal[0]%>" class="boximg rfloat">
+					<%
+					
+					%>
+				</div>
 			</article>
 			<%
 			}

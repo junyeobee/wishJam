@@ -8,11 +8,8 @@
 
 <%
 String sellidx_s = request.getParameter("s_idx");
-
-int sellidx = 0;
-if (sellidx_s != null) {
-	sellidx = Integer.parseInt(sellidx_s);
-}
+int sellidx=0;
+if(sellidx_s!=null)	sellidx = Integer.parseInt(sellidx_s);
 
 DetailDTO sddto = ddao.viewSellDetail(sellidx);
 ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
@@ -311,7 +308,6 @@ ul {
 			<div style="background-image: linear-gradient(white 30%, pink 30%);">
 				<img src="../img/img1.jpg" class="pfimg">
 				<div><%=sddto.getM_nick()%></div>
-				<div><%=sddto.getG_name()%></div>
 				<input type="button" value="찜">
 			</div>
 		</article>

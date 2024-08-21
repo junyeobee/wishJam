@@ -5,6 +5,7 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.*"%>
 <%
+request.setCharacterEncoding("utf-8");
 String getstart = request.getParameter("s_start");
 String getend = request.getParameter("s_end");
 
@@ -29,19 +30,15 @@ String sg_main[] = request.getParameterValues("sg_main");
 
 
 <jsp:setProperty property="s_idx" name="ddto"></jsp:setProperty>
-<jsp:setProperty property="m_nick" name="ddto"></jsp:setProperty>
+<jsp:setProperty property="m_idx" name="ddto"></jsp:setProperty>
 <jsp:setProperty property="c_idx" name="ddto"></jsp:setProperty>
-<jsp:setProperty property="g_name" name="ddto"></jsp:setProperty>
 <jsp:setProperty property="s_title" name="ddto"></jsp:setProperty>
 <jsp:setProperty property="s_content" name="ddto"></jsp:setProperty>
 <jsp:setProperty property="s_hash" name="ddto"></jsp:setProperty>
-<jsp:setProperty property="s_view" name="ddto"></jsp:setProperty>
-<jsp:setProperty property="s_jjim" name="ddto"></jsp:setProperty>
 <jsp:setProperty property="s_discnt" name="ddto"></jsp:setProperty>
 <jsp:setProperty property="s_type" name="ddto"></jsp:setProperty>
-<jsp:setProperty property="s_trade" name="ddto"></jsp:setProperty>
+<jsp:setProperty property="s_tradeT" name="ddto"></jsp:setProperty>
 <jsp:setProperty property="s_img" name="ddto"></jsp:setProperty>
-<jsp:setProperty property="s_stat" name="ddto"></jsp:setProperty>
 
 <jsp:useBean id="ddao" class="com.wishJam.detail.DetailDAO"></jsp:useBean>
 <jsp:useBean id="sgdao" class="com.wishJam.s_goods.S_goodsDAO"></jsp:useBean>

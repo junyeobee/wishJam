@@ -125,16 +125,14 @@
 		}
 	}
 
-	function openImgpop(idx, nick, tid) {
+	function openImgpop(idx, tid) {
 		if (tid == "content_img") {
 			var cnt = document.getElementsByTagName("img").length + 1;
-			window.open('sellImgUp.jsp?s_idx=' + idx + '&m_nick=' + nick
-					+ '&select_id=' + tid + '&imgcnt=' + cnt, 'sellImgUp',
+			window.open('sellImgUp.jsp?s_idx=' + idx + '&select_id=' + tid + '&imgcnt=' + cnt, 'sellImgUp',
 					'width=700, height=600');
 		} else {
 			window
-					.open('sellImgUp.jsp?s_idx=' + idx + '&m_nick=' + nick
-							+ '&select_id=' + tid, 'sellImgUp',
+					.open('sellImgUp.jsp?s_idx=' + idx + '&select_id=' + tid, 'sellImgUp',
 							'width=700, height=600');
 		}
 	}
@@ -187,20 +185,20 @@
 
 		var fm = document.makeSellfm;
 
-		fm.s_trade.value = fm.whereT.options[fm.whereT.selectedIndex].value
+		fm.s_tradeT.value = fm.whereT.options[fm.whereT.selectedIndex].value
 				+ "," + fm.apT.options[fm.apT.selectedIndex].value + ","
 				+ fm.whenT.options[fm.whenT.selectedIndex].value + ","
 				+ fm.apT2.options[fm.apT2.selectedIndex].value + ","
 				+ fm.whenT2.options[fm.whenT2.selectedIndex].value;
 	}
 
-	function addOpt(sidx, mnick) {
+	function addOpt(sidx) {
 		var optsbox = document.getElementById("optsbox");
 		var dislist = document.getElementById("dislist");
 		var cntid = optsbox.lastElementChild.lastElementChild.id;
 		var cnt = parseInt(cntid.slice(-1)) + 1;
 
-		makeOptbox(cnt, sidx, mnick);
+		makeOptbox(cnt, sidx);
 		makeListbox(cnt);
 
 	}
@@ -244,7 +242,7 @@
 		ul1.append(li2, li3, li4, li5);
 	}
 
-	function makeOptbox(cnt, sidx, mnick) {
+	function makeOptbox(cnt, sidx) {
 		var optbox = document.createElement("div");
 		optbox.className = "fbox optbox";
 
@@ -266,8 +264,7 @@
 		var div3 = document.createElement("div");
 		div3.id = "option_img" + cnt;
 		div3.className = "options fbox";
-		div3.setAttribute("onclick", "openImgpop(" + sidx + ", '" + mnick
-				+ "', this.id)");
+		div3.setAttribute("onclick", "openImgpop(" + sidx + ", this.id)");
 
 		var input5 = document.createElement("input");
 		input5.setAttribute("type", "hidden");
@@ -567,7 +564,7 @@
 			fm.apT2.options[fm.apT.selectedIndex].selected = "true";
 		}
 
-		fm.s_trade.value = fm.whereT.options[fm.whereT.selectedIndex].value
+		fm.s_tradeT.value = fm.whereT.options[fm.whereT.selectedIndex].value
 				+ "," + fm.apT.options[fm.apT.selectedIndex].value + ","
 				+ fm.whenT.options[fm.whenT.selectedIndex].value + ","
 				+ fm.apT2.options[fm.apT2.selectedIndex].value + ","

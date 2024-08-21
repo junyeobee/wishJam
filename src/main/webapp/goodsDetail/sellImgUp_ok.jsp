@@ -4,8 +4,7 @@
 <%@ page import="com.oreilly.servlet.*"%>
 <%@ page import="com.manage.wishJam.MyFileRenamePolicy" %>
 
-<jsp:useBean id="idao" class="com.wishJam.detail.DetailImgDAO"
-	scope="session"></jsp:useBean>
+<jsp:useBean id="idao" class="com.wishJam.detail.DetailImgDAO" scope="session"></jsp:useBean>
 
 <%
 request.setCharacterEncoding("UTF-8");

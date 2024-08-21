@@ -16,11 +16,11 @@ public class ReviewDAO {
 			int end = rp*rSize;
 			
 			conn = com.db.wishJam.DbConn.getConn();
-			String sql = "select * from"
-					+ " (select rownum rn, f.* from"
-					+ " (select r_idx, review.m_idx, review.m_nick, review.g_name, r_img, r_star, r_content, r_date, m_img"
-					+ " from review, mypage"
-					+ " where review.m_idx = mypage.m_idx and s_idx=? order by r_idx asc)f)s"
+			String sql = "select * from (select rownum rn, rev.* from"
+					+ " (select r_idx, s_idx, review.m_idx, r_img, r_star, r_content, r_date, m_img, m_nick"
+					+ " from review, mypage, member"
+					+ " where review.m_idx=mypage.m_idx and review.m_idx=member.m_idx and s_idx=?"
+					+ " order by r_idx asc)rev)ro"
 					+ " where rn>? and rn<=?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, s_idx);
@@ -31,16 +31,15 @@ public class ReviewDAO {
 			while (rs.next()) {
 				int r_idx = rs.getInt("r_idx");
 				int m_idx = rs.getInt("m_idx");
-				String m_nick = rs.getString("m_nick");
-				String g_name = rs.getString("g_name");
 				String r_img = rs.getString("r_img");
 				int r_star = rs.getInt("r_star");
 				String r_content = rs.getString("r_content");
 				Date r_date = rs.getDate("r_date");
 				String m_img = rs.getString("m_img");
+				String m_nick=rs.getString("m_nick");
 
-				ReviewDTO dto = new ReviewDTO(r_idx, m_idx, m_nick, g_name, r_img, r_star, r_content, r_date, m_img);
-
+				ReviewDTO dto = new ReviewDTO(r_idx, m_idx, r_img, r_star, r_content, r_date, m_img, m_nick);
+				
 				list.add(dto);
 			}
 				return list;
@@ -121,11 +120,12 @@ public class ReviewDAO {
 
 			
 			conn = com.db.wishJam.DbConn.getConn();
-			String sql = "select * from"
-					+ " (select rownum rn, f.* from"
-					+ " (select r_idx, review.m_idx, review.m_nick, review.g_name, r_img, r_star, r_content, r_date, m_img"
-					+ " from review, mypage"
-					+ " where review.m_idx = mypage.m_idx and s_idx=? and r_img is not null order by r_idx asc)f)s";
+			String sql = "select * from (select rownum rn, rev.* from"
+					+ " (select r_idx, s_idx, review.m_idx, r_img, r_star, r_content, r_date, m_img, m_nick"
+					+ " from review, mypage, member"
+					+ " where review.m_idx=mypage.m_idx and review.m_idx=member.m_idx and s_idx=? and r_img is not null"
+					+ " order by r_idx asc)rev)ro"
+					+ " where rn>? and rn<=?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, s_idx);
 			rs = ps.executeQuery();
@@ -133,16 +133,15 @@ public class ReviewDAO {
 			while (rs.next()) {
 				int r_idx = rs.getInt("r_idx");
 				int m_idx = rs.getInt("m_idx");
-				String m_nick = rs.getString("m_nick");
-				String g_name = rs.getString("g_name");
 				String r_img = rs.getString("r_img");
 				int r_star = rs.getInt("r_star");
 				String r_content = rs.getString("r_content");
 				Date r_date = rs.getDate("r_date");
 				String m_img = rs.getString("m_img");
+				String m_nick=rs.getString("m_nick");
 
-				ReviewDTO dto = new ReviewDTO(r_idx, m_idx, m_nick, g_name, r_img, r_star, r_content, r_date, m_img);
-
+				ReviewDTO dto = new ReviewDTO(r_idx, m_idx, r_img, r_star, r_content, r_date, m_img, m_nick);
+				
 				list.add(dto);
 			}
 				return list;
@@ -188,5 +187,32 @@ public class ReviewDAO {
 			} catch (Exception e2) {
 			}
 		}
+	}
+	
+	public int addReview(int s_idx, int m_idx, ReviewDTO dto) {
+		try {
+			conn=com.db.wishJam.DbConn.getConn();
+			String sql = "insert into review values(review_r_idx.nextval,?,?,?,?,?,sysdate)";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, s_idx);
+			ps.setInt(2, m_idx);
+			ps.setString(3, dto.getR_img());
+			ps.setInt(4, dto.getR_star());
+			ps.setString(5, dto.getR_content());
+			
+			int count = ps.executeUpdate();
+			
+			return count;
+	} catch (Exception e) {
+		e.printStackTrace();
+		return -1;
+	} finally {
+		try {
+				if(rs!=null) rs.close();
+				if(ps!=null) ps.close();
+				if(conn!=null) conn.close();
+		} catch (Exception e2) {
+		}
+	}
 	}
 }

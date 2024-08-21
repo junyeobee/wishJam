@@ -18,7 +18,6 @@ if(imgcnt_s !=null){
 }
 
 idao.setS_idx(s_idx);
-idao.setM_nick(m_nick);
 idao.setSelect_id(select_id);
 idao.setImgcnt(imgcnt);
 

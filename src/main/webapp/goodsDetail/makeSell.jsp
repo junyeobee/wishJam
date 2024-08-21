@@ -2,17 +2,27 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.wishJam.category.CategoryDTO"%>
-<jsp:useBean id="idao" class="com.wishJam.detail.DetailImgDAO"
-	scope="session"></jsp:useBean>
+<%@ page import="com.wishJam.detail.DetailDTO"%>
+
+<jsp:useBean id="idao" class="com.wishJam.detail.DetailImgDAO" scope="session"></jsp:useBean>
 <jsp:useBean id="cdao" class="com.wishJam.detail.ColorDAO"></jsp:useBean>
-<jsp:useBean id="cgdao" class="com.wishJam.category.CategoryDAO"
-	scope="session"></jsp:useBean>
+<jsp:useBean id="cgdao" class="com.wishJam.category.CategoryDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="sdao" class="com.wishJam.detail.DetailDAO"></jsp:useBean>
 
 <%
-int s_idx = Integer.parseInt(request.getParameter("s_idx"));
-String m_nick = request.getParameter("m_nick");
-String g_name = request.getParameter("g_name");
-String imgsrc = idao.getHomePath() + idao.getEverypath() + "mapjpg.jpg";
+int s_idx = sdao.getLastidx();
+Object m_idx_s = session.getAttribute("m_idx");
+int m_idx = 0;
+if (m_idx_s == null) {
+%>
+<script>
+		window.alert('로그인을 해주세요.')
+		location.href='/wishJam/login/login.jsp';
+	</script>
+<%
+} else {
+	m_idx = (Integer) session.getAttribute("m_idx");
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -146,7 +156,7 @@ ul {
 
 .contentImg {
 	padding: 5px;
-width:750px;
+	width: 750px;
 }
 
 .cPalette {
@@ -239,19 +249,13 @@ width:750px;
 	margin: 10px 0 0 8px;
 }
 
-.c_small	{
+.c_small {
 	width: 70px;
 }
 
-
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
 }
-
 </style>
 
 <%@ include file="scriptDetail.jsp"%>
@@ -260,47 +264,58 @@ width:750px;
 	<section>
 		<h2>게시글 작성</h2>
 
-		<form name="makeSellfm" action="makeSell_ok.jsp">
-			<input type="hidden" name="s_idx" value="<%=s_idx%>"> <input
-				type="hidden" name="m_nick" value="<%=m_nick%>"> <input type="hidden" name="g_name" value=<%=g_name %>>
+		<form name="makeSellfm" action="makeSell_ok.jsp" method="post">
+			<input type="hidden" name="s_idx" value="<%=s_idx%>">
+			<input type="hidden" name="m_idx" value="<%=m_idx %>">
 			<article>
 				<ul>
-					<li class="fbox" style="align-items: center; flex-direction: column;">
+					<li class="fbox"
+						style="align-items: center; flex-direction: column;">
 						<div id="thumb_img" class="thumbs fbox"
-							onclick="openImgpop(<%=s_idx%>, '<%=m_nick%>',this.id)">
+							onclick="openImgpop(<%=s_idx%>,this.id)">
 							<label>섬네일</label>
-						</div>
-						<span style="font-size: 12px;">섬네일 권장 규격은 215x215px입니다.</span>
-						 <input type="hidden" name="s_img">
+						</div> <span style="font-size: 12px;">섬네일 권장 규격은 215x215px입니다.</span> <input
+						type="hidden" name="s_img">
 					</li>
-					<li><div style="justify-content: space-between;">카테고리<label>대분류</label> <select name="c_big"
-						onchange="select_bc(this)">
-							<%
-							ArrayList<CategoryDTO> blist = cgdao.list_bicC();
+					<li><div style="justify-content: space-between;">
+							카테고리<label>대분류</label> <select name="c_big"
+								onchange="select_bc(this)">
+								<%
+								ArrayList<CategoryDTO> blist = cgdao.list_bicC();
 
+								for (int i = 0; i < blist.size(); i++) {
+								%>
+								<option value="<%=blist.get(i).getC_big()%>"><%=blist.get(i).getC_name()%></option>
+								<%
+								}
+								%>
+							</select> <label>소분류</label>
+							<%
+							ArrayList<CategoryDTO> clist = cgdao.list_C();
+							ArrayList<Integer> s_num = cgdao.S_num();
+
+							int ccnt = 0;
 							for (int i = 0; i < blist.size(); i++) {
 							%>
-							<option value="<%=blist.get(i).getC_big()%>"><%=blist.get(i).getC_name()%></option>
+							<select class="c_small" name="c_small"
+								style="display: <%=i == 0 ? "inline-block" : "none"%>"
+								onchange="select_cate(this)">
+								<%
+								for (int j = 0; j < s_num.get(i); j++) {
+								%>
+								<option id="<%=clist.get(ccnt).getC_hash()%>"
+									value=<%=clist.get(ccnt).getC_idx()%>><%=clist.get(ccnt).getC_name()%></option>
+								<%
+								ccnt++;
+								}
+								%>
+							</select>
 							<%
 							}
 							%>
-					</select> <label>소분류</label>
-					<%
-						ArrayList<CategoryDTO> clist = cgdao.list_C();
-						ArrayList<Integer> s_num  = cgdao.S_num();
-						
-						int ccnt = 0;
-						for(int i=0; i<blist.size(); i++){
-					%>
-							<select class="c_small" name="c_small" style="display: <%=i==0?"inline-block":"none"%>" onchange="select_cate(this)">
-							<% for(int j=0; j<s_num.get(i); j++){ %>
-								<option id="<%=clist.get(ccnt).getC_hash() %>" value=<%=clist.get(ccnt).getC_idx() %>><%=clist.get(ccnt).getC_name() %></option>
-							<%
-								ccnt++; 
-							} %>
-							</select>
-					<%} %>
-					</div><input type="hidden" name="c_idx" value="<%=clist.get(0).getC_idx() %>">
+						</div>
+						<input type="hidden" name="c_idx"
+						value="<%=clist.get(0).getC_idx()%>">
 					<li>제목<input type="text" name="s_title">
 					<li>상세 설명
 						<div class="editor">
@@ -399,7 +414,7 @@ width:750px;
 											</div>
 										</div></li>
 									<li><input id="content_img" type="button" value="이미지"
-										onclick="openImgpop(<%=s_idx%>,'<%=m_nick%>',this.id)"></li>
+										onclick="openImgpop(<%=s_idx%>,this.id)"></li>
 								</ul>
 							</div>
 							<div class="editbox" onclick="boxclick()">
@@ -529,22 +544,26 @@ width:750px;
 							</div>
 						</div>
 						<div class="fbox" style="justify-content: center;">
-						<span>추천</span>
+							<span>추천</span>
 							<ul class="fbox fcenter" id="recomm">
 								<%
 								String kw[] = clist.get(0).getC_hash().split("#");
-								for(int i=1; i<kw.length;i++){ %>
-								<li><input type="button" value="#<%=kw[i] %>" onclick="keySelect(this.value)"></li>
-								<%} %>
+								for (int i = 1; i < kw.length; i++) {
+								%>
+								<li><input type="button" value="#<%=kw[i]%>"
+									onclick="keySelect(this.value)"></li>
+								<%
+								}
+								%>
 							</ul>
-						</div> <input type="hidden" name="s_hash" value="">
-						<input type="hidden" name="hashkw" value="<%=clist.get(0).getC_hash() %>">
+						</div> <input type="hidden" name="s_hash" value=""> <input
+						type="hidden" name="hashkw" value="<%=clist.get(0).getC_hash()%>">
 					</li>
 					<li>
 						<article id="optsbox">
 							<div class="fbox" style="justify-content: space-between;">
 								<span>대표 상품 선택</span><label>옵션 등록</label> <input type="button"
-									value="옵션 추가" onclick="addOpt(<%=s_idx%>,'<%=m_nick%>')">
+									value="옵션 추가" onclick="addOpt(<%=s_idx%>)">
 							</div>
 							<div class="fbox optbox">
 								<div class="fbox">
@@ -552,7 +571,7 @@ width:750px;
 										onclick="selectMainopt(this)"> <input type="hidden"
 										name="sg_main" value="0">
 									<div id="option_img1" class="options fbox"
-										onclick="openImgpop(<%=s_idx%>, '<%=m_nick%>',this.id)">
+										onclick="openImgpop(<%=s_idx%>,this.id)">
 										<label>이미지 등록</label>
 									</div>
 									<input type="hidden" id="sg_img1" name="sg_img" value="이미지없음">
@@ -629,7 +648,7 @@ width:750px;
 											</select>시까지
 										</ul>
 									</div>
-									<input type="hidden" name="s_trade" id="s_trade" value="">
+									<input type="hidden" name="s_tradeT" id="s_tradeT" value="">
 								</div>
 							</div>
 						</div>
@@ -645,7 +664,9 @@ width:750px;
 										<li>
 											<div class="bordbox">
 												<ul class="fbox fcenter">
-													<li><input type="checkbox" id="dcbox_ck1" onclick="selectIt(this)" name="discnt_box"><input type="hidden" name="sg_discnt" value="0"></li>
+													<li><input type="checkbox" id="dcbox_ck1"
+														onclick="selectIt(this)" name="discnt_box"><input
+														type="hidden" name="sg_discnt" value="0"></li>
 													<li name="op_sg_name1"></li>
 													<li name="op_sg_price1"></li>
 													<li name="op_sg_dcprice1"></li>
