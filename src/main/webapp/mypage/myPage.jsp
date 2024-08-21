@@ -9,34 +9,35 @@
 <%
 //m_idx 세션 받기
 
-
-int m_idx = (int)session.getAttribute("m_idx");
-
-String id = "user1_id";
-
-String nick="user1";
-
-session.setAttribute("userId", id);
-
-session.setAttribute("nick", nick);
-session = request.getSession();
-
-
-String path = request.getRealPath("/");
-mdto.setHomepath(path);
-File file = new File(mdto.getHomepath() + mdto.getUrl());
-File[] fileList = file.listFiles();
-String imgSrc = "/wishJam/img/member_profile/default.png";
-System.out.println(mdto.getHomepath());
-
-for (File f : fileList) {
-	if (f.isFile() && f.getName().startsWith(id)) {
-		imgSrc = "/wishJam/img/member_profile/" + f.getName();
-		break;
-	} else {
-		imgSrc = "/wishJam/img/member_profile/default.png";
-	}
-}
+	
+/* 	int m_idx = (int)session.getAttribute("m_idx");
+	
+	String id = "user1_id";
+	
+	String nick="user1";
+	
+	session.setAttribute("userId", id);
+	
+	session.setAttribute("nick", nick);
+	session = request.getSession();
+	
+	
+	String path = request.getRealPath("/");
+	mdto.setHomepath(path);
+	File file = new File(mdto.getHomepath() + mdto.getUrl());
+	File[] fileList = file.listFiles();
+	String imgSrc = "/wishJam/img/member_profile/default.png";
+	System.out.println(mdto.getHomepath());
+	
+	for (File f : fileList) {
+		if (f.isFile() && f.getName().startsWith(id)) {
+			imgSrc = "/wishJam/img/member_profile/" + f.getName();
+			break;
+		} else {
+			imgSrc = "/wishJam/img/member_profile/default.png";
+		}
+	} 
+	*/
 
 %>
 
@@ -165,21 +166,29 @@ color: gray;
 line-height : 30px;
 }
 
-
 </style>
 </head>
 <body>
-	<%@ include file="../header.jsp"%>
-
+	<%@ include file="/header.jsp"%>
+	<script>
+        //현재 로그인 한 상태로 왔는지 체크하는 로직입니다. 헤더에서 받은 m_idx값이 만약 0이라면(헤더에서 세션이 없으면 0으로 세팅되도록 설정되어있습니다.) 해당 페이지 사용못하도록 구현했습니다
+        //윤나님 파이팅하세용
+		var m_idx = <%=m_idx %>;
+        if (m_idx === 0) {
+        	alert('로그인을 하세요');
+            window.history.back();
+        } 
+    </script>
 	<section>
 		<h2>마이페이지</h2>
 		<article id="mypage_section1">
 			<div id="mypage_wrap">	
 				<div class="profileimg">
-					<img src="<%=imgSrc%>">
+					<!-- 이거 dto에서 받아오도록 하시면 될것같습니다. 즉, dto에 m_img 인자 추가 -> mmdto의 인자 생성자에 추가,쿼리 수정 > dto객체를 이미지태그 위에서 불러오면 되겠죠? -->
+					<!-- 그냥 헤더에서 받아오는 로직있어서 그거썼습니다. 수정안하셔도됩니다 -->
+					<img src="<%=src %>">
 				</div>
 				<%
-			
 				if (m_idx != 0) {
 					MypageDTO mmdto = new MypageDTO();
 					mmdto= mdao.memberGet(m_idx);
@@ -211,7 +220,6 @@ line-height : 30px;
 			<div class="container">
 				<%
 				List<MypageDTO> buylist =  mdao.buyList(m_idx);
-
 				for (MypageDTO goods : buylist) {
 					
 					if(goods ==null){
