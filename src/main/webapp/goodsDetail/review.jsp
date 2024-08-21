@@ -39,6 +39,8 @@ int nowGroup = rp / pageSize;
 if (rp % pageSize == 0) {
 	nowGroup--;
 }
+
+System.out.println(rlist.get(1).getR_img());
 %>
 
 <style>
@@ -139,14 +141,45 @@ h2 {
 .moreArrow:hover {
 	cursor: pointer;
 }
+
+.moreImg {
+	display: none;
+	flex-wrap: nowrap;
+	overflow:hidden;
+}
+
+.moreboximg {
+	width: 180px;
+	height: 180px;
+	object-fit: cover;
+	border-radius: 5px;
+	
+}
+
+.rboximg {
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
+	border-radius: 5px;
+}
 </style>
+<script>
+	function moreImgOpen(t){
+		var imgbox = t.nextElementSibling;
+		
+		if(imgbox.style.display=="none"){
+			imgbox.style.display="flex";
+		} else{
+			imgbox.style.display="none";
+		}
+	}
+</script>
 <section class="review">
 	<h2 class="th2">리뷰</h2>
 	<%
 	if (rlist == null) {
 	%>
-	<div style="text-align: center; margin-bottom: 30px;">작성된 리뷰가
-		없습니다.</div>
+	<div style="text-align: center; margin-bottom: 30px;">작성된 리뷰가 없습니다.</div>
 	<%
 	} else {
 	%>
@@ -211,7 +244,7 @@ h2 {
 			for (int i = 0; i < totalCnt; i++) {
 			%>
 			<article class="reply">
-				<div class="rebox fbox" style="justify-content: space-between;">
+				<div class="rebox fbox" style="justify-content: space-between;" onclick="moreImgOpen(this)">
 					<div style="height: 100px; flex-direction: column;" class="fbox">
 						<div class="fbox">
 							<div>
@@ -237,21 +270,23 @@ h2 {
 						if (rlist.get(i).getR_img() != null) {
 							String gal[] = rlist.get(i).getR_img().split("\\*");
 						%>
-						<img src="<%=gal[0]%>" class="boximg rfloat">
+						<img src="<%=gal[0]%>" class="rboximg rfloat">
 						<%
 						}
 						%>
 						<div class="fbox" style="justify-content: right; font-size: 13px;"><%=rlist.get(i).getR_date()%></div>
 					</div>
 				</div>
-				<div id="moreImg">
+ 				<div id="moreImg" class="moreImg">
 					<%
-					String gal[] = rlist.get(i).getR_img().split("\\*");
-
+					if (rlist.get(i).getR_img() != null) {
+						String gal[] = rlist.get(i).getR_img().split("\\*");
+						for (int j = 0; j < gal.length; j++) {
 					%>
-					<img src="<%=gal[0]%>" class="boximg rfloat">
+					<img src="<%=gal[j]%>" class="moreboximg">
 					<%
-					
+					}
+					}
 					%>
 				</div>
 			</article>

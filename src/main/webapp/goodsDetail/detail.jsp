@@ -22,14 +22,12 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 <title>Detail page</title>
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
 </head>
 <style>
 body {
 	width: 1000px;
 	margin: 0px auto;
 }
-
 
 .pfimg {
 	height: 100px;

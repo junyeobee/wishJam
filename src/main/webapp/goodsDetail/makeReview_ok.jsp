@@ -23,5 +23,5 @@ String msg = result>0?"성공":"실패";
 %>
 <script>
 window.alert('<%=msg %>');
-location.close();
+window.close();
 </script>

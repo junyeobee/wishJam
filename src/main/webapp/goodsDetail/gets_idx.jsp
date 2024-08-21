@@ -19,6 +19,7 @@
 <body>
 	<form name="idx_gfm" action="detail.jsp">
 		detail이동
+		<input type="text" name="s_idx">
 		<input type="submit" value="제출">
 	</form>
 	<form name="idx_gfm2" action="makeSell.jsp">

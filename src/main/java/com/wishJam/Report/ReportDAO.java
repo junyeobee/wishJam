@@ -13,11 +13,13 @@ public class ReportDAO {
 	public int reportContent(ReportDTO dto) {
 		try {
 			conn = com.db.wishJam.DbConn.getConn();
-			String sql = "insert into report values(?,?,?)";
+			String sql = "insert into report values(report_rp_idx.nextval,?,?,?,?,?)";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, dto.getS_idx());
-			ps.setString(2, dto.getG_name());
-			ps.setString(3, dto.getRp_reason());
+			ps.setString(2, dto.getRp_reason());
+			ps.setInt(3, 0);
+			ps.setInt(4, dto.getReported());
+			ps.setInt(5, dto.getReporter());
 			
 			int count = ps.executeUpdate();
 			

@@ -156,7 +156,8 @@ ul {
 
 .contentImg {
 	padding: 5px;
-	width: 750px;
+	max-width: 650px;
+	min-width: 500px;
 }
 
 .cPalette {

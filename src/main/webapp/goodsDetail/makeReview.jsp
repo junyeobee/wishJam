@@ -56,10 +56,11 @@ li {
 }
 
 .review_img {
-	width: 80px;
-	height: 90px;
+	width: 100px;
+	height: 100px;
 	border: 1px solid gray;
 	border-radius: 10px;
+	object-fit: cover;
 }
 
 .review_img:hover {
@@ -132,7 +133,7 @@ li {
 								onclick="openImgpop(<%=s_idx%>,<%=m_idx%>)"></div></li>
 
 					</ul>
-					<input type="hidden" name="r_img" id="r_img">
+					<input type="hidden" name="r_img" id="r_img" value=" ">
 					<div>최대 5장</div>
 				</div>
 				<div>
