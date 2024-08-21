@@ -1,3 +1,5 @@
+<%@page import="com.member.wishJam.MemberDTO"%>
+<%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="javax.servlet.http.Cookie" %>
 <jsp:useBean id="mdao" class="com.member.wishJam.MemberDAO"></jsp:useBean>
@@ -10,9 +12,12 @@
    int result = mdao.loginCheck(userid, userpwd);
    
    if(result==mdao.LOGIN_OK){
-      String username = mdao.getUserInfo(userid);
+     Map<String, Object> userInfoMap = mdao.getUserInfo(userid);
       session.setAttribute("sid", userid);
-      session.setAttribute("sname", username);
+      if (userInfoMap != null) {
+           session.setAttribute("m_idx", userInfoMap.get("m_idx"));
+           session.setAttribute("m_nick", userInfoMap.get("m_nick"));
+       }
       
       if (keepLogIn) {
           session.setMaxInactiveInterval(7 * 24 * 60 * 60);
@@ -31,7 +36,7 @@
       }
       %>
       <script>
-         window.alert('<%=username%>님 환영합니다!');
+         window.alert('<%=userInfoMap.get("m_nick")%>님 환영합니다!');
          location.href='../index.jsp';
          window.self.close();
       </script>
@@ -45,17 +50,17 @@
       <%
    } else if(result==mdao.NOT_PWD){
       %>
-	      <script>
-	         window.alert('잘못된 아이디 및 비밀번호입니다.');
-	         location.href='login.jsp';
-	      </script> 
+         <script>
+            window.alert('잘못된 아이디 및 비밀번호입니다.');
+            location.href='login.jsp';
+         </script> 
       <%
    } else{
       %>
-       	  <script>
-	         window.alert('고객센터로 연락바랍니다.');
-	         location.href='login.jsp';
-	      </script> 
+            <script>
+            window.alert('고객센터로 연락바랍니다.');
+            location.href='login.jsp';
+         </script> 
       <%
    }
 %>
