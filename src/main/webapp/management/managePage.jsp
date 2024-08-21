@@ -115,36 +115,37 @@
             <a href="/wishJam/index.jsp">메인로고</a>
         </div>
         <div id="manageimg">
-        	<a href="#" data-content = "/wishJam/management/manager/managerModify" class="dynamic-link">
+        	<a href="#" data-content = "/wishJam/management/manager/managerModify" class="link">
             <img src="<%=imgSrc %>" class="pfimg" alt="img">
             </a>
             <div id = "managerExplane"><%=id %> 님</div>
         </div>
         <div class="element">
-            <a href="#" data-content="/wishJam/management/stats/stats" class="dynamic-link">거래 통계</a>
+            <a href="#" data-content="/wishJam/management/stats/stats" class="link">거래 통계</a>
         </div>
         <div class="element">
-            <a href="#" data-content="/wishJam/management/member/memberManage" class="dynamic-link">회원 관리</a>
+            <a href="#" data-content="/wishJam/management/member/memberManage" class="link">회원 관리</a>
         </div>
         <div class="element">
-            <a href="#" data-content="/wishJam/management/report/reports" class="dynamic-link">신고 관리</a>
+            <a href="#" data-content="/wishJam/management/report/reports" class="link">신고 관리</a>
         </div>
         <div class="element">
-            <a href="#" data-content="/wishJam/management/banner/banner" class="dynamic-link">배너 설정</a>
+            <a href="#" data-content="/wishJam/management/banner/banner" class="link">배너 설정</a>
         </div>
         <div class="element">
-            <a href="#" data-content="/wishJam/management/grade/grade" class="dynamic-link">등급 관리</a>
+            <a href="#" data-content="/wishJam/management/grade/grade" class="link">등급 관리</a>
         </div>
         <div class="element">
-            <a href="#" data-content="dd" class="dynamic-link">카테고리 관리</a>
+            <a href="#" data-content="/wishJam/management/cartegory/cartegory" class="link">카테고리 관리</a>
         </div>
     </div>
     <section id="manageArea">
         <iframe id="contentFrame" src="main.jsp"></iframe>
     </section>
     <script>
+    	/*link 클릭시 data content값 가져옴*/
         document.addEventListener('DOMContentLoaded', function() {
-            const dynamicLinks = document.querySelectorAll('.dynamic-link');
+            const dynamicLinks = document.querySelectorAll('.link');
             dynamicLinks.forEach(link => {
                 link.addEventListener('click', function(event) {
                     event.preventDefault();
@@ -155,7 +156,7 @@
                 });
             });
         });
-
+		//data content + .jsp로 iframe 링크 변경
         function loadContent(content) {
             const fileName = content + '.jsp';
             document.getElementById('contentFrame').src = fileName;

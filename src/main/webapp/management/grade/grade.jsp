@@ -32,11 +32,9 @@ function openTab(evt, tabName) {
         tablinks[i].classList.remove("active");
     }
 
-    // 선택된 탭 콘텐츠 표시
     document.getElementById(tabName).style.display = "block";
     document.getElementById(tabName).classList.add("active");
 
-    // 선택된 탭 링크에 active 클래스 추가
     evt.currentTarget.classList.add("active");
 }
 function gradeEdit(i){

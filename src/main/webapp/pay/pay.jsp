@@ -233,6 +233,16 @@
 				<h3>주문상품</h3>
 				<hr style="border:1px solid; color:#a9a9a9;">
 				<!-- 이부분 반복 -->
+				<% 
+			    String[] products = request.getParameterValues("product");
+			    if (products != null) {
+			        for (String product : products) {
+			            out.println("<p>" + product + "</p>");
+			        }
+			    } else {
+			        out.println("<p>No products selected.</p>");
+			    }
+			%>
 				<div class="pay_product">
 					<img src="../img/profile.png" class="product_img">
 					<span class="product_name">상품명</span>
