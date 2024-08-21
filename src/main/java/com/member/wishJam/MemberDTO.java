@@ -4,6 +4,7 @@ import java.sql.*;
 
 public class MemberDTO {
 
+	
 	private int m_idx;
 	private String m_nick;
 	private int g_idx;

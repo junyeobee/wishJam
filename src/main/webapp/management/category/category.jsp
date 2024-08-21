@@ -4,7 +4,6 @@
 <jsp:useBean id = "cdao" class = "com.manage.wishJam.M_CartegoryDAO"/>
 <%
 	int idx = cdao.getCIdx();
-	System.out.println(idx);
 %>
 <style>
 .container {

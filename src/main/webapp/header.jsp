@@ -24,7 +24,7 @@
 	<% if(sname==null){
       %>
 	<div id = "top_right">
-		<a href="login/login.jsp">로그인</a> | <a href="login/member.jsp">회원 가입</a>
+		<a href="login/login.jsp">로그인</a> | <a href="/wishJam/login/member.jsp">회원 가입</a>
 	</div>
 	<% 
    } else{
