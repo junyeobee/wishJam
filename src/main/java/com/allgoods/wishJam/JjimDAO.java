@@ -25,12 +25,12 @@ public class JjimDAO {
 				
 				con=com.db.wishJam.DbConn.getConn();
 
-				String sql="insert into jjim (m_idx, s_idx, s_title) values (?, ?, ?)";
+				String sql="insert into jjim (m_idx, s_idx) values (?, ?)";
 				
 				ps=con.prepareStatement(sql);
 				ps.setInt(1, jjim.getM_idx());
 				ps.setInt(2, jjim.getS_idx());
-				ps.setString(3, jjim.getS_title());
+		
 				
 				return ps.executeUpdate() >0;
 				

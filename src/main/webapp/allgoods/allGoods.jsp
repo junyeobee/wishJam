@@ -11,12 +11,12 @@
 
 <%
 
-int Id= 7; //임시 멤버번호 
+int Id= 1; //임시 멤버번호 
 session.setAttribute("m_idx", Id);
 Integer memberId = (Integer)session.getAttribute("m_idx");
 
-
 if(request.getMethod().equalsIgnoreCase("POST")){
+	
 int productId = Integer.parseInt(request.getParameter("productId"));
 String s_title = request.getParameter("s_title");
 
@@ -35,7 +35,7 @@ if(memberId == null){
 		JjimDTO jjdto= new JjimDTO();
 		jjdto.setM_idx(memberId);
 		jjdto.setS_idx(productId);
-		jjdto.setS_title(s_title);
+	
 		
 		boolean added = jdao.addJjim(jjdto);
 		
@@ -237,13 +237,14 @@ function updateSortOrder() {
         out.println("상품이 없습니다.");
     } else {
         for (AllgoodsDTO products : productList) {
-            // 찜한 상태 확인
+            
+        	// 찜한 상태 확인
             boolean isJjimmed = jjimProductIds.contains(products.getS_idx());
             String buttonText = isJjimmed ? "🧡" : "🤍";
+            
 			%>
 			
-			
-			
+
 			<form action="allGoods.jsp" method="post" >
 			<div class="item" >
 				<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
@@ -255,6 +256,8 @@ function updateSortOrder() {
             <input type="hidden" name="productId" value="<%=products.getS_idx()%>"> <!-- 상품 ID -->
 					<div name="s_title"><%=products.getS_title()%></div>
 					<div>
+					
+					
 					<% 
 					int dis=products.getS_discnt();
 					

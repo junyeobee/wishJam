@@ -10,15 +10,11 @@
 //m_idx 세션 받기
 
 
-String idx = (String)session.getAttribute("m_idx");
-int m_idx = Integer.parseInt(idx);
+int m_idx = (int)session.getAttribute("m_idx");
 
 String id = "user1_id";
 
 String nick="user1";
-
-session.setAttribute("m_idx", idx);
-Integer m_idx_obj = (Integer) session.getAttribute("m_idx");
 
 session.setAttribute("userId", id);
 
