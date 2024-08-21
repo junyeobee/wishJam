@@ -49,7 +49,6 @@
 	
 	#manageArea {
 		flex: 1;
-		padding: 10px;
 		background-color: #f4f4f4;
 	}
 	
@@ -136,7 +135,7 @@
             <a href="#" data-content="/wishJam/management/grade/grade" class="link">등급 관리</a>
         </div>
         <div class="element">
-            <a href="#" data-content="/wishJam/management/cartegory/cartegory" class="link">카테고리 관리</a>
+            <a href="#" data-content="/wishJam/management/category/category" class="link">카테고리 관리</a>
         </div>
     </div>
     <section id="manageArea">
