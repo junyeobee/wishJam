@@ -37,7 +37,7 @@ if(sellerProducts !=null){
 <style>
 
 section {
-	
+	 font-family: 'Cafe24Ohsquareair';
 	width: 940px;
 	height: 1500px;
 	margin: 0 auto;
@@ -64,26 +64,30 @@ section {
     text-align: center; /* 텍스트 중앙 정렬 */
     position: relative;
 	border-radius: 20px;
-	border: 1px solid gray;
+	
 }
 
 .img {
     cursor: pointer; /* 클릭할 수 있음을 나타내는 커서 */
+    
 }
 
 .img img {
     width: 215px; /* 이미지가 아이템 크기에 맞게 조정 */
     height: 215px; /* 비율 유지 */
+    border-radius: 20px;
 }
 
 .rank {
     display: block; /* 순위를 블록으로 표시 */
     font-weight: bold; /* 강조 */
     margin-bottom: 5px; /* 순위와 이미지 사이의 여백 */
+     font-family: 'Cafe24Ohsquareair';
 }
 .seller_pf{
 width:35px;
 height:35px;
+ font-family: 'Cafe24Ohsquareair'; 	
 
 }
 </style>

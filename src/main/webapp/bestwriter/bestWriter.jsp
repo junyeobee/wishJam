@@ -19,9 +19,9 @@
 <style>
 section {
 	
-	width: 940px;
+	width: 960px;
 	height: 1500px;
-	border: 1px solid black;
+	
 	margin: 0 auto;
 }
 
@@ -37,14 +37,14 @@ article div {
 #selllist_wrap {
 	width: 100%;
 	height: 200px;
-	border: 1px solid gray;
+	
 	display: flex;
 }
 
 .bw_item {
 	width: 200px;
 	height: 100%;
-	border: 1px solid gray;
+	
 	background-image: url("/wishJam/img/img1.jpg");
 	background-size: cover;
 }
@@ -60,7 +60,7 @@ article div {
 	width: 35px;
 	height: 35px;
 	border-radius: 50px;
-	border: 1px solid gray;
+	border: 1px solid #C4C4C4;
 }
 
 h3 {
@@ -88,7 +88,7 @@ h3 {
 #seller_tg div {
 	width: 120px;
 	height: 35px;
-	border: 1px solid gray;
+	border: 1px solid #C4C4C4;
 	border-radius: 20px;
 	margin-right: 7px;
 	margin-bottom: 5px;
@@ -133,8 +133,7 @@ overflow:hidden;
 		for(BestsellerDTO nicks : goldsellers){ 
 		System.out.println(nicks.getM_nick());
 		%>
-			
-		
+
 			<div><a onclick="sellerTag('<%=nicks.getM_nick()%>')"  class="dynamic-link"><%=nicks.getM_nick()%></a></div>
 	<%} %>
 		

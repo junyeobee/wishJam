@@ -27,6 +27,7 @@ public class MypageDTO {
 	private String m_addr;
 	private String m_email;
 	private String m_point;
+	private String m_grade;
 	private Date joindate;
 	
 	private String profile;
@@ -35,6 +36,14 @@ public class MypageDTO {
 	
 	
 	
+	public String getM_grade() {
+		return m_grade;
+	}
+
+	public void setM_grade(String m_grade) {
+		this.m_grade = m_grade;
+	}
+
 	public int getDiscount() {
 		return discount;
 	}

@@ -19,20 +19,19 @@ public class MypageDAO {
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 			
-			String sql="select * from mypage where m_id=?";
+			String sql="select mypage.*,member.* from mypage join member on mypage.m_idx=member.m_idx where member.m_id=?";
 			ps=con.prepareStatement(sql);
 			ps.setString(1,id);
 			
 			rs=ps.executeQuery();
 			
-			if(rs.next()) {
-				
+			while(rs.next()) {				
 				 mypage= new MypageDTO();
 				
 				mypage.setUserid(id);
 				mypage.setM_nick(rs.getString("m_nick"));
 				mypage.setProfile(rs.getString("profile"));
-				
+				mypage.setM_grade(rs.getString("m_grade"));				
 			}
 			
 		} catch (Exception e) {

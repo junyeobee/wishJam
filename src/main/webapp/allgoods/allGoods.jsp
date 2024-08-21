@@ -11,9 +11,11 @@
 
 <%
 
-int Id= 4; //임시 멤버번호 
+int Id= 7; //임시 멤버번호 
 session.setAttribute("m_idx", Id);
 Integer memberId = (Integer)session.getAttribute("m_idx");
+
+
 
 
 if(request.getMethod().equalsIgnoreCase("POST")){
@@ -44,30 +46,17 @@ if(memberId == null){
 			
 			jdao.incrementJjim(productId);
 			
-			%>
-			
-			<script>
-			
-			    function jjim(button){
-			    	window.alert('찜하기에 추가되었습니다❤️');
-
-
-					button.innerText= '🧡';
-			    }
-				
-			jjim(button);
-				
-			</script>			
-			
-			<% 
-			
+			 // URL에 쿼리 파라미터 추가
+            response.sendRedirect("allGoods.jsp?added=1&productId=" + productId);
+            return; // 추가 후 현재 요청 종료
 		}
 
 		
 	}
 
 }
-
+//찜한 상품 목록을 가져오는 로직 (예시)
+List<Integer> jjimProductIds = jdao.getJjimProductIds(memberId); // 찜한 상품 ID 목록을 가져오도록 가정
 
 
 //페이징
@@ -116,6 +105,7 @@ section {
 
 #filter {
 	float: right;
+	
 }
 
 .container {
@@ -132,23 +122,31 @@ section {
 	height: 380px;
 	position: relative;
 	border-radius: 20px;
-	border: 1px solid gray;
+	border: 1px solid #C4C4C4;
 }
 
 .inner {
 	width: 100%;
+	
 	height: 140px;
+	background-color:#F2F2F2;
+	position: absolute;
+	border-radius: 0 0 20px 20px;
 	position: absolute;
 	bottom: 0;
+	padding-top:10px;
 }
 
 .inner div {
-	margin-bottom: 4px;
+	margin-bottom: 10px;
+	margin-left:6px;
 }
 
 #sortOrder {
 	width: 130px;
 	height: 50px;
+	border: 1px solid #C4C4C4;
+	border-radius:10px;
 }
 
 .img img {
@@ -156,6 +154,7 @@ section {
 	height: 240px;
 	object-fit: cover;
 	border-radius: 20px 20px 0 0;
+	
 }
 
 .heart {
@@ -184,18 +183,21 @@ font-size:13px;
 
 .discount{
 display:inline;
+font-weight:bold;
 color:orange;
 }
 
+
 .jbt{
 border:none;
-background-color:white;
+background-color:#F2F2F2;
 position: absolute;
-right: 8;
-bottom: 10;
+right: 7px;
+bottom: 10px;
 cursor: pointer;
-font-size:1em;
+font-size:1.4em;
 }
+
 
 </style>
 
@@ -238,8 +240,12 @@ function updateSortOrder() {
         out.println("상품이 없습니다.");
     } else {
         for (AllgoodsDTO products : productList) {
-
+            // 찜한 상태 확인
+            boolean isJjimmed = jjimProductIds.contains(products.getS_idx());
+            String buttonText = isJjimmed ? "🧡" : "🤍";
 			%>
+			
+			
 			
 			<form action="allGoods.jsp" method="post" >
 			<div class="item" >
@@ -256,16 +262,18 @@ function updateSortOrder() {
 					int dis=products.getS_discnt();
 					
 					if(dis>0){
-						
-					  %><span class="discount"><%=dis +"%"%></span> <%
-					}else{ }%>
-					
-					<%= products.getSg_price()%></div>
+		                  
+		                 %><span class="discount"><%=dis +"%"%></span>
+		                <%=(int)(products.getSg_price()*(1-(double)products.getS_discnt()/100)) %> <%
+		               }else{%>
+		                  <%=products.getSg_price() %>
+		                  <% }%>
+		               
+		               </div>
 
 
-                  <button type="submit" onclick="jjim(this);" id="jbt_<%= products.getS_idx() %>" class="jbt">찜🤍</button> <!--제출 버튼 -->
-              
-          
+                  <button type="submit" id="jbt_<%= products.getS_idx() %>" class="jbt"><%= buttonText %></button> <!--제출 버튼 -->
+   
 					
 				</div>
 
@@ -276,8 +284,12 @@ function updateSortOrder() {
     } 
 			%>
 		</div>
-		
-		
+
+
+
+
+
+
 		<!-- 페이징처리  -->
 			 <div class="pagination">
         	<span>Showing <%=(totalcnt/listsize)>=cp?cp*listsize:totalcnt %> to <%=totalcnt %> of <%=cp %> entries</span>

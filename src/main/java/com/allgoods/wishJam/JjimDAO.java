@@ -3,6 +3,8 @@ package com.allgoods.wishJam;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JjimDAO {
 	Connection con;
@@ -64,4 +66,38 @@ public class JjimDAO {
 		}
 		
 		
+		
+		public List<Integer> getJjimProductIds(int memberId) {
+
+			List<Integer> jjimProductIds = new ArrayList<>();
+			
+			
+			try {
+				con = com.db.wishJam.DbConn.getConn();
+				 String sql="select s_idx from jjim where m_idx=?";
+					
+			    ps = con.prepareStatement(sql);
+			    ps.setInt(1, memberId);
+				rs = ps.executeQuery();
+
+				while (rs.next()) {
+					jjimProductIds.add(rs.getInt("s_idx"));
+					
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(con!=null)con.close();
+					if(rs!=null)rs.close();
+					if(ps!=null)ps.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+					 
+				}
+				
+			}
+			return jjimProductIds;
+			
+		}
 }

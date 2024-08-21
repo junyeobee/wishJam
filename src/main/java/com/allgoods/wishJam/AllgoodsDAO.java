@@ -23,9 +23,9 @@ public class AllgoodsDAO {
 			con = com.db.wishJam.DbConn.getConn();
 			
 			if("latest".equals(sortOrder)) {
-			sql = "select sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx order by s_jjim desc";
+			sql = "select sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx where s_stat=0 order by s_jjim desc ";
 			}else {
-				sql = "select sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx order by sell.s_start desc";
+				sql = "select sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx where s_stat=0 order by sell.s_start desc ";
 			}
 				
 		    ps = con.prepareStatement(sql);
@@ -60,6 +60,7 @@ public class AllgoodsDAO {
 	}
 	
 	
+
 	
 	
 	
@@ -102,6 +103,9 @@ public class AllgoodsDAO {
     		}
 		}
 	}
+	
+	
+	
 	
 	
 	public int getTotalcnt() {

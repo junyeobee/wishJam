@@ -46,7 +46,7 @@ System.out.println(imgSrc);
 
 <style>
 section {
-	width: 940px;
+	width: 960px;
 	margin: 0 auto;
 	font-family: 'Cafe24Ohsquare';
 }
@@ -54,19 +54,20 @@ section {
 #mypage_section1 {
 	width: 100%;
 	height: 250px;
-	border: 1px solid red;
 }
 
 #mypage_wrap {
 	width: 300px;
-	height: 100%;
+	height: 100px;
 	margin: 0 auto;
-	border: 1px solid blue;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	
 }
-
+#mypage_wrap div{
+margin-bottom:10px;
+}
 .profile_item {
 	height: 20px;
 	width: 100%;
@@ -77,16 +78,16 @@ section {
 	width: 80px;
 	height: 80px;
 	border-radius: 100px;
-	background-color: gray;
+	background-color: #C4C4C4;
 	text-align: center;
-	margin-top: 80px;
+	
 }
 
 .container {
 	width: 100%;
 	heigth: 340px;
 	display: flex;
-	border: 2px solid red;
+	background-color:#C4C4C4
 	gap: 1.2rem !important;
 	row-gap: 1.2rem !important;
 	overflow: hidden;
@@ -95,16 +96,17 @@ section {
 .item {
 	width: 223px;
 	height: 340px;
-	border: 1px solid blue;
+	border: 1px solid #C4C4C4;
 	position: relative;
 	border-radius: 20px;
 }
 
 .inner {
 	width: 100%;
-	height: 100px;
-	border: 1px solid red;
+	height: 120px;
+	background-color:#F2F2F2;
 	position: absolute;
+	border-radius: 0 0 20px 20px;
 	bottom: 0;
 }
 
@@ -125,9 +127,10 @@ section {
 }
 
 #mypage_section2 {
-	height: 200px;
-	border: 1px solid red;
+	height: 240px;
+	background-color:#F2F2F2;
 	text-align: center;
+	
 }
 
 .nickname {
@@ -138,7 +141,8 @@ section {
 .introduce {
 	font-weight: 500;
 	font-size: 18px;
-	margin-top: 10%;
+	margin-top:30px;
+
 }
 
 .edit{
@@ -151,6 +155,8 @@ font-size:13px;
 color: gray;
 line-height : 30px;
 }
+
+
 </style>
 </head>
 <body>
@@ -159,20 +165,20 @@ line-height : 30px;
 	<section>
 		<h2>마이페이지</h2>
 		<article id="mypage_section1">
-
-			<div id="mypage_wrap">
-				<div class="profile_item">등급</div>
+			<div id="mypage_wrap">	
 				<div class="profileimg">
 					<img src="<%=imgSrc%>">
 				</div>
 				<%
+			
 				if (id != null) {
 					mdto = mdao.memberGet(id);
+					String grade=mdto.getM_grade();
+			
 				%>
 
+				<div class="profile_item"><%=mdto.getM_grade() %></div>
 				<div class="profile_item nickname" ><%=mdto.getM_nick()%></div>
-
-
 				<%
 				System.out.println(mdto.getM_nick());
 				}

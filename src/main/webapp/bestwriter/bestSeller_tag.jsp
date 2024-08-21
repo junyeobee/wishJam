@@ -54,7 +54,7 @@ h2 {
 	width: 35px;
 	height: 35px;
 	border-radius: 50px;
-	border: 1px solid gray;
+	
 }
 
 h3 {
@@ -105,9 +105,10 @@ h3 {
 .img img {
     width: 215px; /* 이미지가 아이템 크기에 맞게 조정 */
     height: 215px; /* 비율 유지 */
+    border-radius: 20px;
 }
 .title{
-
+font-family: 'Cafe24Ohsquareair';
 text-align:center;
 }
 
