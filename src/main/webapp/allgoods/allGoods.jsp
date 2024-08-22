@@ -9,77 +9,6 @@
 
 
 
-<%
-
-
-
-Integer memberId = (Integer)session.getAttribute("m_idx");
-
-if(request.getMethod().equalsIgnoreCase("POST")){
-	
-int productId = Integer.parseInt(request.getParameter("productId"));
-
-
-
-if(memberId == null){
-	
-		%>
-		<script>
-		window.alert('로그인이 필요합니다.');
-		</script>
-		
-		<%
-		
-	}else{
-		
-		JjimDTO jjdto= new JjimDTO();
-		jjdto.setM_idx(memberId);
-		jjdto.setS_idx(productId);
-	
-		
-		boolean added = jdao.addJjim(jjdto);
-		
-		if(added){
-			
-			jdao.incrementJjim(productId);
-			
-			 // URL에 쿼리 파라미터 추가
-            response.sendRedirect("allGoods.jsp?added=1&productId=" + productId);
-            return; // 추가 후 현재 요청 종료
-		}
-
-		
-	}
-
-}
-//찜한 상품 목록을 가져오는 로직 (예시)
-List<Integer> jjimProductIds = jdao.getJjimProductIds(memberId); // 찜한 상품 ID 목록을 가져오도록 가정
-
-
-//페이징
-	String cp_s = request.getParameter("cp");
-	if(cp_s==null||cp_s.equals("")){
-		cp_s="1";
-	}
-	int cp = Integer.parseInt(cp_s);
-	
-	//총 게시물수
-	int totalcnt = dao.getTotalcnt();
-	//한번에 보여줄 리스트 수
-	int listsize = 10;
-	//페이지수
-	int pagesize = 5;
-	
-	//사용자 현재위치
-	//int cp=1;
-	
-	int totalpage = (totalcnt/listsize)+1;
-	if(totalcnt%listsize == 0)totalpage--;
-	
-	int usrgroup=cp/pagesize;
-	if(cp%pagesize==0)usrgroup--;
-	
-%>
 
 
 <!DOCTYPE html>
@@ -119,7 +48,7 @@ section {
 	height: 380px;
 	position: relative;
 	border-radius: 20px;
-	border: 1px solid #C4C4C4;
+	border: 1px solid #DDDEE0;
 }
 
 .inner {
@@ -142,8 +71,9 @@ section {
 #sortOrder {
 	width: 130px;
 	height: 50px;
-	border: 1px solid #C4C4C4;
-	border-radius:10px;
+	border: 1px solid #DDDEE0;
+	border-radius:5px;
+	font-family: 'Pretendard-Regular';
 }
 
 .img img {
@@ -215,7 +145,81 @@ function updateSortOrder() {
 </script>
 </head>
 <body>
-	<%@ include file="../header.jsp"%>
+	<%@ include file="/header.jsp"%>
+	<script>
+        //현재 로그인 한 상태로 왔는지 체크하는 로직입니다. 헤더에서 받은 m_idx값이 만약 0이라면(헤더에서 세션이 없으면 0으로 세팅되도록 설정되어있습니다.) 해당 페이지 사용못하도록 구현했습니다
+        //윤나님 파이팅하세용 
+		var m_idx = <%=m_idx %>;
+       
+
+    </script>
+	<%
+
+if(request.getMethod().equalsIgnoreCase("POST")){
+	
+int productId = Integer.parseInt(request.getParameter("productId"));
+
+
+if(m_idx == 0){
+	
+		%>
+		<script>
+		window.alert('로그인이 필요합니다.');
+		</script>
+		
+		<%
+		
+	}else{
+		
+		JjimDTO jjdto= new JjimDTO();
+		jjdto.setM_idx(m_idx);
+		jjdto.setS_idx(productId);
+	
+		
+		boolean added = jdao.addJjim(jjdto);
+		
+		if(added){
+			
+			jdao.incrementJjim(productId);
+			
+			 // URL에 쿼리 파라미터 추가
+            response.sendRedirect("allGoods.jsp?added=1&productId=" + productId);
+            return; // 추가 후 현재 요청 종료
+		}
+
+		
+	}
+
+}
+//찜한 상품 목록을 가져오는 로직 
+List<Integer> jjimProductIds = jdao.getJjimProductIds(m_idx); // 찜한 상품 ID 목록을 가져오도록 가정
+
+
+//페이징
+	String cp_s = request.getParameter("cp");
+	if(cp_s==null||cp_s.equals("")){
+		cp_s="1";
+	}
+	int cp = Integer.parseInt(cp_s);
+	
+	//총 게시물수
+	int totalcnt = dao.getTotalcnt();
+	//한번에 보여줄 리스트 수
+	int listsize = 10;
+	//페이지수
+	int pagesize = 5;
+	
+	//사용자 현재위치
+	//int cp=1;
+	
+	int totalpage = (totalcnt/listsize)+1;
+	if(totalcnt%listsize == 0)totalpage--;
+	
+	int usrgroup=cp/pagesize;
+	if(cp%pagesize==0)usrgroup--;
+	
+%>
+	
 	<section>
 		<h2>전체 상품</h2>
 		<article>
@@ -262,11 +266,19 @@ function updateSortOrder() {
 					
 					
 					<% 
-					int dis=products.getS_discnt();
 					
-					if(dis>0){
+					
+					int dis=products.getS_discnt();
+					int ddd=products.getSg_discnt();
+					double originalPrice = products.getSg_price();
+					double finalPrice; 
+					
+		
+					if(dis>0  && products.getSg_discnt()==1){
 		                  
 		                 %><span class="discount"><%=dis +"%"%></span>
+		                 
+		                 
 		                <%=(int)(products.getSg_price()*(1-(double)products.getS_discnt()/100)) %> <%
 		               }else{%>
 		                  <%=products.getSg_price() %>
@@ -287,10 +299,6 @@ function updateSortOrder() {
     } 
 			%>
 		</div>
-
-
-
-
 
 
 		<!-- 페이징처리  -->

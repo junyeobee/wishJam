@@ -38,6 +38,8 @@
 		}
 	} 
 	*/
+	
+	
 
 %>
 
@@ -188,12 +190,20 @@ line-height : 30px;
 	<%@ include file="/header.jsp"%>
 	<script>
         //현재 로그인 한 상태로 왔는지 체크하는 로직입니다. 헤더에서 받은 m_idx값이 만약 0이라면(헤더에서 세션이 없으면 0으로 세팅되도록 설정되어있습니다.) 해당 페이지 사용못하도록 구현했습니다
-        //윤나님 파이팅하세용
+        //윤나님 파이팅하세용 
 		var m_idx = <%=m_idx %>;
         if (m_idx === 0) {
         	alert('로그인을 하세요');
             window.history.back();
         } 
+        
+        //인자값없거나 나랑동일하지 않거나 2개 조건일때, 수정하기 버튼 없슴.
+        
+        
+        function godetail(i){
+        	window.location.href = '/wishJam/goodsDetail/detail.jsp?s_idx='+i
+        }
+        
     </script>
 	<section>
 		<h2>마이페이지</h2>
@@ -231,6 +241,7 @@ line-height : 30px;
 
 			<div class="container">
 				<%
+				int idx = m_idx!=a ? a : m_idx;
 				List<MypageDTO> buylist =  mdao.buyList(m_idx);
 				for (MypageDTO goods : buylist) {
 					
@@ -240,7 +251,7 @@ line-height : 30px;
 					}else{
 				%>
 				<div class="item">
-					<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
+					<div class="img" onclick="godetail('<%=goods.getS_idx()%>');">
 						<img src="<%=goods.getS_img()%>" alt="썸네일">
 					</div>
 
