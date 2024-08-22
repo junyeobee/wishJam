@@ -18,7 +18,7 @@ Date e_date = Date.valueOf(getend);
 ddto.setS_start(s_date);
 ddto.setS_end(e_date);
 
-int s_goods_result = 0;String a[]= new String[2];
+int s_goods_result = 0;
 String sg_names[] = request.getParameterValues("sg_name");
 String sg_prices[] = request.getParameterValues("sg_price");
 String sg_counts[] = request.getParameterValues("sg_count");
