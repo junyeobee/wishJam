@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <jsp:useBean id="mdao" class="com.manage.wishJam.manageDTO"/>
-<jsp:useBean id="bdao" class="com.manage.wishJam.BannerDAO"/> 
+<jsp:useBean id="bdao" class="com.manage.wishJam.BannerDAO"/>
+<jsp:useBean id="dao" class="com.allgoods.wishJam.AllgoodsDAO"/>
+<jsp:useBean id="jdto" class="com.allgoods.wishJam.AllgoodsDTO"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +45,7 @@
             <h2>인기상품</h2>
             <div class="listBox">
                 <div class="list"><label id="1">상품이미지</label></div>
-                <div class="list"><a href="/wishJam/goodsDetail/detail.jsp">상품이미지</a></div>
+                <div class="list"><a href="/wishJam/goodsDetail/detail.jsp?s_idx=1">상품이미지</a></div>
                 <div class="list">상품이미지</div>
                 <div class="list">상품이미지</div>
             </div>

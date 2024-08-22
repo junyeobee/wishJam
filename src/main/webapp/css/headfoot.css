@@ -14,25 +14,31 @@ header {
 	background-color:white;
 	z-index:50;	/*배너때매 걍 널널하게 줬습니다*/
 }
-#top_left {
+.top{
+	flex-grow:1;
+}
+.top.menu{
+	margin-left:50px;
+}
+.top.left {
+	
+}
+.top.center {
 	
 }
 
-#top_center {
-	
-}
-
-.top_right.login {
+.top.right.login {
 	display: grid;
 	justify-items: center;
+	z-index:5000;
 }
-.top_right img{
+.top.right img{
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
 }
 
-#top_Search {
+.top.Search {
 	
 }
 
