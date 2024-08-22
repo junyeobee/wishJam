@@ -124,8 +124,7 @@ public class ReviewDAO {
 					+ " (select r_idx, s_idx, review.m_idx, r_img, r_star, r_content, r_date, m_img, m_nick"
 					+ " from review, mypage, member"
 					+ " where review.m_idx=mypage.m_idx and review.m_idx=member.m_idx and s_idx=? and r_img is not null"
-					+ " order by r_idx asc)rev)ro"
-					+ " where rn>? and rn<=?";
+					+ " order by r_idx asc)rev)ro";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, s_idx);
 			rs = ps.executeQuery();
