@@ -7,14 +7,8 @@
 	int m_idx = (m_idxObj != null) ? m_idxObj : 0;
 	String src = maindao.getImgsrc(m_idx) != null ? maindao.getImgsrc(m_idx) : "";
 %>
-<style>
-.wrap{
-
-}
-</style>
 <header>
    <div class="top menu">
-   <div class ="wrap">
       <label class="burger" for="burger">
         <input type="checkbox" id="burger">
         <span></span>
@@ -22,7 +16,7 @@
         <span></span>
       </label>
       <a href="/wishJam/index.jsp">
-         <img src="/wishJam/img/logo.png" alt="Wishgem Logo" class="logo">
+         <img src="/wishJam/img/logo.png" alt="mainLogo" class="logo">
       </a>
    </div>
    <div class="top center">
@@ -36,8 +30,7 @@
       <a href="/wishJam/login/login.jsp">로그인</a> | 
       <a href="/wishJam/login/member.jsp">회원 가입</a>
    </div>
-   <% 
-	}else { %>
+   <% } else { %>
    <div class="top right login">
       <img src="<%=src %>" alt="profile" class="profile-icon"/>
       <label><%=m_nick %>님</label>
@@ -47,7 +40,6 @@
             <li><a href="/wishJam/goodsDetail/makeSell.jsp">판매글 작성</a></li>
             <li><a href="/wishJam/login/logout.jsp">로그아웃</a></li>
          </ul>
-      	</div>
       </div>
    </div>
    <% } %>
