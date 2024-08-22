@@ -103,13 +103,19 @@ margin-bottom:10px;
 	overflow: hidden;
 }
 
+
+.container1{
+gap: 1.2rem !important;
+
+}
 .item {
+gap: 1.2rem !important;
 	width: 223px;
 	height: 340px;
 	border: 1px solid #C4C4C4;
 	position: relative;
 	border-radius: 20px;
-	margin-right:20px;
+
 }
 
 .inner {
@@ -119,7 +125,7 @@ margin-bottom:10px;
 	position: absolute;
 	border-radius: 0 0 20px 20px;
 	bottom: 0;
-	
+	font-family: 'Pretendard-Regular';
 }
 
 .inner div{
@@ -219,7 +225,7 @@ line-height : 30px;
 				}
 				%>
 
-		<article>
+		<article class="container1">
 			<h3>판매내역</h3>
 			<hr>
 
