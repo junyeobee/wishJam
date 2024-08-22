@@ -8,7 +8,8 @@
 
 section {
 	width: 1200px;
-	height: 1200px;
+	min-height: 1500px;
+	height: auto;
 	margin: 0px auto;
 }
 
