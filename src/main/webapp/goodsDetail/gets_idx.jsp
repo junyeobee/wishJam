@@ -12,7 +12,7 @@
 <title>Insert title here</title>
 <%
 	session.setAttribute("m_idx", 1);
-	session.setAttribute("s_idx", 2);
+	session.setAttribute("s_idx", 1);
 
 %>
 </head>
