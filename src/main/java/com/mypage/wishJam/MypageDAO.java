@@ -20,7 +20,7 @@ public class MypageDAO {
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 			
-			String sql="SELECT member.m_id,member.m_nick, member.m_tel, member.m_email, member.m_addr, grade.g_name, mypage.profile FROM member JOIN mypage ON member.m_idx = mypage.m_idx JOIN grade ON grade.g_idx = member.g_idx WHERE member.m_idx = ?";
+			String sql="SELECT member.m_id,member.m_pwd,member.m_nick, member.m_tel, member.m_email, member.m_addr, grade.g_name, mypage.profile FROM member JOIN mypage ON member.m_idx = mypage.m_idx JOIN grade ON grade.g_idx = member.g_idx WHERE member.m_idx = ?";
 			ps=con.prepareStatement(sql);
 			ps.setInt(1,idx);
 			
@@ -29,6 +29,7 @@ public class MypageDAO {
 			while(rs.next()) {				
 				mypage= new MypageDTO();
 				mypage.setM_id(rs.getString("m_id"));
+				mypage.setM_pwd(rs.getString("m_pwd"));
 				mypage.setM_nick(rs.getString("m_nick"));
 				mypage.setM_tel(rs.getString("m_tel"));
 				mypage.setM_email(rs.getString("m_email"));
@@ -107,16 +108,23 @@ public class MypageDAO {
 		rs=ps.executeQuery();
 		
 		while(rs.next()) {
-			String m_nick= rs.getString("m_nick");
+		
 			String s_title = rs.getString("s_title");
 			int sg_price = rs.getInt("sg_price");
 			String s_img = rs.getString("s_img");
-			bl.add(new MypageDTO(m_nick,s_title,sg_price,s_img ));
-		}
+			bl.add(new MypageDTO(s_title,sg_price,s_img ));
 		
-	} catch (Exception e) {
+		
+	} }catch (Exception e) {
 		e.printStackTrace();
+			
 	}
-	return bl;		
+	
+	return bl;
 	}
 }
+	
+
+ // 
+	
+

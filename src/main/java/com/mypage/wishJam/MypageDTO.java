@@ -48,12 +48,12 @@ public class MypageDTO {
     }
 	
 
-	public MypageDTO(String m_nick,String s_title, int sg_price, String s_img) {
-		super();
+	public MypageDTO(String s_title, int sg_price, String s_img) {
+		
 		this.s_title = s_title;
 		this.sg_price = sg_price;
 		this.s_img = s_img;
-		this.m_nick = m_nick;
+	
 	}
 
 

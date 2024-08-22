@@ -124,7 +124,7 @@ section {
 
 .inner {
 	width: 100%;
-	
+	font-family: 'Cafe24Ohsquareair';
 	height: 140px;
 	background-color:#F2F2F2;
 	position: absolute;

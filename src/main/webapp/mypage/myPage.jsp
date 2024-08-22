@@ -60,11 +60,13 @@ section {
 }
 
 #mypage_section1 {
+ font-family: 'Pretendard-Regular';
 	width: 100%;
 	height: 250px;
 }
 
 #mypage_wrap {
+ font-family: 'Pretendard-Regular';
 	width: 300px;
 	height: 100px;
 	margin: 0 auto;
@@ -107,15 +109,22 @@ margin-bottom:10px;
 	border: 1px solid #C4C4C4;
 	position: relative;
 	border-radius: 20px;
+	margin-right:20px;
 }
 
 .inner {
 	width: 100%;
 	height: 120px;
-	background-color:#F2F2F2;
+	background-color:#F0F1F4;
 	position: absolute;
 	border-radius: 0 0 20px 20px;
 	bottom: 0;
+	
+}
+
+.inner div{
+
+margin: 10px 0 0 10px;
 }
 
 .img img {
@@ -135,8 +144,9 @@ margin-bottom:10px;
 }
 
 #mypage_section2 {
+ font-family: 'Pretendard-Regular';
 	height: 240px;
-	background-color:#F2F2F2;
+	background-color:#F0F1F4;
 	text-align: center;
 	border-radius: 10px;
 	margin-bottom: 60px;
@@ -192,11 +202,7 @@ line-height : 30px;
 				if (m_idx != 0) {
 					MypageDTO mmdto = new MypageDTO();
 					mmdto= mdao.memberGet(m_idx);
-					
-					
-			
 				%>
-
 				<div class="profile_item"><%=mmdto.getM_grade() %></div>
 				<div class="profile_item nickname" ><%=mmdto.getM_nick()%></div>
 			
@@ -228,8 +234,7 @@ line-height : 30px;
 					}else{
 				%>
 				<div class="item">
-					<div class="img"
-						onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
+					<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
 						<img src="<%=goods.getS_img()%>" alt="썸네일">
 					</div>
 

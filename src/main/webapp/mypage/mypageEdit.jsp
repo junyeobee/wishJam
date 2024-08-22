@@ -230,22 +230,7 @@ function validatePasswords() {
 </script>
 
 </head>
-<%
-//로그인 세션 받아오기
-Integer idx = (Integer) session.getAttribute("m_idx");
 
-System.out.println(idx);
-
-String id = (String) session.getAttribute("userId"); //앞에 mypage에서 받은 userid 맞춰서
-
-
-
-if (idx != 0) {
-	
-	MypageDTO mmdto = new MypageDTO();
-	mmdto= mdao.memberGet(idx);
-	System.out.println(mmdto.getM_id());
-%>
 <Script>
   //프로필 사진 변경 팝업
   function modifyImg() {
@@ -280,33 +265,29 @@ if (idx != 0) {
 </Script>
 
 <body>
-	<%@ include file="../header.jsp"%>
+	<%@ include file="/header.jsp"%>
+	
+	<%
+
+
+
+
+if (m_idx != 0) {
+	
+	MypageDTO mmdto = new MypageDTO();
+	mmdto= mdao.memberGet(m_idx);
+	
+%>
 	<section>
 		<form name="mypageedit" action="mypageEdit_ok.jsp">
 			<div class="title">
 				<h2>내 정보 수정하기</h2>
 			</div>
 			<article id="article_edit">
-				<%
-                String path = request.getRealPath("/");
-                mdto.setHomepath(path);
-                File file = new File(mdto.getHomepath() + mdto.getUrl());
-				File[] fileList = file.listFiles();
-				String imgSrc = "/wishJam/img/member_profile/default.png";
-                
-				for (File f : fileList) {
-	
-                    if (f.isFile() && f.getName().startsWith(id)) {
-                        imgSrc = "/wishJam/img/member_profile/" + f.getName();
-                        break;
-				}else {
-                    imgSrc = "/wishJam/img/member_profile/default.png";
-                }
-            }
-				%>
+				
 				<div class="edit_item label">프로필 사진</div>
 				<div class="profileimg ">
-					<span class="edit">변경하기</span> <img src="<%=imgSrc%>" alt="mypageImg" onclick="modifyImg()">
+					<span class="edit">변경하기</span> <img src="<%=src%>" alt="mypageImg" onclick="modifyImg()">
 				</div>
 
 			</article>
@@ -329,7 +310,7 @@ if (idx != 0) {
     <div class="input_wrap">
         <div class="edit_item">
             <div class="introduce">
-                <input type="password" name="m_pwd" id="m_pwd" value="<%=mmdto.getM_pwd()%>">
+                <input type="text" name="m_pwd" id="m_pwd" value="<%=mmdto.getM_pwd()%>">
             </div>
         </div>
     </div>
