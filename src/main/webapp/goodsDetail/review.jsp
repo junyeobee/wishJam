@@ -8,7 +8,9 @@
 <%
 DecimalFormat df = new DecimalFormat("#.##");
 
-int s_idx = (Integer) session.getAttribute("s_idx");
+String s_idx_s = request.getParameter("s_idx");
+int s_idx=0;
+if(s_idx_s!=null)	s_idx = Integer.parseInt(s_idx_s);
 
 int rSize = 5;
 int pageSize = 5;

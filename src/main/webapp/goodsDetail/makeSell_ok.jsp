@@ -55,7 +55,7 @@ if (detail_result > 0) {
 %>
 <script>
 	window.alert('게시글 등록에 <%=msg%>했습니다.');
-	location.href = '/wishJam/goodsDetail/gets_idx.jsp';
+	location.href = '/wishJam/';
 </script>
 <%
 }

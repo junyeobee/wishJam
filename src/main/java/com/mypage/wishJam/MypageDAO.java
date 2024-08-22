@@ -112,7 +112,7 @@ public class MypageDAO {
 			String s_title = rs.getString("s_title");
 			int sg_price = rs.getInt("sg_price");
 			String s_img = rs.getString("s_img");
-			bl.add(new MypageDTO(s_title,sg_price,s_img ));
+			bl.add(new MypageDTO(s_title,sg_price,s_img));
 		
 		
 	} }catch (Exception e) {
