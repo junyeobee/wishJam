@@ -64,7 +64,7 @@ public class DetailDAO {
 	public int getLastidx() {
 		try {
 			conn = com.db.wishJam.DbConn.getConn();
-			String sql = "select max(s_idx) from sell";
+			String sql = "select max(s_idx) from sell order by s_idx asc";
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 

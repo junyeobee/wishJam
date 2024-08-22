@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <jsp:useBean id="dto" class="com.mypage.wishJam.MypageDTO"></jsp:useBean>
 <jsp:setProperty property="*" name="dto"/>
 <jsp:useBean id="mdao" class="com.mypage.wishJam.MypageDAO"></jsp:useBean>

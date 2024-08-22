@@ -6,15 +6,6 @@
 <jsp:useBean id="ddao" class="com.wishJam.detail.DetailDAO"></jsp:useBean>
 <jsp:useBean id="sgdao" class="com.wishJam.s_goods.S_goodsDAO"></jsp:useBean>
 
-<%
-String sellidx_s = request.getParameter("s_idx");
-int sellidx=0;
-if(sellidx_s!=null)	sellidx = Integer.parseInt(sellidx_s);
-
-DetailDTO sddto = ddao.viewSellDetail(sellidx);
-ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -148,10 +139,10 @@ ul {
 }
 </style>
 <script>
-	function openReport() {
+	<%-- function openReport() {
 		window.open('/wishJam/goodsDetail/report.jsp?s_idx=<%=sellidx %>', 'report',
 				'width=400, height=500');
-	}
+	} --%>
 
 	function deleteGd(t) {
 		t.parentNode.remove(t);
@@ -234,7 +225,15 @@ ul {
 	}
 </script>
 <body>
+	<%@ include file="../header.jsp" %>
+<%
+String sellidx_s = request.getParameter("s_idx");
+int sellidx=0;
+if(sellidx_s!=null)	sellidx = Integer.parseInt(sellidx_s);
 
+DetailDTO sddto = ddao.viewSellDetail(sellidx);
+ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
+%>
 	<section class="option">
 		<article>
 			<form name="option">
@@ -310,7 +309,8 @@ ul {
 			</div>
 		</article>
 		<article class="reportbtn">
-			<input type="button" value="신고" class="rpbtn" onclick="openReport()">
+			<input type="button" value="신고" class="rpbtn" onclick="window.open('/wishJam/goodsDetail/report.jsp?s_idx=<%=sellidx %>', 'report',
+			'width=400, height=500');">
 		</article>
 
 	</section>

@@ -32,6 +32,7 @@ if (ilist != null) {
 }
 
 int totalPage = totalCnt / rSize + 1;
+int tiPage = tiCnt/rSize+1;
 int total_s = rdao.sumRstar(s_idx);
 double avg_s = (double) total_s / totalCnt;
 
@@ -39,8 +40,6 @@ int nowGroup = rp / pageSize;
 if (rp % pageSize == 0) {
 	nowGroup--;
 }
-
-System.out.println(rlist.get(1).getR_img());
 %>
 
 <style>
@@ -62,13 +61,14 @@ h2 {
 }
 
 .reviewul {
-	justify-content: space-around;
+	justify-content: left;
 }
 
 .reviewul img {
 	width: 100px;
 	height: 100px;
 	object-fit: cover;
+	margin-left: 15px;
 }
 
 .sleft {
@@ -205,9 +205,10 @@ h2 {
 				<%
 				if (ilist != null) {
 
-					for (int i = 0; i < rSize; i++) {
+					for (int i = 0; i < (ilist.size()<=rSize?ilist.size():rSize); i++) {
+						String gals[] = ilist.get(i).getR_img().split("\\*");
 				%>
-				<li><a href="#"><img src="<%=ilist.get(i).getR_img()%>"></a></li>
+				<li><a href="#"><img src="<%=gals[0]%>"></a></li>
 				<%
 				if (rdao.countimgReview(s_idx) > rSize && i == rSize - 1) {
 				%>
@@ -274,14 +275,14 @@ h2 {
 						<%
 						}
 						%>
-						<div class="fbox" style="justify-content: right; font-size: 13px;"><%=rlist.get(i).getR_date()%></div>
+						 <div class="fbox" style="justify-content: right; font-size: 13px;"><%=rlist.get(i).getR_date()%></div>
 					</div>
 				</div>
  				<div id="moreImg" class="moreImg">
 					<%
 					if (rlist.get(i).getR_img() != null) {
 						String gal[] = rlist.get(i).getR_img().split("\\*");
-						for (int j = 0; j < gal.length; j++) {
+						for (int j = 0; j < gal.length-1; j++) {
 					%>
 					<img src="<%=gal[j]%>" class="moreboximg">
 					<%
