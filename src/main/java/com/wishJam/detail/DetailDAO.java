@@ -38,8 +38,9 @@ public class DetailDAO {
 				int s_stat = rs.getInt("s_stat");
 				String m_nick = rs.getString("m_nick");
 
-				DetailDTO dto = new DetailDTO(s_idx, m_idx, c_idx, s_title, s_content, s_hash, s_view, s_jjim, s_start, s_end, s_discnt, s_type, s_tradeT, s_img, s_stat, m_nick);
-				
+				DetailDTO dto = new DetailDTO(s_idx, m_idx, c_idx, s_title, s_content, s_hash, s_view, s_jjim, s_start,
+						s_end, s_discnt, s_type, s_tradeT, s_img, s_stat, m_nick);
+
 				return dto;
 			} else {
 				return null;
@@ -126,4 +127,28 @@ public class DetailDAO {
 		}
 	}
 
+	public int addCart(int m_idx, int sg_idx, int ct_count) {
+		try {
+				conn=com.db.wishJam.DbConn.getConn();
+				String sql = "insert into cart values(ct_seq.nextval, ?,?,?,0)";
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, m_idx);
+				ps.setInt(2,sg_idx );
+				ps.setInt(3, ct_count);
+				
+				int count = ps.executeUpdate();
+				
+				return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			try {
+					if(ps!=null) ps.close();
+					if(conn!=null) conn.close();
+			} catch (Exception e2) {
+			}
+		}
+	}
+	
 }

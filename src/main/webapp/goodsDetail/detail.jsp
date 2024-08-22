@@ -8,8 +8,10 @@
 
 <%
 String sellidx_s = request.getParameter("s_idx");
-int sellidx=0;
-if(sellidx_s!=null)	{sellidx = Integer.parseInt(sellidx_s);}
+int sellidx = 0;
+if (sellidx_s != null) {
+	sellidx = Integer.parseInt(sellidx_s);
+}
 
 DetailDTO sddto = ddao.viewSellDetail(sellidx);
 ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
@@ -27,6 +29,12 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 body {
 	width: 1000px;
 	margin: 0px auto;
+	
+	-webkit-touch-callout: none;
+     user-select: none;
+     -moz-user-select: none;
+     -ms-user-select: none;
+     -webkit-user-select: none;
 }
 
 .pfimg {
@@ -40,7 +48,7 @@ body {
 .option {
 	position: sticky;
 	position: -webkit-sticky;
-	top: 0px;
+	top: 127px;
 	width: 350px;
 	border: 1px solid gray;
 	text-align: center;
@@ -122,7 +130,7 @@ ul {
 
 .detailnav {
 	position: sticky;
-	top: 0;
+	top: 127px;
 	width: 635px;
 	text-align: center;
 }
@@ -132,11 +140,7 @@ ul {
 }
 
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
 }
 
 .detailnav div {
@@ -167,10 +171,9 @@ ul {
 		amount[1].value = '0';
 	}
 
-	function plusBtn(t) {
+	function plusBtn(t,sgidx) {
 		var amount = document.getElementsByName(t.name);
 		amount[1].value = parseInt(amount[1].value, 10) + 1;
-		console.log(t.name);
 		var price = parseInt(document.getElementById(t.name + '_p').innerText);
 
 		var lname = document.getElementById(t.name + '_gname');
@@ -195,9 +198,12 @@ ul {
 		var totals = document.getElementById('totalprice');
 		totals.innerHTML = parseInt(document.getElementById('totalprice').innerText)
 				+ price + '원';
+		
+		var num = t.name.slice(-1);
+		makeCartform(num, sgidx,amount[1].value);
 	}
 
-	function minusBtn(t) {
+	function minusBtn(t,sgidx) {
 		var amount = document.getElementsByName(t.name);
 		if (parseInt(amount[1].value, 10) > 0) {
 			amount[1].value = parseInt(amount[1].value, 10) - 1;
@@ -231,31 +237,69 @@ ul {
 			var tlabel = document.getElementById(t.name);
 			tlabel.parentNode.remove();
 		}
+		
+		var num = t.name.slice(-1);
+		makeCartform(num, sgidx,amount[1].value);
+	}
+	
+	function makeCartform(num, sgidx,amount){
+		var ot = document.option_table;
+		var optnum = document.option.childElementCount;
+		var optbox = document.getElementById("subvalues"+num);
+		if(optbox!=null){optbox.remove();}
+		
+		var div1 = document.createElement("div");
+		div1.id="subvalues"+num;
+		
+			var input1 = document.createElement("input");
+			var input2 = document.createElement("input");
+			var input3 = document.createElement("input");
+			
+			input1.setAttribute("type","hidden");
+			input2.setAttribute("type","hidden");
+			input3.setAttribute("type","hidden");
+			
+			input1.name="m_idx";
+			input2.name="sg_idx";
+			input3.name="ct_count";
+			
+			input1.value="<%=sddto.getM_idx()%>";
+			input2.value=sgidx;
+			input3.value=amount;
+			
+			
+			div1.append(input1,input2,input3);
+			ot.append(div1);
 	}
 </script>
 <body>
-	<%@ include file="../header.jsp" %>
+	<%@ include file="../header.jsp"%>
 	<section class="option">
 		<article>
 			<form name="option">
 				<%
 				for (int i = 0; i < sglist.size(); i++) {
-					%>
+				%>
 				<div class="fclear">
 					<img class="boximg lfloat" src="../img/img2.jpeg">
 					<div id="sg_idx<%=i%>_name"><%=sglist.get(i).getSg_name()%></div>
 					<div class="fbox" style="justify-content: space-evenly;">
-						<div style="display:<%=sglist.get(i).getSg_discnt()==1?"block":"none"%>">할인중</div>
+						<div
+							style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>">할인중</div>
 						<div class="fbox">
-							<div class="detail_price" style="text-decoration:<%=sglist.get(i).getSg_discnt()==1?"line-through":"none"%>;"><%=sglist.get(i).getSg_price()%></div>
-							<span class="material-symbols-outlined" style="display:<%=sglist.get(i).getSg_discnt()==1?"block":"none"%>;">trending_flat</span>
-							<div id="sg_idx<%=i%>_p" style="display:<%=sglist.get(i).getSg_discnt()==1?"block":"none"%>;"><%=sglist.get(i).getSg_discnt()==1?(int)(sglist.get(i).getSg_price()*(1-(double)sddto.getS_discnt()/100)):sglist.get(i).getSg_price() %></div>
+							<div class="detail_price"
+								style="text-decoration:<%=sglist.get(i).getSg_discnt() == 1 ? "line-through" : "none"%>;"><%=sglist.get(i).getSg_price()%></div>
+							<span class="material-symbols-outlined"
+								style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>;">trending_flat</span>
+							<div id="sg_idx<%=i%>_p"
+								style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>;"><%=sglist.get(i).getSg_discnt() == 1? (int) (sglist.get(i).getSg_price() * (1 - (double) sddto.getS_discnt() / 100)): sglist.get(i).getSg_price()%></div>
 						</div>
 					</div>
 					<input type="button" value="-" name="sg_idx<%=i%>"
-						onclick="minusBtn(this)"> <input type="text"
-						name="sg_idx<%=i%>" value="0"> <input type="button"
-						value="+" name="sg_idx<%=i%>" onclick="plusBtn(this)">
+						onclick="minusBtn(this,<%=sglist.get(i).getSg_idx()%>)"> <input
+						type="text" name="sg_idx<%=i%>" value="0"> <input
+						type="button" value="+" name="sg_idx<%=i%>"
+						onclick="plusBtn(this,<%=sglist.get(i).getSg_idx()%>)">
 				</div>
 				<%
 				}
@@ -263,14 +307,15 @@ ul {
 			</form>
 		</article>
 		<article class="fclear">
-			<form name="option_table">
+			<form name="option_table" action="addCart_ok.jsp">
 				<div id="option_table"></div>
 				<div>총 상품 금액</div>
 				<div id="totalprice">0원</div>
 				<ul class="fbox">
-					<li class="btnli"><a href="#">장바구니</a></li>
+					<li class="btnli"><input type="submit" value="장바구니"></li>
 					<li class="btnli"><a href="#">구매하기</a></li>
 				</ul>
+				<input type="hidden" name="s_idx" value="<%=sellidx %>">
 			</form>
 		</article>
 	</section>
@@ -290,14 +335,15 @@ ul {
 			<div>
 				<ul class="fbox fcenter">
 					<%
-					if(sddto.getS_hash()!=null){
+					if (sddto.getS_hash() != null) {
 						String hash_arr[] = (sddto.getS_hash()).split("#");
 						for (int i = 1; i < hash_arr.length; i++) {
-						%>
-						<li>#<%=hash_arr[i]%></li>
-						<%
-						}}
-						%>
+					%>
+					<li>#<%=hash_arr[i]%></li>
+					<%
+					}
+					}
+					%>
 				</ul>
 			</div>
 		</article>
@@ -310,7 +356,8 @@ ul {
 			</div>
 		</article>
 		<article class="reportbtn">
-			<input type="button" value="신고" class="rpbtn" onclick="window.open('/wishJam/goodsDetail/report.jsp?s_idx=<%=sellidx %>', 'report',
+			<input type="button" value="신고" class="rpbtn"
+				onclick="window.open('/wishJam/goodsDetail/report.jsp?s_idx=<%=sellidx%>', 'report',
 			'width=400, height=500');">
 		</article>
 

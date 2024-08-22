@@ -105,7 +105,6 @@ h2 {
 }
 
 .rebox:hover {
-	cursor: pointer;
 	background-color: #D1E7FD;
 }
 
@@ -164,6 +163,17 @@ h2 {
 	object-fit: cover;
 	border-radius: 5px;
 }
+
+.moreimgbtn {
+padding-top: 4px;
+	text-align: center;
+	margin: 0 3px 3px 3px;
+}
+
+.moreimgbtn:hover {
+	cursor: pointer;
+	background-color:#E6E6E6; 
+}
 </style>
 <script>
 	function moreImgOpen(t){
@@ -171,8 +181,10 @@ h2 {
 		
 		if(imgbox.style.display=="none"){
 			imgbox.style.display="flex";
+			t.innerHTML='<span class="material-symbols-outlined">keyboard_arrow_up</span>';
 		} else{
 			imgbox.style.display="none";
+			t.innerHTML='<span class="material-symbols-outlined">keyboard_arrow_down</span>';
 		}
 	}
 </script>
@@ -244,10 +256,10 @@ h2 {
 		</article>
 		<section class="fbox" style="flex-direction: column;">
 			<%
-			for (int i = 0; i < totalCnt; i++) {
+			for (int i = 0; i < rlist.size(); i++) {
 			%>
 			<article class="reply">
-				<div class="rebox fbox" style="justify-content: space-between;" onclick="moreImgOpen(this)">
+				<div class="rebox fbox" style="justify-content: space-between;">
 					<div style="height: 100px; flex-direction: column;" class="fbox">
 						<div class="fbox">
 							<div>
@@ -270,8 +282,9 @@ h2 {
 					</div>
 					<div class="fbox" style="flex-direction: column;">
 						<%
-						if (rlist.get(i).getR_img() != null) {
-							String gal[] = rlist.get(i).getR_img().split("\\*");
+						String gal[] = rlist.get(i).getR_img().split("\\*");
+						
+						if (rlist.get(i).getR_img() != null) {		
 						%>
 						<img src="<%=gal[0]%>" class="rboximg rfloat">
 						<%
@@ -280,10 +293,14 @@ h2 {
 						 <div class="fbox" style="justify-content: right; font-size: 13px;"><%=rlist.get(i).getR_date()%></div>
 					</div>
 				</div>
+				<% if(gal.length>1){ %>
+				<div class="moreimgbtn" onclick="moreImgOpen(this)">
+					<span class="material-symbols-outlined">keyboard_arrow_down</span></div>
  				<div id="moreImg" class="moreImg">
-					<%
+					<%}
+					
 					if (rlist.get(i).getR_img() != null) {
-						String gal[] = rlist.get(i).getR_img().split("\\*");
+						
 						for (int j = 0; j < gal.length-1; j++) {
 					%>
 					<img src="<%=gal[j]%>" class="moreboximg">

@@ -3,6 +3,8 @@ package com.wishJam.s_goods;
 import java.sql.*;
 import java.util.*;
 
+import com.wishJam.detail.DetailDTO;
+
 public class S_goodsDAO {
 	Connection conn;
 	PreparedStatement ps;
