@@ -10,7 +10,11 @@ public class manageDTO {
 	private String banner = "img/banner/";
 	private String grade = "img/grade/";
 	private String category = "img/category/";
+	private String usrpf = "img/member_profile/";
 	
+	public String getUsrpf() {
+		return usrpf;
+	}
 	public String getHomePath() {
 		return homePath;
 	}

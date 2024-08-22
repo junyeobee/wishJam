@@ -7,7 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action = "imgUpload_ok.jsp" name = "imgupload" method = "post" enctype="multipart/form-data">
+<%
+	int m_idx = Integer.parseInt(request.getParameter("m_idx"));
+%>
+<form action = "imgUpload_ok.jsp?m_idx=<%=m_idx %>" name = "imgupload" method = "post" enctype="multipart/form-data">
 	<fieldset>
 		<legend>파일올리기</legend>
 		<label>파일 선택</label>

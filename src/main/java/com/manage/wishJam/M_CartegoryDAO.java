@@ -152,12 +152,6 @@ public class M_CartegoryDAO {
 	public int addCategory(int c_idx, int c_big, int c_small, String c_name, String c_hash, String c_img) {
 		try {
 			int result = 0;
-			System.out.println(c_idx);
-			System.out.println(c_big);
-			System.out.println(c_small);
-			System.out.println(c_name);
-			System.out.println(c_hash);
-			System.out.println(c_img);
 			con = com.db.wishJam.DbConn.getConn();
 			String sql = "insert into category values(?,?,?,?,?,?)";
 			ps = con.prepareStatement(sql);
@@ -175,6 +169,66 @@ public class M_CartegoryDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 			return -1;
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null) 
+	            	ps.close();
+	            if (con != null) 
+	            	con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public int editCategory(int c_idx, int c_big, int c_small, String c_name, String c_hash, String c_img) {
+		try {
+			int result = 0;
+			con = com.db.wishJam.DbConn.getConn();
+			String sql = "update category set c_big = ?, c_small = ?, c_name = ?, c_hash = ?, c_img = ? where c_idx = ?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, c_big);
+			ps.setInt(2, c_small);
+			ps.setString(3, c_name);
+			ps.setString(4, c_hash);
+			ps.setString(5, c_img);
+			ps.setInt(6, c_idx);
+			result = ps.executeUpdate();
+			sql = "select c_seq.nextval from dual";
+			ps = con.prepareStatement(sql);
+			ps.executeQuery();
+			return result;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null) 
+	            	ps.close();
+	            if (con != null) 
+	            	con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public CategoryDTO editCart(int idx) {
+		try {
+			con = com.db.wishJam.DbConn.getConn();
+			String sql = "select * from category where c_idx = ?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, idx);
+			rs = ps.executeQuery();
+			CategoryDTO dto = null;
+			if(rs.next()) dto = new CategoryDTO(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6));
+			return dto;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
 		}finally {
 			try {
 				if (rs != null)

@@ -229,6 +229,7 @@ window.onclick = function(event) {
 }
 </script>
 <div class="container">
+<button onclick="addCategory()">카테고리 추가</button>
 	<div class="c_container">
 	<%
 		ArrayList<CategoryDTO> arr = cdao.getBigCategory();
@@ -260,7 +261,6 @@ window.onclick = function(event) {
 			}
 		%>
 	</div>
-	<button onclick="addCategory()">카테고리 추가</button>
 	<div id="categoryModal" class="modal2">
 		<div class="modal-content">
 			<div class="modal-top">
@@ -300,7 +300,7 @@ window.onclick = function(event) {
 				</div>
 				<div class="image-upload-container">
 					<label for="imagePath">이미지</label>
-				    <img src="/wishJam/img/banner/default.jpg" onclick="uploadImage()" id="previewImg" class="image-preview">
+				    <img src="/wishJam/img/category/category1.jpg" onclick="uploadImage()" id="previewImg" class="image-preview">
 				    <input type="text" id="imagePath" name="imagePath" readonly="readonly" hidden="hidden">
 				    <input type="button" onclick="uploadImage()" value="이미지 업로드">
 				</div>

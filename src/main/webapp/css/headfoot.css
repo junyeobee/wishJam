@@ -71,8 +71,8 @@ header {
 	display: none;
 	position: absolute;
 	top: 80px;
-	right: 110px;
-	width:150px;
+	right: 0px;
+    width: 150px;
 	background-color: white;
 	border: 1px solid #ccc;
 	z-index: 1000;

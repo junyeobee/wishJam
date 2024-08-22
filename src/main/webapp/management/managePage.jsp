@@ -1,26 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:useBean id = "maindao" class="com.manage.wishJam.mainDAO"/>
 <%@ page import = "java.util.*" %>
 <%@page import="java.io.*"%>
+
 <!DOCTYPE html>
 <jsp:useBean id = "mdao" class="com.manage.wishJam.manageDTO"/>
 <%
-	String id = "bonobono";
-	String pwd = "1234";
-	session.setAttribute("userId" , id);
-	session.setAttribute("userPwd" , pwd);
-	String path = request.getRealPath("/");
-	mdao.setHomePath(path);
-	File file = new File(mdao.getHomePath() + mdao.getUrl());
-	
-	File[] fileList = file.listFiles();
-	String imgSrc = "/wishJam/img/profile/default.jpg";
-	for (File f : fileList) {
-		if (f.isFile() && f.getName().startsWith(id)) {
-			imgSrc = "/wishJam/img/profile/"+f.getName();	//관리자이름이랑 같으면 경로지정하고 break
-			break;
-		}else{
-			imgSrc = "/wishJam/img/profile/default.jpg"; //아니면 default이미지
-		}
+	String m_nick = (String)session.getAttribute("m_nick");
+	Integer m_idxObj = (Integer) session.getAttribute("m_idx");
+	int m_idx = (m_idxObj != null) ? m_idxObj : 0;
+	String src = maindao.getImgsrc(m_idx) != null ? maindao.getImgsrc(m_idx) : "";
+	if(m_idx!=1){
+		%>
+			<script>
+				alert('관리자만 접근 허용');
+				window.location.href = '/wishJam/';
+			</script>
+		<%
 	}
 %>
 <html>
@@ -115,9 +111,9 @@
         </div>
         <div id="manageimg">
         	<a href="#" data-content = "/wishJam/management/manager/managerModify" class="link">
-            <img src="<%=imgSrc %>" class="pfimg" alt="img">
+            <img src="<%=src %>" class="pfimg" alt="img">
             </a>
-            <div id = "managerExplane"><%=id %> 님</div>
+            <div id = "managerExplane"><%=m_nick %> 님</div>
         </div>
         <div class="element">
             <a href="#" data-content="/wishJam/management/stats/stats" class="link">거래 통계</a>
