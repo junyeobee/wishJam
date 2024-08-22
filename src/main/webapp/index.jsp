@@ -23,6 +23,7 @@
     <section>
         <article>
         <a href="/wishJam/mypage/myPage.jsp">d</a>
+           <a href="/wishJam/allgoods/allGoods.jsp">전체 상품</a>
             <div class="slide slide_wrap">
                 <%
                     ArrayList<String> arr = bdao.getBannerList();

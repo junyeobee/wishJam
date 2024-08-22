@@ -11,14 +11,14 @@
 
 <%
 
-int Id= 1; //임시 멤버번호 
-session.setAttribute("m_idx", Id);
+
+
 Integer memberId = (Integer)session.getAttribute("m_idx");
 
 if(request.getMethod().equalsIgnoreCase("POST")){
 	
 int productId = Integer.parseInt(request.getParameter("productId"));
-String s_title = request.getParameter("s_title");
+
 
 
 if(memberId == null){
@@ -124,9 +124,9 @@ section {
 
 .inner {
 	width: 100%;
-	font-family: 'Cafe24Ohsquareair';
+	font-family: 'Pretendard-Regular';
 	height: 140px;
-	background-color:#F2F2F2;
+	background-color:#F0F1F4;
 	position: absolute;
 	border-radius: 0 0 20px 20px;
 	position: absolute;
@@ -163,7 +163,10 @@ section {
 	display: block;
 }
 
-
+.price{
+font-family: 'Pretendard-Regular';
+ font-weight: 700;
+}
 
 .writer {
 	font-size: 14px;
@@ -247,15 +250,15 @@ function updateSortOrder() {
 
 			<form action="allGoods.jsp" method="post" >
 			<div class="item" >
-				<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
-					<img src="<%=products.getS_img()%>" alt="썸네일">
-				</div>
+			<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
+			<img src="<%=products.getS_img()%>" alt="썸네일">
+			</div>
 				<div class="inner"> 	
-					<div class="writer"><%=products.getM_nick()%></div>
-			<input type="hidden" name="s_title" value="<%=products.getS_title()%>"> <!-- 상품 제목 -->
-            <input type="hidden" name="productId" value="<%=products.getS_idx()%>"> <!-- 상품 ID -->
-					<div name="s_title"><%=products.getS_title()%></div>
-					<div>
+				<div class="writer"><%=products.getM_nick()%></div>
+				<input type="hidden" name="s_title" value="<%=products.getS_title()%>"> <!-- 상품 제목 -->
+            	<input type="hidden" name="productId" value="<%=products.getS_idx()%>"> <!-- 상품 ID -->
+				<div name="s_title"><%=products.getS_title()%></div>
+				<div class="price">
 					
 					
 					<% 
