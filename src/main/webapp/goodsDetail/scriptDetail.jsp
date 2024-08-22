@@ -295,7 +295,7 @@
 		li1.append(document.createTextNode("이름"), input1);
 
 		var input2 = document.createElement("input");
-		input2.setAttribute("type", "text");
+		input2.setAttribute("type", "number");
 		input2.name = "sg_price";
 		input2.id = "op_sg_price" + cnt;
 		input2.setAttribute("onchange", "getoptInfo(this)");
@@ -309,16 +309,18 @@
 
 		var li4 = document.createElement("li");
 		var input3 = document.createElement("input");
-		input3.setAttribute("type", "text");
+		input3.setAttribute("type", "number");
+		input3.setAttribute("onchange", "checkSgCount(this)");
 		input3.name = "sg_count";
 
 		li4.append(document.createTextNode("판매 수량"), input3);
 
 		var li5 = document.createElement("li");
 		var input4 = document.createElement("input");
-		input4.setAttribute("type", "text");
+		input4.setAttribute("type", "numer");
 		input4.name = "sg_limit";
 		input4.setAttribute("value", "0");
+		input4.setAttribute("onchange", "checkSgCount(this)");
 
 		li5.append(document.createTextNode("구매 제한"), input4);
 
@@ -407,7 +409,7 @@
 
 	function selectM(t) {
 		var m = parseInt(t.options[t.selectedIndex].value);
-
+		
 		var lastday = 0;
 		switch (m) {
 		case 1:
@@ -482,6 +484,7 @@
 		}
 
 		var oms = document.getElementById("monthselect");
+		
 		var om = parseInt(oms.options[oms.selectedIndex].value);
 		var nm = parseInt(t.options[t.selectedIndex].value);
 
@@ -491,8 +494,8 @@
 
 		if (om > nm) {
 			window.alert('판매 시작 월 이후 숫자를 선택해주세요.');
-			t.options[oms.selectedIndex].selected = true;
-			nds.options[ods.selectedIndex + 1].selected = true;
+			t.options[om-1].selected = true;
+			nds.options[od].selected = true;
 		}
 
 		var fm = document.makeSellfm;
@@ -519,7 +522,7 @@
 
 		if (om == nm && od > nd) {
 			window.alert('판매 시작 일 이후 숫자를 선택해주세요.');
-			t.options[ods.selectedIndex + 1].selected = true;
+			t.options[od].selected = true;
 		}
 
 		var fm = document.makeSellfm;
@@ -593,6 +596,12 @@
 	}
 
 	function getoptInfo(t) {
+		if(t.name=="sg_price"){
+			if(t.value<10){
+				window.alert('100보다 큰 가격을 입력하세요.');
+				t.focus();
+			}
+		}
 		var cnt = document.getElementById("dislist").childElementCount;
 
 		if ((t.id).indexOf("sg_name")) {
@@ -760,5 +769,30 @@
 
 		li1.append(input1);
 		ul1.append(li1);
+	}
+	
+	function checkAllform(e){
+		return false;
+	}
+	
+	function checkSgCount(t){
+		if(t.name=="sg_count"){
+			var sglimit = document.makeSellfm.sg_limit;
+			
+			if(t.value<1){
+				window.alert('최소 판매수량은 1입니다.');
+				t.focus();
+			} else if(t.value<sglimit.value){
+				window.alert('판매수량은 1인 구매 제한 수량보다 적을 수 없습니다.');
+				t.focus();
+			}
+		} else if(t.name=="sg_limit"){
+			var sgcount = document.makeSellfm.sg_count;
+			
+			if(sgcount.value!=""&sgcount.value<t.value){
+				window.alert('1인 구매 제한 수량은 판매 수량보다 많을 수 없습니다.');
+				t.focus();
+			}
+		}
 	}
 </script>

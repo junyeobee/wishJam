@@ -5,7 +5,6 @@
 <jsp:useBean id="rdao" class="com.wishJam.Report.ReportDAO"></jsp:useBean>
 
 <%
-	int s_idx = rdto.getS_idx();
 	int result = rdao.reportContent(rdto);
 
 	String msg = result>0?"신고가 성공적으로 접수되었습니다.":"신고 접수에 실패했습니다.";
@@ -13,5 +12,4 @@
 <script>
 	window.alert('<%=msg %>');
 	window.self.close();
-	location.href='/wishJam/goodsDetail/detail.jsp?s_idx=<%=s_idx %>';
 </script>

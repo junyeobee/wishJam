@@ -2,9 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="com.wishJam.detail.DetailDTO"%>
 <%@ page import="com.wishJam.s_goods.S_goodsDTO"%>
+<%@ page import="com.allgoods.wishJam.JjimDTO" %>
 <%@ page import="java.util.*"%>
 <jsp:useBean id="ddao" class="com.wishJam.detail.DetailDAO"></jsp:useBean>
 <jsp:useBean id="sgdao" class="com.wishJam.s_goods.S_goodsDAO"></jsp:useBean>
+<jsp:useBean id="jdao" class="com.allgoods.wishJam.JjimDAO"></jsp:useBean>
 
 <%
 String sellidx_s = request.getParameter("s_idx");
@@ -24,17 +26,18 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 <title>Detail page</title>
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <style>
 body {
 	width: 1000px;
 	margin: 0px auto;
-	
 	-webkit-touch-callout: none;
-     user-select: none;
-     -moz-user-select: none;
-     -ms-user-select: none;
-     -webkit-user-select: none;
+	user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
 }
 
 .pfimg {
@@ -48,7 +51,7 @@ body {
 .option {
 	position: sticky;
 	position: -webkit-sticky;
-	top: 127px;
+	top: 151px;
 	width: 350px;
 	border: 1px solid gray;
 	text-align: center;
@@ -130,7 +133,7 @@ ul {
 
 .detailnav {
 	position: sticky;
-	top: 127px;
+	top: 151px;
 	width: 635px;
 	text-align: center;
 }
@@ -143,6 +146,20 @@ ul {
 	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
 }
 
+.material-symbols-rounded {
+	font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24
+}
+
+.heart {
+	font-size: 42px;
+	color: black;
+}
+
+.heart:hover {
+	cursor: pointer;
+	transform: scale(1.1, 1.1);
+}
+
 .detailnav div {
 	background-color: white;
 }
@@ -150,12 +167,23 @@ ul {
 .detailnav ul {
 	background-color: white;
 }
+
+.emptybox {
+	width: 100%;
+}
+
+.jbt{
+border:none;
+background-color:transparent;
+cursor: pointer;
+font-size:1.4em;
+}
 </style>
 <script>
-	<%-- function openReport() {
-		window.open('/wishJam/goodsDetail/report.jsp?s_idx=<%=sellidx %>', 'report',
-				'width=400, height=500');
-	} --%>
+	function openReport(s_idx, m_idx) {
+		window.open('/wishJam/goodsDetail/report.jsp?s_idx='+s_idx+'&m_idx='+m_idx, 'report',
+		'width=400, height=500');
+	}
 
 	function deleteGd(t) {
 		t.parentNode.remove(t);
@@ -271,9 +299,29 @@ ul {
 			div1.append(input1,input2,input3);
 			ot.append(div1);
 	}
+	
+	function likeIt(t){
+			t.style.color="red";	
+	}
 </script>
 <body>
 	<%@ include file="../header.jsp"%>
+<%
+boolean isFav =jdao.isthisJjim(sellidx, m_idx);
+
+String favorite = request.getParameter("favorite");
+JjimDTO jjdto= new JjimDTO();
+jjdto.setM_idx(m_idx);
+jjdto.setS_idx(sellidx);
+if(favorite!=null&&isFav==false){
+	boolean addf = jdao.addJjim(jjdto);
+	boolean incf = jdao.incrementJjim(sellidx);
+} else{
+	System.out.println("gg");
+}
+
+
+%>
 	<section class="option">
 		<article>
 			<form name="option">
@@ -313,19 +361,21 @@ ul {
 				<div id="totalprice">0원</div>
 				<ul class="fbox">
 					<li class="btnli"><input type="submit" value="장바구니"></li>
-					<li class="btnli"><a href="#">구매하기</a></li>
+					<li class="btnli"><input type="button" value="구매하기"
+						onclick="window.alert('구매 완료!');"></li>
 				</ul>
-				<input type="hidden" name="s_idx" value="<%=sellidx %>">
+				<input type="hidden" name="s_idx" value="<%=sellidx%>">
 			</form>
 		</article>
 	</section>
 	<article class="detailnav">
-		<div><%=sddto.getS_title()%></div>
+		<div class="emptybox"></div>
 		<ul class="fbox">
 			<li class="btnli"><a href="#detailpage">상세정보</a></li>
 			<li class="btnli"><a href="#reviewpage">리뷰</a></li>
 		</ul>
 	</article>
+	<div><%=sddto.getS_title()%></div>
 	<section class="explain">
 		<a name="detailpage"></a>
 		<article>
@@ -349,19 +399,23 @@ ul {
 		</article>
 
 		<article>
+		<form name="likefm" action="detail.jsp">
 			<div style="background-image: linear-gradient(white 30%, pink 30%);">
 				<img src="../img/img1.jpg" class="pfimg">
 				<div><%=sddto.getM_nick()%></div>
-				<input type="button" value="찜">
-			</div>
+				<input type="hidden" name="s_idx" value="<%=sellidx %>">
+				<input type="hidden" name="m_idx" value="<%=m_idx %>">
+				<input type="hidden" name="favorite" value="1">
+				<input type="submit" class="jbt" value="<%=isFav==true?"찜":"찜해"%>">
+			</div></form>
 		</article>
 		<article class="reportbtn">
 			<input type="button" value="신고" class="rpbtn"
-				onclick="window.open('/wishJam/goodsDetail/report.jsp?s_idx=<%=sellidx%>', 'report',
-			'width=400, height=500');">
+				onclick="openReport(<%=sellidx%>, <%=m_idx%>)">
 		</article>
 
 	</section>
 	<%@ include file="review.jsp"%>
+	<%@ include file="../footer.jsp"%>
 </body>
 </html>

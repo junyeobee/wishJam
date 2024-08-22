@@ -33,7 +33,11 @@ if (ilist != null) {
 	tiCnt = rdao.countimgReview(s_idx);
 }
 
-int totalPage = totalCnt / rSize + 1;
+int totalPage = (totalCnt / rSize) + 1;
+if(totalCnt%rSize==0){
+	totalPage--;
+}
+
 int tiPage = tiCnt/rSize+1;
 int total_s = rdao.sumRstar(s_idx);
 double avg_s = (double) total_s / totalCnt;
@@ -104,9 +108,9 @@ h2 {
 	padding: 5px 5px;
 }
 
-.rebox:hover {
+/* .rebox:hover {
 	background-color: #D1E7FD;
-}
+} */
 
 .rstar {
 	color: pink;
@@ -173,6 +177,10 @@ padding-top: 4px;
 .moreimgbtn:hover {
 	cursor: pointer;
 	background-color:#E6E6E6; 
+}
+
+.pageArrow {
+	padding: 10px 0px;
 }
 </style>
 <script>
@@ -314,7 +322,7 @@ padding-top: 4px;
 			}
 			%>
 		</section>
-		<div class="fclear" style="text-align: center;">
+		<div class="fclear pageArrow" style="text-align: center;">
 			<%
 			if (nowGroup != 0) {
 			%>

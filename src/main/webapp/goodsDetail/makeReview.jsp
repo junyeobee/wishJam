@@ -98,6 +98,21 @@ li {
 			window.alert('더이상 사진을 등록 할 수 없습니다!');
 		}
 	}
+	
+	function checkAllfm(){
+		if(document.makeReviewfm.r_star.value<1){
+			window.alert('별점을 선택해주세요.');
+			return false;
+		} else if(document.makeReviewfm.r_content.value==""){
+			window.alert('리뷰 내용을 작성해주세요.');
+			return false;
+		} else if(document.makeReviewfm.r_content.value.length<10){
+			window.alert('최소 10자 이상 작성해주세요.');
+			return false;
+		}
+		
+		
+	}
 </script>
 </head>
 <body>
@@ -108,7 +123,7 @@ li {
 			<div class="display:flex;"></div>
 		</article>
 		<article>
-			<form name="makeReviewfm" action="makeReview_ok.jsp">
+			<form name="makeReviewfm" action="makeReview_ok.jsp" onsubmit="return checkAllfm()">
 				<div>
 					<span>상품은 만족하셨나요?</span>
 					<div>

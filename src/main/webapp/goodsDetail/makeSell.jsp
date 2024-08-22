@@ -265,7 +265,7 @@ ul {
 	<section>
 		<h2>게시글 작성</h2>
 
-		<form name="makeSellfm" action="makeSell_ok.jsp" method="post">
+		<form name="makeSellfm" action="makeSell_ok.jsp" method="post" onsubmit="return checkAllform(event)">
 			<input type="hidden" name="s_idx" value="<%=s_idx%>">
 			<input type="hidden" name="m_idx" value="<%=m_idx %>">
 			<article>
@@ -458,8 +458,8 @@ ul {
 								}
 								%>
 								<option>2024</option>
-							</select> <select name="s_month" id="monthselect" onchange="selectM(this)">
-								<%
+							</select> <select name="s_month" id="monthselect">
+								<%-- <%
 								for (int i = 1; i <= 12; i++) {
 									if (i == m) {
 								%>
@@ -471,9 +471,10 @@ ul {
 								<%
 								}
 								}
-								%>
-							</select> <select name="s_date" id="dayselect" onchange="sellterm()">
-								<%
+								%> --%>
+								<option selected value="<%=m%>"><%=m%></option>
+							</select> <select name="s_date" id="dayselect">
+								<%-- <%
 								for (int i = 1; i <= 31; i++) {
 									if (i == d) {
 								%>
@@ -485,7 +486,8 @@ ul {
 								<%
 								}
 								}
-								%>
+								%> --%>
+								<option selected value="<%=d%>"><%=d%></option>
 							</select> ~ <select name="e_year" onchange="sellterm()">
 								<%
 								for (int i = y; i < y + 10; i++) {
@@ -580,13 +582,13 @@ ul {
 										<ul>
 											<li>이름 <input type="text" name="sg_name"
 												id="op_sg_name1" onchange="getoptInfo(this)"></li>
-											<li>가격 <input type="text" name="sg_price"
+											<li>가격 <input type="number" name="sg_price"
 												id="op_sg_price1" onchange="getoptInfo(this)">원
 											</li>
 											<li>
 												<ul class="fbox">
-													<li>판매 수량 <input type="text" name="sg_count"></li>
-													<li>구매 제한 <input type="text" name="sg_limit" value="0"></li>
+													<li>판매 수량 <input type="number" name="sg_count" onchange="checkSgCount(this)"></li>
+													<li>구매 제한 <input type="number" name="sg_limit" value="0" onchange="checkSgCount(this)"></li>
 												</ul>
 											</li>
 										</ul>
