@@ -18,6 +18,7 @@ public class MypageDAO {
 		MypageDTO mypage=null;
 		
 		try {
+			
 			con = com.db.wishJam.DbConn.getConn();
 			
 			String sql="SELECT member.m_id,member.m_pwd,member.m_nick, member.m_tel, member.m_email, member.m_addr, grade.g_name, mypage.profile FROM member JOIN mypage ON member.m_idx = mypage.m_idx JOIN grade ON grade.g_idx = member.g_idx WHERE member.m_idx = ?";
@@ -29,6 +30,7 @@ public class MypageDAO {
 			while(rs.next()) {				
 				mypage= new MypageDTO();
 				mypage.setM_id(rs.getString("m_id"));
+				
 				mypage.setM_pwd(rs.getString("m_pwd"));
 				mypage.setM_nick(rs.getString("m_nick"));
 				mypage.setM_tel(rs.getString("m_tel"));
@@ -100,19 +102,20 @@ public class MypageDAO {
 	List<MypageDTO> bl = new ArrayList();
 	
 	try {
+		
 		con = com.db.wishJam.DbConn.getConn();
 		
-		String sql = "select sell.*,s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx where sell.s_idx between 1 and 4 and sell.m_idx=?";
+		String sql = "SELECT sell.s_idx, sell.s_title, sell.s_img, sell.m_idx,s_goods.sg_price FROM sell JOIN s_goods ON sell.s_idx = s_goods.s_idx WHERE sell.m_idx = ? AND ROWNUM <= 4";
 		ps=con.prepareStatement(sql);
 		ps.setInt(1, m_idx); 
 		rs=ps.executeQuery();
 		
 		while(rs.next()) {
-		
+			int s_idx= (rs.getInt("s_idx"));
 			String s_title = rs.getString("s_title");
 			int sg_price = rs.getInt("sg_price");
 			String s_img = rs.getString("s_img");
-			bl.add(new MypageDTO(s_title,sg_price,s_img));
+			bl.add(new MypageDTO(s_idx,s_title,sg_price,s_img));
 		
 		
 	} }catch (Exception e) {

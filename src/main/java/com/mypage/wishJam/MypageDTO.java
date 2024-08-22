@@ -10,6 +10,7 @@ public class MypageDTO {
 
     //판매상품
     private int idx;
+    private int s_idx;
     private String s_title;
     private int sg_price;
     private String seller;
@@ -33,8 +34,21 @@ public class MypageDTO {
 	private String m_grade;
 	//private int m_point;
 	
+	
+	
+	
     public String getM_grade() {
 		return m_grade;
+	}
+
+
+	public int getS_idx() {
+		return s_idx;
+	}
+
+
+	public void setS_idx(int s_idx) {
+		this.s_idx = s_idx;
 	}
 
 
@@ -48,8 +62,8 @@ public class MypageDTO {
     }
 	
 
-	public MypageDTO(String s_title, int sg_price, String s_img) {
-		
+	public MypageDTO(int s_idx, String s_title, int sg_price, String s_img) {
+		this.s_idx = s_idx;
 		this.s_title = s_title;
 		this.sg_price = sg_price;
 		this.s_img = s_img;

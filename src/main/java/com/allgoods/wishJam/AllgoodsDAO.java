@@ -23,9 +23,9 @@ public class AllgoodsDAO {
 			con = com.db.wishJam.DbConn.getConn();
 			
 			if("latest".equals(sortOrder)) {
-			sql = "select sell.*, s_goods.*,member.m_nick from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx where s_stat=0 order by s_jjim desc ";
+			sql = "select s_goods.sg_main,sell.s_jjim,sell.s_idx,sell.s_title,member.m_idx,member.m_nick,sell.s_img,s_goods.sg_price,sell.s_discnt,s_goods.sg_discnt from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx where s_stat=0 and s_goods.sg_main=1 order by s_jjim desc ";
 			}else {
-				sql = "select sell.*, s_goods.*,member.m_nick from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx where s_stat=0 order by sell.s_start desc";
+				sql = "select s_goods.sg_main,sell.s_jjim,sell.s_idx,sell.s_title,member.m_idx,member.m_nick,sell.s_img,s_goods.sg_price,sell.s_discnt,s_goods.sg_discnt from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx where s_stat=0 and s_goods.sg_main=1 order by sell.s_start desc";
 			}
 				
 		    ps = con.prepareStatement(sql);
@@ -36,12 +36,15 @@ public class AllgoodsDAO {
 				String s_title = rs.getString("s_title");
 				int s_idx=rs.getInt("s_idx");
 				int s_jjim = rs.getInt("s_jjim");
-				int s_discnt= rs.getInt("sg_discnt");
+				int sg_discnt= rs.getInt("sg_discnt"); 
+				System.out.println(sg_discnt);
+				int s_discnt= rs.getInt("s_discnt"); 
 				int sg_main = rs.getInt("sg_main");
 				int sg_price = rs.getInt("sg_price");
 				String s_img = rs.getString("s_img");
-				products.add(new AllgoodsDTO(m_nick,s_title,s_idx,s_jjim ,s_discnt, sg_main, sg_price,s_img));
+				products.add(new AllgoodsDTO(m_nick,s_title,s_idx,s_jjim ,sg_discnt, s_discnt, sg_main, sg_price,s_img));
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
