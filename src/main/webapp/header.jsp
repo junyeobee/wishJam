@@ -26,11 +26,6 @@
 	margin:0 auto;
 	text-align: center;
 }
-#top_right img{
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-}
 </style>
 <header>
    <div id = "top_menu">
@@ -51,21 +46,21 @@
    </div>
    <% if(m_nick==null){
       %>
-   <div id = "top_right">
+   <div class = "top_right notlogin">
       <a href="/wishJam/login/login.jsp">로그인</a> | <a href="/wishJam/login/member.jsp">회원 가입</a>
    </div>
    <% 
    } else{
       %>
       
-    <div id = "top_right">
+    <div class = "top_right login">
       <img src="<%=src %>" alt="profile" />
       <label><%=m_nick %>님</label>
       
       <div id = "funcBox">
       <ul>
       	<li><a href="/wishJam/mypage/myPage.jsp">마이페이지</a></li>
-      	<li></li>
+      	<li><a href="/wishJam/goodsDetail/makeSell.jsp">판매글 작성</a></li>
       	<li><a href="/wishJam/login/logout.jsp">로그아웃</a></li>
       </ul>
       </div>

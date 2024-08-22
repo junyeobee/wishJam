@@ -22,8 +22,14 @@ header {
 	
 }
 
-#top_right {
-	
+.top_right.login {
+	display: grid;
+	justify-items: center;
+}
+.top_right img{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
 }
 
 #top_Search {
