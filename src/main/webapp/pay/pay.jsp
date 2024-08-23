@@ -38,17 +38,50 @@
      
      .pay_rightbox{
        position: relative;
-       width: 330px;
+	   width: 300px;
+	   min-height: 942px;
      }
      
+     .cost_title{
+      position: sticky;
+      top: 129px;
+      z-index: 1;
+    }
+    
      .cost_box{
-       width: 310px;
-       height: 550px;
-       margin-top: 60px;
-       margin-left: 10px;
+       padding: 19px 18px 18px 20px;
+       border: 1px solid #f2f2f2;
        background-color: #fff0f5;
      }
      
+     .cost_detail{
+      display: flex;
+      -webkit-box-pack: justify;
+      justify-content: space-between;
+      padding-top: 5px;
+      padding-bottom: 20px;
+    }
+    
+    .cost_name{
+      width: 100px;
+      font-size: 16px;
+      line-height: 24px;
+      white-space: nowrap;
+    }
+    
+    .cost_money{
+      font-size: 18px;
+      line-height: 24px;
+      text-align: right;
+    }
+    
+    .cost_alt{
+      padding-left: 2px;
+      font-size: 16px;
+      font-weight: normal;
+      vertical-align: bottom;
+    }
+    
      .pay_product{
        display: flex;
        flex-direction: row;
@@ -235,7 +268,7 @@
 <body>
 <%@ include file="../header.jsp" %>
 <div class="pay_wrap">
-	<form class="pay_form" action="../mypage/myPage.jsp">
+	<form class="pay_form" action="">
 	<h2>상품주문</h2>
 	<div class="pay_box">
 		<%
@@ -347,7 +380,7 @@
 						<div class="lbox">
 							<div class="user_info"><%= m_addr %></div>
 							<div style="padding-bottom: 25px;"></div>
-							<button class="user_btn">수정</button>
+							<button class="user_btn" onclick="upd_addr();">수정</button>
 						</div>
 					</div>
 					<div class="user_box" style="padding-top: 25px;">
@@ -357,7 +390,7 @@
 								<input type="text" style="width: 300px; height: 20px; border-radius: 3px; border: 2px solid #c0c0c0;">
 							</div>
 							<div style="padding-bottom: 25px;"></div>
-							<button class="user_btn">입력</button>
+							<button class="user_btn" >입력</button>
 						</div>
 					</div>
 				</div>
@@ -410,16 +443,47 @@
 			</div>
 		</div>
 		<div class="pay_rightbox">
-			<div class="cost_box">
-				<p>test</p>
+			<div class="cost_title">
+				<div class="cost_box">
+					<div class="cost_detail">
+						<span class="cost_name">상품금액</span>
+						<span class="cost_money"><%= formatter.format(origin_sum) %>
+						  	<span class="cost_alt">원</span>
+						</span>
+					</div>
+					<div class="cost_detail">
+						<span class="cost_name">상품할인금액</span>
+						<span class="cost_money">- <%= formatter.format(sale_sum) %>
+						  	<span class="cost_alt">원</span>
+						</span>
+					</div>
+					<div class="cost_detail">
+						<span class="cost_name">배송비</span>
+						<span class="cost_money">+ <%= formatter.format(ship_sum) %>
+						  	<span class="cost_alt">원</span>
+						</span>
+					</div>
+					<hr>
+				    <div class="cost_detail">
+				    	<span class="cost_name">결제예정금액</span>
+				    	<span class="cost_money"><%= formatter.format(gross_value) %>
+				    		<span class="cost_alt">원</span>
+				    	</span>
+				    </div>
+				</div>
 			</div>
 		</div>
 	</div>
 	<div style="margin-top:50px;">
-		<input type="submit" class="pay_btn" value="결제하기">
+		<button class="pay_btn">결제하기</button>
 	</div>
 	</form>
 </div>
 <%@ include file="../footer.jsp" %>
 </body>
 </html>
+<script>
+	function upd_addr() {
+		window.open('addrUpd.jsp','주소변경창');
+	}
+</script>

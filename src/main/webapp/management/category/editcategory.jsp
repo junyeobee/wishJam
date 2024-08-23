@@ -1,12 +1,12 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="com.wishJam.category.CategoryDTO"%>
+<%@ page import ="com.manage.wishJam.M_CategoryDTO"%>
 <jsp:useBean id = "cdao" class ="com.manage.wishJam.M_CartegoryDAO"/>
 <%
 	String idx_s = request.getParameter("idx");
 	if(idx_s!=null){
 		int idx = Integer.parseInt(idx_s);
-		CategoryDTO cdto = cdao.editCart(idx);
+		M_CategoryDTO cdto = cdao.editCart(idx);
 		if(cdto!=null){
 %>
 <script>
@@ -60,8 +60,8 @@ function uploadImage(){
 				<select id="bigCategory" name="bigCategory" onchange="changeBig();">
 		        	<option value="">--대분류 선택--</option>
 					<%
-						ArrayList<CategoryDTO> arr = cdao.getBigCategory();
-							for(CategoryDTO dto : arr){
+						ArrayList<M_CategoryDTO> arr = cdao.getBigCategory();
+							for(M_CategoryDTO dto : arr){
 								String cname = dto.getC_name();
 								if(dto.getC_big()==cdto.getC_big()) {
 								%>

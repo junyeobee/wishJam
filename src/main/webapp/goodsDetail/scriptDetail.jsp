@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.wishJam.category.CategoryDTO"%>
-<jsp:useBean id="ctdao" class="com.wishJam.category.CategoryDAO"
-	scope="session"></jsp:useBean>
 
 <script>
 	function outClick(e) {

@@ -2,7 +2,6 @@ package com.manage.wishJam;
 
 import java.sql.*;
 import java.util.*;
-import com.wishJam.category.CategoryDTO;
 
 public class M_CartegoryDAO {
 	Connection con;
@@ -38,16 +37,16 @@ public class M_CartegoryDAO {
 		}
     }
 	
-	public ArrayList<CategoryDTO> getBigCategory(){
+	public ArrayList<M_CategoryDTO> getBigCategory(){
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 			String sql = "select c_idx, c_big, c_small, c_name, c_hash, c_img from category where c_small is null";
-			ArrayList<CategoryDTO> arr = new ArrayList<CategoryDTO>();
+			ArrayList<M_CategoryDTO> arr = new ArrayList<M_CategoryDTO>();
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				do {
-					CategoryDTO dto = new CategoryDTO(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6));
+					M_CategoryDTO dto = new M_CategoryDTO(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6));
 					arr.add(dto);
 				}while(rs.next());
 			}
@@ -66,17 +65,17 @@ public class M_CartegoryDAO {
 			}
 		}
 	}
-	public ArrayList<CategoryDTO> getSmallCategory(int c_big){
+	public ArrayList<M_CategoryDTO> getSmallCategory(int c_big){
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 			String sql = "select c_idx, c_big, c_small, c_name, c_hash, c_img from category where c_small is not null and c_big = ?";
-			ArrayList<CategoryDTO> arr = new ArrayList<CategoryDTO>();
+			ArrayList<M_CategoryDTO> arr = new ArrayList<M_CategoryDTO>();
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, c_big);
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				do {
-					CategoryDTO dto = new CategoryDTO(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6));
+					M_CategoryDTO dto = new M_CategoryDTO(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6));
 					arr.add(dto);
 				}while(rs.next());
 			}
@@ -216,15 +215,15 @@ public class M_CartegoryDAO {
 			}
 		}
 	}
-	public CategoryDTO editCart(int idx) {
+	public M_CategoryDTO editCart(int idx) {
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 			String sql = "select * from category where c_idx = ?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, idx);
 			rs = ps.executeQuery();
-			CategoryDTO dto = null;
-			if(rs.next()) dto = new CategoryDTO(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6));
+			M_CategoryDTO dto = null;
+			if(rs.next()) dto = new M_CategoryDTO(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6));
 			return dto;
 		}catch(Exception e) {
 			e.printStackTrace();

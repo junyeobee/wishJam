@@ -1,6 +1,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import ="com.wishJam.category.CategoryDTO"%>
+<%@ page import ="com.manage.wishJam.M_CategoryDTO"%>
 <jsp:useBean id = "cdao" class = "com.manage.wishJam.M_CartegoryDAO"/>
 <%
 	int idx = cdao.getCIdx();
@@ -232,7 +232,7 @@ window.onclick = function(event) {
 <button onclick="addCategory()">카테고리 추가</button>
 	<div class="c_container">
 	<%
-		ArrayList<CategoryDTO> arr = cdao.getBigCategory();
+		ArrayList<M_CategoryDTO> arr = cdao.getBigCategory();
 		if (arr != null) {
 			for (int i = 0; i < arr.size(); i++) {
 				int big = arr.get(i).getC_big();
@@ -243,7 +243,7 @@ window.onclick = function(event) {
 		</div>
 		<div class="smallCategory" id="small_parent_<%=big%>">
 			<%
-				ArrayList<CategoryDTO> arr2 = cdao.getSmallCategory(big);
+				ArrayList<M_CategoryDTO> arr2 = cdao.getSmallCategory(big);
 				if (arr2 != null) {
 					for (int j = 0; j < arr2.size(); j++) {
 			%>
@@ -278,7 +278,7 @@ window.onclick = function(event) {
 		        	<option value="">--대분류 선택--</option>
 					<%
 						if(arr!=null){
-							for(CategoryDTO dto : arr){
+							for(M_CategoryDTO dto : arr){
 								String cname = dto.getC_name();
 								%>
 									<option value="<%=dto.getC_big()%>"><%=cname%></option>
