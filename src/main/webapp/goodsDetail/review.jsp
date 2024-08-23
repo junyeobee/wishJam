@@ -9,8 +9,9 @@
 DecimalFormat df = new DecimalFormat("#.##");
 
 String s_idx_s = request.getParameter("s_idx");
-int s_idx=0;
-if(s_idx_s!=null)	s_idx = Integer.parseInt(s_idx_s);
+int s_idx = 0;
+if (s_idx_s != null)
+	s_idx = Integer.parseInt(s_idx_s);
 
 int rSize = 5;
 int pageSize = 5;
@@ -34,11 +35,11 @@ if (ilist != null) {
 }
 
 int totalPage = (totalCnt / rSize) + 1;
-if(totalCnt%rSize==0){
+if (totalCnt % rSize == 0) {
 	totalPage--;
 }
 
-int tiPage = tiCnt/rSize+1;
+int tiPage = tiCnt / rSize + 1;
 int total_s = rdao.sumRstar(s_idx);
 double avg_s = (double) total_s / totalCnt;
 
@@ -46,31 +47,36 @@ int nowGroup = rp / pageSize;
 if (rp % pageSize == 0) {
 	nowGroup--;
 }
-
 %>
 <script>
-	function moreImgOpen(t){
+	function moreImgOpen(t) {
 		var imgbox = t.nextElementSibling;
 		var farr = t.nextElementSibling.nextElementSibling;
-		
-		if(imgbox.style.display=="none"){
-			imgbox.style.display="flex";
-			farr.style.display="inline-block";
-			t.innerHTML='<span class="material-symbols-outlined">keyboard_arrow_up</span>';
-		} else{
-			imgbox.style.display="none";
-			farr.style.display="none";
-			t.innerHTML='<span class="material-symbols-outlined">keyboard_arrow_down</span>';
+
+		if (imgbox.style.display == "none") {
+			imgbox.style.display = "flex";
+			farr.style.display = "inline-block";
+			t.innerHTML = '<span class="material-symbols-outlined">keyboard_arrow_up</span>';
+		} else {
+			imgbox.style.display = "none";
+			farr.style.display = "none";
+			t.innerHTML = '<span class="material-symbols-outlined">keyboard_arrow_down</span>';
 		}
 	}
-
+	
+	function scrollImgbox(t){
+		var imgbox = t.previousElementSibling;
+		imgbox.style.right="190px";
+	
+	}
 </script>
-<section class="review">
+<section class="review fullsize">
 	<h2 class="th2">리뷰</h2>
 	<%
 	if (totalCnt == 0) {
 	%>
-	<div style="text-align: center; margin-bottom: 30px;">작성된 리뷰가 없습니다.</div>
+	<div style="text-align: center; margin-bottom: 30px;">작성된 리뷰가
+		없습니다.</div>
 	<%
 	} else {
 	%>
@@ -96,7 +102,7 @@ if (rp % pageSize == 0) {
 				<%
 				if (ilist != null) {
 
-					for (int i = 0; i < (ilist.size()<=rSize?ilist.size():rSize); i++) {
+					for (int i = 0; i < (ilist.size() <= rSize ? ilist.size() : rSize); i++) {
 						String gals[] = ilist.get(i).getR_img().split("\\*");
 				%>
 				<li><a href="#"><img src="<%=gals[0]%>"></a></li>
@@ -127,9 +133,9 @@ if (rp % pageSize == 0) {
 							<div style="justify-content: center;">
 								<img src="<%=rlist.get(i).getM_img()%>" class="smallimg">
 							</div>
-							<div style="margin-left:20px;">
+							<div style="margin-left: 20px;">
 								<div class="fbox">
-									<span  class="namebox"><%=rlist.get(i).getM_nick()%></span>
+									<span class="namebox"><%=rlist.get(i).getM_nick()%></span>
 									<%
 									for (int j = 0; j < rlist.get(i).getR_star(); j++) {
 									%>
@@ -138,43 +144,55 @@ if (rp % pageSize == 0) {
 									}
 									%>
 								</div>
-								<span style="font-size:19px; padding-left:10px;"><%=rlist.get(i).getR_content()%></span>
+								<span style="font-size: 19px; padding-left: 10px;"><%=rlist.get(i).getR_content()%></span>
 							</div>
 						</div>
 					</div>
 					<div class="fbox" style="flex-direction: column;">
 						<%
 						String gal[] = rlist.get(i).getR_img().split("\\*");
-						
-						if (rlist.get(i).getR_img() != null) {		
+
+						if (rlist.get(i).getR_img() != null) {
 						%>
 						<img src="<%=gal[0]%>" class="rboximg rfloat">
 						<%
 						}
 						%>
-						 <div class="fbox" style="margin-top:5px; justify-content: right; font-size: 16px;"><%=rlist.get(i).getR_date()%></div>
+						<div class="fbox"
+							style="margin-top: 5px; justify-content: right; font-size: 16px;"><%=rlist.get(i).getR_date()%></div>
 					</div>
 				</div>
-				<% if(gal.length>1){ %>
+				<%
+				if (gal.length > 1) {
+				%>
 				<div class="moreimgbtn" onclick="moreImgOpen(this)">
-					<span class="material-symbols-outlined">keyboard_arrow_down</span></div>
- 				<div id="moreImg" class="moreImg fbox">
-					<%}
-					
-					if (rlist.get(i).getR_img() != null) {
-						
-						for (int j = 0; j < gal.length-1; j++) {
-					%>
-					<img src="<%=gal[j]%>" class="moreboximg">
-					<%
-					}} %>
+					<span class="material-symbols-outlined">keyboard_arrow_down</span>
+				</div>
+				<div class="moreImgbox">
+					<div id="moreImg" class="moreImg fbox">
 
+						<%
+						}
+
+						if (rlist.get(i).getR_img() != null) {
+
+						for (int j = 0; j < (gal.length>5?gal.length:gal.length-1); j++) {
+							
+						%>
+						<img src="<%=gal[j]%>" class="moreboximg">
+						<%
+						}
+						}
+						%>
+					</div>
 				</div>
 				<%
-					if(gal.length>4){
-					%>
-					<span class="material-symbols-outlined forarrow">arrow_forward_ios</span>
-					<%} %>
+				if (gal.length > 4) {
+				%>
+				<span class="material-symbols-outlined forarrow" onclick="scrollImgbox(this)">arrow_forward_ios</span>
+				<%
+				}
+				%>
 			</article>
 			<%
 			}
@@ -184,16 +202,16 @@ if (rp % pageSize == 0) {
 			<%
 			if (nowGroup != 0) {
 			%>
-			<span class="material-symbols-rounded"><a
+			<span class="material-symbols-rounded pagenum"><a
+				class="pageB"
 				href="detail.jsp?s_idx=<%=s_idx%>&rp=<%=(nowGroup - 1) * pageSize + pageSize%>#reviewpage">arrow_back</a></span>
 			<%
 			}
 
 			for (int i = nowGroup * pageSize + 1; i <= pageSize * nowGroup + pageSize; i++) {
 			%>
-			<span class="pagenum"><a class="pageA"
-				href="detail.jsp?s_idx=<%=s_idx%>&rp=<%=i%>#reviewpage"
-				style="color:<%=rp == i ? "#ff4900" : "black"%>;"><%=i%></a></span>
+			<span class="pagenum"><a class="<%=rp == i ? "pageA2" : "pageA"%>"
+				href="detail.jsp?s_idx=<%=s_idx%>&rp=<%=i%>#reviewpage"><%=i%></a></span>
 			<%
 			if (i == totalPage) {
 				break;
@@ -202,7 +220,8 @@ if (rp % pageSize == 0) {
 
 			if (nowGroup != (totalPage / pageSize) - (totalPage % pageSize == 0 ? 1 : 0)) {
 			%>
-			<span class="material-symbols-rounded"><a
+			<span class="material-symbols-rounded pagenum"><a
+				class="pageB"
 				href="detail.jsp?s_idx=<%=s_idx%>&rp=<%=(nowGroup + 1) * pageSize + 1%>#reviewpage">arrow_forward</a></span>
 			<%
 			}
