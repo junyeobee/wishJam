@@ -20,11 +20,11 @@ public class CartDAO {
 		try {
 			conn = com.db.wishJam.DbConn.getConn();
 			
-			String sql = " select ct_idx, m_id, se.s_idx, s_title, sg_name, sg_img, ct_count, ct_price, ct_dispr, (ct_price-ct_dispr) as ct_sale, sg_count, sg_limit, s_start, s_end+1 as s_end, ct_ckbox "
+			String sql = " select ct_idx, m_id, se.s_idx, s_title, sg_name, sg_img, ct_count, sg_price, s_discnt, sg_discnt, sg_count, sg_limit, s_start, s_end+1 as s_end, ct_ckbox "
 					+ " from cart ca join s_goods sg on ca.sg_idx = sg.sg_idx "
 					+ " join member me on ca.m_idx = me.m_idx "
 					+ " join sell se on sg.s_idx = se.s_idx "
-					+ " where m_id = ? ";
+					+ " where m_id = ? and s_stat = 0 ";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, user_id);
 			rs=ps.executeQuery();
@@ -37,16 +37,16 @@ public class CartDAO {
 				String sg_name = rs.getString("sg_name");
 				String sg_img = rs.getString("sg_img");
 				int ct_count = rs.getInt("ct_count");
-				int ct_price = rs.getInt("ct_price");
-				int ct_dispr = rs.getInt("ct_dispr");
-				int ct_sale = rs.getInt("ct_sale");
+				int sg_price = rs.getInt("sg_price");
+				double s_discnt = rs.getDouble("s_discnt")/100;
+				int sg_discnt = rs.getInt("sg_discnt");
 				int sg_count = rs.getInt("sg_count");
 				int sg_limit = rs.getInt("sg_limit");
 				Date s_start = rs.getDate("s_start");
 				Date s_end = rs.getDate("s_end");
 				int ct_ckbox = rs.getInt("ct_ckbox");
 				
-				ctlist.add(new CartDTO(ct_idx, m_id, s_idx, s_title, sg_name, sg_img, ct_count, ct_price, ct_dispr, ct_sale, sg_count, sg_limit, s_start, s_end, ct_ckbox));
+				ctlist.add(new CartDTO(ct_idx, ct_count, ct_ckbox, m_id, sg_name, sg_price, sg_discnt, sg_count, sg_limit, sg_img, s_idx, s_title, s_start, s_end, s_discnt));
 			}
 			
 			return ctlist;
@@ -183,14 +183,14 @@ public class CartDAO {
 					+ " WHERE sg_idx IN (SELECT sg_idx "
 					+ "					 FROM s_goods "
 					+ "					 WHERE s_idx IN (SELECT s_idx FROM sell "
-					+ "									 WHERE sysdate BETWEEN s_start AND s_end) AND sg_count > 0) ";
+					+ "									 WHERE sysdate BETWEEN s_start AND s_end+1) AND sg_count > 0) ";
 			
 			String sql2 = " UPDATE cart "
 					+ " SET ct_ckbox = 0 "
 					+ " WHERE sg_idx IN (SELECT sg_idx "
 					+ "					 FROM s_goods "
 					+ "					 WHERE s_idx IN (SELECT s_idx FROM sell "
-					+ "									 WHERE sysdate NOT BETWEEN s_start AND s_end) OR sg_count <= 0) ";
+					+ "									 WHERE sysdate NOT BETWEEN s_start AND s_end+1) OR sg_count <= 0) ";
 			
 			ps = conn.prepareStatement(sql);
 			PreparedStatement ps2 = conn.prepareStatement(sql2);

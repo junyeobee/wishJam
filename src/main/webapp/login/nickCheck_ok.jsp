@@ -7,6 +7,8 @@
     // m_nick 확인
     if (m_nick == null) {
     	m_nick = "null";
+    } else if (m_nick != null){
+    	m_nick = m_nick.replaceAll("\\s+", "");
     }
     System.out.println("Received m_nick: " + m_nick);
 

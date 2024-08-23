@@ -255,9 +255,9 @@
 								<%
 							    	}
 								%>
-								<a href="../goodsDetail/detail.jsp?s_idx=<%=clist.get(i).getS_idx() %>" class="detail_img"><img src="../img/profile.png" style="width: 100px;height: 100px;"></a>
+								<a href="/wishJam/goodsDetail/detail.jsp?s_idx=<%=clist.get(i).getS_idx() %>" class="detail_img"><img src="<%=clist.get(i).getSg_img() %>" style="width: 100px;height: 100px;"></a>
 								<div class="detail_alt">
-									<a href="../goodsDetail/detail.jsp?s_idx=<%=clist.get(i).getS_idx() %>" class="detail_alt" style="text-decoration: none;">
+									<a href="/wishJam/goodsDetail/detail.jsp?s_idx=<%=clist.get(i).getS_idx() %>" class="detail_alt" style="text-decoration: none;">
 										<span class="detail_info"><%=clist.get(i).getS_title() %></span>
 										<span class="detail_altinfo"><%=clist.get(i).getSg_name() %></span>
 									</a>
@@ -280,12 +280,22 @@
 									<button class="count_css" data-idx="<%=clist.get(i).getCt_idx() %>" onclick="goods_plus(this);"><img src="../img/plus.png" style="width: 8px;height: 8px;padding-top: 8px;padding-left: 4px;"></button>
 								</div>
 								<div class="detail_cost"> 
-									<div class="detail_info"><%=formatter.format(clist.get(i).getCt_sale()) %>원</div>
+									<% 
+										if(clist.get(i).getSg_discnt() == 1){
+									%>
+									<div class="detail_info"><%=formatter.format(clist.get(i).getSg_price()-(clist.get(i).getSg_price()*clist.get(i).getS_discnt())) %>원</div>
+									<%
+										} else {
+									%>
+									<div class="detail_info"><%=formatter.format(clist.get(i).getSg_price()) %>원</div>
+									<%
+										}
+									%>
 									<!-- 할인가격 없으면 생성x -->
 									<% 
-										if(clist.get(i).getCt_dispr() != 0){
+										if(clist.get(i).getSg_discnt() == 1){
 									%>
-									<div class="detail_altcost"><%=formatter.format(clist.get(i).getCt_price()) %>원</div>
+									<div class="detail_altcost"><%=formatter.format(clist.get(i).getSg_price()) %>원</div>
 									<%
 										}
 									%>
@@ -339,9 +349,9 @@
 								<%
 							    	}
 								%>
-								<a href="../goodsDetail/detail.jsp?s_idx=<%=clist.get(i).getS_idx() %>" class="detail_img"><img src="../img/profile.png" style="width: 100px;height: 100px;"></a>
+								<a href="/wishJam/goodsDetail/detail.jsp?s_idx=<%=clist.get(i).getS_idx() %>" class="detail_img"><img src="<%=clist.get(i).getSg_img() %>" style="width: 100px;height: 100px;"></a>
 								<div class="detail_alt">
-									<a href="../goodsDetail/detail.jsp?s_idx=<%=clist.get(i).getS_idx() %>" class="detail_alt" style="text-decoration: none;">
+									<a href="/wishJam/goodsDetail/detail.jsp?s_idx=<%=clist.get(i).getS_idx() %>" class="detail_alt" style="text-decoration: none;">
 										<span class="detail_info"><%=clist.get(i).getS_title() %></span>
 										<span class="detail_altinfo"><%=clist.get(i).getSg_name() %></span>
 									</a>
@@ -352,12 +362,22 @@
 									<button class="count_css" disabled><img src="../img/add.png" style="width: 8px;height: 8px;padding-top: 8px;padding-left: 4px;"></button>
 								</div>
 								<div class="detail_cost"> 
-									<div class="detail_info"><%=formatter.format(clist.get(i).getCt_sale()) %>원</div>
+									<% 
+										if(clist.get(i).getSg_discnt() == 1){
+									%>
+									<div class="detail_info"><%=formatter.format(clist.get(i).getSg_price()-(clist.get(i).getSg_price()*clist.get(i).getS_discnt())) %>원</div>
+									<%
+										} else {
+									%>
+									<div class="detail_info"><%=formatter.format(clist.get(i).getSg_price()) %>원</div>
+									<%
+										}
+									%>
 									<!-- 할인가격 없으면 생성x -->
 									<% 
-										if(clist.get(i).getCt_dispr() != 0){
+										if(clist.get(i).getSg_discnt() == 1){
 									%>
-									<div class="detail_altcost"><%=formatter.format(clist.get(i).getCt_price()) %>원</div>
+									<div class="detail_altcost"><%=formatter.format(clist.get(i).getSg_price()) %>원</div>
 									<%
 										}
 									%>
@@ -389,8 +409,10 @@
 								if(clist != null && !clist.isEmpty()){
 									for (int i = 0; i < clist.size(); i++) {
 										if((clist.get(i).getS_start().compareTo(today) <= 0 ) && (clist.get(i).getS_end().compareTo(today) >= 0) && clist.get(i).getSg_count() > 0 && clist.get(i).getCt_ckbox() == 1){
-											origin_sum += (clist.get(i).getCt_price() * clist.get(i).getCt_count());
-											sale_sum += (clist.get(i).getCt_dispr() * clist.get(i).getCt_count());
+											origin_sum += (clist.get(i).getSg_price() * clist.get(i).getCt_count());
+											if(clist.get(i).getSg_discnt() == 1){
+												sale_sum += (clist.get(i).getSg_price() * clist.get(i).getS_discnt() * clist.get(i).getCt_count());
+											}
 										}
 									} 
 									ship_sum = (origin_sum-sale_sum)>=80000?0:3000;

@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.pay.wishJam.PayDTO"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.text.*"%>
+<jsp:useBean id="pdao" class="com.pay.wishJam.PayDAO"></jsp:useBean>
+<%
+	String[] products = request.getParameterValues("product");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,13 +85,16 @@
        overflow: hidden;
        width: 550px;
        padding: 0px 20px;
+       font-size: 17px;
+       font-family: 'Pretendard-Regular';
      }
      
      .product_count{
        width: 100px;
-       font-size: 15px;
+       font-size: 17px;
        line-height: 22px;
        text-align: center;
+       font-family: 'Pretendard-Regular';
      }
      
      .product_cost{
@@ -228,33 +238,78 @@
 	<form class="pay_form" action="../mypage/myPage.jsp">
 	<h2>상품주문</h2>
 	<div class="pay_box">
+		<%
+			List<PayDTO> plist;
+			DecimalFormat formatter = new DecimalFormat("#,###");
+			int origin_sum = 0;
+	  		int sale_sum = 0;
+	  		int ship_sum = 0;
+	  		int gross_value = 0;
+	  		String m_name = null;
+	  		String m_tel = null;
+	  		String m_email = null;
+	  		String m_addr = null;
+		%>
 		<div class="pay_leftbox">
 			<div class="pay_info">
 				<h3>주문상품</h3>
 				<hr style="border:1px solid; color:#a9a9a9;">
 				<!-- 이부분 반복 -->
 				<% 
-			    String[] products = request.getParameterValues("product");
-			    if (products != null) {
-			        for (String product : products) {
-			            out.println("<p>" + product + "</p>");
-			        }
-			    } else {
-			        out.println("<p>No products selected.</p>");
-			    }
-			%>
+				    if (products != null) {
+				        for (String product : products) {
+				            plist = pdao.payList(product);
+				            if(plist != null && !plist.isEmpty()){
+								   for (int i = 0; i < plist.size(); i++) {	   
+									   m_name = plist.get(i).getM_name();
+									   m_tel = plist.get(i).getM_tel();
+									   m_email = plist.get(i).getM_email();
+									   m_addr = plist.get(i).getM_addr();
+									   origin_sum += (plist.get(i).getSg_price() * plist.get(i).getCt_count());
+										if(plist.get(i).getSg_discnt() == 1){
+											sale_sum += (plist.get(i).getSg_price() * plist.get(i).getS_discnt() * plist.get(i).getCt_count());
+										}
+				%>
 				<div class="pay_product">
-					<img src="../img/profile.png" class="product_img">
-					<span class="product_name">상품명</span>
-					<span class="product_count">1개</span>
-					<span class="product_cost">2,000원
+					<img src="<%=plist.get(i).getSg_img() %>" class="product_img">
+					<span class="product_name"><%=plist.get(i).getSg_name() %></span>
+					<span class="product_count"><%=plist.get(i).getCt_count() %> 개</span>
+					<% 
+						if(plist.get(i).getSg_discnt() == 1){
+					%>
+					<span class="product_cost"><%=formatter.format(plist.get(i).getSg_price()-(plist.get(i).getSg_price()*plist.get(i).getS_discnt())) %>원
+					<%
+						} else {
+					%>
+					<span class="product_cost"><%=formatter.format(plist.get(i).getSg_price()) %>원
+					<%
+						}
+					%>
+						<% 
+							if(plist.get(i).getSg_discnt() == 1){
+						%>
 						<!-- 할인가격 없으면 생성x -->
-						<span class="product_bcost">3,500원</span>
+						<span class="product_bcost"><%=formatter.format(plist.get(i).getSg_price()) %>원</span>
+						<%
+							}
+						%>
 					</span>
 				</div>
+				<%
+								   }
+								   ship_sum = (origin_sum-sale_sum)>=80000?0:3000;
+								   gross_value = origin_sum - sale_sum + ship_sum;
+				            } else{
+				            	ship_sum = (origin_sum-sale_sum)>=80000?0:3000;
+				            }
+				        }
+				    } else {
+				        out.println("<p>error.</p>");
+				    }
+				%>
 				<div class="pay_costdetail">
 					<div>총 주문 금액
-						<span>2,000원</span>
+						<span><%= formatter.format(gross_value) %>원</span>
 					</div>
 				</div>
 				<div style="padding-top: 60px;">
@@ -265,19 +320,19 @@
 					<div class="user_box">
 						<span class="u_title">구매자이름</span>
 						<div class="lbox">
-							<div class="user_info">김수민</div>
+							<div class="user_info"><%= m_name %></div>
 						</div>
 					</div>
 					<div class="user_box">
 						<span class="u_title">휴대폰</span>
 						<div class="lbox">
-							<div class="user_info">010-9377-7893</div>
+							<div class="user_info"><%= m_tel %></div>
 						</div>
 					</div>
 					<div class="user_box">
 						<span class="u_title">이메일</span>
 						<div class="lbox">
-							<div class="user_info">ksm7893@naver.com</div>
+							<div class="user_info"><%= m_email %></div>
 							<p class="user_noti">정보 변경은 [마이페이지 > 개인정보 수정] 메뉴를 이용해주세요.</p>
 						</div>
 					</div>
@@ -290,7 +345,7 @@
 					<div class="user_box" style="border-bottom: 1px solid rgb(244, 244, 244); padding-bottom: 30px;">
 						<span class="u_title">배송지</span>
 						<div class="lbox">
-							<div class="user_info">서울시 송파구 ~~블라블라</div>
+							<div class="user_info"><%= m_addr %></div>
 							<div style="padding-bottom: 25px;"></div>
 							<button class="user_btn">수정</button>
 						</div>

@@ -20,6 +20,7 @@ public class MemberDAO {
    public static final int NOT_ID = 1;
    public static final int NOT_PWD = 2;
    public static final int LOGIN_OK = 3;
+   public static final int MANAGE = 4;
    public static final int ERROR = -1;
    
    /** 회원가입 메서드 */
@@ -28,10 +29,13 @@ public class MemberDAO {
          conn = com.db.wishJam.DbConn.getConn();
          
          String sql = " INSERT INTO member "
-               + " VALUES(seq_memno.nextval, '위시잼'||seq_nickno.nextval, 1, ?, ?, ?, ?, ?, ?, ?, ?, 0, sysdate) ";
+               + " VALUES(seq_memno.nextval, '위시잼'||seq_nickno.nextval, 2, ?, ?, ?, ?, ?, ?, ?, ?, 0, sysdate) ";
          
          String sql2 = " INSERT INTO member "
-               + " VALUES(seq_memno.nextval, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, 0, sysdate) ";
+               + " VALUES(seq_memno.nextval, ?, 2, ?, ?, ?, ?, ?, ?, ?, ?, 0, sysdate) ";
+         
+         String sql3 = " INSERT INTO mypage "
+         		+ " VALUES(seq_memno.currval, '/wishJam/img/member_profile/default.png', '') ";
          
          if(dto.getM_nick() == null) {
             ps = conn.prepareStatement(sql);
@@ -56,8 +60,12 @@ public class MemberDAO {
             ps.setString(9, dto.getM_email());
          }
          
-         int count = ps.executeUpdate();
+         PreparedStatement ps2 = conn.prepareStatement(sql3);
          
+         int count = ps.executeUpdate();
+         count = ps2.executeUpdate();
+         
+         if(ps2!=null) ps2.close();
          return count;
       } catch (Exception e) {
          e.printStackTrace();
@@ -155,7 +163,7 @@ public class MemberDAO {
       try {
          conn = com.db.wishJam.DbConn.getConn();
          
-         String sql = " SELECT m_pwd "
+         String sql = " SELECT m_pwd, g_idx "
                + " FROM member "
                + " WHERE m_id = ? ";
          ps = conn.prepareStatement(sql);
@@ -163,7 +171,11 @@ public class MemberDAO {
          rs = ps.executeQuery();
          if(rs.next()) {
             String dbpwd = rs.getString(1);
-            if(dbpwd.equals(user_pwd)) {
+            int gidx = rs.getInt(2);
+            
+            if(dbpwd.equals(user_pwd) && gidx == 1) {
+               return MANAGE;
+            } else if (dbpwd.equals(user_pwd)){
                return LOGIN_OK;
             } else {
                return NOT_PWD;

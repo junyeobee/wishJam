@@ -108,7 +108,7 @@
 		</div>
 		</form>
 		<div style="margin-top:10px;">
-			<a href="member.jsp"><input type="button" class="l_join" value="회원가입"></a>
+			<a href="/wishJam/login/member.jsp"><input type="button" class="l_join" value="회원가입"></a>
 		</div>
 		<div style="text-align:center; margin-top:15px; font-size:14px; ">
 			<a href="find_id.jsp"><span style="color:#696969;">아이디 찾기</span></a>
