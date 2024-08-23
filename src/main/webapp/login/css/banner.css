@@ -1,0 +1,48 @@
+@charset "UTF-8";
+.container {
+	margin: 0 auto;
+}
+.conTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom:20px;
+}
+.contopbtn{
+	margin-right:10px;
+}
+.conTop > div {
+    display: flex;
+    align-items: center;
+}
+
+.conTop .search-area {
+    margin-right: auto; /* 좌측으로 배치 */
+}
+
+.conTop .button-area {
+    margin-left: auto; /* 우측으로 배치 */
+}
+.banner-management {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.banner-management th, .banner-management td {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+.banner-management th {
+	background-color: #f2f2f2;
+	text-align: center;
+}
+
+.banner-management td {
+	text-align: center;
+}
+
+.banner-management img {
+	width: 150px;
+	height: auto;
+}

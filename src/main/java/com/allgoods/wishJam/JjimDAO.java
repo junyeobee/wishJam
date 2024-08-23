@@ -96,17 +96,20 @@ public class JjimDAO {
 	public boolean isthisJjim(int s_idx, int m_idx) {
 		try {
 				con=com.db.wishJam.DbConn.getConn();
-				String sql = "select s_idx from Jjim where m_idx=? and s_idx=?";
+				String sql = "select count(s_idx) from Jjim where m_idx=? and s_idx=?";
 				ps=con.prepareStatement(sql);
 				ps.setInt(1, m_idx);
 				ps.setInt(2, s_idx);
 				rs=ps.executeQuery();
-				
+
+				int result = 0;
 				if(rs.next()) {
-					return true;
+					result=rs.getInt(1);
 				} else {
 					return false;
 				}
+				
+				return result==1?true:false;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

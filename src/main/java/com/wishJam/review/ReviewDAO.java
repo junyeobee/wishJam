@@ -70,7 +70,7 @@ public class ReviewDAO {
 				
 				int r_num=0;
 				if(rs.next()) {
-					r_num = rs.getInt(1);
+					r_num = rs.getInt("count(r_idx)");
 				}
 				
 				return r_num;
@@ -191,7 +191,7 @@ public class ReviewDAO {
 	public int addReview(int s_idx, int m_idx, ReviewDTO dto) {
 		try {
 			conn=com.db.wishJam.DbConn.getConn();
-			String sql = "insert into review values(review_r_idx.nextval,?,?,?,?,?,sysdate)";
+			String sql = "insert into review values(rv_seq.nextval,?,?,?,?,?,sysdate)";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, s_idx);
 			ps.setInt(2, m_idx);

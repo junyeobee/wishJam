@@ -13,7 +13,7 @@ public class S_goodsDAO {
 	public int addGoods(int s_idx, String sg_name, int sg_price, int sg_count, int sg_limit, int sg_discnt, String sg_img, int sg_main) {
 		try {
 				conn=com.db.wishJam.DbConn.getConn();
-				String sql = "insert into s_goods values(s_goods_sg_idx.nextval,?,?,?,?,?,?,?,?)";
+				String sql = "insert into s_goods values(sg_seq.nextval,?,?,?,?,?,?,?,?)";
 				ps=conn.prepareStatement(sql);
 				ps.setInt(1, s_idx);
 				ps.setString(2, sg_name);

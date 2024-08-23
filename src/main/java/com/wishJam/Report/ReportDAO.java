@@ -13,7 +13,7 @@ public class ReportDAO {
 	public int reportContent(ReportDTO dto) {
 		try {
 			conn = com.db.wishJam.DbConn.getConn();
-			String sql = "insert into report values(report_rp_idx.nextval,?,?,?,?,?)";
+			String sql = "insert into report values(rp_seq.nextval,?,?,?,?,?)";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, dto.getS_idx());
 			ps.setString(2, dto.getRp_reason());
