@@ -73,7 +73,8 @@ display:inline;
 font-weight:bold;
 color:orange;
 }
-
+a{
+}
 </style>
 </head>
 <body>
@@ -176,6 +177,9 @@ color:orange;
 			<%
 			}}
 			%>
+		</div>
+		<div>
+			<a href="/wishJam/bestwriter/bestWriter.jsp">베스트작가</a>
 		</div>
         </article>
     </section>

@@ -126,7 +126,7 @@ header {
 }
 
 .funcBox {
-    display: block;
+    display: none;
     position: absolute;
     top: 80px;
     right: 0;
@@ -134,6 +134,7 @@ header {
     background-color: white;
     border: 1px solid #ccc;
     z-index: 1000;
+    cursor:pointer;
 }
 
 .funcBox ul {
