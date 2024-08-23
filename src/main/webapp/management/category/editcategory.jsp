@@ -32,6 +32,20 @@ function uploadImage(){
 	window.open('uploadImage.jsp?idx=<%=idx%>', 'ImageUpload', 'width=400,height=200');
 }
 </script>
+<style>
+	/*이미지 사이즈조정*/
+	.image-upload-container {
+		width:100px;
+		height:100px;
+		border-radius: 50%;
+	}
+	#previewImg{
+		width: 90%;
+		height: 90%;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+</style>
 <div id="categoryModal" class="modal2">
 		<div class="modal-content">
 			<h1>수정</h1>

@@ -3,7 +3,7 @@
 <%@ page import="com.cart.wishJam.CartDTO"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.*"%>
-<jsp:useBean id="cdao" class="com.cart.wishJam.CartDAO"></jsp:useBean>
+<jsp:useBean id="cadao" class="com.cart.wishJam.CartDAO"></jsp:useBean>
 
 <%
 	String user_id = (String) session.getAttribute("sid");
@@ -235,7 +235,7 @@
 						<ul style="list-style-type: none;">
 							<!-- 이부분 반복 -->
 							<%
-							   List<CartDTO> clist = cdao.cartList(user_id);
+							   List<CartDTO> clist = cadao.cartList(user_id);
 							   int count = clist.size();
 							   DecimalFormat formatter = new DecimalFormat("#,###");
 							   Date today = new Date();

@@ -4,6 +4,9 @@
 
 <%
 String m_idxs[] = request.getParameterValues("m_idx");
+for(String name : m_idxs){
+	System.out.println(name);
+}
 String sg_idxs[] = request.getParameterValues("sg_idx");
 String ct_counts[] = request.getParameterValues("ct_count");
 

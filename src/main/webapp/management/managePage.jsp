@@ -10,15 +10,26 @@
 	Integer m_idxObj = (Integer) session.getAttribute("m_idx");
 	int m_idx = (m_idxObj != null) ? m_idxObj : 0;
 	String src = maindao.getImgsrc(m_idx) != null ? maindao.getImgsrc(m_idx) : "";
-	if(m_idx!=1){
+	if(m_idx == 0){
 		%>
 			<script>
 				alert('관리자만 접근 허용');
 				window.location.href = '/wishJam/';
 			</script>
 		<%
+	}else {
+		int g_idx = maindao.getGrader(m_idx);
+		
+		if(g_idx != 1) {
+			%>
+			<script>
+				alert('관리자만 접근 허용');
+				window.location.href = '/wishJam/';
+			</script>
+		<%
+		}
 	}
-%>
+	%>
 <html>
 <head>
 <meta charset="UTF-8">

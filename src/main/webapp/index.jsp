@@ -99,7 +99,7 @@ color:orange;
             </div>
         </article>
         <article>
-            <h2>인기상품</h2>
+            <h2><a href="/wishJam/allgoods/allGoods.jsp?sortOrder=popular">인기상품</a></h2>
             <div class="container">
             <%
             List<AllgoodsDTO> productList = dao.allGoods("인기순");
@@ -138,7 +138,7 @@ color:orange;
 			}}
 			%>
 		</div>
-            <h2 id="test2">전체상품</h2>
+            <h2 id="test2"><a href="/wishJam/allgoods/allGoods.jsp?sortOrder=latest">최신순</a></h2>
                 <div class="container">
             <%
             List<AllgoodsDTO> productList2 = dao.allGoods("최신순");

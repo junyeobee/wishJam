@@ -1,3 +1,4 @@
+<%@page import="com.member.wishJam.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "java.util.*" %>
 <%@ page import = "com.manage.wishJam.MemberExDTO" %>
@@ -40,32 +41,33 @@
 			<tr>
 				<th>회원번호</th>
 				<th>닉네임</th>
-				<th>등급</th>
-				<th>아이디</th>
-				<th>패스워드</th>
 				<th>이름</th>
+				<th>아이디</th>
+				<th>등급</th>
 				<th>번호</th>
 				<th>주소</th>
 				<th>이메일</th>
+				<th>생년월일</th>
 				<th>보유포인트</th>
 			</tr>
 		</thead>
 		<tbody id="report-list">
 			<%
-				ArrayList<MemberExDTO> arr = mexdao.allMember(cp,listsize);
+				ArrayList<MemberDTO> arr = mexdao.allMember(cp,listsize);
 				if(arr!=null){
-					for(MemberExDTO dto : arr){
+					for(MemberDTO dto : arr){
+						String gname = mexdao.getGname(dto.getG_idx());
 					%>
 						<tr>
 							<td><%=dto.getM_idx() %></td>
 							<td><%=dto.getM_nick() %></td>
-							<td><%=dto.getG_name() %></td>
-							<td><%=dto.getM_id() %></td>
-							<td><%=dto.getM_pwd() %></td>
 							<td><%=dto.getM_name() %></td>
+							<td><%=dto.getM_id() %></td>
+							<td><%=gname %></td>
 							<td><%=dto.getM_tel() %></td>
 							<td><%=dto.getM_addr() %></td>
 							<td><%=dto.getM_email() %></td>
+							<td><%=dto.getM_brd()==null?"-": dto.getM_brd().substring(0, 10)%></td>
 							<td><%=dto.getM_point() %></td>
 						</tr>
 				<%

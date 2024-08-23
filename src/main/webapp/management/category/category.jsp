@@ -165,7 +165,7 @@ function openSub(id) {
 	smallCategory.style.display = 'block';
 }
 function editSub(idx) {
-	window.location.href = "editcategory.jsp?idx=" + idx;
+	window.open("editcategory.jsp?idx="+idx,'editCategory', 'width=400,height=200');
 }
 function changeBig(){
 	var sel = document.getElementById('bigCategory').value;

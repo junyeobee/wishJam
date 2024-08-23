@@ -220,6 +220,7 @@ public class M_ReportDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, s_idx);
 			result = ps.executeUpdate();
+			sql = "delete from cart where ct_idx in (select ct_idx from cart where sg_idx = (select sg_idx from s_goods where s_idx = (select sell.s_idx from sell join report on sell.s_idx = report.s_idx where s_stat = 1)))";
 			return result;
 		}catch(Exception e) {
 			e.printStackTrace();

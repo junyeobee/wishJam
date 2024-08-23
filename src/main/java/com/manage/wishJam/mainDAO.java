@@ -36,4 +36,29 @@ public class mainDAO {
 		}
 		
 	}
+	
+	public int getGrader(int m_idx) {
+		try {
+			con = com.db.wishJam.DbConn.getConn();
+			String sql = "select g_idx from member where m_idx = ?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, m_idx);
+			rs = ps.executeQuery();
+			int g_idx = 0;
+			if(rs.next()) g_idx = rs.getInt(1);
+			
+			return g_idx;
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;			
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(ps!=null) ps.close();
+				if(con!=null) con.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

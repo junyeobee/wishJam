@@ -2,6 +2,7 @@ package com.manage.wishJam;
 
 import java.sql.*;
 import java.util.*;
+import com.member.wishJam.MemberDTO;
 public class MemberExDAO {
 	Connection con;
 	PreparedStatement ps;
@@ -67,7 +68,7 @@ public class MemberExDAO {
 //		}
 //	}
 	
-	public ArrayList<MemberExDTO> allMember(int cp, int ls) {
+	public ArrayList<MemberDTO> allMember(int cp, int ls) {
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 			int start = (cp - 1) * ls + 1;
@@ -82,15 +83,41 @@ public class MemberExDAO {
 			ps.setInt(2, end);
 			rs = ps.executeQuery();
 			
-			ArrayList<MemberExDTO> arr = new ArrayList<MemberExDTO>();
+			ArrayList<MemberDTO> arr = new ArrayList<MemberDTO>();
 			while(rs.next()) {
-				MemberExDTO dto = new MemberExDTO(rs.getInt(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11));
+				MemberDTO dto = new MemberDTO(rs.getInt(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getInt(13));
 				arr.add(dto);
 			}
 			return arr;
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public String getGname(int g_idx) {
+		try {
+			con = com.db.wishJam.DbConn.getConn();
+			String sql = "select g_name from grade where g_idx = ?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, g_idx);
+			rs = ps.executeQuery();
+			rs.next();
+			String gname = rs.getString(1);			
+			return gname==null?"등급없음":gname;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "등급없음";
 		}finally {
 			try {
 				if (rs != null)
