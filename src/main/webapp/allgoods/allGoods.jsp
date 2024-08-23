@@ -142,6 +142,12 @@ function updateSortOrder() {
     window.location.href = '/wishJam/allgoods/allGoods.jsp?sortOrder='+selectedValue;
 }
 
+function viewFeed(ownerIdx) {
+    // URL에 owner_idx를 쿼리 파라미터로 추가
+    window.alert('ggg');
+    window.location.href = '/wishJam/mypage/myPage.jsp?ownerIdx=' + ownerIdx;
+}
+
 </script>
 </head>
 <body>
@@ -150,8 +156,6 @@ function updateSortOrder() {
         //현재 로그인 한 상태로 왔는지 체크하는 로직입니다. 헤더에서 받은 m_idx값이 만약 0이라면(헤더에서 세션이 없으면 0으로 세팅되도록 설정되어있습니다.) 해당 페이지 사용못하도록 구현했습니다
         //윤나님 파이팅하세용 
 		var m_idx = <%=m_idx %>;
-       
-
     </script>
 	<%
 
@@ -254,11 +258,11 @@ List<Integer> jjimProductIds = jdao.getJjimProductIds(m_idx); // 찜한 상품 I
 
 			<form action="allGoods.jsp" method="post" >
 			<div class="item" >
-			<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
+			<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp?s_idx=<%=products.getS_idx()%>'">
 			<img src="<%=products.getS_img()%>" alt="썸네일">
 			</div>
-				<div class="inner"> 	
-				<div class="writer"><%=products.getM_nick()%></div>
+				<div class="inner">
+				<div class="writer" onclick="viewFeed('<%=products.getM_idx()%>')"><%=products.getM_nick()%></div>
 				<input type="hidden" name="s_title" value="<%=products.getS_title()%>"> <!-- 상품 제목 -->
             	<input type="hidden" name="productId" value="<%=products.getS_idx()%>"> <!-- 상품 ID -->
 				<div name="s_title"><%=products.getS_title()%></div>

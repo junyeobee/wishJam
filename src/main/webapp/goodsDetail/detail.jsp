@@ -32,6 +32,194 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 	href="/wishJam/goodsDetail/Fordetail.css" />
 <link rel="stylesheet" href="/wishJam/css/allFonts.css" />
 </head>
+
+<body>
+	<%@ include file="../header.jsp"%>
+
+	<%
+	boolean isFav = jdao.isthisJjim(sellidx, m_idx);
+
+	String favorite = request.getParameter("favorite");
+	JjimDTO jjdto = new JjimDTO();
+	jjdto.setM_idx(m_idx);
+	jjdto.setS_idx(sellidx);
+
+	if (favorite != null && isFav == false) {
+		boolean addf = jdao.addJjim(jjdto);
+		boolean incf = jdao.incrementJjim(sellidx);
+	}
+	%>
+
+	<section class="option">
+		<div class="optionblank"></div>
+		<div class="option_article">
+			<article>
+				<form name="option">
+					<%
+					for (int i = 0; i < sglist.size(); i++) {
+					%>
+					<div class="fclear oneopt">
+						<img class="boximg lfloat" src="<%=sglist.get(i).getSg_img() %>">
+						<div id="sg_idx<%=i%>_name" style="font-size:20px;"><%=sglist.get(i).getSg_name()%></div>
+						<div class="fbox" style="justify-content: space-evenly;">
+							<div class="disbox"
+								style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>">할인중</div>
+							<div class="fbox" style="align-items:center;">
+								<div class="detail_price"
+									style="text-decoration:<%=sglist.get(i).getSg_discnt() == 1 ? "line-through" : "none"%>;"><%=sglist.get(i).getSg_price()%></div>
+								<span class="material-symbols-outlined"
+									style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>;">trending_flat</span>
+								<div id="sg_idx<%=i%>_p"
+									style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>;"><%=sglist.get(i).getSg_discnt() == 1? (int) (sglist.get(i).getSg_price() * (1 - (double) sddto.getS_discnt() / 100)): sglist.get(i).getSg_price()%></div>
+							</div>
+						</div>
+						<input type="button" value="-" name="sg_idx<%=i%>"
+							onclick="minusBtn(this,<%=sglist.get(i).getSg_idx()%>,<%=sglist.get(i).getSg_limit()%>)">
+						<input type="text" name="sg_idx<%=i%>" value="0"> <input
+							type="button" value="+" name="sg_idx<%=i%>"
+							onclick="plusBtn(this,<%=sglist.get(i).getSg_idx()%>,<%=sglist.get(i).getSg_limit()%>)">
+						<div class="cntbox">
+							<div class="sellcnt">전체 수량: <%=sglist.get(i).getSg_count() %></div>
+							<div class="limcnt">1인 구매 제한: <%=sglist.get(i).getSg_limit()>0?sglist.get(i).getSg_limit()+"개":"없음" %></div>
+						</div>
+						<div class="alertcnt">전체 수량은 처음 등록된 수량입니다.</div>
+						
+					</div>
+					<%
+					}
+					%>
+				</form>
+			</article>
+			<article class="fclear">
+				<form name="option_table" action="addCart_ok.jsp">
+					<div id="option_table"></div>
+					<div>총 상품 금액</div>
+					<div id="totalprice">0원</div>
+					<ul class="fbox">
+						<li class="btnli"><input type="submit" value="장바구니"></li>
+						<li class="btnli"><input type="button" value="구매하기"
+							onclick="window.alert('구매 완료!');"></li>
+					</ul>
+					<input type="hidden" name="s_idx" value="<%=sellidx%>">
+				</form>
+			</article>
+		</div>
+	</section>
+	<div class="headInfo fullsize" id="scrollH1">
+		<div>
+			<div class="titles"><%=sddto.getS_title()%></div>
+			<div>
+				<img src="<%=sddto.getS_img()%>">
+			</div>
+			<table>
+				<tr>
+					<th>조회수</th>
+					<td><%=sddto.getS_view()%></td>
+					<th style="text-align: center;"><span
+						class="material-symbols-rounded" style="color: #FF4900;">favorite</span></th>
+					<td><%=sddto.getS_jjim()%></td>
+				</tr>
+				<tr>
+					<th>판매 기간</th>
+					<%
+					Calendar now = Calendar.getInstance();
+					int y = now.get(Calendar.YEAR);
+
+					DateFormat datef = new SimpleDateFormat("yyyy-mm-dd");
+
+					String tm_s = datef.format(sddto.getS_end());
+					int tm = Integer.parseInt(tm_s.substring(0, 4));
+
+					if (tm == y + 99) {
+					%>
+					<td colspan="3"><div>상시 판매</div></td>
+					<%
+					} else {
+					%>
+					<td colspan="3"><div
+							style="display: flex; justify-content: space-between;"><%=sddto.getS_start()%><span>~</span><%=sddto.getS_end()%></div></td>
+					<%
+					}
+					%>
+				</tr>
+				<tr>
+					<th>판매 방법</th>
+					<td colspan="3" class="tradeway">
+						<%
+						if (sddto.getS_type() == 1) {
+						%>
+						<div>배송 판매</div> <%
+ } else if (sddto.getS_type() == 2) {
+ %>
+						<div>현장 판매</div> <%
+ } else if (sddto.getS_type() == 3) {
+ %>
+						<div>배송 판매</div>
+						<div>현장 판매</div> <%
+ }
+ %>
+					</td>
+				</tr>
+			</table>
+
+		</div>
+	</div>
+	<article class="reportbtn fullsize" id="scrollH2">
+		<input type="button" value="상품에 문제가 있나요?" class="rpbtn"
+			onclick="openReport(<%=sellidx%>, <%=m_idx%>)">
+	</article>
+	<article class="detailnav fullsize" id="scrollH3">
+		<div class="emptybox"></div>
+		<ul class="fbox">
+			<li class="btnli btninfo" id="btninfo">상세정보</li>
+			<li class="btnli btnrev" id="btnrev">리뷰</li>
+		</ul>
+	</article>
+	<section class="explain fullsize" id="explain">
+		<article>
+			<div class="contentbox"><%=sddto.getS_content()%></div>
+		</article>
+		<article>
+			<div>
+				<ul class="fbox fcenter hashli">
+					<%
+					if (sddto.getS_hash() != null) {
+						String hash_arr[] = (sddto.getS_hash()).split("#");
+						for (int i = 1; i < hash_arr.length; i++) {
+					%>
+					<li>#<%=hash_arr[i]%></li>
+					<%
+					}
+					}
+					%>
+				</ul>
+			</div>
+		</article>
+
+		<article>
+			<form name="likefm"
+				<%=isFav == true ? "onsubmit='return false;'" : "onsubmit='window.location.reload();'"%>>
+				<div class="profilebox">
+					<img src="../img/img1.jpg" class="pfimg pointerC"
+						onclick="goprofilepage();">
+					<div class="profbox">
+						<span class="pointerC proftxt" onclick="goprofilepage()"><%=sddto.getM_nick()%></span>
+					</div>
+					<input type="hidden" name="s_idx" value="<%=sellidx%>"> <input
+						type="hidden" name="m_idx" value="<%=m_idx%>"> <input
+						type="hidden" name="favorite" value="1"> <input
+						type="submit"
+						class="jjimbtn pointerC <%=isFav == true ? "twoheart" : "oneheart"%>"
+						class="likesb" value="">
+				</div>
+			</form>
+		</article>
+
+	</section>
+	<%@ include file="review.jsp"%>
+	<%@ include file="../footer.jsp"%>
+</body>
+
 <script>
 	function openReport(s_idx, m_idx) {
 		window.open('/wishJam/goodsDetail/report.jsp?s_idx='+s_idx+'&m_idx='+m_idx, 'report',
@@ -52,7 +240,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 		amount[1].value = '0';
 	}
 
-	function plusBtn(t,sgidx) {
+	function plusBtn(t,sgidx,lcnt) {
 		var amount = document.getElementsByName(t.name);
 		amount[1].value = parseInt(amount[1].value, 10) + 1;
 		var price = parseInt(document.getElementById(t.name + '_p').innerText);
@@ -61,8 +249,13 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 		var lamount = document.getElementById(t.name + '_amount');
 		var lprice = document.getElementById(t.name + '_price');
 		var gname = document.getElementById(t.name + '_name');
-
+		
+		if(amount[1].value>lcnt){
+			window.alert('1인 제한 수량 이상 구매할 수 없습니다.');
+			amount[1].value-=1;
+		}else{
 		if (lname == null) {
+			
 			document.getElementById("option_table").innerHTML += '<div class="listable fbox"><table><tr><td id="'+t.name+'_gname">'
 					+ gname.innerText
 					+ '</td><td id="'+ t.name+'_price">'
@@ -81,10 +274,10 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 				+ price + '원';
 		
 		var num = t.name.slice(-1);
-		makeCartform(num, sgidx,amount[1].value);
+		makeCartform(num, sgidx,amount[1].value);}
 	}
 
-	function minusBtn(t,sgidx) {
+	function minusBtn(t,sgidx,lcnt) {
 		var amount = document.getElementsByName(t.name);
 		if (parseInt(amount[1].value, 10) > 0) {
 			amount[1].value = parseInt(amount[1].value, 10) - 1;
@@ -144,7 +337,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 			input2.name="sg_idx";
 			input3.name="ct_count";
 			
-			input1.value="<%=sddto.getM_idx()%>";
+			input1.value="<%=m_idx%>";
 			input2.value=sgidx;
 			input3.value=amount;
 			
@@ -171,186 +364,5 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 		location.href='/wishJam/mypage/myPage.jsp';
 	}
 </script>
-<%@ include file="../header.jsp"%>
-<body>
 
-	<%
-	boolean isFav = jdao.isthisJjim(sellidx, m_idx);
-
-	String favorite = request.getParameter("favorite");
-	JjimDTO jjdto = new JjimDTO();
-	jjdto.setM_idx(m_idx);
-	jjdto.setS_idx(sellidx);
-
-	if (favorite != null && isFav == false) {
-		boolean addf = jdao.addJjim(jjdto);
-		boolean incf = jdao.incrementJjim(sellidx);
-	}
-	%>
-
-	<section class="option">
-		<div class="optionblank"></div>
-		<div class="option_article">
-			<article>
-				<form name="option">
-					<%
-					for (int i = 0; i < sglist.size(); i++) {
-					%>
-					<div class="fclear">
-						<img class="boximg lfloat" src="../img/img2.jpeg">
-						<div id="sg_idx<%=i%>_name"><%=sglist.get(i).getSg_name()%></div>
-						<div class="fbox" style="justify-content: space-evenly;">
-							<div
-								style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>">할인중</div>
-							<div class="fbox">
-								<div class="detail_price"
-									style="text-decoration:<%=sglist.get(i).getSg_discnt() == 1 ? "line-through" : "none"%>;"><%=sglist.get(i).getSg_price()%></div>
-								<span class="material-symbols-outlined"
-									style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>;">trending_flat</span>
-								<div id="sg_idx<%=i%>_p"
-									style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>;"><%=sglist.get(i).getSg_discnt() == 1
-		? (int) (sglist.get(i).getSg_price() * (1 - (double) sddto.getS_discnt() / 100))
-		: sglist.get(i).getSg_price()%></div>
-							</div>
-						</div>
-						<input type="button" value="-" name="sg_idx<%=i%>"
-							onclick="minusBtn(this,<%=sglist.get(i).getSg_idx()%>)">
-						<input type="text" name="sg_idx<%=i%>" value="0"> <input
-							type="button" value="+" name="sg_idx<%=i%>"
-							onclick="plusBtn(this,<%=sglist.get(i).getSg_idx()%>)">
-					</div>
-					<%
-					}
-					%>
-				</form>
-			</article>
-			<article class="fclear">
-				<form name="option_table" action="addCart_ok.jsp">
-					<div id="option_table"></div>
-					<div>총 상품 금액</div>
-					<div id="totalprice">0원</div>
-					<ul class="fbox">
-						<li class="btnli"><input type="submit" value="장바구니"></li>
-						<li class="btnli"><input type="button" value="구매하기"
-							onclick="window.alert('구매 완료!');"></li>
-					</ul>
-					<input type="hidden" name="s_idx" value="<%=sellidx%>">
-				</form>
-			</article>
-		</div>
-	</section>
-	<div class="headInfo" id="scrollH1">
-		<div>
-			<div class="titles"><%=sddto.getS_title()%></div>
-			<div>
-				<img src="<%=sddto.getS_img()%>">
-			</div>
-			<table>
-				<tr>
-					<th>조회수</th>
-					<td><%=sddto.getS_view()%></td>
-					<th style="text-align: center;"><span
-						class="material-symbols-rounded" style="color: #FF4900;">favorite</span></th>
-					<td><%=sddto.getS_jjim()%></td>
-				</tr>
-				<tr>
-					<th>판매 기간</th>
-					<%
-					Calendar now = Calendar.getInstance();
-					int y = now.get(Calendar.YEAR);
-
-					DateFormat datef = new SimpleDateFormat("yyyy-mm-dd");
-
-					String tm_s = datef.format(sddto.getS_end());
-					int tm = Integer.parseInt(tm_s.substring(0, 4));
-
-					if (tm == y + 99) {
-					%>
-					<td colspan="3"><div>상시 판매</div></td>
-					<%
-					} else {
-					%>
-					<td colspan="3"><div
-							style="display: flex; justify-content: space-between;"><%=sddto.getS_start()%><span>~</span><%=sddto.getS_end()%></div></td>
-					<%
-					}
-					%>
-				</tr>
-				<tr>
-					<th>판매 방법</th>
-					<td colspan="3" class="tradeway">
-						<%
-						if (sddto.getS_type() == 1) {
-						%>
-						<div>배송 판매</div> <%
- } else if (sddto.getS_type() == 2) {
- %>
-						<div>현장 판매</div> <%
- } else if (sddto.getS_type() == 3) {
- %>
-						<div>배송 판매</div>
-						<div>현장 판매</div> <%
- }
- %>
-					</td>
-				</tr>
-			</table>
-
-		</div>
-	</div>
-	<article class="reportbtn" id="scrollH2">
-		<input type="button" value="상품에 문제가 있나요?" class="rpbtn"
-			onclick="openReport(<%=sellidx%>, <%=m_idx%>)">
-	</article>
-	<article class="detailnav" id="scrollH3">
-		<div class="emptybox"></div>
-		<ul class="fbox">
-			<li class="btnli btninfo" id="btninfo">상세정보</li>
-			<li class="btnli btnrev" id="btnrev">리뷰</li>
-		</ul>
-	</article>
-	<section class="explain" id="explain">
-		<article>
-			<div class="contentbox"><%=sddto.getS_content()%></div>
-		</article>
-		<article>
-			<div>
-				<ul class="fbox fcenter hashli">
-					<%
-					if (sddto.getS_hash() != null) {
-						String hash_arr[] = (sddto.getS_hash()).split("#");
-						for (int i = 1; i < hash_arr.length; i++) {
-					%>
-					<li>#<%=hash_arr[i]%></li>
-					<%
-					}
-					}
-					%>
-				</ul>
-			</div>
-		</article>
-
-		<article>
-			<form name="likefm"
-				<%=isFav == true ? "onsubmit='return false;'" : "onsubmit='window.location.reload();'"%>>
-				<div class="profilebox">
-					<img src="../img/img1.jpg" class="pfimg pointerC"
-						onclick="goprofilepage();">
-					<div class="profbox">
-						<span class="pointerC proftxt" onclick="goprofilepage()"><%=sddto.getM_nick()%></span>
-					</div>
-					<input type="hidden" name="s_idx" value="<%=sellidx%>"> <input
-						type="hidden" name="m_idx" value="<%=m_idx%>"> <input
-						type="hidden" name="favorite" value="1"> <input
-						type="submit"
-						class="jjimbtn pointerC <%=isFav == true ? "twoheart" : "oneheart"%>"
-						class="likesb" value="">
-				</div>
-			</form>
-		</article>
-
-	</section>
-	<%@ include file="review.jsp"%>
-	<%@ include file="../footer.jsp"%>
-</body>
 </html>

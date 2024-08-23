@@ -10,7 +10,8 @@ System.out.println(path);
 
 mdto.setHomepath(path);
 
-String userId = (String)session.getAttribute("userId");
+String userId = request.getParameter("idx");
+System.out.println(userId);
 MyFileRenamePolicy renamePolicy = new MyFileRenamePolicy(userId);
 String savepath = mdto.getHomepath() + mdto.getUrl();
 int maxPostSize = 10 * 1024 * 1024;

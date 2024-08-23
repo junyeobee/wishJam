@@ -133,7 +133,7 @@ public class DetailDAO {
 				String sql = "insert into cart values(ct_seq.nextval, ?,?,?,1)";
 				ps=conn.prepareStatement(sql);
 				ps.setInt(1, m_idx);
-				ps.setInt(2,sg_idx );
+				ps.setInt(2, sg_idx );
 				ps.setInt(3, ct_count);
 				
 				int count = ps.executeUpdate();

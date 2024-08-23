@@ -11,6 +11,10 @@ body {
 	font-family: 'Pretendard-Regular';
 }
 
+.fullsize {
+	width: 760px;
+}
+
 a {
 	text-decoration: none;
 	color: black;
@@ -27,34 +31,61 @@ a {
 	position: sticky;
 	position: -webkit-sticky;
 	top: 151px;
-	width: 350px;
+	width: 430px;
 	font-size:17px;
 	text-align: center;
 	float: right;
 }
 
 .option_article {
-	border: 1px solid gray;
+	border: 1px solid #E6E6E6;
 }
 
 .optionblank {
 	height: 50px;
 }
 
+.oneopt {
+	margin: 20px 10px 0 15px;
+	font-size: 19px;
+}
+
 .explain {
-	width: 810px;
 	text-align: center;
 }
 
-.boximg {
-	width: 100px;
-	height: 100px;
-	object-fit: cover;
+.cntbox {
+	margin:10px 25px 0 0;
+	text-align:right;
 }
 
-.conimg {
-	object-fit: contain;
-	width: 630px;
+.sellcnt,
+.limcnt {
+	color: #ff4900;
+	font-size: 17px;
+}
+
+.alertcnt{
+	font-size:14px;
+	text-align:right;
+	margin-top: 5px;
+	margin-right: 18px;
+}
+
+.boximg {
+	margin-bottom:20px;
+	width: 130px;
+	height: 130px;
+	object-fit: cover;
+	border-radius: 5px;
+}
+
+.disbox {
+	border: 2px solid #ff4900;
+	padding: 3px 7px;
+    border-radius: 30px;
+    color: #ff4900;
+    font-size:18px;
 }
 
 .detail_price {
@@ -94,14 +125,16 @@ ul {
 }
 
 .btnli {
-	border: 1px solid #DBDBDB;
 	width: 50%;
+	background-color: white;
+	border: 1px solid #DBDBDB;
 }
 
 .btnli:hover {
 	cursor:pointer;
 	background-color: #ff4900;
 	color: white;
+	border:1px solid #ff4900;
 }
 
 .colortobox {
@@ -110,7 +143,6 @@ ul {
 
 .reportbtn {
 	text-align: right;
-	width:810px;
 }
 
 .rpbtn {
@@ -128,9 +160,9 @@ ul {
 .detailnav {
 	position: sticky;
 	top: 151px;
-	width: 810px;
 	text-align: center;
 	background-color: white;
+	z-index:10;
 }
 
 .kwicon {
@@ -148,7 +180,6 @@ ul {
 .heart {
 	font-size: 42px;
 	color:gray;
-	z-index:10;
 }
 
 .heart:hover {
@@ -177,7 +208,7 @@ ul {
 }
 
 .contentbox img {
-	width: 770px;
+	width: 720px;
 	object-fit: contain;
 	margin:20px;
 }
@@ -190,7 +221,6 @@ ul {
 }
 
 .headInfo {
-	width: 810px;
 	padding:20px;
 	display: flex;
 	justify-content: center;
@@ -243,6 +273,7 @@ ul {
 .profilebox {
 	padding: 60px 0;
 	text-align: center;
+	margin-bottom: 200px;
 }
  
  .proftxt {
@@ -283,17 +314,12 @@ ul {
 
 .th2 {
 	margin: 20px auto;
-	padding-bottom: 20px;
-	width: 90%;
-	border-bottom: 1px solid #BDBDBD;
+	padding: 20px;
 	width: 90%;
 	text-align: center;
 	font-size: 2em;
-}
-
-.review {
-	width: 810px;
-	border: 1px solid gray;
+	border-bottom: 2px solid #ff4900;
+	color: #ff4900;
 }
 
 .reviewul {
@@ -353,10 +379,14 @@ ul {
 .totalrv {
 	font-size: 25px;
 	font-weight: bold;
+	padding: 3px;
+	padding:10px;
 }
 
 .totalrs {
-	font-size: 22px;
+	font-size: 30px;
+	color: #ff4900;
+	
 }
 
 .rvul li {
@@ -364,13 +394,65 @@ ul {
 }
 
 .pageA {
+	display:block;
 	text-decoration: none;
-	color: black;
+	color:#ff4900;
+	font-size: 20px;
+	border-radius: 100px;
+	padding: 8px 0;
+	width: 40px;
+	
+}
+
+.pageA:hover {
+	font-size:21px;
+	font-weight: bold;
+	background-color:#ffebd3;
+}
+
+.pageA2{
+	display:block;
+	text-decoration: none;
+	color:white;
+	font-size: 20px;
+	border-radius: 100px;
+	padding: 8px 0;
+	width: 40px;
+	background-color:#ff630a;
+	font-weight: bold;
+}
+
+.pageB {
+	display:block;
+	text-decoration: none;
+	color: #ff630a;
+	font-size: 22px;
+	border-radius: 100px;
+	padding: 8px 0;
+	width: 40px;
+}
+
+.pageB:hover {
+	font-size:24px;
+	font-weight: bold;
+	background-color:#ffebd3;
+}
+
+.pageArrow {
+	/* padding: 10px 0px; */
+	height: 60px;
+	justify-content: center;
+	align-items: center;
+}
+
+.pagenum {
+	margin: 0 5px;
 }
 
 .moreArrow {
 	align-items: center;
 	display: flex;
+	
 }
 
 .moreArrow:hover {
@@ -379,10 +461,14 @@ ul {
 }
 
 .moreImg {
-	display: none;
+	position: relative;
 	flex-wrap: nowrap;
-	overflow:hidden;
 	margin: 10px 20px 13px 10px;
+}
+
+.moreImgbox{
+	overflow:hidden;
+	display: none;
 }
 
 .moreboximg {
@@ -409,10 +495,6 @@ padding-top: 4px;
 .moreimgbtn:hover {
 	cursor: pointer;
 	background-color:#E6E6E6; 
-}
-
-.pageArrow {
-	padding: 10px 0px;
 }
 
 .revbox2 {
@@ -442,5 +524,4 @@ padding-top: 4px;
 
 .forarrow:hover {
 	background-color:#E6E6E6;
-	
 }

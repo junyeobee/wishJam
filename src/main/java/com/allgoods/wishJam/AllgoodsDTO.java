@@ -150,9 +150,10 @@ public class AllgoodsDTO {
 		this.s_discnt = s_discnt;
 	}
 
-	public AllgoodsDTO(String m_nick,String s_title, int s_idx, int s_jjim, int sg_discnt,int s_discnt, int sg_main, int sg_price,  String s_img  ) {
+	public AllgoodsDTO(String m_nick,String s_title, int s_idx, int m_idx, int s_jjim, int sg_discnt,int s_discnt, int sg_main, int sg_price,  String s_img  ) {
 		
 		this.s_idx = s_idx;
+		this.m_idx = m_idx;
 		this.s_title = s_title;
 		this.sg_main = sg_main;
 		this.sg_price =sg_price;
