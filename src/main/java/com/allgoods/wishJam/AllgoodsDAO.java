@@ -35,6 +35,7 @@ public class AllgoodsDAO {
 				String m_nick= rs.getString("m_nick");
 				String s_title = rs.getString("s_title");
 				int s_idx=rs.getInt("s_idx");
+				int m_idx=rs.getInt("m_idx");
 				int s_jjim = rs.getInt("s_jjim");
 				int sg_discnt= rs.getInt("sg_discnt"); 
 				System.out.println(sg_discnt);
@@ -42,7 +43,7 @@ public class AllgoodsDAO {
 				int sg_main = rs.getInt("sg_main");
 				int sg_price = rs.getInt("sg_price");
 				String s_img = rs.getString("s_img");
-				products.add(new AllgoodsDTO(m_nick,s_title,s_idx,s_jjim ,sg_discnt, s_discnt, sg_main, sg_price,s_img));
+				products.add(new AllgoodsDTO(m_nick,s_title,s_idx,m_idx,s_jjim ,sg_discnt, s_discnt, sg_main, sg_price,s_img));
 			}
 			
 		} catch (Exception e) {

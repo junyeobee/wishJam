@@ -170,6 +170,12 @@ section {
 	height: 120px;
 }
 
+	.info-text {
+      color: blue;
+      font-size: 12px;
+      font-family: 'Pretendard-Regular';
+	}
+	
 	.error-text {
       color: red;
       font-size: 12px;
@@ -233,8 +239,8 @@ function validatePasswords() {
 
 <Script>
   //프로필 사진 변경 팝업
-  function modifyImg() {
-      window.open('ImgUpload.jsp', 'ImgUpload', 'width=400,height=400');
+  function modifyImg(i) {
+      window.open('ImgUpload.jsp?idx='+i, 'ImgUpload', 'width=400,height=400');
   }
   
   function validatePasswords() {
@@ -262,6 +268,24 @@ function validatePasswords() {
 	    alert('비밀번호가 확인되었습니다.');
 	    return true;
 	}
+  function imgChange() {
+	    var imgpath = document.getElementById('imagePath').value;
+	    var previewImg = document.getElementById('previewImg');
+	    if (previewImg) {
+	        previewImg.src = imgpath;
+	    }
+	}
+
+	function setImagePath(value) {
+	    var input = document.getElementById('imagePath');
+	    input.value = value;
+	    imgChange();
+	}
+	//imgPath에 값이 들어오면 이벤트처리
+	document.addEventListener('DOMContentLoaded', (event) => {
+	    var inputElement = document.getElementById('imagePath');
+	    inputElement.addEventListener('input', imgChange);
+	});
 </Script>
 
 <body>
@@ -279,15 +303,16 @@ if (m_idx != 0) {
 	
 %>
 	<section>
-		<form name="mypageedit" action="mypageEdit_ok.jsp">
+		<form id="mypageedit" name="mypageedit" action="mypageEdit_ok.jsp?">
 			<div class="title">
 				<h2>내 정보 수정하기</h2>
 			</div>
-			<article id="article_edit">
-				
+			<article id="article_edit">				    
+				    
 				<div class="edit_item label">프로필 사진</div>
 				<div class="profileimg ">
-					<span class="edit">변경하기</span> <img src="<%=src%>" alt="mypageImg" onclick="modifyImg()">
+					<span class="edit">변경하기</span> <img src="<%=src%>" alt="mypageImg" onclick="modifyImg('<%=m_idx%>')" id = "previewImg">
+					<input type="text" id="imagePath" name="m_img" readonly="readonly" hidden="hidden">
 				</div>
 
 			</article>
@@ -310,8 +335,10 @@ if (m_idx != 0) {
     <div class="input_wrap">
         <div class="edit_item">
             <div class="introduce">
-                <input type="text" name="m_pwd" id="m_pwd" value="<%=mmdto.getM_pwd()%>">
-            </div>
+                <input type="password" name="m_pwd" id="m_pwd" value="" placeholder="비밀번호를 입력하세요." onfocus="this.placeholder='';">
+				 <div class="input_alt_pwd" id="alt_pwd"></div> 
+            </div>     
+           
         </div>
     </div>
 </article>
@@ -321,7 +348,7 @@ if (m_idx != 0) {
     <div class="input_wrap">
         <div class="edit_item">
             <div class="introduce">
-                <input type="password" name="m_pwd_confirm" id="m_pwd_confirm" value="<%=mmdto.getM_pwd()%>"> 
+                <input type="password" name="m_pwd_confirm" id="m_pwd_confirm" > 
             </div>
         </div>
     </div>
@@ -334,7 +361,7 @@ if (m_idx != 0) {
 				<div class="input_wrap">
 					<div class="edit_item">
 						<div class="nickname">
-							<input type="text" name="m_nick" value="<%=mmdto.getM_nick() %>">
+							<input type="text" name="m_nick" value="<%=mmdto.getM_nick() %>"><button onclick="nickCheck()"> 중복체크</button>
 						</div>
 					</div>
 					<div class=" edit_item limit">0/10</div>
@@ -364,7 +391,7 @@ if (m_idx != 0) {
 				<div class="input_wrap">
 					<div class="edit_item">
 						<div class="introduce">
-							<input type="text" name="m_tel" value="<%=mmdto.getM_tel()%>">
+							<input type="text" id="m_tel" name="m_tel" maxlength="13" value="<%=mmdto.getM_tel()%>" onkeyup="autoHyphen(value);">
 						</div>
 					</div>
 						<div class="edit_item limit">0/10</div>
@@ -378,7 +405,8 @@ if (m_idx != 0) {
 				<div class="input_wrap">
 					<div class="edit_item">
 						<div class="introduce">
-							<input type="text" name="m_email" value="<%=mmdto.getM_email()%>">
+							<input type="text" id="m_email" name="m_email" value="<%=mmdto.getM_email()%>">
+							 <div class="input_alt_email" id="alt_email"></div> 
 						</div>
 					</div>
 					<div class=" edit_item limit">0/10</div>
@@ -390,19 +418,131 @@ if (m_idx != 0) {
 				<div class="input_wrap">
 					<div class="edit_item">
 						<div class="addr">
-<input type="text" name="m_addr" value="<%=mmdto.getM_addr()%>">
+							<input type="text" id="m_addr" name="m_addr" value="<%=mmdto.getM_addr()%>">
 						</div>
 					</div>
 				</div>
 			</article>
 			<article id="article_edit4">
 				<div>
-					<input type="submit" name="bt_save" value="저장하기" id="bt" onclick="validatePasswords()">
-					<div id="error_message" style="color: red;"></div>
+					<button id="bt" name="bt_save">저장하기</button>
 				</div>
 			</article>
 	</form>
 	</section>
-<%} %>
+<%
+	} 
+	%>
 </body>
 </html>
+<script>
+	const autoHyphen = (number) => {
+	    number = number.replace(/[^0-9]/g, '');
+	    let temp = '';
+	    if (number.length < 4) {
+	      temp = number;
+	    } else if (number.length < 8) {
+	      temp += number.substr(0, 3);
+	      temp += '-';
+	      temp += number.substr(3, 4);
+	    } else if (number.length < 12) {
+	      temp += number.substr(0, 3);
+	      temp += '-';
+	      temp += number.substr(3, 4);
+	      temp += '-';
+	      temp += number.substr(7);
+	    }
+	    const PHONE_NUMBER_WITH_HYPHEN = temp;
+	    const PHONE_INPUT_BOX = document.querySelector('#m_tel');
+	    PHONE_INPUT_BOX.value = PHONE_NUMBER_WITH_HYPHEN;
+	    PHONE_INPUT_BOX.setAttribute('value', PHONE_NUMBER_WITH_HYPHEN);
+	  };
+</script>
+<script>
+	function isPwd(pvalue) {
+		var regExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+		
+		return regExp.test(pvalue);
+	}
+	
+	function isPhoneNumber(pnValue) {
+		var cleanPhoneNumber = pnValue.replace(/-/g, '');
+		var regExp = /^01(?:0|1|[6-9])(?:\d{7}|\d{8})$/;
+	 
+		return regExp.test(cleanPhoneNumber);
+	}
+	
+	function isEmail(eValue) {
+		var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	
+		return regExp.test(eValue);
+	}
+</script>
+<script>
+	var inputpwd = document.getElementById("m_pwd");
+	var altpwd = document.getElementById("alt_pwd");
+	var altemail = document.getElementById("alt_email");
+	var inputemail = document.getElementById("m_email");
+	
+	inputpwd.addEventListener('keyup', ()=>{
+		if(inputpwd.value.trim() != "" && !isPwd(inputpwd.value)){
+			altpwd.innerText = "비밀번호는 8자리 이상 20자리 이하의 영문/숫자/특수문자 조합으로 입력해주세요.";
+			altpwd.classList.add("error-text"); 
+			altpwd.classList.remove("info-text"); 
+		} else if(isPwd(inputpwd.value)){
+			altpwd.innerText = "올바른 비밀번호 형식입니다.";
+			altpwd.classList.add("info-text"); 
+			altpwd.classList.remove("error-text"); 
+		} else{
+			altpwd.innerText = " ";
+			altpwd.classList.add("info-text"); 
+			altpwd.classList.remove("error-text");
+		}
+	});
+	
+	inputemail.addEventListener('keyup', ()=>{
+		if(inputemail.value.trim()!="" && !isEmail(inputemail.value)){
+			altemail.innerText = "올바른 이메일 형식을 입력해주세요.";
+			altemail.classList.add("error-text"); 
+			altemail.classList.remove("info-text"); 
+		} else if(isEmail(inputemail.value)){
+			altemail.innerText = "올바른 이메일 형식입니다.";
+			altemail.classList.remove("error-text"); 
+			altemail.classList.add("info-text"); 
+		} else{
+			altemail.innerText = "";
+			altemail.classList.remove("error-text"); 
+			altemail.classList.add("info-text"); 
+		}
+	}); 
+</script>
+<script>
+function nickCheck(){
+	window.open('nickCheck.jsp','nickCheck', 'width=500px,height=500px');
+	event.preventDefault();
+}
+</script>
+<script>
+	document.getElementById("bt").addEventListener('click', (event)=>{
+		var pwd = document.getElementById("m_pwd").value;
+		var pwdcheck = document.getElementById("m_pwd_confirm").value;
+		var tel = document.getElementById("m_tel").value;
+		var email = document.getElementById("m_email").value;
+		var addr = document.getElementById("m_addr").value;
+		
+		if(pwd == "" || tel == "" || email =="" || addr == ""){
+			window.alert('입력사항을 모두 기입해주세요.');
+		} else if(pwd !=pwdcheck){
+			window.alert('비밀번호가 일치하지 않습니다.');
+		} else if(!isPwd(pwd)){
+			window.alert('비밀번호 형식을 지켜주세요.');
+		} else if(!isPhoneNumber(tel)){
+			window.alert('전화번호 형식을 지켜주세요.');
+		} else if(!isEmail(email)){
+			window.alert('이메일 형식을 지켜주세요.');
+		} else{
+			document.getElementById("m_pwd_confirm").remove();
+			document.getElementById("mypageedit").submit();
+		}
+	}); 
+</script>

@@ -30,7 +30,6 @@ public class MypageDAO {
 			while(rs.next()) {				
 				mypage= new MypageDTO();
 				mypage.setM_id(rs.getString("m_id"));
-				
 				mypage.setM_pwd(rs.getString("m_pwd"));
 				mypage.setM_nick(rs.getString("m_nick"));
 				mypage.setM_tel(rs.getString("m_tel"));
@@ -48,6 +47,8 @@ public class MypageDAO {
 	}
 	
 
+	
+	
 
 	//회원 정보 수정
 	public int memberUpdate(MypageDTO dto, int idx) {
@@ -57,42 +58,51 @@ public class MypageDAO {
 			con=com.db.wishJam.DbConn.getConn();
 			
 
-			String sql1 = "UPDATE member m SET m.m_nick = ?, m.m_pwd = ?, m.m_tel = ?, m.m_email = ?, m.m_addr = ? WHERE m.m_idx = ?";
-			String sql2 = "UPDATE mypage mp SET mp.profile = ? WHERE mp.m_idx = ?";
+			String sql1 = "UPDATE member  "
+					+ "SET m_pwd = ?, m_nick = ?, m_tel = ?, m_email = ?, m_addr = ? "
+					+ "WHERE m_idx = ?";
+			String sql2 = "UPDATE mypage  "
+					+ "SET profile = ?, m_img=? "
+					+ "WHERE m_idx = ?";
 			
 			
 			  ps = con.prepareStatement(sql1);
+			  PreparedStatement ps2= con.prepareStatement(sql2);
 			    
-			    ps.setString(1, dto.getM_nick());
-			    ps.setString(2, dto.getM_pwd());
+			    ps.setString(1, dto.getM_pwd());
+			    ps.setString(2, dto.getM_nick());
 			    ps.setString(3, dto.getM_tel());
 			    ps.setString(4, dto.getM_email());
 			    ps.setString(5, dto.getM_addr());
 			    ps.setInt(6, idx);
 			    
-			    int count1 = ps.executeUpdate();
+			    int count = ps.executeUpdate();
 	
-		    ps = con.prepareStatement(sql2);
+		   
 		    
-		    ps.setString(1, dto.getProfile());
-		    ps.setInt(2, idx);
+		    ps2.setString(1, dto.getProfile());
+		    ps2.setString(2, dto.getM_img());
+		    ps2.setInt(3, idx);
 		    
-		    int count2 = ps.executeUpdate();
-		    return count1+ count2;
+		    count = ps2.executeUpdate();
+		    
+		    if(ps2!=null) ps2.close();
+		    return count;
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
 		}finally {
 			try {
-				if(rs!=null)rs.close();
-				if(con!=null)con.close();
 				if(ps!=null)ps.close();
+				if(con!=null)con.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}  
 		}
 	}
+	
+	
 	
 	
 	
@@ -125,8 +135,85 @@ public class MypageDAO {
 	
 	return bl;
 	}
+	
+	
+	
+	
+	
+	public MypageDTO mypageOwner(int ownerIdx) {
+	   
+		MypageDTO dto =new MypageDTO();
+	   
+
+	    try {
+	    		
+	    		
+	    		con = com.db.wishJam.DbConn.getConn();	 
+	    		
+	    		 String sql = "SELECT m_nick FROM member WHERE m_idx = ?";
+	    		 ps=con.prepareStatement(sql);
+	    
+	    		 ps.setInt(1, ownerIdx); 
+	    			rs=ps.executeQuery();
+
+	        if (rs.next()) {
+	        	dto.setM_nick(rs.getString("m_nick")); // 주인 m_idx 가져오기
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace(); // 예외 처리
+	    }
+
+	    return dto; // 주인 m_idx 반환
+	}
+	
+	
+	
+
+	
+	public boolean mynickCheck(String m_nick) {
+		
+		try {
+			con = com.db.wishJam.DbConn.getConn();	 
+			
+			String sql = " select m_nick "
+					+ " from member "
+					+ " where m_nick=? ";
+			
+			ps=con.prepareStatement(sql);
+			ps.setString(1, m_nick);
+			rs=ps.executeQuery();
+			return rs.next();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(con!=null)con.close();
+			} catch (Exception e2) {
+			
+			}
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 	
+
+
+
 
  // 
 	

@@ -1,3 +1,4 @@
+<%@page import="com.mypage.wishJam.MypageDAO"%>
 <%@page import="com.member.wishJam.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -182,6 +183,33 @@ border-radius: 20px;
 font-size:13px;
 color: gray;
 line-height : 30px;
+position: absolute;
+top:53%;
+
+}
+
+
+.buylist{
+
+border:1px solid red;
+position: absolute;
+top:170%;
+width:960px;
+height:500px;
+font-family: 'Cafe24Ohsquare';
+}
+
+
+.title{
+position: absolute;
+top:20%;
+left:16%;
+}
+
+.sellList{
+position:absolute;
+top:100%;
+
 }
 
 </style>
@@ -193,11 +221,11 @@ line-height : 30px;
         //윤나님 파이팅하세용 
 		var m_idx = <%=m_idx %>;
         if (m_idx === 0) {
-        	alert('로그인을 하세요');
-            window.history.back();
+        	//alert('로그인을 하세요');
+           // window.history.back();
         } 
         
-        //인자값없거나 나랑동일하지 않거나 2개 조건일때, 수정하기 버튼 없슴.
+        
         
         
         function godetail(i){
@@ -205,8 +233,12 @@ line-height : 30px;
         }
         
     </script>
+  
+  
+  
+    
 	<section>
-		<h2>마이페이지</h2>
+		
 		<article id="mypage_section1">
 			<div id="mypage_wrap">	
 				<div class="profileimg">
@@ -214,40 +246,115 @@ line-height : 30px;
 					<!-- 그냥 헤더에서 받아오는 로직있어서 그거썼습니다. 수정안하셔도됩니다 -->
 					<img src="<%=src %>">
 				</div>
+				
 				<%
-				if (m_idx != 0) {
-					MypageDTO mmdto = new MypageDTO();
-					mmdto= mdao.memberGet(m_idx);
-				%>
-				<div class="profile_item"><%=mmdto.getM_grade() %></div>
+				
+				/*
+				int test = 12;
+				
+				session.setAttribute("m_idx", test);
+				
+				session= request.getSession(); */
+				
+				//Integer sessionMIdx = (Integer) request.getSession().getAttribute("m_idx");
+				//int ownerId = Integer.parseInt(request.getParameter("ownerIdx"));
+
+				//int ownerMidx = mdao.mypageOwner(ownerId); 
+				
+				// 요청 파라미터에서 ownerIdx 가져오기
+				
+				
+			    String ownerIdxParam = request.getParameter("ownerIdx");
+			    int ownerId = Integer.parseInt(ownerIdxParam);
+			    if (ownerIdxParam != null) {
+			        
+			        
+			    	if(ownerId == m_idx){
+			    		%>
+			    		
+			    		<%
+			    	}
+			        System.out.println("ownerIdx parameter is null.");
+			    }
+				
+				
+				//m_idx = (sessionMIdx != null) ? sessionMIdx : 0; 
+				
+				 MypageDTO mmdto = new MypageDTO(); 
+				 
+				 System.out.println(mmdto);
+					
+					if(m_idx == 0 || m_idx!=ownerId ){ //로그인한 m_idx != 마이페이지 주인m_idx
+					   
+					
+						mmdto= mdao.memberGet(ownerId);
+					   mmdto= mdao.mypageOwner(ownerId);
+					%>
+					<h2 class="title">
+					<%=mmdto.getM_nick() %>의 위시잼💎</h2>
+					
+					<%
+						
+						
+					}else if (m_idx != 0 && m_idx==ownerId) {  // 로그인한 m_idx = 마이페이지 주인 m_idx
+					
+							
+							
+						mmdto= mdao.memberGet(ownerId);
+					    System.out.println("됨됨됨");
+
+						%>
+						<h2 class="title">마이페이지</h2>
+						<div class="profile_item edit" onclick="location.href='/wishJam/mypage/mypageEdit.jsp'">수정하기  ></div>
+						
+						<article class="buylist">
+						
+			<h3>구매내역</h3>
+			<hr>
+			<div id="celllist_wrap">
+				<div class="mypage_item"></div>
+				<div class="mypage_item"></div>
+				<div class="mypage_item"></div>
+				<div class="mypage_item rightbox"></div>
+			</div>
+		</article>
+						
+						<%
+						
+								
+					}
+					%>
+					
+				<div class="profile_item"><%=mmdto.getM_grade()%></div>
 				<div class="profile_item nickname" ><%=mmdto.getM_nick()%></div>
-			
-				<div class="profile_item edit"
-					onclick="location.href='/wishJam/mypage/mypageEdit.jsp'">수정하기  ></div>
 
 			</div>
-
 	</article>
 		<article id="mypage_section2">
-			<div class="introduce"><%=mmdto.getProfile()%></div>
+		<%
+		MypageDTO mmdto_2 = new MypageDTO(); 
+		if(mmdto_2.getProfile()==null){
+			
+			%><p>자기소개를 입력해주세요.</p><%
+			
+		}else{ %>
+			<div class="introduce"><%=mmdto_2.getProfile()%></div>
 		</article>
-	<%
-				}
-				%>
-
-		<article class="container1">
+		<%} %>
+				
+		<article class="sellList">
 			<h3>판매내역</h3>
 			<hr>
 
 			<div class="container">
 				<%
 				int idx = m_idx!=0 ? 0 : m_idx;
-				List<MypageDTO> buylist =  mdao.buyList(m_idx);
+				List<MypageDTO> buylist =  mdao.buyList(ownerId);
 				for (MypageDTO goods : buylist) {
 					
 					if(goods ==null){
 						
-						%> <p>판매 내역이 없습니다.<p> <%
+						%> <p> 판매 내역이 없습니다. <p><%
 					}else{
 				%>
 				<div class="item">
@@ -261,22 +368,14 @@ line-height : 30px;
 					</div>
 				</div>
 				<%
-				} }
+				}
+					}
 				%>
 			</div>
 		</article>
 
 
-		<article>
-			<h3>구매내역</h3>
-			<hr>
-			<div id="celllist_wrap">
-				<div class="mypage_item"></div>
-				<div class="mypage_item"></div>
-				<div class="mypage_item"></div>
-				<div class="mypage_item rightbox"></div>
-			</div>
-		</article>
+		
 
 	</section>
 </body>

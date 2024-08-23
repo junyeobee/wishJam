@@ -14,7 +14,7 @@
     
     <script>
     window.alert('<%=msg%>');
-    location.href='myPage.jsp';
+    location.href='/wishJam/mypage/myPage.jsp?ownerIdx=<%=m_idx%>';
     </script>
 
  

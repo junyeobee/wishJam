@@ -19,6 +19,7 @@ public class MypageDTO {
 
     //mypage
     private String profile;
+    private String m_img;
 
 	//member
     private int m_idx;
@@ -31,6 +32,7 @@ public class MypageDTO {
 	private String m_addr;
 	private String m_email;
 	
+	
 	private String m_grade;
 	//private int m_point;
 	
@@ -39,6 +41,16 @@ public class MypageDTO {
 	
     public String getM_grade() {
 		return m_grade;
+	}
+
+
+	public String getM_img() {
+		return m_img;
+	}
+
+
+	public void setM_img(String m_img) {
+		this.m_img = m_img;
 	}
 
 
