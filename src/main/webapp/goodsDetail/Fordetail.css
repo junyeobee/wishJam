@@ -94,14 +94,16 @@ ul {
 }
 
 .btnli {
-	border: 1px solid #DBDBDB;
 	width: 50%;
+	background-color: white;
+	border: 1px solid #DBDBDB;
 }
 
 .btnli:hover {
 	cursor:pointer;
 	background-color: #ff4900;
 	color: white;
+	border:1px solid #ff4900;
 }
 
 .colortobox {
@@ -131,6 +133,7 @@ ul {
 	width: 810px;
 	text-align: center;
 	background-color: white;
+	z-index:10;
 }
 
 .kwicon {
@@ -148,7 +151,6 @@ ul {
 .heart {
 	font-size: 42px;
 	color:gray;
-	z-index:10;
 }
 
 .heart:hover {
@@ -243,6 +245,7 @@ ul {
 .profilebox {
 	padding: 60px 0;
 	text-align: center;
+	margin-bottom: 200px;
 }
  
  .proftxt {
@@ -283,17 +286,16 @@ ul {
 
 .th2 {
 	margin: 20px auto;
-	padding-bottom: 20px;
-	width: 90%;
-	border-bottom: 1px solid #BDBDBD;
+	padding: 20px;
 	width: 90%;
 	text-align: center;
 	font-size: 2em;
+	border-bottom: 2px solid #ff4900;
+	color: #ff4900;
 }
 
 .review {
 	width: 810px;
-	border: 1px solid gray;
 }
 
 .reviewul {
@@ -364,8 +366,20 @@ ul {
 }
 
 .pageA {
+	display:block;
 	text-decoration: none;
 	color: black;
+	font-size: 20px;
+	border: 1px solid #ff4900;
+	/* padding: 6px 11px; */
+	border-radius: 50px;
+	width: 40px;
+	height: 40px;
+	margin: 0 auto;
+}
+
+.pagenum {
+	margin: 5px;
 }
 
 .moreArrow {
@@ -442,5 +456,4 @@ padding-top: 4px;
 
 .forarrow:hover {
 	background-color:#E6E6E6;
-	
 }

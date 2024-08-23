@@ -32,147 +32,9 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 	href="/wishJam/goodsDetail/Fordetail.css" />
 <link rel="stylesheet" href="/wishJam/css/allFonts.css" />
 </head>
-<script>
-	function openReport(s_idx, m_idx) {
-		window.open('/wishJam/goodsDetail/report.jsp?s_idx='+s_idx+'&m_idx='+m_idx, 'report',
-		'width=400, height=500');
-	}
 
-	function deleteGd(t) {
-		t.parentNode.remove(t);
-
-		var amount = document.getElementsByName(t.id);
-		var price = parseInt(document.getElementById(t.id + '_p').innerText);
-
-		var mprice = parseInt(amount[1].value) * price;
-
-		var totals = document.getElementById('totalprice');
-		totals.innerHTML = parseInt(document.getElementById('totalprice').innerText)
-				- mprice + '원';
-		amount[1].value = '0';
-	}
-
-	function plusBtn(t,sgidx) {
-		var amount = document.getElementsByName(t.name);
-		amount[1].value = parseInt(amount[1].value, 10) + 1;
-		var price = parseInt(document.getElementById(t.name + '_p').innerText);
-
-		var lname = document.getElementById(t.name + '_gname');
-		var lamount = document.getElementById(t.name + '_amount');
-		var lprice = document.getElementById(t.name + '_price');
-		var gname = document.getElementById(t.name + '_name');
-
-		if (lname == null) {
-			document.getElementById("option_table").innerHTML += '<div class="listable fbox"><table><tr><td id="'+t.name+'_gname">'
-					+ gname.innerText
-					+ '</td><td id="'+ t.name+'_price">'
-					+ price
-					+ '원</td><td id="'+t.name+'_amount">'
-					+ amount[1].value
-					+ '개</td></tr></table><span class="material-symbols-outlined kwicon" id="'
-					+ t.name + '" onclick="deleteGd(this)">close</span></div>';
-		} else if (gname.innerText == lname.innerText) {
-			lamount.innerHTML = amount[1].value + '개';
-			lprice.innerHTML = price + '원';
-		}
-
-		var totals = document.getElementById('totalprice');
-		totals.innerHTML = parseInt(document.getElementById('totalprice').innerText)
-				+ price + '원';
-		
-		var num = t.name.slice(-1);
-		makeCartform(num, sgidx,amount[1].value);
-	}
-
-	function minusBtn(t,sgidx) {
-		var amount = document.getElementsByName(t.name);
-		if (parseInt(amount[1].value, 10) > 0) {
-			amount[1].value = parseInt(amount[1].value, 10) - 1;
-
-			var totals = document.getElementById('totalprice');
-			var price = parseInt(document.getElementById(t.name + '_p').innerText);
-			totals.innerHTML = parseInt(document.getElementById('totalprice').innerText)
-					- price + '원';
-
-			var lname = document.getElementById(t.name + '_gname');
-			var lamount = document.getElementById(t.name + '_amount');
-			var lprice = document.getElementById(t.name + '_price');
-			var gname = document.getElementById(t.name + '_name');
-
-			if (lname == null) {
-				document.getElementById("option_table").innerHTML += '<div class="listable fbox"><table><tr><td id="'+t.name+'_gname">'
-						+ gname.innerText
-						+ '</td><td id="'+t.name+'_amount">'
-						+ amount[1].value
-						+ '개</td><td id="'+ t.name+ '_price">'
-						+ price
-						+ '원</td></tr></table><span class="material-symbols-outlined kwicon" id="'
-						+ t.name
-						+ '" onclick="deleteGd(this)">close</span></div>';
-			} else if (gname.innerText == lname.innerText) {
-				lamount.innerHTML = amount[1].value + '개';
-				lprice.innerHTML = price + '원';
-			}
-		}
-		if (parseInt(amount[1].value, 10) == 0) {
-			var tlabel = document.getElementById(t.name);
-			tlabel.parentNode.remove();
-		}
-		
-		var num = t.name.slice(-1);
-		makeCartform(num, sgidx,amount[1].value);
-	}
-	
-	function makeCartform(num, sgidx,amount){
-		var ot = document.option_table;
-		var optnum = document.option.childElementCount;
-		var optbox = document.getElementById("subvalues"+num);
-		if(optbox!=null){optbox.remove();}
-		
-		var div1 = document.createElement("div");
-		div1.id="subvalues"+num;
-		
-			var input1 = document.createElement("input");
-			var input2 = document.createElement("input");
-			var input3 = document.createElement("input");
-			
-			input1.setAttribute("type","hidden");
-			input2.setAttribute("type","hidden");
-			input3.setAttribute("type","hidden");
-			
-			input1.name="m_idx";
-			input2.name="sg_idx";
-			input3.name="ct_count";
-			
-			input1.value="<%=sddto.getM_idx()%>";
-			input2.value=sgidx;
-			input3.value=amount;
-			
-			
-			div1.append(input1,input2,input3);
-			ot.append(div1);
-	}
-	
-	window.addEventListener('click',(e)=>{
-		if(e.target.id=='btninfo'){
-			window.scrollTo(0,0);
-		} else if(e.target.id=='btnrev'){
-			var e_height = document.getElementById("explain");
-			var sh1=document.getElementById("scrollH1");
-			var sh2=document.getElementById("scrollH2");
-			var sh3=document.getElementById("scrollH3");
-			
-			var allheight = e_height.getBoundingClientRect().height+sh1.getBoundingClientRect().height+sh2.getBoundingClientRect().height+sh3.getBoundingClientRect().height;
-			window.scrollTo(0,allheight);
-		}
-	})
-	
-	function goprofilepage() {
-		location.href='/wishJam/mypage/myPage.jsp';
-	}
-</script>
-<%@ include file="../header.jsp"%>
 <body>
+<%@ include file="../header.jsp"%>
 
 	<%
 	boolean isFav = jdao.isthisJjim(sellidx, m_idx);
@@ -353,4 +215,145 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 	<%@ include file="review.jsp"%>
 	<%@ include file="../footer.jsp"%>
 </body>
+
+<script>
+	function openReport(s_idx, m_idx) {
+		window.open('/wishJam/goodsDetail/report.jsp?s_idx='+s_idx+'&m_idx='+m_idx, 'report',
+		'width=400, height=500');
+	}
+
+	function deleteGd(t) {
+		t.parentNode.remove(t);
+
+		var amount = document.getElementsByName(t.id);
+		var price = parseInt(document.getElementById(t.id + '_p').innerText);
+
+		var mprice = parseInt(amount[1].value) * price;
+
+		var totals = document.getElementById('totalprice');
+		totals.innerHTML = parseInt(document.getElementById('totalprice').innerText)
+				- mprice + '원';
+		amount[1].value = '0';
+	}
+
+	function plusBtn(t,sgidx) {
+		var amount = document.getElementsByName(t.name);
+		amount[1].value = parseInt(amount[1].value, 10) + 1;
+		var price = parseInt(document.getElementById(t.name + '_p').innerText);
+
+		var lname = document.getElementById(t.name + '_gname');
+		var lamount = document.getElementById(t.name + '_amount');
+		var lprice = document.getElementById(t.name + '_price');
+		var gname = document.getElementById(t.name + '_name');
+
+		if (lname == null) {
+			document.getElementById("option_table").innerHTML += '<div class="listable fbox"><table><tr><td id="'+t.name+'_gname">'
+					+ gname.innerText
+					+ '</td><td id="'+ t.name+'_price">'
+					+ price
+					+ '원</td><td id="'+t.name+'_amount">'
+					+ amount[1].value
+					+ '개</td></tr></table><span class="material-symbols-outlined kwicon" id="'
+					+ t.name + '" onclick="deleteGd(this)">close</span></div>';
+		} else if (gname.innerText == lname.innerText) {
+			lamount.innerHTML = amount[1].value + '개';
+			lprice.innerHTML = price + '원';
+		}
+
+		var totals = document.getElementById('totalprice');
+		totals.innerHTML = parseInt(document.getElementById('totalprice').innerText)
+				+ price + '원';
+		
+		var num = t.name.slice(-1);
+		makeCartform(num, sgidx,amount[1].value);
+	}
+
+	function minusBtn(t,sgidx) {
+		var amount = document.getElementsByName(t.name);
+		if (parseInt(amount[1].value, 10) > 0) {
+			amount[1].value = parseInt(amount[1].value, 10) - 1;
+
+			var totals = document.getElementById('totalprice');
+			var price = parseInt(document.getElementById(t.name + '_p').innerText);
+			totals.innerHTML = parseInt(document.getElementById('totalprice').innerText)
+					- price + '원';
+
+			var lname = document.getElementById(t.name + '_gname');
+			var lamount = document.getElementById(t.name + '_amount');
+			var lprice = document.getElementById(t.name + '_price');
+			var gname = document.getElementById(t.name + '_name');
+
+			if (lname == null) {
+				document.getElementById("option_table").innerHTML += '<div class="listable fbox"><table><tr><td id="'+t.name+'_gname">'
+						+ gname.innerText
+						+ '</td><td id="'+t.name+'_amount">'
+						+ amount[1].value
+						+ '개</td><td id="'+ t.name+ '_price">'
+						+ price
+						+ '원</td></tr></table><span class="material-symbols-outlined kwicon" id="'
+						+ t.name
+						+ '" onclick="deleteGd(this)">close</span></div>';
+			} else if (gname.innerText == lname.innerText) {
+				lamount.innerHTML = amount[1].value + '개';
+				lprice.innerHTML = price + '원';
+			}
+		}
+		if (parseInt(amount[1].value, 10) == 0) {
+			var tlabel = document.getElementById(t.name);
+			tlabel.parentNode.remove();
+		}
+		
+		var num = t.name.slice(-1);
+		makeCartform(num, sgidx,amount[1].value);
+	}
+	
+	function makeCartform(num, sgidx,amount){
+		var ot = document.option_table;
+		var optnum = document.option.childElementCount;
+		var optbox = document.getElementById("subvalues"+num);
+		if(optbox!=null){optbox.remove();}
+		
+		var div1 = document.createElement("div");
+		div1.id="subvalues"+num;
+		
+			var input1 = document.createElement("input");
+			var input2 = document.createElement("input");
+			var input3 = document.createElement("input");
+			
+			input1.setAttribute("type","hidden");
+			input2.setAttribute("type","hidden");
+			input3.setAttribute("type","hidden");
+			
+			input1.name="m_idx";
+			input2.name="sg_idx";
+			input3.name="ct_count";
+			
+			input1.value="<%=m_idx%>";
+			input2.value=sgidx;
+			input3.value=amount;
+			
+			
+			div1.append(input1,input2,input3);
+			ot.append(div1);
+	}
+	
+	window.addEventListener('click',(e)=>{
+		if(e.target.id=='btninfo'){
+			window.scrollTo(0,0);
+		} else if(e.target.id=='btnrev'){
+			var e_height = document.getElementById("explain");
+			var sh1=document.getElementById("scrollH1");
+			var sh2=document.getElementById("scrollH2");
+			var sh3=document.getElementById("scrollH3");
+			
+			var allheight = e_height.getBoundingClientRect().height+sh1.getBoundingClientRect().height+sh2.getBoundingClientRect().height+sh3.getBoundingClientRect().height;
+			window.scrollTo(0,allheight);
+		}
+	})
+	
+	function goprofilepage() {
+		location.href='/wishJam/mypage/myPage.jsp';
+	}
+</script>
+
 </html>

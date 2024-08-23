@@ -180,21 +180,20 @@ if (rp % pageSize == 0) {
 			}
 			%>
 		</section>
-		<div class="fclear pageArrow" style="text-align: center;">
+		<div class="fclear pageArrow fbox" style="text-align: center;">
 			<%
 			if (nowGroup != 0) {
 			%>
-			<span><a
-				href="detail.jsp?s_idx=<%=s_idx%>&rp=<%=(nowGroup - 1) * pageSize + pageSize%>#reviewpage">[&lt;이전]</a></span>
+			<span class="material-symbols-rounded"><a
+				href="detail.jsp?s_idx=<%=s_idx%>&rp=<%=(nowGroup - 1) * pageSize + pageSize%>#reviewpage">arrow_back</a></span>
 			<%
 			}
 
 			for (int i = nowGroup * pageSize + 1; i <= pageSize * nowGroup + pageSize; i++) {
 			%>
-			<span><a class="pageA"
+			<span class="pagenum"><a class="pageA"
 				href="detail.jsp?s_idx=<%=s_idx%>&rp=<%=i%>#reviewpage"
-				style="color:<%=rp == i ? "blue" : "black"%>;">[<%=i%>]
-			</a></span>
+				style="color:<%=rp == i ? "#ff4900" : "black"%>;"><%=i%></a></span>
 			<%
 			if (i == totalPage) {
 				break;
@@ -203,8 +202,8 @@ if (rp % pageSize == 0) {
 
 			if (nowGroup != (totalPage / pageSize) - (totalPage % pageSize == 0 ? 1 : 0)) {
 			%>
-			<span><a
-				href="detail.jsp?s_idx=<%=s_idx%>&rp=<%=(nowGroup + 1) * pageSize + 1%>#reviewpage">[다음&gt;]</a></span>
+			<span class="material-symbols-rounded"><a
+				href="detail.jsp?s_idx=<%=s_idx%>&rp=<%=(nowGroup + 1) * pageSize + 1%>#reviewpage">arrow_forward</a></span>
 			<%
 			}
 			}
