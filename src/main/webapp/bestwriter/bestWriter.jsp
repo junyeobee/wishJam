@@ -129,13 +129,14 @@ overflow:hidden;
 		<article id="seller_tg">
 		<% 
 		List<BestsellerDTO> goldsellers = bdao.goldSeller();
-		
+		if(goldsellers!=null){
+			
 		for(BestsellerDTO nicks : goldsellers){ 
 		System.out.println(nicks.getM_nick());
 		%>
 
 			<div><a onclick="sellerTag('<%=nicks.getM_nick()%>')"  class="dynamic-link"><%=nicks.getM_nick()%></a></div>
-	<%} %>
+	<%} 		}%>
 		
 		</article>
 		

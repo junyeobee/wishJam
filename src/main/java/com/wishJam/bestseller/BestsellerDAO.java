@@ -166,7 +166,7 @@ public List<BestsellerDTO> bestSellersOne(String nick) {
 		try {
 			con=com.db.wishJam.DbConn.getConn();
 			
-			String sql="select m_nick from member where m_grade='Gold'";
+			String sql="select m_nick from member where g_idx=5";
 			
 			ps=con.prepareStatement(sql);
 			rs=ps.executeQuery();

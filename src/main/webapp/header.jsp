@@ -19,12 +19,21 @@ function navView() {
     if (burger.checked) {
         leftNav.style.transform = 'translateX(0)';
     } else {
-        leftNav.style.transform = 'translateX(-120%)';
+        leftNav.style.transform = 'translateX(-240%)';
     }
 }
 function showExtend(i){
     var element = document.querySelector('#smallToBig' + i);
     if (element.style.display === 'none' || element.style.display === '') {
+        element.style.display = 'block';
+    } else {
+        element.style.display = 'none';
+    }
+}
+
+function showfuncBox(){
+	var element = document.querySelector('.funcBox');
+	if (element.style.display === 'none' || element.style.display === '') {
         element.style.display = 'block';
     } else {
         element.style.display = 'none';
@@ -68,6 +77,7 @@ function showExtend(i){
 	#leftNavSmall0{
 		margin-top:20px;
 	}
+	
 </style>
 <header>
     <label class="burger" for="burger">
@@ -120,7 +130,7 @@ function showExtend(i){
         <a href="/wishJam/login/member.jsp">회원 가입</a>
     </div>
     <% } else { %>
-    <div class="top right login">
+    <div class="top right login" id = "loginBox" onclick="showfuncBox();">
         <img src="<%=src %>" alt="profile" class="profile-icon"/>
         <label><%=m_nick %>님</label>
         <div class="funcBox">
