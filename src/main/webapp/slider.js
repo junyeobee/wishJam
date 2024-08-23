@@ -4,7 +4,7 @@ let slideWidth = slide.clientWidth;
 
 // 버튼 엘리먼트 선택하기
 const prevBtn = document.querySelector(".slide_prev_button");
-const nextBtn = document.querySelector(".slide_next_button");
+const nextBtn = document.querySelector(".slide_next_button"); 
 
 // 슬라이드 전체를 선택해 값을 변경해주기 위해 슬라이드 전체 선택하기
 let slideItems = document.querySelectorAll(".slide_item");

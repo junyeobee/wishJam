@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:useBean id = "maindao" class = "com.manage.wishJam.mainDAO"></jsp:useBean>
-<jsp:useBean id = "cdao" class ="com.manage.wishJam.M_CartegoryDAO"/>
+<jsp:useBean id = "ctdao" class ="com.manage.wishJam.M_CartegoryDAO"/>
 <%@ page import ="com.wishJam.category.CategoryDTO" %>
 <%@ page import ="java.util.*" %>
 <link rel="stylesheet" href="/wishJam/css/headfoot.css" />
@@ -80,7 +80,7 @@ function showExtend(i){
         <div class="leftNav">
         	<div class="info"><label>카테고리</label></div>
 	        <%
-				ArrayList<CategoryDTO> categoryarr = cdao.getBigCategory();
+				ArrayList<CategoryDTO> categoryarr = ctdao.getBigCategory();
 				if (categoryarr != null) {
 				for (int i = 0; i < categoryarr.size(); i++) {
 					int big = categoryarr.get(i).getC_big();
@@ -90,7 +90,7 @@ function showExtend(i){
 
         			<div id = "smallToBig<%=big %>" class="leftNavExtend">
         			<%
-        			ArrayList<CategoryDTO> categoryarr2 = cdao.getSmallCategory(big);
+        			ArrayList<CategoryDTO> categoryarr2 = ctdao.getSmallCategory(big);
 					if (categoryarr2 != null) {
 						for (int j = 0; j < categoryarr2.size(); j++) {
 		        	%>

@@ -18,263 +18,32 @@ int s_idx = sdao.getLastidx();
 <meta charset="UTF-8">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+<link rel="stylesheet" href="/wishJam/goodsDetail/Formake.css">
+<link rel="stylesheet" href="/wishJam/css/allFonts.css" />
 <title>Insert title here</title>
-<style>
-body {
-	width: 800px;
-	margin: 0 auto;
-	text-align: center;
-}
-
-.fbox {
-	display: flex;
-}
-
-.lfloat {
-	float: left;
-}
-
-.rfloat {
-	float: right;
-}
-
-.fcenter {
-	justify-content: center;
-}
-
-ul {
-	text-decoration: none;
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-.txtfunc {
-	display: flex;
-}
-
-.bordbox {
-	border: 1px solid gray;
-}
-
-.editbox {
-	border: 1px solid gray;
-	padding: 15px;
-	min-height: 100px;
-	text-align: center;
-}
-
-.txtimg {
-	width: 400px;
-	object-fit: cover;
-}
-
-.txtimg:hover {
-	cursor: pointer;
-}
-
-.txtbox {
-	overflow: auto;
-	max-height: 580px;
-}
-
-#txt:focus {
-	outline: 0;
-}
-
-.editor {
-	margin: 0 auto;
-	width: 800px;
-}
-
-.optbox {
-	justify-content: space-between;
-	border: 1px solid gray;
-}
-
-.optbox:focus-within {
-	background-color: #ffdbea;
-}
-
-<
-.material-symbols-outlined {
-	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-}
-
-.icons {
-	font-size: 30px;
-	color: gray;
-	float: left;
-	height: 30px;
-}
-
-.icons:hover {
-	cursor: pointer;
-}
-
-.kwbox {
-	width: 300px;
-	padding: 3px;
-	border: 1px solid black;
-	text-align: left;
-	height: 24px;
-}
-
-.kwbtn {
-	padding: 2px;
-	font-size: 13px;
-	border-radius: 15px;
-	cursor: pointer;
-	border: 1px solid #D1D1D1;
-	align-items: center;
-	caret-color: transparent;
-}
-
-.kwicon {
-	height: 15px;
-	display: flex;
-	font-size: 15px;
-	border-radius: 10px;
-	align-items: center;
-}
-
-.kwicon:hover {
-	background-color: #D1D1D1;
-}
-
-.kweditbox:focus {
-	outline: 0;
-}
-
-.contentImg {
-	padding: 5px;
-	max-width: 650px;
-	min-width: 500px;
-}
-
-.cPalette {
-	position: absolute;
-	z-index: 10;
-	width: 256px;
-	height: 176px;
-	border-radius: 5px;
-	border: 1px solid #D1D1D1;
-	background-color: white;
-}
-
-.cPalette div {
-	margin: 3px;
-}
-
-.cPalette li {
-	margin: 0px 1px;
-}
-
-.psqr {
-	width: 23px;
-	height: 23px;
-	border-radius: 3px;
-	border: 1px solid #E6E6E6;
-	margin: 0px 0px;
-}
-
-.psqr:hover {
-	cursor: pointer;
-	transform: scale(1.04, 1.04);
-	box-shadow: 0 0 0 1px #E6E6E6;
-}
-
-.thumbs {
-	width: 215px;
-	height: 215px;
-	border: 1px solid gray;
-	align-items: center;
-	justify-content: center;
-	border-radius: 10px;
-}
-
-.thumbs:hover {
-	cursor: pointer;
-}
-
-.thumbs label {
-	font-size: 20px;
-}
-
-.thumbs label:hover {
-	cursor: pointer;
-}
-
-.thumbImg {
-	width: 215px;
-	height: 215px;
-	object-fit: cover;
-	border-radius: 10px;
-}
-
-.options {
-	width: 150px;
-	height: 150px;
-	border: 1px solid #C4C4C4;
-	align-items: center;
-	justify-content: center;
-	border-radius: 10px;
-	margin: 5px;
-}
-
-.options:hover {
-	cursor: pointer;
-}
-
-.options label:hover {
-	cursor: pointer;
-}
-
-.optionimg {
-	width: 150px;
-	height: 150px;
-	object-fit: cover;
-	border-radius: 10px;
-}
-
-.main_op {
-	align-self: flex-start;
-	margin: 10px 0 0 8px;
-}
-
-.c_small {
-	width: 70px;
-}
-
-.material-symbols-outlined {
-	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
-}
-</style>
-
 <%@ include file="scriptDetail.jsp"%>
 </head>
 <%@ include file="../header.jsp"%>
 <body onmousedown="outClick(event)">
-
 	<section>
-		<h2>게시글 작성</h2>
-
 		<form name="makeSellfm" action="makeSell_ok.jsp" method="post" onsubmit="return checkAllform(event)">
 			<input type="hidden" name="s_idx" value="<%=s_idx%>">
 			<input type="hidden" name="m_idx" value="<%=m_idx %>">
-			<article>
+			<article class="settings">
 				<ul>
-					<li class="fbox"
-						style="align-items: center; flex-direction: column;">
+					<li class="fbox thumbli">
 						<div id="thumb_img" class="thumbs fbox"
 							onclick="openImgpop(<%=s_idx%>,this.id)">
-							<label>섬네일</label>
-						</div> <span style="font-size: 12px;">섬네일 권장 규격은 215x215px입니다.</span> <input
+							<label>썸네일 이미지 등록</label>
+						</div> <span style="font-size: 14px;">지나치게 선정적이거나 폭력적인 이미지 사용은 지양해 주시길 바랍니다.</span> <input
 						type="hidden" name="s_img">
 					</li>
-					<li><div style="justify-content: space-between;">
-							카테고리<label>대분류</label> <select name="c_big"
+					<li class="cateli">
+					<div class="catediv">
+							<div class="catetitle">카테고리 선택<span class="necess">*</span></div>
+							<div class="catebs"><label>대분류</label> 
+							<div class="fbox makedb"><select name="c_big"
 								onchange="select_bc(this)">
 								<%
 								ArrayList<CategoryDTO> blist = cgdao.list_bicC();
@@ -285,7 +54,8 @@ ul {
 								<%
 								}
 								%>
-							</select> <label>소분류</label>
+							</select><span class="material-symbols-rounded catedrop">arrow_drop_down</span></div></div>
+							<div class="catebs"><label>소분류</label><div class="fbox makedb">
 							<%
 							ArrayList<CategoryDTO> clist = cgdao.list_C();
 							ArrayList<Integer> s_num = cgdao.S_num();
@@ -308,7 +78,7 @@ ul {
 							</select>
 							<%
 							}
-							%>
+							%><span class="material-symbols-rounded catedrop">arrow_drop_down</span></div></div>
 						</div>
 						<input type="hidden" name="c_idx"
 						value="<%=clist.get(0).getC_idx()%>">

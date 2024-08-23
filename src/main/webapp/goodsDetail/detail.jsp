@@ -13,9 +13,18 @@ String sellidx_s = request.getParameter("s_idx");
 int sellidx = 0;
 if (sellidx_s != null) {
 	sellidx = Integer.parseInt(sellidx_s);
-}
+} 
 
 DetailDTO sddto = ddao.viewSellDetail(sellidx);
+if (sddto==null){
+	%>
+		<script>
+			window.alert('존재하지 않거나 삭제된 게시물입니다.');
+			location.href='/wishJam/';
+		</script>
+	<%
+} else {
+
 ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 %>
 
@@ -47,6 +56,11 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 	if (favorite != null && isFav == false) {
 		boolean addf = jdao.addJjim(jjdto);
 		boolean incf = jdao.incrementJjim(sellidx);
+		%>
+			<script>
+				window.location.reload();
+			</script>
+		<%
 	}
 	%>
 
@@ -73,13 +87,15 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 									style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>;"><%=sglist.get(i).getSg_discnt() == 1? (int) (sglist.get(i).getSg_price() * (1 - (double) sddto.getS_discnt() / 100)): sglist.get(i).getSg_price()%></div>
 							</div>
 						</div>
-						<input type="button" value="-" name="sg_idx<%=i%>"
-							onclick="minusBtn(this,<%=sglist.get(i).getSg_idx()%>,<%=sglist.get(i).getSg_limit()%>)">
-						<input type="text" name="sg_idx<%=i%>" value="0"> <input
-							type="button" value="+" name="sg_idx<%=i%>"
-							onclick="plusBtn(this,<%=sglist.get(i).getSg_idx()%>,<%=sglist.get(i).getSg_limit()%>)">
+						<div class="cals fbox">
+							<input type="button" name="sg_idx<%=i%>" class="mbtn" disabled
+								onclick="minusBtn(this,<%=sglist.get(i).getSg_idx()%>,<%=sglist.get(i).getSg_limit()%>)">
+							<input type="text" name="sg_idx<%=i%>" class="countinput" value="0"> <input
+								type="button" name="sg_idx<%=i%>" class="pbtn"
+								onclick="plusBtn(this,<%=sglist.get(i).getSg_idx()%>,<%=sglist.get(i).getSg_limit()%>)">
+						</div>		
 						<div class="cntbox">
-							<div class="sellcnt">전체 수량: <%=sglist.get(i).getSg_count() %></div>
+							<div class="sellcnt">전체 수량: <%=sglist.get(i).getSg_count() %>개</div>
 							<div class="limcnt">1인 구매 제한: <%=sglist.get(i).getSg_limit()>0?sglist.get(i).getSg_limit()+"개":"없음" %></div>
 						</div>
 						<div class="alertcnt">전체 수량은 처음 등록된 수량입니다.</div>
@@ -90,7 +106,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 					%>
 				</form>
 			</article>
-			<article class="fclear">
+			<article class="fclear buybtn">
 				<form name="option_table" action="addCart_ok.jsp">
 					<div id="option_table"></div>
 					<div>총 상품 금액</div>
@@ -105,7 +121,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 			</article>
 		</div>
 	</section>
-	<div class="headInfo fullsize" id="scrollH1">
+	<div class="headInfo" id="scrollH1">
 		<div>
 			<div class="titles"><%=sddto.getS_title()%></div>
 			<div>
@@ -198,7 +214,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 
 		<article>
 			<form name="likefm"
-				<%=isFav == true ? "onsubmit='return false;'" : "onsubmit='window.location.reload();'"%>>
+				<%=isFav == true ? "onsubmit='return false;'" : ""%>>
 				<div class="profilebox">
 					<img src="../img/img1.jpg" class="pfimg pointerC"
 						onclick="goprofilepage();">
@@ -230,6 +246,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 		t.parentNode.remove(t);
 
 		var amount = document.getElementsByName(t.id);
+		var idx = t.id.slice(-1);
 		var price = parseInt(document.getElementById(t.id + '_p').innerText);
 
 		var mprice = parseInt(amount[1].value) * price;
@@ -238,6 +255,9 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 		totals.innerHTML = parseInt(document.getElementById('totalprice').innerText)
 				- mprice + '원';
 		amount[1].value = '0';
+		var btns = document.getElementsByName("sg_idx"+idx);
+		btns[0].disabled=true;
+		btns[2].disabled=false;
 	}
 
 	function plusBtn(t,sgidx,lcnt) {
@@ -250,10 +270,15 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 		var lprice = document.getElementById(t.name + '_price');
 		var gname = document.getElementById(t.name + '_name');
 		
-		if(amount[1].value>lcnt){
+		var btnid = t.name.slice(-1);
+		var minusbtn  = document.getElementsByName("sg_idx"+btnid);
+
+		if(lcnt!=0&amount[1].value>lcnt){
 			window.alert('1인 제한 수량 이상 구매할 수 없습니다.');
 			amount[1].value-=1;
+			t.disabled=true;
 		}else{
+			minusbtn[0].disabled=false;
 		if (lname == null) {
 			
 			document.getElementById("option_table").innerHTML += '<div class="listable fbox"><table><tr><td id="'+t.name+'_gname">'
@@ -279,9 +304,19 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 
 	function minusBtn(t,sgidx,lcnt) {
 		var amount = document.getElementsByName(t.name);
+
+		var btnid = t.name.slice(-1);
+		var plusbtn  = document.getElementsByName("sg_idx"+btnid);
+		
 		if (parseInt(amount[1].value, 10) > 0) {
 			amount[1].value = parseInt(amount[1].value, 10) - 1;
-
+			
+			plusbtn[2].disabled=false;
+			
+			if(amount[1].value==0){
+				t.disabled="true";
+			} else{
+				
 			var totals = document.getElementById('totalprice');
 			var price = parseInt(document.getElementById(t.name + '_p').innerText);
 			totals.innerHTML = parseInt(document.getElementById('totalprice').innerText)
@@ -313,7 +348,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 		}
 		
 		var num = t.name.slice(-1);
-		makeCartform(num, sgidx,amount[1].value);
+		makeCartform(num, sgidx,amount[1].value);}
 	}
 	
 	function makeCartform(num, sgidx,amount){
@@ -366,3 +401,4 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 </script>
 
 </html>
+<%} %>
