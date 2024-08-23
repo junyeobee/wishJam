@@ -13,16 +13,16 @@ String sellidx_s = request.getParameter("s_idx");
 int sellidx = 0;
 if (sellidx_s != null) {
 	sellidx = Integer.parseInt(sellidx_s);
-} 
+}
 
 DetailDTO sddto = ddao.viewSellDetail(sellidx);
-if (sddto==null){
-	%>
-		<script>
+if (sddto == null) {
+%>
+<script>
 			window.alert('존재하지 않거나 삭제된 게시물입니다.');
 			location.href='/wishJam/';
 		</script>
-	<%
+<%
 } else {
 
 ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
@@ -56,11 +56,11 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 	if (favorite != null && isFav == false) {
 		boolean addf = jdao.addJjim(jjdto);
 		boolean incf = jdao.incrementJjim(sellidx);
-		%>
-			<script>
+	%>
+	<script>
 				window.location.reload();
 			</script>
-		<%
+	<%
 	}
 	%>
 
@@ -73,33 +73,41 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 					for (int i = 0; i < sglist.size(); i++) {
 					%>
 					<div class="fclear oneopt">
-						<img class="boximg lfloat" src="<%=sglist.get(i).getSg_img() %>">
-						<div id="sg_idx<%=i%>_name" style="font-size:20px;"><%=sglist.get(i).getSg_name()%></div>
+						<img class="boximg lfloat" src="<%=sglist.get(i).getSg_img()%>">
+						<div id="sg_idx<%=i%>_name" style="font-size: 20px;"><%=sglist.get(i).getSg_name()%></div>
 						<div class="fbox" style="justify-content: space-evenly;">
 							<div class="disbox"
 								style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>">할인중</div>
-							<div class="fbox" style="align-items:center;">
+							<div class="fbox" style="align-items: center;">
 								<div class="detail_price"
 									style="text-decoration:<%=sglist.get(i).getSg_discnt() == 1 ? "line-through" : "none"%>;"><%=sglist.get(i).getSg_price()%></div>
 								<span class="material-symbols-outlined"
 									style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>;">trending_flat</span>
 								<div id="sg_idx<%=i%>_p"
-									style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>;"><%=sglist.get(i).getSg_discnt() == 1? (int) (sglist.get(i).getSg_price() * (1 - (double) sddto.getS_discnt() / 100)): sglist.get(i).getSg_price()%></div>
+									style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>;"><%=sglist.get(i).getSg_discnt() == 1
+		? (int) (sglist.get(i).getSg_price() * (1 - (double) sddto.getS_discnt() / 100))
+		: sglist.get(i).getSg_price()%></div>
 							</div>
 						</div>
 						<div class="cals fbox">
 							<input type="button" name="sg_idx<%=i%>" class="mbtn" disabled
 								onclick="minusBtn(this,<%=sglist.get(i).getSg_idx()%>,<%=sglist.get(i).getSg_limit()%>)">
-							<input type="text" name="sg_idx<%=i%>" class="countinput" value="0"> <input
-								type="button" name="sg_idx<%=i%>" class="pbtn"
+							<input type="text" name="sg_idx<%=i%>" class="countinput"
+								value="0"> <input type="button" name="sg_idx<%=i%>"
+								class="pbtn"
 								onclick="plusBtn(this,<%=sglist.get(i).getSg_idx()%>,<%=sglist.get(i).getSg_limit()%>)">
-						</div>		
+						</div>
 						<div class="cntbox">
-							<div class="sellcnt">전체 수량: <%=sglist.get(i).getSg_count() %>개</div>
-							<div class="limcnt">1인 구매 제한: <%=sglist.get(i).getSg_limit()>0?sglist.get(i).getSg_limit()+"개":"없음" %></div>
+							<div class="sellcnt">
+								전체 수량:
+								<%=sglist.get(i).getSg_count()%>개
+							</div>
+							<div class="limcnt">
+								1인 구매 제한:
+								<%=sglist.get(i).getSg_limit() > 0 ? sglist.get(i).getSg_limit() + "개" : "없음"%></div>
 						</div>
 						<div class="alertcnt">전체 수량은 처음 등록된 수량입니다.</div>
-						
+
 					</div>
 					<%
 					}
@@ -114,7 +122,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 					<ul class="fbox">
 						<li class="btnli"><input type="submit" value="장바구니"></li>
 						<li class="btnli"><input type="button" value="구매하기"
-							onclick="window.alert('구매 완료!');"></li>
+							onclick="Buyit()"></li>
 					</ul>
 					<input type="hidden" name="s_idx" value="<%=sellidx%>">
 				</form>
@@ -243,7 +251,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 	}
 
 	function deleteGd(t) {
-		t.parentNode.remove(t);
+		t.parentNode.remove();
 
 		var amount = document.getElementsByName(t.id);
 		var idx = t.id.slice(-1);
@@ -288,7 +296,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 					+ '원</td><td id="'+t.name+'_amount">'
 					+ amount[1].value
 					+ '개</td></tr></table><span class="material-symbols-outlined kwicon" id="'
-					+ t.name + '" onclick="deleteGd(this)">close</span></div>';
+					+ t.name + '" onclick="deleteGd(this)" name="forfBuyit">close</span></div>';
 		} else if (gname.innerText == lname.innerText) {
 			lamount.innerHTML = amount[1].value + '개';
 			lprice.innerHTML = price + '원';
@@ -336,7 +344,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 						+ price
 						+ '원</td></tr></table><span class="material-symbols-outlined kwicon" id="'
 						+ t.name
-						+ '" onclick="deleteGd(this)">close</span></div>';
+						+ '" onclick="deleteGd(this)" name="forfBuyit">close</span></div>';
 			} else if (gname.innerText == lname.innerText) {
 				lamount.innerHTML = amount[1].value + '개';
 				lprice.innerHTML = price + '원';
@@ -398,7 +406,23 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 	function goprofilepage() {
 		location.href='/wishJam/mypage/myPage.jsp';
 	}
+	
+	function Buyit(){
+		var tt = document.getElementsByName("forfBuyit");
+		var result = document.getElementById("option_table");
+		var tl = tt.length;
+		
+		while(result.childElementCount!=0){
+			tl-=1;
+			deleteGd(tt[tl]);
+		}
+		
+		if(result.childElementCount==0){
+		window.alert('구매되었습니다.');} 
+	}
 </script>
 
 </html>
-<%} %>
+<%
+}
+%>

@@ -130,7 +130,7 @@ let randomNumber;
 </script>
 </head>
 <body>
-<%@ include file="../header.jsp" %>
+<%@ include file="../header.jsp"%>
 <div class="find_wrap">
    <div class="find_box">
       <h2 style="color:#ff4900;">아이디 찾기</h2>

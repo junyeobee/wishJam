@@ -326,7 +326,7 @@ function send_ck() {
 </script>
 </head>
 <body>
-<%@ include file="../header.jsp" %>
+<%@ include file="../header.jsp"%>
 <div class="join_wrap">
 	<div class="join_box">
 		<h2 style="color:#ff4900;">회 원 가 입</h2>

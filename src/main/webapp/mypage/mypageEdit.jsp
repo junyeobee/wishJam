@@ -289,7 +289,7 @@ function validatePasswords() {
 </Script>
 
 <body>
-	<%@ include file="/header.jsp"%>
+	<%@ include file="/header.jsp" %>
 	
 	<%
 

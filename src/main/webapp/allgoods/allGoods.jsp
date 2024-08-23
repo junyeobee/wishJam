@@ -151,7 +151,7 @@ function viewFeed(ownerIdx) {
 </script>
 </head>
 <body>
-	<%@ include file="/header.jsp"%>
+	<%@ include file="/header.jsp" %>
 	<script>
         //현재 로그인 한 상태로 왔는지 체크하는 로직입니다. 헤더에서 받은 m_idx값이 만약 0이라면(헤더에서 세션이 없으면 0으로 세팅되도록 설정되어있습니다.) 해당 페이지 사용못하도록 구현했습니다
         //윤나님 파이팅하세용 

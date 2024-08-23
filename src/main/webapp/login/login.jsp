@@ -89,7 +89,7 @@
 </style>
 </head>
 <body>
-<%@ include file="../header.jsp" %>
+<%@ include file="../header.jsp"%>
 <div class="login_wrap">
 	<div class="login_box">
 		<h2 style="color:#ff4900;">L O G I N</h2>

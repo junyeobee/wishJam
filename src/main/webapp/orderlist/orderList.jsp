@@ -26,7 +26,7 @@ background-color:#c1c1c1;
 </style>
 </head>
 <body>
-	<%@ include file="../header.jsp"%>
+	<%@ include file="../header.jsp" %>
 <section>
 
 <h2>주문 내역</h2>
