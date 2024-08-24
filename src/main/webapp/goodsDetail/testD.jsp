@@ -7,25 +7,38 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
-
-var ld=new Object();
-ld.v=[4,5,6];
-
-console.log(ld.v[1]);
-	function countinput(){
-		
-		var itag = document.getElementsByTagName('input');
-		
-		console.log(itag.length);
+	function gogogo(){
+		var b = document.getElementById("bbox");
+		var i = document.getElementById("im");
+		i.style.left="30px";
 	}
 </script>
+<style>
+	#bbox {
+	overflow: hidden;
+	}
+	
+	@keyframes box-ani{
+	from {
+		transform: translate(0, 0);
+	}
+	to {
+		transform: translate(100px, 0);
+	}
+	
+	}
+	
+	#im {
+	position: absolute;
+	animation: box-ani 1s inear forwards;
+	}
+</style>
 </head>
 <body>
-	<form action="testD_ok.jsp">
-		<input type="checkbox" name="box1" value="1" onclick="countinput()"> <input
-			type="checkbox" name="box2" value="2"> <input type="checkbox"
-			name="box3" value="3">
-			<input type="submit" value="전송">
-	</form>
+<div style="margin: 50px; overflow: hidden; width: 150px; border: 1px solid gray;">
+	<div id="bbox" style="position: relative;"><img id="im" src='/wishJam/img/img1.jpg'></div>
+	<div style="cursor: pointer;" onclick="gogogo()">>>>></div>
+	
+</div>
 </body>
 </html>

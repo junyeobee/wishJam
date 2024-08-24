@@ -152,7 +152,11 @@ if (rp % pageSize == 0) {
 						<%
 						String gal[] = rlist.get(i).getR_img().split("\\*");
 
-						if (rlist.get(i).getR_img() != null) {
+						if (rlist.get(i).getR_img().equals(" ")) {
+						%>
+						<div class="rboximg rfloat"></div>
+						<%
+						} else{
 						%>
 						<img src="<%=gal[0]%>" class="rboximg rfloat">
 						<%

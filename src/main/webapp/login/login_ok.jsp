@@ -6,7 +6,7 @@
 <%
    String userid = request.getParameter("user_id");
    String userpwd = request.getParameter("user_pwd");
-
+   
    boolean keepLogIn = request.getParameter("keepLogIn") != null; 
    
    int result = mdao.loginCheck(userid, userpwd);
