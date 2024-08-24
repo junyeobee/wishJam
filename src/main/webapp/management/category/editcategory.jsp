@@ -45,10 +45,23 @@ function uploadImage(){
 		border-radius: 50%;
 		object-fit: cover;
 	}
+	.modal-content{
+		display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    flex-direction: column;
+	}
+	.d li{
+		text-decoration: none;
+		list-style: none;
+	}
+	.d{
+	padding-left: 0;
+	}
 </style>
 <div id="categoryModal" class="modal2">
 		<div class="modal-content">
-			<h1>수정</h1>
+			<h1>수정하기</h1>
 			<form action="editcategory_ok.jsp" name = "dd" onsubmit="chk();">
 			<div style = "display:flex; justify-content: space-between;">
 				<div>
@@ -77,11 +90,11 @@ function uploadImage(){
 				</select>
 				</li>
 				<li>
-				<label for="smallCategory">소분류:</label>
+				<label for="smallCategory">소분류</label>
 				<input type="text" id="small_Category" name="smallCategory" required="required" value="<%=cdto.getC_name()%>"/>
 				</li>
 				<li>
-				<label for="hashtags">해시태그:</label>
+				<label for="hashtags">해시태그</label>
 				<input type="text" id="hashtags" name="hashtags" required="required" value="<%=cdto.getC_hash()%>"/>
 				</li>
 				</ul>

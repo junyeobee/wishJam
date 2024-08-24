@@ -60,9 +60,24 @@
 	}
 	
 	.element {
-		margin-bottom: 10px;
+	    width: 90%;
+	    height: 50px;
+	    margin: 0px auto;
+	    display: flex;
+	    align-items: center;
+	    font-weight: bold;
+	    padding-left: 10px;
 	}
-	
+	.element:hover{
+		background-color:#ff9900;
+	}
+	.element.active {
+	    background-color: #ff9900;
+	    color: white;
+	}
+	.elcontentbox{
+		margin-top:50px;
+	}
 	#manageimg {
 		height: 150px;
 		width: 150px;
@@ -70,6 +85,7 @@
 		background-color: #4f4f4f;
 		text-align: center;
 		padding: 10px;
+		margin:10px auto;
 	}
 	
 	.pfimg {
@@ -113,60 +129,85 @@
 		margin-top: 10px;
 		color: #FAFAFA;
 	}
+	.mainlogo img{
+	    width: 60px;
+    	height: 60px;
+		object-fit: cover;
+	}
+	.hadan{
+		position:absolute;
+		top:850px;
+		font-size: 10px;
+		font-family: 'Pretendard-Regular';
+	}
 </style>
+<script>
+function changeImg(){
+	window.open('/wishJam/management/manager/managerModify.jsp', 'imChag', 'width=400,height=400,top=400px,left=800px');
+}
+</script>
 </head>
 <body id = "body">
     <div id="manageNavbar">
-        <div>
-            <a href="/wishJam/index.jsp">메인로고</a>
+        <div class="mainlogo">
+            <img src="/wishJam/img/logo2.png" onclick='window.location.href="/wishJam/"'/>
         </div>
-        <div id="manageimg">
-        	<a href="#" data-content = "/wishJam/management/manager/managerModify" class="link">
+        <div id="manageimg" onclick="changeImg()">
             <img src="<%=src %>" class="pfimg" alt="img">
-            </a>
             <div id = "managerExplane"><%=m_nick %> 님</div>
         </div>
-        <div class="element">
-            <a href="#" data-content="/wishJam/management/stats/stats" class="link">거래 통계</a>
-        </div>
-        <div class="element">
-            <a href="#" data-content="/wishJam/management/member/memberManage" class="link">회원 관리</a>
-        </div>
-        <div class="element">
-            <a href="#" data-content="/wishJam/management/report/reports" class="link">신고 관리</a>
-        </div>
-        <div class="element">
-            <a href="#" data-content="/wishJam/management/banner/banner" class="link">배너 설정</a>
-        </div>
-        <div class="element">
-            <a href="#" data-content="/wishJam/management/grade/grade" class="link">등급 관리</a>
-        </div>
-        <div class="element">
-            <a href="#" data-content="/wishJam/management/category/category" class="link">카테고리 관리</a>
-        </div>
+		<div class ="elcontentbox">
+		    <div class="element active" data-content="/wishJam/management/member/memberManage">
+		        회원 관리
+		    </div>
+		    <div class="element" data-content="/wishJam/management/report/reports">
+		        신고 관리
+		    </div>
+		    <div class="element" data-content="/wishJam/management/banner/banner">
+		        배너 설정
+		    </div>
+		    <div class="element" data-content="/wishJam/management/grade/grade">
+		        등급 관리
+		    </div>
+		    <div class="element" data-content="/wishJam/management/category/category">
+		        카테고리 관리
+		    </div>
+		    
+		    <div class="hadan">
+		    	<p>W I S H G E M ◈</p>
+		    </div>
+		</div>
     </div>
     <section id="manageArea">
-        <iframe id="contentFrame" src="main.jsp"></iframe>
+        <iframe id="contentFrame" src="/wishJam/management/member/memberManage.jsp"></iframe>
     </section>
     <script>
-    	/*link 클릭시 data content값 가져옴*/
-        document.addEventListener('DOMContentLoaded', function() {
-            const dynamicLinks = document.querySelectorAll('.link');
-            dynamicLinks.forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const content = this.getAttribute('data-content');
-                    if (content) {
-                        loadContent(content);
-                    }
-                });
-            });
-        });
-		//data content + .jsp로 iframe 링크 변경
-        function loadContent(content) {
-            const fileName = content + '.jsp';
-            document.getElementById('contentFrame').src = fileName;
-        }
+	document.addEventListener('DOMContentLoaded', function() {
+	    const dynamicElements = document.querySelectorAll('.element');
+	    
+	    dynamicElements.forEach(element => {
+	        element.addEventListener('click', function(event) {
+	            event.preventDefault();
+	            
+	            // 기존 활성화된 element에서 active 클래스 제거
+	            dynamicElements.forEach(el => el.classList.remove('active'));
+	            
+	            // 현재 클릭된 element에 active 클래스 추가
+	            this.classList.add('active');
+	            
+	            // iframe에 페이지 로드
+	            const content = this.getAttribute('data-content');
+	            if (content) {
+	                loadContent(content);
+	            }
+	        });
+	    });
+	});
+	
+	function loadContent(content) {
+	    const fileName = content + '.jsp';
+	    document.getElementById('contentFrame').src = fileName;
+	}
     </script>
 </body>
 </html>

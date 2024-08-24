@@ -16,12 +16,11 @@
 <link rel="stylesheet" href="/wishJam/css/burger.css" />
 <link rel="stylesheet" href="/wishJam/css/index.css" />
 
+
 <style>
 section {
-	
 	width: 960px;
 	height: 1500px;
-	
 	margin: 0 auto;
 }
 
@@ -115,8 +114,10 @@ overflow:hidden;
 	function sellerTag(nick){
 		document.getElementById('contentFrame').src = 'bestSeller_tag.jsp?nick='+nick;
 	}
+	
 </script>
 </head>
+
 
 
 <body>

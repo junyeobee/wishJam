@@ -1,4 +1,3 @@
-<%@page import="com.allgoods.wishJam.AllgoodsDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.allgoods.wishJam.AllgoodsDTO"%>
@@ -114,7 +113,7 @@ font-size:13px;
 .discount{
 display:inline;
 font-weight:bold;
-color:orange;
+color:#ff4900;
 }
 
 

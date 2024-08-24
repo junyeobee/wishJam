@@ -6,7 +6,7 @@
 <jsp:useBean id="bdao" class="com.wishJam.bestseller.BestsellerDAO"></jsp:useBean>
 	
 <%
-String[] sellerArray = {"1","2","user3"};
+String[] sellerArray = {"김뚜뚜","줴니퍼"};
 List<String> sellerslist = new ArrayList<>();
 
 List<BestsellerDTO> bestsellerlist= new ArrayList<>();
@@ -21,6 +21,8 @@ List<BestsellerDTO> sellerProducts = bdao.bestSellers(bdto); //상품정보를 �
 if(sellerProducts !=null){
 	
 	bestsellerlist.addAll(sellerProducts);
+	
+	
 }
 
 
@@ -38,7 +40,7 @@ if(sellerProducts !=null){
 
 section {
 	 font-family: 'Cafe24Ohsquareair';
-	width: 940px;
+	width: 960px;
 	height: 1500px;
 	margin: 0 auto;
 }
@@ -88,8 +90,8 @@ section {
 width:35px;
 height:35px;
  font-family: 'Cafe24Ohsquareair'; 	
-
 }
+
 </style>
 </head>
 <body>

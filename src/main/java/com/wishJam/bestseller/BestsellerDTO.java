@@ -12,6 +12,10 @@ public class BestsellerDTO {
     
     
     
+	public BestsellerDTO() {
+		
+	}
+    
 	public int getJjim() {
 		return jjim;
 	}
@@ -30,12 +34,6 @@ public class BestsellerDTO {
 	public void setm_idx(int m_idx) {
 		this.m_idx = m_idx;
 	}
-
-
-	public BestsellerDTO() {
-		
-	}
-
 
 	public BestsellerDTO(int s_idx, String s_title, int price, int  m_idx, String thumbnail_url, int jjim) {
 		

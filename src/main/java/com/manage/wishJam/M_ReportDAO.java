@@ -206,21 +206,30 @@ public class M_ReportDAO {
 		try {
 			int result = 0;
 			con = com.db.wishJam.DbConn.getConn();
+			//r_stat(관리자용, 처리 완료/마완료, 0=미완료, 1=처리완료
 			String sql = "update report set r_stat = 1 where rp_idx = ?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, rp_idx);
 			ps.executeQuery();
+			
+			//해당 게시글 찾아서
 			sql = "select s_idx from sell where s_idx = (select s_idx from report where rp_idx = ?)";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, rp_idx);
 			rs = ps.executeQuery();
 			rs.next();
 			int s_idx = rs.getInt(1);
+			
+			//제재처리(1, 정지)
 			sql = "update sell set s_stat = 1 where s_idx = ?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, s_idx);
 			result = ps.executeUpdate();
+			
+			//장바구니에서 삭제
 			sql = "delete from cart where ct_idx in (select ct_idx from cart where sg_idx = (select sg_idx from s_goods where s_idx = (select sell.s_idx from sell join report on sell.s_idx = report.s_idx where s_stat = 1)))";
+			ps = con.prepareStatement(sql);
+			ps.executeQuery();
 			return result;
 		}catch(Exception e) {
 			e.printStackTrace();
