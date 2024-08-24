@@ -63,7 +63,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 	<%
 	}
 	%>
-
+<section class="bodyroll">
 	<section class="option">
 		<div class="optionblank"></div>
 		<div class="option_article">
@@ -173,14 +173,14 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 						if (sddto.getS_type() == 1) {
 						%>
 						<div>배송 판매</div> <%
- } else if (sddto.getS_type() == 2) {
- %>
+						} else if (sddto.getS_type() == 2) {
+ 						%>
 						<div>현장 판매</div> <%
- } else if (sddto.getS_type() == 3) {
- %>
+ 						} else if (sddto.getS_type() == 3) {
+ 						%>
 						<div>배송 판매</div>
 						<div>현장 판매</div> <%
- }
+ 						}
  %>
 					</td>
 				</tr>
@@ -241,6 +241,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 
 	</section>
 	<%@ include file="review.jsp"%>
+</section>
 	<%@ include file="../footer.jsp"%>
 </body>
 

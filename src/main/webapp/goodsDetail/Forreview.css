@@ -21,39 +21,50 @@
 }
 
 section {
+	-webkit-touch-callout: none;
+	user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
 	font-family: 'Pretendard-Regular';
 	width: 550px;
 	margin: 0 auto;
-	padding: 20px;
+	padding-bottom: 20px;
 	text-align: center;
 }
 
 h2 {
 	font-size: 32px;
+	/* background-color: */
 }
 
 .starcolor {
 	color: #ff4900;
+	font-size: 32px;
 }
 
 .stars {
 	display: flex;
+	padding: 0;
+    justify-content: center;
+    margin: 8px;
 }
 
 li {
 	list-style: none;
 }
 
-.stars li:hover {
+.stars span:hover {
 	cursor: pointer;
 }
 
 .review_img {
-	width: 100px;
-	height: 100px;
-	border: 1px solid gray;
-	border-radius: 10px;
+	width: 170px;
+	height: 170px;
+	border: 1px solid white;;
+	border-radius: 5px;
 	object-fit: cover;
+	margin: 3px;
 }
 
 .review_img:hover {
@@ -61,7 +72,10 @@ li {
 }
 
 #rvImg{
+	justify-content: left;
 	display: flex;
+	padding: 0;
+	flex-wrap: wrap;
 }
 
 .rvprof {
@@ -75,15 +89,104 @@ li {
 }
 
 .sinfo2{
-	font-size:20px;
-	margin: 15px;
+	display: flex;
+    font-size: 20px;
+    margin: 15px;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .stf {
-	margin: 20px;	
+	margin: 30px;	
 }
 
 .stf span {
-	font-size: 24px;
 	font-weight: bold;
+}
+
+.reviewbox {
+	margin: 20px 0;
+	font-size: 19px;
+}
+
+.contentbox {
+	width:380px;
+	padding: 15px;
+	overflow: auto;
+	margin: 10px auto;
+	height: 200px;
+	position: relative;
+	border: 1px solid #afafaf;
+}
+
+#contentlabel {
+	color: #ffb26d;
+	font-size: 18px;
+}
+
+.contentbox:hover {
+	cursor: text;
+}
+
+#txt {
+	position: absolute;
+	left: 15px;
+	font-size: 18px;
+	top: 15px;
+}
+
+#txt:focus {
+	outline: 0;
+}
+
+.imgbox {
+	margin: 30px 0;
+}
+
+.imgbox div {
+	font-size:19px;
+	font-weight: bold;
+}
+
+.uploadbox{
+	border: 1px solid #ffd2a5;
+	background: linear-gradient(rgba(255, 255, 255,1) 25%,rgba(255, 222, 189,1) 50%,rgba(255, 162, 69,1) 75%,rgba(255, 73, 0,1) 100%);
+	display: flex;
+	justify-content: center;
+    align-items: center;
+}
+
+.uploadbox span {
+	font-size: 60px;
+	color: #ff4900;
+}
+
+.uploadbox:hover {
+	cursor: pointer;
+}
+
+.buttonbox {
+	position: fixed;
+    bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 550px;
+}
+
+.buttonbox input:hover {
+	cursor: pointer;
+	background-color:#ff4900;
+	border-color: #ff4900;
+	color: white;
+}
+
+.buttonbox input {
+	width: 50%;
+	border: 1px solid #dbdbdb;
+	height: 50px;
+	background-color: white;
+	font-size: 20px;
+	font-weight: 700;
 }
