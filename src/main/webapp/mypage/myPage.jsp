@@ -8,6 +8,7 @@
 <jsp:useBean id="mdto" class="com.mypage.wishJam.MypageDTO"></jsp:useBean>
 <jsp:useBean id="mdao" class="com.mypage.wishJam.MypageDAO"></jsp:useBean>
 <%
+
 //m_idx 세션 받기
 
 	
@@ -38,9 +39,9 @@
 			imgSrc = "/wishJam/img/member_profile/default.png";
 		}
 	} 
+	
+	
 	*/
-	
-	
 
 %>
 
@@ -174,6 +175,8 @@ margin: 10px 0 0 10px;
 
 }
 
+
+
 .edit{
 cursor : pointer;
 width:8em;
@@ -184,14 +187,12 @@ font-size:13px;
 color: gray;
 line-height : 30px;
 position: absolute;
-top:53%;
+top:83%;
 
 }
 
 
 .buylist{
-
-border:1px solid red;
 position: absolute;
 top:170%;
 width:960px;
@@ -203,7 +204,7 @@ font-family: 'Cafe24Ohsquare';
 .title{
 position: absolute;
 top:20%;
-left:16%;
+left:210px;
 }
 
 .sellList{
@@ -212,48 +213,48 @@ top:100%;
 
 }
 
+.profilewrap {
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    align-items: center; /* 수평 가운데 정렬 */
+    justify-content: center; /* 수직 가운데 정렬 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    margin: 0 auto; /* 부모 요소의 가운데 정렬을 위해 자동 마진 */
+    height: 100%; /* 부모 요소의 높이에 맞추기 위한 설정 */
+}
+
 </style>
 </head>
+
+
+
 <body>
 	<%@ include file="/header.jsp"%>
-	<script>
+	
+	<script>	
         //현재 로그인 한 상태로 왔는지 체크하는 로직입니다. 헤더에서 받은 m_idx값이 만약 0이라면(헤더에서 세션이 없으면 0으로 세팅되도록 설정되어있습니다.) 해당 페이지 사용못하도록 구현했습니다
         //윤나님 파이팅하세용 
 		var m_idx = <%=m_idx %>;
         if (m_idx === 0) {
         	//alert('로그인을 하세요');
            // window.history.back();
-        } 
-        
-        
-        
-        
+        }       
+
         function godetail(i){
         	window.location.href = '/wishJam/goodsDetail/detail.jsp?s_idx='+i
         }
         
-    </script>
-  
-  
-  
-    
-	<section>
-		
-		<article id="mypage_section1">
-			<div id="mypage_wrap">	
-				<div class="profileimg">
-					<!-- 이거 dto에서 받아오도록 하시면 될것같습니다. 즉, dto에 m_img 인자 추가 -> mmdto의 인자 생성자에 추가,쿼리 수정 > dto객체를 이미지태그 위에서 불러오면 되겠죠? -->
-					<!-- 그냥 헤더에서 받아오는 로직있어서 그거썼습니다. 수정안하셔도됩니다 -->
-					<img src="<%=src %>">
-				</div>
-				
-				<%
-				
+        
+        
+        
+    </script>  
+
+	<section>		
+		<article id="mypage_section1">		
+			<div id="mypage_wrap">
+
+				<%				
 				/*
-				int test = 12;
-				
-				session.setAttribute("m_idx", test);
-				
 				session= request.getSession(); */
 				
 				//Integer sessionMIdx = (Integer) request.getSession().getAttribute("m_idx");
@@ -261,50 +262,38 @@ top:100%;
 
 				//int ownerMidx = mdao.mypageOwner(ownerId); 
 				
-				// 요청 파라미터에서 ownerIdx 가져오기
-				
+				// 요청 파라미터에서 ownerIdx 가져오기				
 				
 			    String ownerIdxParam = request.getParameter("ownerIdx");
-			    int ownerId = Integer.parseInt(ownerIdxParam);
-			    if (ownerIdxParam != null) {
-			        
-			        
-			    	if(ownerId == m_idx){
-			    		%>
-			    		
-			    		<%
-			    	}
-			        System.out.println("ownerIdx parameter is null.");
-			    }
+			    int ownerId;
 				
-				
-				//m_idx = (sessionMIdx != null) ? sessionMIdx : 0; 
-				
-				 MypageDTO mmdto = new MypageDTO(); 
 				 
-				 System.out.println(mmdto);
+				 
+					if(ownerIdxParam!=null){
+						ownerId= Integer.parseInt(ownerIdxParam);
+					}else{
+						ownerId=m_idx;
+		                System.out.println("ownerId가 null이어서 m_idx 값을 사용합니다: " + ownerId);
+					}
 					
-					if(m_idx == 0 || m_idx!=ownerId ){ //로그인한 m_idx != 마이페이지 주인m_idx
-					   
+					MypageDTO mmdto = new MypageDTO();
 					
+					if(m_idx == 0 || m_idx!=ownerId ){ //로그인한 m_idx != 마이페이지 주인m_idx	
+							
 						mmdto= mdao.memberGet(ownerId);
 					   mmdto= mdao.mypageOwner(ownerId);
 					%>
 					<h2 class="title">
-					<%=mmdto.getM_nick() %>의 위시잼💎</h2>
-					
-					<%
-						
-						
+					<%=mmdto.getM_nick() %>의 위시잼💎</h2>				
+					<%			
 					}else if (m_idx != 0 && m_idx==ownerId) {  // 로그인한 m_idx = 마이페이지 주인 m_idx
-					
-							
-							
+
 						mmdto= mdao.memberGet(ownerId);
 					    System.out.println("됨됨됨");
 
 						%>
 						<h2 class="title">마이페이지</h2>
+						
 						<div class="profile_item edit" onclick="location.href='/wishJam/mypage/mypageEdit.jsp'">수정하기  ></div>
 						
 						<article class="buylist">
@@ -318,29 +307,35 @@ top:100%;
 				<div class="mypage_item rightbox"></div>
 			</div>
 		</article>
-						
+					
 						<%
 						
-								
 					}
+					
 					%>
 					
+					
+					<div class="profilewrap">
+				<div class="profileimg">
+					<!-- 이거 dto에서 받아오도록 하시면 될것같습니다. 즉, dto에 m_img 인자 추가 -> mmdto의 인자 생성자에 추가,쿼리 수정 > dto객체를 이미지태그 위에서 불러오면 되겠죠? -->
+					<!-- 그냥 헤더에서 받아오는 로직있어서 그거썼습니다. 수정안하셔도됩니다 -->
+					<img src="<%=src %>">
+				</div>	
 				<div class="profile_item"><%=mmdto.getM_grade()%></div>
 				<div class="profile_item nickname" ><%=mmdto.getM_nick()%></div>
-
+</div>
 			</div>
 	</article>
 		<article id="mypage_section2">
 		<%
-		MypageDTO mmdto_2 = new MypageDTO(); 
-		if(mmdto_2.getProfile()==null){
-			
+		
+		if(mmdto.getProfile()==null){			
 			%><p>자기소개를 입력해주세요.</p><%
 			
 		}else{ %>
-			<div class="introduce"><%=mmdto_2.getProfile()%></div>
+		<div class="introduce"><%=mmdto.getProfile()%></div><%} %>
 		</article>
-		<%} %>
+		
 				
 		<article class="sellList">
 			<h3>판매내역</h3>
@@ -369,7 +364,7 @@ top:100%;
 				</div>
 				<%
 				}
-					}
+		}
 				%>
 			</div>
 		</article>

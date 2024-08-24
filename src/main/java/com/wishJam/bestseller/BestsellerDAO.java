@@ -22,7 +22,7 @@ public class BestsellerDAO {
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 
-			String sql = "select sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx where m_nick=? and rownum<=4 order by s_jjim desc ";
+			String sql = "select member.m_nick, sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx where member.m_nick=? and rownum<=4 order by s_jjim desc";
 
 			ps = con.prepareStatement(sql);
 
@@ -166,7 +166,7 @@ public List<BestsellerDTO> bestSellersOne(String nick) {
 		try {
 			con=com.db.wishJam.DbConn.getConn();
 			
-			String sql="select m_nick from member where g_idx=5";
+			String sql="select member.m_nick from member join grade on grade.g_idx=member.g_idx where grade.g_idx=5";
 			
 			ps=con.prepareStatement(sql);
 			rs=ps.executeQuery();
