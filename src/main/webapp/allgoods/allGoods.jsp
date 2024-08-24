@@ -113,7 +113,7 @@ font-size:13px;
 .discount{
 display:inline;
 font-weight:bold;
-color:orange;
+color:#ff4900;
 }
 
 
