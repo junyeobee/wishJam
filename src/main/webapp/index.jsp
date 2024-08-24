@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <link rel="stylesheet" href="/wishJam/css/burger.css" />
 <link rel="stylesheet" href="/wishJam/css/index.css" />
 <link rel="stylesheet" href="/wishJam/css/allFonts.css" />
@@ -26,6 +27,7 @@
 	padding-top: 30px;
 	gap: 1.2rem !important;
 	row-gap: 1.2rem !important;
+	margin-bottom:60px;
 }
 
 .item {
@@ -180,8 +182,7 @@ a, a:hover, a:focus, a:active, a:link {
 .eco-card-wrap{
 width:1200px;
 heigth:600px;
-
-margin-top:60px;
+margin-top:80px;
 
 }
 
@@ -245,6 +246,7 @@ margin-top:60px;
 .eco-card-swiper .swiper-slide {
 	width: calc(280px + 24px);
 	padding: 0 12px;
+	height:430px;
 }
 
 @media ( min-width : 1904px) {
@@ -544,9 +546,8 @@ margin-top:60px;
 
 <div class="eco-card-wrap">
 		<div class="eco-card-swiper swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
-			<ul class="swiper-wrapper" id="swiper-wrapper-99cd55f6df77898a"
-				aria-live="polite"
-				style="transform: translate3d(291px, 0px, 0px); transition-duration: 0ms;">
+			<ul class="swiper-wrapper" id="swiper-wrapper-99cd55f6df77898a" aria-live="polite"
+				style="transform: translate3d(100px, 0px, 0px); transition-duration: 0ms;">
 				<li class="swiper-slide swiper-slide-active" role="group"
 					aria-label="1 / 3">
 					<div class="eco-card">
@@ -596,6 +597,8 @@ margin-top:60px;
 
                 </div>
             </div>
+            </section>
+            
 		<%@ include file="footer.jsp"%>
 </body>
 </html>
