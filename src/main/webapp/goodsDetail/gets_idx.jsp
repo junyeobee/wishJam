@@ -6,7 +6,8 @@
 <meta charset="UTF-8">
 <script>
 	function openMR(){
-		window.open('makeReview.jsp?s_idx=1&m_idx=1','makeReview','width=600px,height=800px');
+		var sd = document.idx_gfm3.s_idx;
+		window.open('makeReview.jsp?s_idx='+sd.value+'&m_idx=1','makeReview','width=600px,height=800px');
 	}
 </script>
 <title>Insert title here</title>
@@ -27,6 +28,7 @@
 		<input type="submit" value="제출">
 	</form>
 	<form name="idx_gfm3" action="makeReview.jsp">
+	<input type="text" name="s_idx">
 		<input type="button" value="제출" onclick="openMR()">
 	</form>
 </body>

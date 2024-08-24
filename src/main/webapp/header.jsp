@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:useBean id = "maindao" class = "com.manage.wishJam.mainDAO"></jsp:useBean>
 <jsp:useBean id = "ctdao" class ="com.manage.wishJam.M_CartegoryDAO"/>
-<%@ page import ="com.manage.wishJam.M_CategoryDTO"%>
+<%@ page import ="com.manage.wishJam.M_CategoryDTO "%>
 <%@ page import ="java.util.*" %>
 <link rel="stylesheet" href="/wishJam/css/headfoot.css" />
 <link rel="stylesheet" href="/wishJam/css/burger.css" />

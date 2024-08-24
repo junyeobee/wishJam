@@ -24,7 +24,7 @@ int s_idx = sdao.getLastidx();
 <title>Insert title here</title>
 <%@ include file="scriptDetail.jsp"%>
 </head>
-<%@ include file="/header.jsp"%>
+<%@ include file="/header.jsp" %>
 <body onmousedown="outClick(event)">
 	<section>
 		<form name="makeSellfm" action="makeSell_ok.jsp" method="post" onsubmit="return checkAllform(event)">

@@ -129,26 +129,28 @@ public class DetailDAO {
 
 	public int addCart(int m_idx, int sg_idx, int ct_count) {
 		try {
-				conn=com.db.wishJam.DbConn.getConn();
-				String sql = "insert into cart values(ct_seq.nextval, ?,?,?,1)";
-				ps=conn.prepareStatement(sql);
-				ps.setInt(1, m_idx);
-				ps.setInt(2, sg_idx );
-				ps.setInt(3, ct_count);
-				
-				int count = ps.executeUpdate();
-				
-				return count;
+			conn = com.db.wishJam.DbConn.getConn();
+			String sql = "insert into cart values(ct_seq.nextval, ?,?,?,1)";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, m_idx);
+			ps.setInt(2, sg_idx);
+			ps.setInt(3, ct_count);
+
+			int count = ps.executeUpdate();
+
+			return count;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
 		} finally {
 			try {
-					if(ps!=null) ps.close();
-					if(conn!=null) conn.close();
+				if (ps != null)
+					ps.close();
+				if (conn != null)
+					conn.close();
 			} catch (Exception e2) {
 			}
 		}
 	}
-	
+
 }
