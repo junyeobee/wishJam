@@ -69,7 +69,7 @@ public class BestsellerDAO {
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 
-			String sql = "select sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx where m_idx=? and rownum<=4 order by s_jjim desc ";
+			String sql = "select member.m_nick, sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx where member.m_nick=? and rownum<=4 order by s_jjim desc ";
 
 			ps = con.prepareStatement(sql);
 
@@ -85,12 +85,12 @@ public class BestsellerDAO {
 				int s_idx= rs.getInt("s_idx");
 				String s_title= rs.getString("s_title");
 				int price= rs.getInt("sg_main");
-				int m_idx = rs.getInt("m_idx");
-				String thumbnail_url=rs.getString("sg_img");
+				int m_nick = rs.getInt("m_nick");
+				String thumbnail_url=rs.getString("s_img");
 				int jjim=rs.getInt("s_jjim");
 				
 	
-				bs.add(new BestsellerDTO(s_idx,s_title,price, m_idx,thumbnail_url,jjim));
+				bs.add(new BestsellerDTO(s_idx,s_title,price, m_nick,thumbnail_url,jjim));
 			}
 			 return bs;
 		} catch (Exception e) {
@@ -136,7 +136,7 @@ public List<BestsellerDTO> bestSellersOne(String nick) {
 				String name= rs.getString("s_title");
 				int price= rs.getInt("sg_main");
 				String m_nick = rs.getString("m_nick");
-				String thumbnail_url=rs.getString("sg_img");
+				String thumbnail_url=rs.getString("s_img");
 				int jjim=rs.getInt("s_jjim");
 				
 	

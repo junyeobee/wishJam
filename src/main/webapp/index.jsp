@@ -34,6 +34,7 @@
 	position: relative;
 	border-radius: 20px;
 	border: 1px solid #C4C4C4;
+	box-shadow: 2px 4px 9px 3px rgba(0, 0, 0, 0.09);
 }
 
 .inner {

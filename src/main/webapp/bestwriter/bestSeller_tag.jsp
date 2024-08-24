@@ -24,7 +24,7 @@ List<BestsellerDTO> sellerproducts = dao.bestSellersOne(nick);
 <style>
 section {
 	
-	width: 920px;
+	width: 960px;
 	height: 1500px;
 	margin: 0 auto;
 }
@@ -116,6 +116,8 @@ text-align:center;
 
 
 </head>
+
+
 <body>
 	<Section>
 		<article>
@@ -141,10 +143,7 @@ text-align:center;
 				%> <p>작품이 없습니다.<p> <%} %>
 				
 				</div>
-				
-				
-				
-		
+			
 		</article>
 	</Section>
 </body>
