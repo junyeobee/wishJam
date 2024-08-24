@@ -82,6 +82,7 @@ h3 {
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
+	
 }
 
 #seller_tg div {
@@ -93,6 +94,14 @@ h3 {
 	margin-bottom: 5px;
 	text-align: center;
 	font-family: 'Cafe24Ohsquareair';
+		cursor: pointer; /* 커서를 포인터로 변경 */
+    transition: border-color 0.3s, color 0.3s; /* 부드러운 전환 효과 */
+    line-height: 35px;
+}
+
+#seller_tg div:hover {
+    border-color: #ff4900; /* 호버 시 테두리 색상 변경 */
+    color: #ff4900; /* 호버 시 글자 색상 변경 */
 }
 
 .hidden{

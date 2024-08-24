@@ -36,10 +36,14 @@ if(sellerProducts !=null){
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/wishJam/css/allFonts.css">
+<link rel="stylesheet" href="/wishJam/css/burger.css" />
+<link rel="stylesheet" href="/wishJam/css/index.css" />
 <style>
 
+
 section {
-	 font-family: 'Cafe24Ohsquareair';
+	font-family: 'Cafe24Ohsquareair';
 	width: 960px;
 	height: 1500px;
 	margin: 0 auto;
@@ -55,12 +59,14 @@ section {
 }
 
 .container {
+	font-family: 'Cafe24Ohsquareair';
     display: flex; /* 플렉스박스를 사용하여 가로 배치 */
     flex-wrap: wrap; /* 줄바꿈 허용 */
     gap: 1.2rem !important;
 }
 
 .item {
+	font-family: 'Cafe24Ohsquareair';
    width: 215px;
 	height: 245px;
     text-align: center; /* 텍스트 중앙 정렬 */
@@ -117,7 +123,7 @@ height:35px;
                 
                 // 현재 작가명과 이미지 업데이트
                 currentNick = goods.getM_nick();
-                currentImage = goods.getThumbnail_url(); // 작가 이미지 URL을 사용하거나 고정된 이미지로 설정
+                currentImage = goods.getS_img(); // 작가 이미지 URL을 사용하거나 고정된 이미지로 설정
         %>
                 <h3>
                     <img src="/wishJam/img/seller.jpeg" class="seller_pf"> <!-- 작가 프로필 이미지 -->
@@ -133,7 +139,7 @@ height:35px;
                
                     <span class="rank"><%= rank%></span> 
                     <div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">				
-                        <img src="<%= goods.getThumbnail_url() %>" alt="썸네일">
+                        <img src="<%= goods.getS_img() %>" alt="썸네일">
                     </div>
                 </div>
         <%

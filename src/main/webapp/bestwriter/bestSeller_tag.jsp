@@ -20,10 +20,13 @@ List<BestsellerDTO> sellerproducts = dao.bestSellersOne(nick);
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/wishJam/css/allFonts.css">
+<link rel="stylesheet" href="/wishJam/css/burger.css" />
+<link rel="stylesheet" href="/wishJam/css/index.css" />
 
 <style>
 section {
-	
+	font-family: 'Pretendard-Regular';
 	width: 960px;
 	height: 1500px;
 	margin: 0 auto;
@@ -38,7 +41,7 @@ article div {
 }
 
 h2 {
-
+	font-family: 'Cafe24Ohsquare';
 	margin-bottom: 50px;
 }
 
@@ -58,9 +61,11 @@ h2 {
 }
 
 h3 {
+	font-family: 'Cafe24Ohsquare';
 	display: table-cell;
 	vertical-align: middle;
 }
+
 
 .rank {
 	width: 25px;
@@ -112,6 +117,69 @@ font-family: 'Cafe24Ohsquareair';
 text-align:center;
 }
 
+
+.container {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	padding-top: 30px;
+	gap: 1.2rem !important;
+	row-gap: 1.2rem !important;
+}
+
+.item {
+	gap: 1.2rem !important;
+	width: 223px;
+	height: 340px;	
+	position: relative;
+	border-radius: 20px;
+	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.09);
+}
+
+.inner {
+	width: 100%;
+	font-family: 'Pretendard-Regular';
+	height: 140px;
+	background-color:#fff;
+	position: absolute;
+	border-radius: 0 0 20px 20px;
+	position: absolute;
+	bottom: 0;
+	padding-top:10px;
+}
+
+.inner div {
+	margin-bottom: 10px;
+	margin-left:6px;
+}
+
+
+.img img {
+	width: 100%;
+	height: 240px;
+	object-fit: cover;
+	border-radius: 20px 20px 0 0;
+	
+}
+
+
+.price{
+font-family: 'Pretendard-Regular';
+ font-weight: 700;
+}
+
+.writer {
+	font-size: 14px;
+	color: #747474;
+}
+
+
+.discount{
+display:inline;
+font-weight:bold;
+color:orange;
+}
+
 </style>
 
 
@@ -125,24 +193,43 @@ text-align:center;
 				<img src="/wishJam/img/seller.jpeg" class="seller_pf">
 				
 				<h3><%=nick%></h3> </div>
-				
-					<div id="selllist_wrap">
-             <% 
-             if(sellerproducts!=null && ! sellerproducts.isEmpty()){
-            	 
-				for(BestsellerDTO goods :sellerproducts ){
-					System.out.println("Dddddd"+goods.getThumbnail_url());
-					%>
+				<article class="sellList">
+			
+			<div class="custom-underline"></div>
 
-				 <div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">				
-                        <img src="<%= goods.getThumbnail_url() %>" alt="썸네일">
-                        <div class="title"><%=goods.gets_title() %></div>
-                    </div>
-					<%
-				} }else{
-				%> <p>작품이 없습니다.<p> <%} %>
+			<div class="container">
+				<%
 				
-				</div>
+				
+
+					if (sellerproducts!=null && ! sellerproducts.isEmpty()) {
+						for(BestsellerDTO goods :sellerproducts ){
+							%>
+							
+							<div class="item">
+								<div class="img" onclick="godetail('<%=goods.getS_idx()%>');">
+									<img src="<%=goods.getS_img()%>" alt="썸네일">
+								</div>
+
+								<div class="inner">
+									<div><%=goods.getS_title()%></div>
+									<div><%=goods.getSg_price()%></div>
+								</div>
+							</div>
+							<%
+					}} else {
+					
+					%>
+					<p>상품이 없습니다.
+					<p>
+				<%
+					
+				}
+				
+				%>
+			</div>
+		</article>
+			
 			
 		</article>
 	</Section>

@@ -35,7 +35,7 @@
 	height: 380px;
 	position: relative;
 	border-radius: 20px;
-	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.09);
+	
 }
 
 .inner {

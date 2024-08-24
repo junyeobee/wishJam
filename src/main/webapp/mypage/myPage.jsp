@@ -26,6 +26,7 @@ section {
 	margin: 0 auto;
 	font-family: 'Cafe24Ohsquare';
 	border: 1px solid red;
+	position:relative;
 }
 
 #mypage_section1 {
@@ -48,11 +49,6 @@ section {
 	margin-bottom: 10px;
 }
 
-.profile_item {
-	height: 20px;
-	width: 100%;
-	text-align: center;
-}
 
 .profileimg img {
 	width: 80px;
@@ -64,30 +60,31 @@ section {
 
 .container {
 	width: 100%;
-	heigth: 340px;
+	height: 360px;
 	display: flex;
-	background-color: #C4C4C4 gap: 1.2rem !important;
-	row-gap: 1.2rem !important;
 	overflow: hidden;
+	gap: 1.2rem !important; 
 }
 
 .container1 {
 	gap: 1.2rem !important;
+	height: 360px;
 }
 
 .item {
 	gap: 1.2rem !important;
 	width: 223px;
 	height: 340px;
-	border: 1px solid #C4C4C4;
+	
 	position: relative;
 	border-radius: 20px;
+	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.09);
 }
 
 .inner {
 	width: 100%;
 	height: 120px;
-	background-color: #F0F1F4;
+	background-color: #Fff;
 	position: absolute;
 	border-radius: 0 0 20px 20px;
 	bottom: 0;
@@ -123,6 +120,7 @@ section {
 	margin-bottom: 60px;
 	margin-top: 63px;
 	width: 990px;
+	
 }
 
 .nickname {
@@ -147,12 +145,12 @@ section {
 	color: gray;
 	line-height: 30px;
 	position: absolute;
-	top: 392px;
+	top: 8.7%;
 }
 
 .buylist {
 	position: absolute;
-	top: 170%;
+	top: 44%;
 	width: 960px;
 	height: 500px;
 	font-family: 'Cafe24Ohsquare';
@@ -160,13 +158,13 @@ section {
 
 .title {
 	position: absolute;
-	top: 20%;
-	left: 235px;
+	top: 0%;
+	left: 0px;
 }
 
 .sellList {
 	position: absolute;
-	top: 100%;
+	top: 25%;
 	gap: 1.2rem !important;
 }
 
@@ -179,7 +177,30 @@ section {
 	margin: 0 auto; /* 부모 요소의 가운데 정렬을 위해 자동 마진 */
 	height: 100%; /* 부모 요소의 높이에 맞추기 위한 설정 */
 	margin-top: 100px;
+	
 }
+
+.custom-underline {
+	width: 100%; /* 전체 너비 */
+	height: 4px; /* 원하는 두께 */
+	background-color: black; /* 원하는 색상 */
+	margin: 20px 0; /* 위아래 여백 조정 */
+}
+
+.profile_item {
+	height: 30px;
+	width: 100px;
+	text-align: center;
+	cursor: pointer; /* 커서를 포인터로 변경 */
+    transition: border-color 0.3s, color 0.3s; /* 부드러운 전환 효과 */
+}
+
+
+.profile_item:hover {
+    border-color: #ff4900; /* 호버 시 테두리 색상 변경 */
+    color: #ff4900; /* 호버 시 글자 색상 변경 */
+}
+
 </style>
 </head>
 
@@ -272,9 +293,7 @@ section {
 					<div class="profile_item nickname"><%=mmdto.getM_nick()%></div>
 				</div>
 
-				<div class="profile_item edit"
-					onclick="location.href='/wishJam/mypage/mypageEdit.jsp'">수정하기
-					></div>
+				<div class="profile_item edit" onclick="location.href='/wishJam/mypage/mypageEdit.jsp'">수정하기   ></div>
 
 
 
@@ -286,7 +305,8 @@ section {
 				<article class="buylist">
 
 					<h3>구매내역</h3>
-					<hr>
+					<div class="custom-underline"></div>
+				
 					<div id="celllist_wrap">
 						<div class="mypage_item"></div>
 						<div class="mypage_item"></div>
@@ -309,7 +329,7 @@ section {
 
 		<article class="sellList">
 			<h3>판매내역</h3>
-			<hr>
+			<div class="custom-underline"></div>
 
 			<div class="container">
 				<%

@@ -4,6 +4,7 @@ import java.io.*;
 import java.sql.*;
 import java.util.*;
 
+import com.allgoods.wishJam.AllgoodsDTO;
 import com.mypage.wishJam.MypageDTO;
 
 
@@ -32,19 +33,22 @@ public class BestsellerDAO {
 			
 			List<BestsellerDTO> bs = new ArrayList();
 			
-			
-			while(rs.next()) {
-				
-				int idx= rs.getInt("s_idx");
-				String name= rs.getString("s_title");
-				int price= rs.getInt("sg_main");
-				String m_nick = rs.getString("m_nick");
-				String thumbnail_url=rs.getString("s_img");
-				int jjim=rs.getInt("s_jjim");
-				
-				bs.add(new BestsellerDTO(idx,name,price,m_nick,thumbnail_url,jjim));
 
+			while (rs.next()) {
+				String m_nick= rs.getString("m_nick");
+				String s_title = rs.getString("s_title");
+				int s_idx=rs.getInt("s_idx");
+				int m_idx=rs.getInt("m_idx");
+				int s_jjim = rs.getInt("s_jjim");
+				int sg_discnt= rs.getInt("sg_discnt"); 
+				System.out.println(sg_discnt);
+				int s_discnt= rs.getInt("s_discnt"); 
+				int sg_main = rs.getInt("sg_main");
+				int sg_price = rs.getInt("sg_price");
+				String s_img = rs.getString("s_img");
+				bs.add(new BestsellerDTO(m_nick,s_title,s_idx,m_idx,s_jjim ,sg_discnt, s_discnt, sg_main, sg_price,s_img));
 			}
+			
 			 return bs;
 		} catch (Exception e) {
 		e.printStackTrace();
@@ -80,17 +84,19 @@ public class BestsellerDAO {
 			List<BestsellerDTO> bs = new ArrayList();
 			
 			
-			while(rs.next()) {
-				
-				int s_idx= rs.getInt("s_idx");
-				String s_title= rs.getString("s_title");
-				int price= rs.getInt("sg_main");
-				int m_nick = rs.getInt("m_nick");
-				String thumbnail_url=rs.getString("s_img");
-				int jjim=rs.getInt("s_jjim");
-				
-	
-				bs.add(new BestsellerDTO(s_idx,s_title,price, m_nick,thumbnail_url,jjim));
+			while (rs.next()) {
+				String m_nick= rs.getString("m_nick");
+				String s_title = rs.getString("s_title");
+				int s_idx=rs.getInt("s_idx");
+				int m_idx=rs.getInt("m_idx");
+				int s_jjim = rs.getInt("s_jjim");
+				int sg_discnt= rs.getInt("sg_discnt"); 
+				System.out.println(sg_discnt);
+				int s_discnt= rs.getInt("s_discnt"); 
+				int sg_main = rs.getInt("sg_main");
+				int sg_price = rs.getInt("sg_price");
+				String s_img = rs.getString("s_img");
+				bs.add(new BestsellerDTO(m_nick,s_title,s_idx,m_idx,s_jjim ,sg_discnt, s_discnt, sg_main, sg_price,s_img));
 			}
 			 return bs;
 		} catch (Exception e) {
@@ -130,17 +136,19 @@ public List<BestsellerDTO> bestSellersOne(String nick) {
 			List<BestsellerDTO> bs = new ArrayList();
 			
 			
-			while(rs.next()) {
-				
-				int idx= rs.getInt("s_idx");
-				String name= rs.getString("s_title");
-				int price= rs.getInt("sg_main");
-				String m_nick = rs.getString("m_nick");
-				String thumbnail_url=rs.getString("s_img");
-				int jjim=rs.getInt("s_jjim");
-				
-	
-				bs.add(new BestsellerDTO(idx,name,price, m_nick,thumbnail_url,jjim));
+			while (rs.next()) {
+				String m_nick= rs.getString("m_nick");
+				String s_title = rs.getString("s_title");
+				int s_idx=rs.getInt("s_idx");
+				int m_idx=rs.getInt("m_idx");
+				int s_jjim = rs.getInt("s_jjim");
+				int sg_discnt= rs.getInt("sg_discnt"); 
+				System.out.println(sg_discnt);
+				int s_discnt= rs.getInt("s_discnt"); 
+				int sg_main = rs.getInt("sg_main");
+				int sg_price = rs.getInt("sg_price");
+				String s_img = rs.getString("s_img");
+				bs.add(new BestsellerDTO(m_nick,s_title,s_idx,m_idx,s_jjim ,sg_discnt, s_discnt, sg_main, sg_price,s_img));
 			}
 			 return bs;
 		} catch (Exception e) {

@@ -181,6 +181,24 @@ section {
       font-size: 12px;
       font-family: 'Pretendard-Regular';
 	}
+	
+	#bt{
+	
+	font-family: 'Pretendard-Regular';
+	background:#ff4900;
+	color:#fff;
+	border:none;
+	border-radius: 10px;
+	
+	}
+	.nickname input {
+    width: 200px; /* 입력 필드의 너비 조정 (필요 시 조정) */
+    margin-right: 10px; /* 버튼과의 간격 조정 */
+}
+
+.nickname button {
+    padding: 5px 10px; /* 버튼의 패딩 조정 */
+}
 </style>
 
 <script>
@@ -361,7 +379,7 @@ if (m_idx != 0) {
 				<div class="input_wrap">
 					<div class="edit_item">
 						<div class="nickname">
-							<input type="text" name="m_nick" value="<%=mmdto.getM_nick() %>"><button onclick="nickCheck()"> 중복체크</button>
+							<input type="text" name="m_nick" value="<%=mmdto.getM_nick() %>"><button onclick="nickCheck()" id="bt"> 중복체크</button>
 						</div>
 					</div>
 					<div class=" edit_item limit">0/10</div>
@@ -394,7 +412,7 @@ if (m_idx != 0) {
 							<input type="text" id="m_tel" name="m_tel" maxlength="13" value="<%=mmdto.getM_tel()%>" onkeyup="autoHyphen(value);">
 						</div>
 					</div>
-						<div class="edit_item limit">0/10</div>
+						
 				</div>
 			</article>
 			
@@ -409,7 +427,7 @@ if (m_idx != 0) {
 							 <div class="input_alt_email" id="alt_email"></div> 
 						</div>
 					</div>
-					<div class=" edit_item limit">0/10</div>
+					
 				</div>
 			</article>
 			<article id="article_edit2">
