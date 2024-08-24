@@ -54,7 +54,7 @@ function showfuncBox(){
 	    color: white;
 	    padding-top: 10px;
 	    position: absolute;
-	    height: 100%;
+	    height: calc(100%+30vh);
 	    min-height: 400px;
 	    z-index: 10000;
 	}

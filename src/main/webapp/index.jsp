@@ -73,7 +73,9 @@ display:inline;
 font-weight:bold;
 color:orange;
 }
-a{
+section a{
+	text-decoration: none;
+	color:black;
 }
 </style>
 </head>
@@ -110,7 +112,7 @@ a{
                 for (AllgoodsDTO products : productList) {
             %>
 			<div class="item" >
-			<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
+			<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp?s_idx='+<%=products.getS_idx()%>">
 			<img src="<%=products.getS_img()%>" alt="썸네일">
 			</div>
 				<div class="inner"> 	
@@ -149,7 +151,7 @@ a{
                 for (AllgoodsDTO products : productList2) {
             %>
 			<div class="item" >
-			<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
+			<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp?s_idx='+<%=products.getS_idx()%>">
 			<img src="<%=products.getS_img()%>" alt="썸네일">
 			</div>
 				<div class="inner"> 	
