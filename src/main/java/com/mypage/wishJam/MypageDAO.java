@@ -146,8 +146,6 @@ public class MypageDAO {
 	   
 
 	    try {
-	    		
-	    		
 	    		con = com.db.wishJam.DbConn.getConn();	 
 	    		
 	    		 String sql = "SELECT m_nick FROM member WHERE m_idx = ?";

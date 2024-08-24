@@ -90,8 +90,8 @@ section {
 width:35px;
 height:35px;
  font-family: 'Cafe24Ohsquareair'; 	
-
 }
+
 </style>
 </head>
 <body>

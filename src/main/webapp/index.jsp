@@ -78,13 +78,40 @@ section a{
 	text-decoration: none;
 	color:black;
 }
+
+
 .bestWriter{
 	width: 90%;
     margin: 50px auto;
-    height: 150px;
-    box-shadow: 2px 4px 9px 3px rgba(0, 0, 0, 0.09);
-    border: 1px solid #C4C4C4;
+    height: 280px;
+    background: #F0F1F4;
     border-radius: 15px;
+    position:relative;
+    
+   
+}
+
+.bw_wrap{
+width:500px;
+hight: 250px;
+line-height:280px;
+
+}
+.bw_wrap p{
+margin-left:70px;
+border:1px solid red;
+font-family: 'Pretendard-Regular';
+font-weight: 700;
+font-size:25px;
+
+
+}
+.bestWriter a{
+position:absolute;
+right:50px;
+bottom:30px;
+font-family: 'Pretendard-Regular';
+font-size:20px;
 }
 </style>
 </head>
@@ -169,8 +196,7 @@ section a{
             	<input type="hidden" name="productId" value="<%=products.getS_idx()%>"> <!-- 상품 ID -->
 				<div name="s_title"><%=products.getS_title()%></div>
 				<div class="price">
-					
-					
+								
 					<% 
 					int dis=products.getS_discnt();
 					
@@ -180,17 +206,23 @@ section a{
 		                <%=(int)(products.getSg_price()*(1-(double)products.getS_discnt()/100)) %> <%
 		               }else{%>
 		                  <%=products.getSg_price() %>
-		                  <% }%>
-		               
+		                  <% }%>		               
 		               </div>
+				
 				</div>
 			</div>
 			<%
 			}}
 			%>
 		</div>
+		
+		
 		<div class ="bestWriter">
-			<a href="/wishJam/bestwriter/bestWriter.jsp">베스트작가</a>
+		<div class="bw_wrap">
+		<p>위시잼의 인기 베스트작가 작품들을 소개합니다🍀</p>
+			
+		</div>
+		<a href="/wishJam/bestwriter/bestWriter.jsp">구경하러 가기    ></a>
 		</div>
         </article>
     </section>
