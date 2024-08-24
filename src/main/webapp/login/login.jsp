@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>위시잼 - 로그인</title>
 <style>
-	.login_wrap {
+   .login_wrap {
       width: 600px;
       padding: 70px 0;
       margin: 0 auto;
@@ -67,8 +67,8 @@
     }
     
     .l_saveid{
-    	text-align: left;
-    	font-family: 'Cafe24Ohsquareair';
+       text-align: left;
+       font-family: 'Cafe24Ohsquareair';
     }
     
     .login_noti {
@@ -81,7 +81,7 @@
       font-family: 'Cafe24Ohsquareair';
     }
     
-    a {
+    .find_font {
       text-decoration: none;
       font-family: 'Cafe24Ohsquareair';
     }
@@ -91,36 +91,36 @@
 <body>
 <%@ include file="../header.jsp"%>
 <div class="login_wrap">
-	<div class="login_box">
-		<h2 style="color:#ff4900;">L O G I N</h2>
-		<form class="login_form" method="post" action="login_ok.jsp">
-		<div style="margin-top:50px;">
-			<input type="text" class="input_txt" name="user_id" value="" placeholder="아이디를 입력해주세요" onfocus="this.placeholder='';">
-		</div>
-		<div style="margin-top:10px;">
-			<input type="password" class="input_txt" name="user_pwd" value="" placeholder="비밀번호를 입력해주세요" onfocus="this.placeholder='';">
-		</div>
-		<div style="margin-top:10px;margin-right:130px;text-align:right;">
-			<input type="checkbox" class="l_saveid" name="keepLogIn" value="on"><span style="color: #696969;">로그인 상태 유지</span>
-		</div>
-		<div style="margin-top:25px;">
-			<input type="submit" class="l_check" value="로그인">
-		</div>
-		</form>
-		<div style="margin-top:10px;">
-			<a href="/wishJam/login/member.jsp"><input type="button" class="l_join" value="회원가입"></a>
-		</div>
-		<div style="text-align:center; margin-top:15px; font-size:14px; ">
-			<a href="find_id.jsp"><span style="color:#696969;">아이디 찾기</span></a>
-			<span style="color:#696969; font-size:12px; vertical-align: 2px; margin:0 9px;">|</span>
-			<a href="find_pwd.jsp"><span style="color:#696969;">비밀번호 찾기</span></a>
-		</div>	
-		<!-- 정책 -->
-		<div class="login_noti">
-			* 회원가입시 다양한 혜택을 누릴 수 있습니다 <br>
-			* 하나의 휴대폰 번호로 하나의 계정만 생성할 수 있습니다 
-		</div>
-	</div>
+   <div class="login_box">
+      <h2 style="color:#ff4900;">L O G I N</h2>
+      <form class="login_form" method="post" action="login_ok.jsp">
+      <div style="margin-top:50px;">
+         <input type="text" class="input_txt" name="user_id" value="" placeholder="아이디를 입력해주세요" onfocus="this.placeholder='';">
+      </div>
+      <div style="margin-top:10px;">
+         <input type="password" class="input_txt" name="user_pwd" value="" placeholder="비밀번호를 입력해주세요" onfocus="this.placeholder='';">
+      </div>
+      <div style="margin-top:10px;margin-right:130px;text-align:right;">
+         <input type="checkbox" class="l_saveid" name="keepLogIn" value="on"><span style="color: #696969;">로그인 상태 유지</span>
+      </div>
+      <div style="margin-top:25px;">
+         <input type="submit" class="l_check" value="로그인">
+      </div>
+      </form>
+      <div style="margin-top:10px;">
+         <a href="/wishJam/login/member.jsp"><input type="button" class="l_join" value="회원가입"></a>
+      </div>
+      <div style="text-align:center; margin-top:15px; font-size:14px; ">
+         <a href="find_id.jsp" class="find_font"><span style="color:#696969;">아이디 찾기</span></a>
+         <span style="color:#696969; font-size:12px; vertical-align: 2px; margin:0 9px;">|</span>
+         <a href="find_pwd.jsp" class="find_font"><span style="color:#696969;">비밀번호 찾기</span></a>
+      </div>   
+      <!-- 정책 -->
+      <div class="login_noti">
+         * 회원가입시 다양한 혜택을 누릴 수 있습니다 <br>
+         * 하나의 휴대폰 번호로 하나의 계정만 생성할 수 있습니다 
+      </div>
+   </div>
 </div>
 <%@ include file="../footer.jsp" %>
 </body>

@@ -30,6 +30,13 @@
 	if(cp%pagesize==0)usrgroup--;
 	
 %>
+<style>
+	.container{
+		background-color: white;
+		height:99%;
+		border: 1px solid #ccc;
+	}
+</style>
 <div class="container">
 <div style = "padding:10px">
 <h1>회원 관리</h1>

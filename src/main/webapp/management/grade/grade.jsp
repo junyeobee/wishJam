@@ -82,7 +82,7 @@ function editIcon(i){
 .container {
    position: relative;
    width: 100%;
-   height: calc(100% - 20vh);
+   height:calc(100% - 10vh)
    margin: auto;
 }
 .topNavLink {
@@ -129,6 +129,18 @@ function editIcon(i){
 .gradetable th {
     background-color: #f2f2f2;
 }
+.btnbox{
+	display: flex;
+    justify-content: end;
+}
+.btnbox input{
+	width: 70px;
+    height: 30px;
+    background-color: #e74a3b;
+    border: none;
+    color: white;
+    border-radius: 3px;
+}
 </style>
 <div class="container">
     <div class="topNavLink">	<!-- topNavLink에 있는 a링크중 active인 친구가 선택될시에 해당 topNav내용 출력 -->
@@ -138,7 +150,7 @@ function editIcon(i){
 	<div id="grade" class="topNav active" style="padding : 10px">
 		<h2>회원등급</h2>
 		<form action="grade_ok.jsp" method="post">
-		    <div>
+		    <div class ="btnbox">
 		    	<input type="button" value = "삭제하기" onclick="deleteData();"/>
     		</div>
 			<table class = "gradetable" id = "gradetable">
