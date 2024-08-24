@@ -18,10 +18,15 @@ for(int i=0; i<m_idxs.length;i++){
 	addcart_result += acdao.addCart(Integer.parseInt(m_idxs[i]), Integer.parseInt(sg_idxs[i]), Integer.parseInt(ct_counts[i]));
 }
 
-String msg = addcart_result==m_idxs.length?"장바구니에 담겼습니다.":"안담김";
+String msg = addcart_result==m_idxs.length?"상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?":"장바구니에 상품을 담지 못했습니다.";
 %>
 	<script>
-		window.alert('<%=msg%>');
-		location.href='/wishJam/goodsDetail/detail.jsp?s_idx=<%=s_idx%>';
+		var cartalert = window.confirm('<%=msg%>');
+		
+		if(cartalert){
+			location.href='/wishJam/cart/cart.jsp';
+		}else {
+			location.href='/wishJam/goodsDetail/detail.jsp?s_idx=<%=s_idx%>';
+		}
 	</script>
 

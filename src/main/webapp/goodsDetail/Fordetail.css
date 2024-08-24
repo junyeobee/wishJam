@@ -360,8 +360,8 @@ ul {
 }
 
 .reviewul img {
-	width: 145px;
-    height: 145px;
+	width: 140px;
+    height: 140px;
     object-fit: cover;
 }
 
@@ -390,7 +390,7 @@ ul {
 
 .rebox {
 	justify-content: space-between;
-	padding: 10px 10px 0 0;
+	padding: 10px 10px 10px 0;
 }
 
 .rebox2 {
@@ -603,4 +603,27 @@ padding-top: 4px;
 
 #totalprice {
 	margin: 2px 0 15px 0;
+}
+
+.ttimes {
+	border-radius: 5px;
+	padding: 3px 4px;
+	color: #cc3202;
+	background-color: #ffebd3;
+	width: 180px;
+	justify-content: space-around;
+
+}
+
+.tplace {
+	border-radius: 5px;
+	padding: 3px 10px;
+	color: #cc3202;
+	background-color: #ffebd3;
+}
+
+.tinfo {
+	align-items: center;
+	justify-content: space-between;
+	
 }

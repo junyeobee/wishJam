@@ -82,12 +82,25 @@ if (mrdto==null) {
 		} else if(document.makeReviewfm.r_content.value==""){
 			window.alert('리뷰 내용을 작성해주세요.');
 			return false;
-		} else if(document.makeReviewfm.r_content.value.length<10){
-			window.alert('최소 10자 이상 작성해주세요.');
-			return false;
+		}
+	}
+	
+	function getContents(t){
+		var contvalue=document.makeReviewfm.r_content;
+		var rbox = document.getElementById("contentlabel");
+		
+		if(contvalue.value==""){
+			rbox.style.display="none";
+		}
+		if(t.innerText==""){
+			rbox.style.display="block";
 		}
 		
-		
+		contvalue.value=t.innerHTML;
+	}
+	
+	function boxclick() {
+		document.getElementById("txt").focus();
 	}
 </script>
 </head>
@@ -101,7 +114,7 @@ if (mrdto==null) {
 				</div>
 				<div class="sinfo2">
 					<div><%=mrdto.getS_title()%></div>
-					<div><%=mrdto.getM_nick() %></div>
+					<div style="text-align: end; font-size: 18px;"><%=mrdto.getM_nick() %></div>
 				</div>
 			</div>
 			<div class="display:flex;"></div>
@@ -110,7 +123,7 @@ if (mrdto==null) {
 			<form name="makeReviewfm" action="makeReview_ok.jsp"
 				onsubmit="return checkAllfm()">
 				<div class="stf">
-					<span>상품은 만족하셨나요?</span>
+					<span style="font-size:25px;">상품은 만족하셨나요?</span>
 					<div>
 						<ul class="stars">
 							<li><span class="material-symbols-rounded starcolor"
@@ -127,22 +140,31 @@ if (mrdto==null) {
 						<input type="hidden" id="r_star" name="r_star" value="0">
 					</div>
 				</div>
-				<div>
-					<div>상품을 자랑해주세요</div>
-					<textarea name="r_content" placeholder="리뷰를 작성해주세요."></textarea>
+				<div class="reviewbox">
+					<div style="font-weight: bold;">상품을 자랑해주세요</div>
+					<div class="contentbox" onclick="boxclick()">
+					<div id="contentlabel">리뷰를 작성해주세요</div>
+					<span class="txtbox" id="txt" contenteditable="true" oninput="getContents(this)"></span>
+					</div>
+					<input type="hidden" name="r_content">
 				</div>
-				<div>
+				<div class="imgbox">
 					<div>사진 첨부</div>
+					<span style="font-size:14px;">(최대 5장 첨부 가능)</span>
 					<ul id="rvImg">
-						<li><div class="review_img"
-								onclick="openImgpop(<%=s_idx%>,<%=m_idx%>)"></div></li>
-
+						<li><div class="review_img uploadbox"
+								onclick="openImgpop(<%=s_idx%>,<%=m_idx%>)">
+								<span class="material-symbols-rounded">add_photo_alternate</span>
+								</div>
+						</li>
 					</ul>
 					<input type="hidden" name="r_img" id="r_img" value=" ">
-					<div>최대 5장</div>
 				</div>
-				<div>
-					<input type="submit" value="리뷰 등록">
+				<div class="buttonbox">
+					
+						<input type="button" value="취소">
+					
+						<input type="submit" value="리뷰 등록">
 				</div>
 			</form>
 		</article>

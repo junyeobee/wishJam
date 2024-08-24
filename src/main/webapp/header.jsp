@@ -125,7 +125,7 @@ function showfuncBox(){
     <img src="/wishJam/img/logo.png" alt="mainLogo" class="logo">
 	</a>
     <div class="top center">
-        <form action="/wishJam/allgoods/allGoods.jsp">
+        <form action="/wishJam/allgoods/searchResult.jsp">
             <input type="text" id="top_Search" name = "search" class="search-bar"/> 
             <input type="submit" value="검색" class="search-btn"/>
         </form>

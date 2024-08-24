@@ -19,7 +19,7 @@ if (s_idx_s != null) {
 }
 
 int result = rvdao.addReview(s_idx, m_idx, rvdto);
-String msg = result>0?"성공":"실패";
+String msg = result>0?"리뷰가 등록되었습니다.":"리뷰 등록 중 오류가 발생했습니다.";
 %>
 <script>
 window.alert('<%=msg %>');

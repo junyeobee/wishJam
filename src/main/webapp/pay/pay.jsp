@@ -44,7 +44,7 @@
      
      .cost_title{
       position: sticky;
-      top: 129px;
+      top: 160px;
       z-index: 1;
     }
     
@@ -206,6 +206,13 @@
        background-color: #fff;
   	 }
   	 
+  	 .shipin {
+  	   color: #4d4d4d;
+  	   padding-left: 10px;
+  	   font-size: 15px;
+       font-family: 'Pretendard-Regular';
+  	 }
+  	
      .payment_box input[type="radio"]{
        display:none;
      }
@@ -268,7 +275,7 @@
 <body>
 <%@ include file="../header.jsp" %>
 <div class="pay_wrap">
-	<form class="pay_form" action="">
+	<form class="pay_form" id="pay_form" name="pay_form" action="/wishJam/" method="get">
 	<h2>상품주문</h2>
 	<div class="pay_box">
 		<%
@@ -378,7 +385,7 @@
 					<div class="user_box" style="border-bottom: 1px solid rgb(244, 244, 244); padding-bottom: 30px;">
 						<span class="u_title">배송지</span>
 						<div class="lbox">
-							<div class="user_info"><%= m_addr %></div>
+							<div class="user_info" id="p_addr" ><%= m_addr %></div>
 							<div style="padding-bottom: 25px;"></div>
 							<button class="user_btn" onclick="upd_addr();">수정</button>
 						</div>
@@ -387,10 +394,17 @@
 						<span class="u_title">배송 요청사항</span>
 						<div class="lbox">
 							<div class="user_info">
-								<input type="text" style="width: 300px; height: 20px; border-radius: 3px; border: 2px solid #c0c0c0;">
+								<select class="shipin" id="shipinfo" style="width: 308px; height: 30px; border-radius: 3px; border: 2px solid #c0c0c0;">
+									<option value="0"></option>							
+									<option value="1">직접 입력하기</option>							
+									<option value="2">문 앞에 놓아주세요</option>
+									<option value="3">부재시 연락 부탁드려요</option>
+									<option value="4">배송 전 미리 연락해주세요</option>
+								</select>
 							</div>
-							<div style="padding-bottom: 25px;"></div>
-							<button class="user_btn" >입력</button>
+							<div style="padding-top: 10px">
+								<input type="hidden" class="shipin" id="shipinfo_ins" style="width: 400px; height: 25px; border-radius: 3px; border: 2px solid #c0c0c0;">
+							</div>
 						</div>
 					</div>
 				</div>
@@ -437,8 +451,8 @@
 					<hr style="border:1px solid; color:#a9a9a9;">
 				</div>
 				<div class="pay_noti">
-					<p><input type="checkbox" name="noti_check"> 개인정보 수집∙이용 및 처리 동의</p>
-					<p><input type="checkbox" name="noti_check"> 환불규정</p>
+					<p><input type="checkbox" id="notick_1" name="noti_check"> 개인정보 수집∙이용 및 처리 동의</p>
+					<p><input type="checkbox" id="notick_2" name="noti_check"> 환불규정</p>
 				</div>
 			</div>
 		</div>
@@ -475,7 +489,7 @@
 		</div>
 	</div>
 	<div style="margin-top:50px;">
-		<button class="pay_btn">결제하기</button>
+		<button class="pay_btn" id="paybtn">결제하기</button>
 	</div>
 	</form>
 </div>
@@ -484,6 +498,61 @@
 </html>
 <script>
 	function upd_addr() {
-		window.open('addrUpd.jsp','주소변경창');
-	}
+		window.open('addrUpd.jsp','addrUpd','width=500,height=250,top=300,left=500');
+		event.preventDefault();
+	}	
+</script>
+<script>
+
+	document.getElementById('shipinfo').addEventListener('change', function() {
+	    var selectedValue = this.value;
+	    if (selectedValue === '1') {	
+	    	document.getElementById('shipinfo_ins').value = "";
+	    	document.getElementById('shipinfo_ins').type = 'text';
+	    } else{
+	    	document.getElementById('shipinfo_ins').type = 'hidden';
+	    	document.getElementById('shipinfo_ins').value = document.getElementById('shipinfo').options[selectedValue].text;
+	    }
+	});
+
+	document.getElementById("paybtn").addEventListener('click', (event) => {
+		var notick_1 = document.getElementById("notick_1");
+		var notick_2 = document.getElementById("notick_2");
+        var paybtns = document.getElementsByName("pay_code");
+        var isSelected = false;
+
+        for (var i = 0; i < paybtns.length; i++) {
+            if (paybtns[i].checked) {
+                isSelected = true;
+                break;
+            }
+        }
+        
+		if(!isSelected) {
+			window.alert("결제방법을 선택해주세요.");
+			event.preventDefault();
+		} else if(!notick_1.checked || !notick_2.checked){
+			window.alert("개인정보 및 결제규정에 동의해주세요.");
+			event.preventDefault();
+		} else {
+			window.alert("구매가 완료되었습니다.");
+			document.getElementById("pay_form").submit();
+		}
+		
+	});
+</script>
+<script>
+// 스크롤 위치저장
+window.addEventListener('scroll', () => {
+    localStorage.setItem('scrollPosition', window.scrollY);
+});
+
+// 페이지 로드시 스크롤 위치 복원
+window.addEventListener('load', () => {
+    const scrollPosition = localStorage.getItem('scrollPosition');
+    if (scrollPosition) {
+        window.scrollTo(0, parseInt(scrollPosition, 10));
+        localStorage.removeItem('scrollPosition');
+    }
+});
 </script>

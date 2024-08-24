@@ -152,5 +152,56 @@ public class DetailDAO {
 			}
 		}
 	}
+	
+	public int addBuyit(int num, int m_idx, int sg_idx, int ct_count) {
+		try {
+			conn = com.db.wishJam.DbConn.getConn();
+			String sql = "insert into cart values(?, ?,?,?,1)";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, num);
+			ps.setInt(2, m_idx);
+			ps.setInt(3, sg_idx);
+			ps.setInt(4, ct_count);
 
+			int count = ps.executeUpdate();
+
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+			}
+		}
+	}
+
+	public int getLastnum() {
+		try {
+				conn=com.db.wishJam.DbConn.getConn();
+				String sql = "select max(ct_idx) from cart";
+				ps=conn.prepareStatement(sql);
+				rs=ps.executeQuery();
+				
+				int lastnum=0;
+				
+				if(rs.next()) {
+					lastnum = rs.getInt(1);	
+				}return lastnum+1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			try {
+					if(rs!=null)rs.close();
+					if(ps!=null)ps.close();
+					if(conn!=null) conn.close();
+			} catch (Exception e2) {
+			}
+		}
+	}
 }
