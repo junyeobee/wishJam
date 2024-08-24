@@ -154,6 +154,12 @@
 .d li input[type=text] {
 	width:200px;
 }
+.btnBox{
+	position: relative;
+	display: flex;
+	align-items: end;
+	justify-content: flex-end;
+}
 </style>
 <script>
 function openSub(id) {
@@ -167,7 +173,7 @@ function openSub(id) {
 	smallCategory.style.display = 'flex';
 }
 function editSub(idx) {
-	window.open("editcategory.jsp?idx="+idx,'editCategory', 'width=400,height=200');
+	window.open("editcategory.jsp?idx="+idx, 'editCategory', 'width=330px,height=290px,top=400px,left=800px');
 }
 function changeBig(){
 	var sel = document.getElementById('bigCategory').value;
@@ -188,7 +194,7 @@ function chk(){
 }
 
 function uploadImage(){
-	window.open('uploadImage.jsp?idx=<%=idx%>', 'ImageUpload', 'width=400,height=200');
+	window.open('uploadImage.jsp?idx=<%=idx%>', 'ImageUpload', 'width=400,height=120,top=400px,left=400px');
 }
 
 function imgChange() {
@@ -231,9 +237,11 @@ window.onclick = function(event) {
 }
 </script>
 <div class="container">
-<div style ="position: relative;display: flex; align-items: end;">
-	<button onclick="addCategory()">카테고리 추가</button>
-</div>
+<div style = "padding : 10px;">
+	<h2>카테고리 관리</h2>
+	<div class="btnBox">
+		<button onclick="addCategory()">카테고리 추가</button>
+	</div>
 	<div class="c_container">
 	<%
 		ArrayList<M_CategoryDTO> arr = cdao.getBigCategory();
@@ -315,4 +323,5 @@ window.onclick = function(event) {
 			</form>
 		</div>
 	</div>
+</div>
 </div>

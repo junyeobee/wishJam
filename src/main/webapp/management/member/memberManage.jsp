@@ -41,7 +41,7 @@
 <div style = "padding:10px">
 <h1>회원 관리</h1>
         <div class="toolbar">
-            <button class="btn ban-btn">회원 없애기</button>
+            <button class="btn ban-btn" onclick="alert('미지원 기능입니다.')">회원제재</button>
         </div>
 	<table>
 		<thead>

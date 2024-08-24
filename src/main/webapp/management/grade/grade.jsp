@@ -38,7 +38,7 @@ function openTab(evt, tabName) {
     evt.currentTarget.classList.add("active");
 }
 function gradeEdit(i){
-	window.open('gradeEdit.jsp?idx='+i, 'gradeIconChange', 'width=800,height=300');
+	window.open('gradeEdit.jsp?idx='+i, 'gradeIconChange', 'width=500,height=400,top=360,left=560');
 }
 function deleteData() {
     var confirmDelete = confirm('정말 삭제하시겠습니까?');
@@ -75,14 +75,14 @@ function deleteData() {
 }
 
 function editIcon(i){
-	window.open('gradeIcon.jsp?idx='+i+'', 'ImageUpload', 'width=400,height=200');
+	window.open('gradeIcon.jsp?idx='+i+'', 'ImageUpload', 'width=400,height=120,top=400px,left=800px');
 }
 </script>
 <style>
 .container {
    position: relative;
    width: 100%;
-   height:calc(100% - 10vh)
+   height:calc(100% - 10vh);
    margin: auto;
 }
 .topNavLink {
@@ -132,6 +132,7 @@ function editIcon(i){
 .btnbox{
 	display: flex;
     justify-content: end;
+    padding: 10px;
 }
 .btnbox input{
 	width: 70px;
@@ -140,6 +141,40 @@ function editIcon(i){
     border: none;
     color: white;
     border-radius: 3px;
+}
+.geditform{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+}
+.form-group{
+	margin:30px;
+}
+.image-upload-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.delbtn{
+	background-color: #e74a3b;
+    border: none;
+    width: 80px;
+    height: 30px;
+    border-radius: 3px;
+    color: white;
+    font-weight: bold;
+}
+.okbtn{
+	background-color: #1cc88a;
+    border: none;
+    width: 80px;
+    height: 30px;
+    border-radius: 3px;
+    color: white;
+    font-weight: bold;
 }
 </style>
 <div class="container">
@@ -171,8 +206,8 @@ function editIcon(i){
 							GradeDTO dto = arr.get(i);
 					%>
 						<tr>
-							<td><%=dto.getG_idx() %></td>
-							<td><a onclick="gradeEdit(<%=dto.getG_idx()%>);"><%=dto.getG_name()%></a></td>
+							<td onclick="gradeEdit(<%=dto.getG_idx()%>);"><%=dto.getG_idx() %></td>
+							<td onclick="gradeEdit(<%=dto.getG_idx()%>);"><%=dto.getG_name()%></td>
 							<td><img src="<%=dto.getG_src() %>" alt="image" width="50px" height="50px" onclick="editIcon('<%=dto.getG_idx() %>');" /></td>
 							<td><%=dto.getG_point()%></td>
 							<td><input type="checkbox" name="chkbox"></td>
@@ -194,7 +229,7 @@ function editIcon(i){
 		<script>
 		//팝업창으로 이미지 업로드
         function uploadImage() {
-            window.open('uploadImage.jsp?idx=<%=idx%>', 'ImageUpload', 'width=400,height=200');
+            window.open('uploadImage.jsp?idx=<%=idx%>', 'ImageUpload', 'width=400,height=120,top=400px,left=800px');
         }
 		//imgPath의 경로를 previewImg에 기입해 화면에 출력되는 이미지의 링크를 바꿔서 이미지 변경 
         function imgChange() {
@@ -220,7 +255,9 @@ function editIcon(i){
     	}
     </script>
 	<div id = "gradeAdd" class = "topNav" style="padding : 10px">
+		<div class="geditform">
 		<form action="gradeUpload.jsp">
+			<h2>등급 추가하기</h2>
 	    	<input type="hidden" name = "idx" value="<%=idx%>"/>
 	        <div class="form-group">
 	            <label for="title">등급명</label>
@@ -239,9 +276,10 @@ function editIcon(i){
 	            <input type="number" id = "g_point" name = "g_point"/>
 	        </div>
 	        <div class="form-actions">
-	            <input type="reset" value="재작성">
-	            <input type="submit" value="등록하기">
+	            <input class ="delbtn" type="reset" value="재작성">
+	            <input class ="okbtn" type="submit" value="등록하기">
 	        </div>
 	    </form>
+	    </div>
 	</div>
 </div>

@@ -73,7 +73,7 @@
 	}
 	.element.active {
 	    background-color: #ff9900;
-	    color: black;
+	    color: white;
 	}
 	.elcontentbox{
 		margin-top:50px;
@@ -85,7 +85,7 @@
 		background-color: #4f4f4f;
 		text-align: center;
 		padding: 10px;
-		margin-top:10px;
+		margin:10px auto;
 	}
 	
 	.pfimg {
@@ -141,20 +141,23 @@
 		font-family: 'Pretendard-Regular';
 	}
 </style>
+<script>
+function changeImg(){
+	window.open('/wishJam/management/manager/managerModify.jsp', 'imChag', 'width=400,height=400,top=400px,left=800px');
+}
+</script>
 </head>
 <body id = "body">
     <div id="manageNavbar">
         <div class="mainlogo">
-            <img src="/wishJam/img/logo2.png" onclick="window.location.href='/wishJam/'"/>
+            <img src="/wishJam/img/logo2.png" onclick='window.location.href="/wishJam/"'/>
         </div>
-        <div id="manageimg">
-        	<a href="#" data-content = "/wishJam/management/manager/managerModify" class="link">
+        <div id="manageimg" onclick="changeImg()">
             <img src="<%=src %>" class="pfimg" alt="img">
-            </a>
             <div id = "managerExplane"><%=m_nick %> 님</div>
         </div>
 		<div class ="elcontentbox">
-		    <div class="element" data-content="/wishJam/management/member/memberManage">
+		    <div class="element active" data-content="/wishJam/management/member/memberManage">
 		        회원 관리
 		    </div>
 		    <div class="element" data-content="/wishJam/management/report/reports">
@@ -176,7 +179,7 @@
 		</div>
     </div>
     <section id="manageArea">
-        <iframe id="contentFrame" src="main.jsp"></iframe>
+        <iframe id="contentFrame" src="/wishJam/management/member/memberManage.jsp"></iframe>
     </section>
     <script>
 	document.addEventListener('DOMContentLoaded', function() {

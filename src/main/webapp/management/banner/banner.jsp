@@ -50,10 +50,10 @@
 	}
     
     function imgedit(ss){
-    	window.open('bannerImgsave.jsp?idx='+ss, 'bannerChange', 'width=400,height=200');
+    	window.open('bannerImgsave.jsp?idx='+ss, 'bannerChange', 'width=400,height=120,top=400px,left=800px');
     }
     function bannerEdit(i){
-    	window.open('bannerEdit.jsp?idx='+i, 'gradeIconChange', 'width=800,height=300');
+    	window.open('bannerEdit.jsp?idx='+i, 'gradeIconChange', 'width=800,height=400,top=300px,left=500px');
     }
     function deleteData() {
         // 확인 대화 상자 표시
@@ -102,7 +102,7 @@
 .container {
    position: relative;
    width: 100%;
-   height: calc(100% - 20vh);
+   height:calc(100% - 10vh);
    margin: auto;
 }
 .topNavLink {
@@ -241,6 +241,35 @@ input[type='date']:valid::before {
     cursor: pointer;
     margin-left: 5px;
 }
+.delbtn{
+	background-color: #e74a3b;
+	border: none;
+	width: 80px;
+	height: 30px;
+	border-radius: 3px;
+	color: white;
+	font-weight:bold
+}
+.okbtn{
+	background-color: #1cc88a;
+	border: none;
+	width: 80px;
+	height: 30px;
+	border-radius: 3px;
+	color: white;
+	font-weight:bold
+}
+.upform{
+	width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+}
+.form-group{
+	margin: 30px;
+}
 </style>
 </head>
 <body>
@@ -252,7 +281,7 @@ input[type='date']:valid::before {
         <div id="manage" class="topNav active">	<!-- active클래스가 있다면 display허용 -->
             <div class="conTop">
                 <div class="button-area">
-                    <button type="button" onclick="deleteData()">선택 삭제</button>
+                    <button class = "delbtn" type="button" onclick="deleteData()">선택 삭제</button>
                 </div>
             </div>
             <table class="banner-management" id="bannerTable">
@@ -271,10 +300,10 @@ input[type='date']:valid::before {
                         if(arr!=null){
                             for(BannerDTO dto : arr){
                     %>
-                    <tr onclick="bannerEdit(<%=dto.getB_idx()%>);">
-                        <td><%=dto.getB_idx() %></td>
-                        <td><%=dto.getB_name() %></a></td>
-                        <td><%=dto.getB_sdate() %> ~ <%=dto.getB_edate() %></td>
+                    <tr>
+                        <td onclick="bannerEdit(<%=dto.getB_idx()%>);"><%=dto.getB_idx() %></td>
+                        <td onclick="bannerEdit(<%=dto.getB_idx()%>);"><%=dto.getB_name() %></td>
+                        <td onclick="bannerEdit(<%=dto.getB_idx()%>);"><%=dto.getB_sdate() %> ~ <%=dto.getB_edate() %></td>
                         <td><img src="<%=dto.getB_src() %>" alt="image" onclick="imgedit('<%=dto.getB_idx() %>');"></td>
                         <td><input type="checkbox" name="chkbox"></td>
                     </tr>
@@ -314,7 +343,7 @@ input[type='date']:valid::before {
 	<script>
 		//팝업창으로 이미지 업로드
         function uploadImage() {
-            window.open('uploadImage.jsp?idx=<%=idx%>', 'ImageUpload', 'width=400,height=200');
+            window.open('uploadImage.jsp?idx=<%=idx%>', 'ImageUpload', 'width=400,height=120,top=400px,left=800px');
         }
 		//imgPath의 경로를 previewImg에 기입해 화면에 출력되는 이미지의 링크를 바꿔서 이미지 변경 
         function imgChange() {
@@ -340,7 +369,9 @@ input[type='date']:valid::before {
     	}
     </script>
 	<div id="upload" class="topNav">
+	<div class = "upform">
 	    <form action="bannerUpload.jsp">
+	    	<h2>배너 등록하기</h2>
 	    	<input type="hidden" name = "idx" value="<%=idx%>"/>
 	        <div class="form-group">
 	            <label for="title">배너 제목</label>
@@ -365,9 +396,10 @@ input[type='date']:valid::before {
 	            <label for="notice">공지사항</label>
 	        </div>
 	        <div class="form-actions">
-	            <input type="reset" value="재작성">
-	            <input type="submit" value="등록하기">
+	            <input class = "delbtn" type="reset" value="재작성">
+	            <input class = "okbtn" type="submit" value="등록하기">
 	        </div>
 	    </form>
+	    </div>
 	</div>
 </div>
