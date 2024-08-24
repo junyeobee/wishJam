@@ -74,7 +74,17 @@ display:inline;
 font-weight:bold;
 color:orange;
 }
-a{
+section a{
+	text-decoration: none;
+	color:black;
+}
+.bestWriter{
+	width: 90%;
+    margin: 50px auto;
+    height: 150px;
+    box-shadow: 2px 4px 9px 3px rgba(0, 0, 0, 0.09);
+    border: 1px solid #C4C4C4;
+    border-radius: 15px;
 }
 </style>
 </head>
@@ -111,7 +121,7 @@ a{
                 for (AllgoodsDTO products : productList) {
             %>
 			<div class="item" >
-			<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
+			<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp?s_idx='+<%=products.getS_idx()%>">
 			<img src="<%=products.getS_img()%>" alt="썸네일">
 			</div>
 				<div class="inner"> 	
@@ -150,7 +160,7 @@ a{
                 for (AllgoodsDTO products : productList2) {
             %>
 			<div class="item" >
-			<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">
+			<div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp?s_idx='+<%=products.getS_idx()%>">
 			<img src="<%=products.getS_img()%>" alt="썸네일">
 			</div>
 				<div class="inner"> 	
@@ -179,7 +189,7 @@ a{
 			}}
 			%>
 		</div>
-		<div>
+		<div class ="bestWriter">
 			<a href="/wishJam/bestwriter/bestWriter.jsp">베스트작가</a>
 		</div>
         </article>

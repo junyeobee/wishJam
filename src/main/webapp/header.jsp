@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:useBean id = "maindao" class = "com.manage.wishJam.mainDAO"></jsp:useBean>
 <jsp:useBean id = "ctdao" class ="com.manage.wishJam.M_CartegoryDAO"/>
-<%@ page import ="com.manage.wishJam.M_CategoryDTO "%>
+<%@ page import ="com.manage.wishJam.M_CategoryDTO"%>
 <%@ page import ="java.util.*" %>
 <link rel="stylesheet" href="/wishJam/css/headfoot.css" />
 <link rel="stylesheet" href="/wishJam/css/burger.css" />
+<link rel="stylesheet" href="/wishJam/css/allFonts.css" />
 <%
 	String m_nick = (String)session.getAttribute("m_nick");
 	Integer m_idxObj = (Integer) session.getAttribute("m_idx");
@@ -53,7 +54,7 @@ function showfuncBox(){
 	    color: white;
 	    padding-top: 10px;
 	    position: absolute;
-	    height: 100%;
+	    height: calc(100%+30vh);
 	    min-height: 400px;
 	    z-index: 10000;
 	}
@@ -119,8 +120,8 @@ function showfuncBox(){
     <img src="/wishJam/img/logo.png" alt="mainLogo" class="logo">
 	</a>
     <div class="top center">
-        <form action="/wishJam/allgoods/searchResult.jsp">
-            <input type="text" id="search" name = "search" class="search-bar"/> 
+        <form action="/wishJam/allgoods/allGoods.jsp">
+            <input type="text" id="top_Search" name = "search" class="search-bar"/> 
             <input type="submit" value="검색" class="search-btn"/>
         </form>
     </div>
