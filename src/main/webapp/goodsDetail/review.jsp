@@ -54,20 +54,47 @@ if (rp % pageSize == 0) {
 		var farr = t.nextElementSibling.nextElementSibling;
 
 		if (imgbox.style.display == "none") {
+			console.log('1');
 			imgbox.style.display = "flex";
 			farr.style.display = "inline-block";
+			window.scrollBy(0,200);
 			t.innerHTML = '<span class="material-symbols-outlined">keyboard_arrow_up</span>';
 		} else {
+			console.log('2');
 			imgbox.style.display = "none";
 			farr.style.display = "none";
+			window.scrollBy(0,-200);
 			t.innerHTML = '<span class="material-symbols-outlined">keyboard_arrow_down</span>';
 		}
 	}
 	
 	function scrollImgbox(t){
-		var imgbox = t.previousElementSibling;
-		imgbox.style.right="190px";
-	
+		var imgbox = t.previousElementSibling;		
+		var barrow = t.nextElementSibling;
+		var farrow = t.previousElementSibling;	;
+		
+		if(t.id=="forarrow"){
+			var imgb = t.previousElementSibling.firstElementChild;
+			var ccnt = imgb.childElementCount;
+			
+			if(ccnt==4){
+				imgb.classList.add("move1");
+				barrow.style.display="inline-block";
+				t.style.display="none";
+				t.previousElementSibling.style.left="30px";
+			} else if(ccnt==5){
+				imgb.classList.add("move2");
+				barrow.style.display="inline-block";
+				t.style.display="none";
+				t.previousElementSibling.style.left="30px";
+			}
+		} else if(t.id=="backarrow"){
+			var imgb = t.previousElementSibling.previousElementSibling.firstElementChild;
+			farrow.style.display="inline-block";
+			t.style.display="none";
+			t.previousElementSibling.previousElementSibling.style.left="0px";
+			imgb.className="moreImg fbox move3";
+		}
 	}
 </script>
 <section class="review fullsize">
@@ -133,7 +160,7 @@ if (rp % pageSize == 0) {
 							<div style="justify-content: center;">
 								<img src="<%=rlist.get(i).getM_img()%>" class="smallimg">
 							</div>
-							<div style="margin-left: 20px;">
+							<div style="margin:0 20px;">
 								<div class="fbox">
 									<span class="namebox"><%=rlist.get(i).getM_nick()%></span>
 									<%
@@ -144,7 +171,7 @@ if (rp % pageSize == 0) {
 									}
 									%>
 								</div>
-								<span style="font-size: 19px; padding-left: 10px;"><%=rlist.get(i).getR_content()%></span>
+								<span style="font-size: 19px; padding: 0 10px;"><%=rlist.get(i).getR_content()%></span>
 							</div>
 						</div>
 					</div>
@@ -172,7 +199,7 @@ if (rp % pageSize == 0) {
 				<div class="moreimgbtn" onclick="moreImgOpen(this)">
 					<span class="material-symbols-outlined">keyboard_arrow_down</span>
 				</div>
-				<div class="moreImgbox">
+				<div class="moreImgbox" style="display: none;">
 					<div id="moreImg" class="moreImg fbox">
 
 						<%
@@ -180,20 +207,20 @@ if (rp % pageSize == 0) {
 
 						if (rlist.get(i).getR_img() != null) {
 
-						for (int j = 0; j < (gal.length>5?gal.length:gal.length-1); j++) {
-							
+						for (int j = 0; j < gal.length/* (gal.length>4?gal.length:gal.length-1) */; j++) {
+							if(!gal[j].equals(" ")){
 						%>
 						<img src="<%=gal[j]%>" class="moreboximg">
 						<%
-						}
-						}
+						}}}
 						%>
 					</div>
 				</div>
 				<%
-				if (gal.length > 4) {
+				if (gal.length > 3) {
 				%>
-				<span class="material-symbols-outlined forarrow" onclick="scrollImgbox(this)">arrow_forward_ios</span>
+				<span class="material-symbols-outlined forarrow" id="forarrow" onclick="scrollImgbox(this)">arrow_forward_ios</span>
+				<span class="material-symbols-outlined backarrow" id="backarrow" onclick="scrollImgbox(this)">arrow_back_ios</span>
 				<%
 				}
 				%>

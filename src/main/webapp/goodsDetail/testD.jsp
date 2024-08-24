@@ -10,35 +10,33 @@
 	function gogogo(){
 		var b = document.getElementById("bbox");
 		var i = document.getElementById("im");
-		i.style.left="30px";
+		i.classList.add("move");
 	}
 </script>
 <style>
 	#bbox {
 	overflow: hidden;
+	width: 100px;
+	height: 100px;
 	}
 	
-	@keyframes box-ani{
-	from {
-		transform: translate(0, 0);
-	}
-	to {
-		transform: translate(100px, 0);
-	}
-	
-	}
+.move {
+	transform: translateX(30px);
+}
 	
 	#im {
-	position: absolute;
-	animation: box-ani 1s inear forwards;
+	//position: absolute;
+	position: relative;
 	}
+	
+	.dddd{
+	margin: 50px; overflow: hidden; width: 150px; height: 100px; border: 1px solid gray;}
 </style>
 </head>
 <body>
-<div style="margin: 50px; overflow: hidden; width: 150px; border: 1px solid gray;">
-	<div id="bbox" style="position: relative;"><img id="im" src='/wishJam/img/img1.jpg'></div>
-	<div style="cursor: pointer;" onclick="gogogo()">>>>></div>
+<div id="bbox">
+	<div id="im"><img src='/wishJam/img/img1.jpg'></div>
 	
-</div>
+</div><div style="cursor: pointer;" onclick="gogogo()">>>>></div>
 </body>
 </html>

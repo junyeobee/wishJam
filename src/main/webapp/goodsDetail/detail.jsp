@@ -429,15 +429,17 @@ hiddens.remove();
 	}
 	
 	window.addEventListener('click',(e)=>{
-		if(e.target.id=='btninfo'){
-			window.scrollTo(0,0);
-		} else if(e.target.id=='btnrev'){
 			var e_height = document.getElementById("explain");
 			var sh1=document.getElementById("scrollH1");
 			var sh2=document.getElementById("scrollH2");
 			var sh3=document.getElementById("scrollH3");
 			
-			var allheight = e_height.getBoundingClientRect().height+sh1.getBoundingClientRect().height+sh2.getBoundingClientRect().height+sh3.getBoundingClientRect().height;
+		if(e.target.id=='btninfo'){
+			var infoheight = sh1.getBoundingClientRect().height+sh2.getBoundingClientRect().height+10;
+			window.scrollTo(0,infoheight);
+		} else if(e.target.id=='btnrev'){
+
+			var allheight = e_height.getBoundingClientRect().height+sh1.getBoundingClientRect().height+sh2.getBoundingClientRect().height+sh3.getBoundingClientRect().height+200;
 			window.scrollTo(0,allheight);
 		}
 	})
