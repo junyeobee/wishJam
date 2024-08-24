@@ -47,7 +47,7 @@ hedaer a:visited {
 
 #burger:checked ~ .leftNav {
     display: block;
-    transform: translateX(0); /* Ensure it appears in view */
+    transform: translateX(0);
 }
 
 .burger {
@@ -134,13 +134,14 @@ hedaer a:visited {
 .funcBox {
     display: none;
     position: absolute;
-    top: 80px;
+    top: 60px;
     right: 0;
     width: 150px;
     background-color: white;
     border: 1px solid #ccc;
     z-index: 1000;
     cursor:pointer;
+    box-shadow: 2px 4px 9px 3px rgba(0, 0, 0, 0.09);
 }
 
 .funcBox ul {

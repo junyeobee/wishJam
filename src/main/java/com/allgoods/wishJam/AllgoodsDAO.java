@@ -23,9 +23,9 @@ public class AllgoodsDAO {
 			con = com.db.wishJam.DbConn.getConn();
 			
 			if("latest".equals(sortOrder)) {
-			sql = "select s_goods.sg_main,sell.s_jjim,sell.s_idx,sell.s_title,member.m_idx,member.m_nick,sell.s_img,s_goods.sg_price,sell.s_discnt,s_goods.sg_discnt from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx where s_stat=0 and s_goods.sg_main=1 order by s_jjim desc ";
+			sql = "select s_goods.sg_main, sell.s_jjim, sell.s_idx, sell.s_title, member.m_idx, member.m_nick, sell.s_img, s_goods.sg_price, sell.s_discnt, s_goods.sg_discnt from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx = sell.m_idx where sell.s_stat = 0 and s_goods.sg_main = 1 and sell.s_end > sysdate group by s_goods.sg_main, sell.s_jjim, sell.s_idx, sell.s_title, member.m_idx, member.m_nick, sell.s_img, s_goods.sg_price, sell.s_discnt, s_goods.sg_discnt having sum(s_goods.sg_count) > 0 order by sell.s_jjim desc";
 			}else {
-				sql = "select s_goods.sg_main,sell.s_jjim,sell.s_idx,sell.s_title,member.m_idx,member.m_nick,sell.s_img,s_goods.sg_price,sell.s_discnt,s_goods.sg_discnt from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx where s_stat=0 and s_goods.sg_main=1 order by sell.s_start desc";
+				sql = "select s_goods.sg_main, sell.s_jjim, sell.s_idx, sell.s_title, member.m_idx, member.m_nick, sell.s_img, s_goods.sg_price, sell.s_discnt, s_goods.sg_discnt from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx = sell.m_idx where sell.s_stat = 0 and s_goods.sg_main = 1 and sell.s_end > sysdate and (select sum(sg_count) from s_goods where s_goods.s_idx = sell.s_idx) > 0 order by sell.s_start desc";
 			}
 				
 		    ps = con.prepareStatement(sql);
@@ -75,12 +75,7 @@ public class AllgoodsDAO {
 
 	    try {
 	    	con = com.db.wishJam.DbConn.getConn();
-	    	String sql = "SELECT s_goods.sg_main, sell.s_jjim, sell.s_idx, sell.s_title, member.m_idx, member.m_nick, sell.s_img, s_goods.sg_price, sell.s_discnt, s_goods.sg_discnt "
-	    			+ "FROM sell JOIN s_goods ON sell.s_idx = s_goods.s_idx "
-	    			+ "JOIN member ON member.m_idx = sell.m_idx "
-	    			+ "WHERE s_stat = 0 AND s_goods.sg_main = 1 AND sell.s_title LIKE '%' || ? || '%'";
-	    			
-	    	
+	    	String sql = "select s_goods.sg_main, sell.s_jjim, sell.s_idx, sell.s_title, member.m_idx, member.m_nick, sell.s_img, s_goods.sg_price, sell.s_discnt, s_goods.sg_discnt from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx = sell.m_idx where sell.s_stat = 0 and s_goods.sg_main = 1 and sell.s_title like '%'||?||'%' and (select sum(sg_count) from s_goods where s_goods.s_idx = sell.s_idx) > 0 order by sell.s_start desc";
 	    	ps = con.prepareStatement(sql);
 	    	ps.setString(1, "%" + search + "%"); // 검색어에 와일드카드 추가
 	        rs = ps.executeQuery();

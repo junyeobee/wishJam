@@ -78,7 +78,12 @@ function showfuncBox(){
 	#leftNavSmall0{
 		margin-top:20px;
 	}
-	
+	.dd:hover{
+		background-color: #ff9400;
+	}
+	.dd:hover a{
+		color:white;
+	}
 </style>
 <header>
     <label class="burger" for="burger">
@@ -136,10 +141,10 @@ function showfuncBox(){
         <label><%=m_nick %>님</label>
         <div class="funcBox">
             <ul>
-                <li><a href="/wishJam/mypage/myPage.jsp">마이페이지</a></li>
-                <li><a href="/wishJam/goodsDetail/makeSell.jsp">판매글 작성</a></li>
-                <li><a href="/wishJam/cart/cart.jsp">장바구니</a></li>
-                <li><a href="/wishJam/login/logout.jsp">로그아웃</a></li>
+                <div class = "dd"><li><a href="/wishJam/mypage/myPage.jsp">마이페이지</a></li></div>
+                <div class = "dd"><li><a href="/wishJam/goodsDetail/makeSell.jsp">판매글 작성</a></li></div>
+                <div class = "dd"><li><a href="/wishJam/cart/cart.jsp">장바구니</a></li></div>
+                <div class = "dd"><li><a href="/wishJam/login/logout.jsp">로그아웃</a></li></div>
             </ul>
         </div>
     </div>

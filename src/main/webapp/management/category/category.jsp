@@ -231,7 +231,9 @@ window.onclick = function(event) {
 }
 </script>
 <div class="container">
-<button onclick="addCategory()">카테고리 추가</button>
+<div style ="position: relative;display: flex; align-items: end;">
+	<button onclick="addCategory()">카테고리 추가</button>
+</div>
 	<div class="c_container">
 	<%
 		ArrayList<M_CategoryDTO> arr = cdao.getBigCategory();
