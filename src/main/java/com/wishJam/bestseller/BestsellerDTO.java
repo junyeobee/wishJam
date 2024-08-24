@@ -2,30 +2,53 @@ package com.wishJam.bestseller;
 
 public class BestsellerDTO {
 
-    private int idx;
-    private String name;
+    private int s_idx;
+    private String s_title;
     private int price;
     private String m_nick;
     private String thumbnail_url;
     private int jjim;
+    private int m_idx;
     
     
     
-    
+	public int getJjim() {
+		return jjim;
+	}
+
+
+	public void setJjim(int jjim) {
+		this.jjim = jjim;
+	}
+
+
+	public int getm_idx() {
+		return m_idx;
+	}
+
+
+	public void setm_idx(int m_idx) {
+		this.m_idx = m_idx;
+	}
+
+
 	public BestsellerDTO() {
 		
 	}
 
 
-	public BestsellerDTO(int idx, String name, int price, String  m_nick, String thumbnail_url, int jjim) {
+	public BestsellerDTO(int s_idx, String s_title, int price, int  m_idx, String thumbnail_url, int jjim) {
 		
-		this.idx = idx;
-		this.name = name;
+		this.s_idx = s_idx;
+		this.s_title = s_title;
 		this.price = price;
-		this. m_nick = m_nick;
+		this. m_idx = m_idx;
 		this.thumbnail_url = thumbnail_url;
 		this.jjim = jjim;
 	}
+	
+	
+	
 	
 	
 	public BestsellerDTO(String m_nick) {
@@ -33,17 +56,27 @@ public class BestsellerDTO {
 	}
 
 
-	public int getIdx() {
-		return idx;
+	public BestsellerDTO(int s_idx, String s_title, int price, String m_nick, String thumbnail_url, int jjim) {
+		this.s_idx = s_idx;
+		this.s_title = s_title;
+		this.price = price;
+		this. m_nick = m_nick;
+		this.thumbnail_url = thumbnail_url;
+		this.jjim = jjim;
 	}
-	public void setIdx(int idx) {
-		this.idx = idx;
+
+
+	public int gets_idx() {
+		return s_idx;
 	}
-	public String getName() {
-		return name;
+	public void sets_idx(int s_idx) {
+		this.s_idx = s_idx;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public String gets_title() {
+		return s_title;
+	}
+	public void sets_title(String s_title) {
+		this.s_title = s_title;
 	}
 	public int getPrice() {
 		return price;

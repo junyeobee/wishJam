@@ -66,6 +66,47 @@ public class AllgoodsDAO {
 	
 
 	
+	//검색기능
+	
+	public List<AllgoodsDTO> searchByTitle(String search) {
+		
+		List<AllgoodsDTO> searchList = new ArrayList<>();
+	    
+
+	    try {
+	    	con = com.db.wishJam.DbConn.getConn();
+	    	String sql = "SELECT s_goods.sg_main, sell.s_jjim, sell.s_idx, sell.s_title, member.m_idx, member.m_nick, sell.s_img, s_goods.sg_price, sell.s_discnt, s_goods.sg_discnt "
+	    			+ "FROM sell JOIN s_goods ON sell.s_idx = s_goods.s_idx "
+	    			+ "JOIN member ON member.m_idx = sell.m_idx "
+	    			+ "WHERE s_stat = 0 AND s_goods.sg_main = 1 AND sell.s_title LIKE '%' || ? || '%'";
+	    			
+	    	
+	    	ps = con.prepareStatement(sql);
+	    	ps.setString(1, "%" + search + "%"); // 검색어에 와일드카드 추가
+	        rs = ps.executeQuery();
+
+	        while (rs.next()) {
+				String m_nick= rs.getString("m_nick");
+				String s_title = rs.getString("s_title");
+				int s_idx=rs.getInt("s_idx");
+				int m_idx=rs.getInt("m_idx");
+				int s_jjim = rs.getInt("s_jjim");
+				int sg_discnt= rs.getInt("sg_discnt"); 
+				System.out.println(sg_discnt);
+				int s_discnt= rs.getInt("s_discnt"); 
+				int sg_main = rs.getInt("sg_main");
+				int sg_price = rs.getInt("sg_price");
+				String s_img = rs.getString("s_img");
+				searchList.add(new AllgoodsDTO(m_nick,s_title,s_idx,m_idx,s_jjim ,sg_discnt, s_discnt, sg_main, sg_price,s_img));
+			}
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return searchList;
+	}
+
+	
+	
 	
 	
 	

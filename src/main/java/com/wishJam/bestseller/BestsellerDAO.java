@@ -39,7 +39,7 @@ public class BestsellerDAO {
 				String name= rs.getString("s_title");
 				int price= rs.getInt("sg_main");
 				String m_nick = rs.getString("m_nick");
-				String thumbnail_url=rs.getString("sg_img");
+				String thumbnail_url=rs.getString("s_img");
 				int jjim=rs.getInt("s_jjim");
 				
 				bs.add(new BestsellerDTO(idx,name,price,m_nick,thumbnail_url,jjim));
@@ -69,7 +69,7 @@ public class BestsellerDAO {
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 
-			String sql = "select sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx where m_nick=? and rownum<=4 order by s_jjim desc ";
+			String sql = "select sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx where m_idx=? and rownum<=4 order by s_jjim desc ";
 
 			ps = con.prepareStatement(sql);
 
@@ -82,15 +82,15 @@ public class BestsellerDAO {
 			
 			while(rs.next()) {
 				
-				int idx= rs.getInt("s_idx");
-				String name= rs.getString("s_title");
+				int s_idx= rs.getInt("s_idx");
+				String s_title= rs.getString("s_title");
 				int price= rs.getInt("sg_main");
-				String m_nick = rs.getString("m_nick");
+				int m_idx = rs.getInt("m_idx");
 				String thumbnail_url=rs.getString("sg_img");
 				int jjim=rs.getInt("s_jjim");
 				
 	
-				bs.add(new BestsellerDTO(idx,name,price, m_nick,thumbnail_url,jjim));
+				bs.add(new BestsellerDTO(s_idx,s_title,price, m_idx,thumbnail_url,jjim));
 			}
 			 return bs;
 		} catch (Exception e) {
@@ -109,14 +109,17 @@ public class BestsellerDAO {
 	
 	
 	
-	//한명 출력
+	//태그 눌렀을 떄 한명꺼만 출력 !!! 
 public List<BestsellerDTO> bestSellersOne(String nick) {
 		
 		
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 
-			String sql = "select sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx where m_nick=? order by s_jjim desc ";
+			String sql = "select member.m_nick, sell.*, s_goods.* "
+					+ "from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx "
+					+ "where member.m_nick=? "
+					+ "order by s_jjim desc ";
 
 			ps = con.prepareStatement(sql);
 

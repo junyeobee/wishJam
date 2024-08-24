@@ -129,17 +129,13 @@ text-align:center;
              if(sellerproducts!=null && ! sellerproducts.isEmpty()){
             	 
 				for(BestsellerDTO goods :sellerproducts ){
-					
+					System.out.println("Dddddd"+goods.getThumbnail_url());
 					%>
 
 				 <div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">				
                         <img src="<%= goods.getThumbnail_url() %>" alt="썸네일">
-                        <div class="title"><%=goods.getName() %></div>
+                        <div class="title"><%=goods.gets_title() %></div>
                     </div>
-		
-		
-			
-			
 					<%
 				} }else{
 				%> <p>작품이 없습니다.<p> <%} %>

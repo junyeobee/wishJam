@@ -6,7 +6,7 @@
 <jsp:useBean id="bdao" class="com.wishJam.bestseller.BestsellerDAO"></jsp:useBean>
 	
 <%
-String[] sellerArray = {"user1","user2","user3"};
+String[] sellerArray = {"1","2","user3"};
 List<String> sellerslist = new ArrayList<>();
 
 List<BestsellerDTO> bestsellerlist= new ArrayList<>();
