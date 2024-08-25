@@ -42,9 +42,9 @@
 	color: black;
 }
 .smallCategory {
-	display: none; /* 기본적으로 숨김 */
+	display: none;
     position: absolute;
-    top: 300px;
+    top: 400px;
 }
 .c_small {
 	width: 100px;
@@ -242,6 +242,7 @@ window.onclick = function(event) {
 	<div class="btnBox">
 		<button onclick="addCategory()">카테고리 추가</button>
 	</div>
+	<div><h3>대분류</h3></div>
 	<div class="c_container">
 	<%
 		ArrayList<M_CategoryDTO> arr = cdao.getBigCategory();
@@ -254,6 +255,7 @@ window.onclick = function(event) {
 			<span class="c_name"><%= arr.get(i).getC_name() %></span>
 		</div>
 		<div class="smallCategory" id="small_parent_<%=big%>">
+		<div><h3>소분류</h3></div>
 			<%
 				ArrayList<M_CategoryDTO> arr2 = cdao.getSmallCategory(big);
 				if (arr2 != null) {

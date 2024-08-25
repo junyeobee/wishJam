@@ -41,50 +41,6 @@ function showfuncBox(){
     }
 }
 </script>
-<style>
-	.leftNavExtend{
-		display: none;
-	    justify-content: center;
-	    padding: 0;
-	    margin-left: 0;
-	    top: 0px;
-	    left: 100px;
-		width: 100px;
-	    background-color: black;
-	    color: white;
-	    padding-top: 10px;
-	    position: absolute;
-	    height: calc(100%+30vh);
-	    min-height: 400px;
-	    z-index: 10000;
-	}
-	.leftNavSmall{
-		width: 50px;
-		height: 50px;
-		border-radius: 50%;
-		background-color: white;
-		margin: 0 auto;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		cursor: pointer;
-	}
-	.smallCategoryImg{
-		width: 90%;
-		height: 90%;
-		border-radius: 50%;
-		object-fit: cover;
-	}
-	#leftNavSmall0{
-		margin-top:20px;
-	}
-	.dd:hover{
-		background-color: #ff4900;
-	}
-	.dd:hover a{
-		color:white;
-	}
-</style>
 <header>
     <label class="burger" for="burger">
         <input type="checkbox" id="burger" onchange="navView();">
@@ -105,6 +61,7 @@ function showfuncBox(){
 		            <div class="infoBig"><label><%= categoryarr.get(i).getC_name() %></label></div>
 
         			<div id = "smallToBig<%=big %>" class="leftNavExtend">
+        				<div class="info"><label><%=categoryarr.get(i).getC_name() %></label></div>
         			<%
         			ArrayList<M_CategoryDTO> categoryarr2 = ctdao.getSmallCategory(big);
 					if (categoryarr2 != null) {
