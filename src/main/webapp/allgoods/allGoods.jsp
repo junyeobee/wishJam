@@ -143,7 +143,7 @@ function updateSortOrder() {
 
 function viewFeed(ownerIdx) {
     // URL에 owner_idx를 쿼리 파라미터로 추가
-    window.alert('ggg');
+
     window.location.href = '/wishJam/mypage/myPage.jsp?ownerIdx=' + ownerIdx;
 }
 

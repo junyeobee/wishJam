@@ -121,6 +121,9 @@ section {
 	margin-bottom: 60px;
 	margin-top: 63px;
 	width: 990px;
+	position: absolute;
+    top: 9%;
+    line-height:240px;
 	
 }
 
@@ -323,8 +326,11 @@ color:#fff;
 
 
 				<article id="mypage_section2">
-
-					<div class="introduce"><%=mmdto.getProfile()%></div>
+					<%if(mmdto.getProfile() ==null ) { 
+					
+					
+					%> <p>자기소개가 없습니다.<p> <%}else{ %>
+					<div class="introduce"><%=mmdto.getProfile()%></div> <%} %>
 
 				</article>
 			<article class="buylist">
