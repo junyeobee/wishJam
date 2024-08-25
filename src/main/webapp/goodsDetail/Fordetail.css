@@ -274,6 +274,7 @@ ul {
 .titles {
 	font-size: 36px;
 	font-weight:600;
+	margin: 5px;
 }
 
 .tradeway {
@@ -647,4 +648,21 @@ padding-top: 4px;
 	align-items: center;
 	justify-content: space-between;
 	
+}
+
+.catelist {
+	align-items: center;font-size: 18px;
+}
+
+.catetitle {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.cateone {
+	color: #cc3202;
+}
+
+.review {
+	margin-bottom: 150px;
 }

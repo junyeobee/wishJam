@@ -19,19 +19,20 @@
 		}
 	}
 
-	function addSale() {
-		var salebtn = document.makeSellfm.addsale;
-		var salebox = document.getElementById('salebox');
+	function addSale(t) {
+		var salebox = document.getElementById('saleboxes');
 		var Dcgoods = document.getElementsByName("discnt_box");
 		var dcr = document.makeSellfm.s_discnt;
 		var selectdcr = document.makeSellfm.select_discnt;
-
-		if (salebtn.checked) {
+			
+		if (t.checked) {
 			salebox.style.display = "block";
+			
+			getInfoforSale();
 			dcr.value = selectdcr.options[selectdcr.selectedIndex].value;
 		} else {
 			salebox.style.display = "none";
-			document.makeSellfm.s_discnt.value = "0";
+			dcr.value = "0";
 
 			for (var i = 0; i < Dcgoods.length; i++) {
 				Dcgoods[i].checked = false;
@@ -39,6 +40,25 @@
 			}
 		}
 
+	}
+	
+	function getInfoforSale(){
+		var dbox = document.getElementsByName("discnt_box");
+		console.log(dbox.length);
+		for(var i=0; i<dbox.length; i++){
+		
+			var getname = dbox[i].parentElement.nextElementSibling;
+			var getprice = getname.nextElementSibling;
+			console.log(getname);console.log(getname.name);
+			//var nametag = document.getElementById(t.name);
+			
+			//t.innerText = nametag.value;
+			
+			//var pricetag = document.getElementById(t2.name);
+
+			//t2.innerText = pricetag.value;
+
+		}
 	}
 
 	function addterm(v) {
@@ -198,7 +218,6 @@
 
 		makeOptbox(cnt, sidx);
 		makeListbox(cnt);
-
 	}
 
 	function makeListbox(cnt) {
@@ -211,7 +230,7 @@
 		li1.append(bordbox);
 
 		var ul1 = document.createElement("ul");
-		ul1.className = "fbox fcenter";
+		ul1.className = "fbox disinfos";
 		bordbox.append(ul1);
 
 		var li2 = document.createElement("li");
@@ -246,6 +265,7 @@
 
 		var div1 = document.createElement("div");
 		div1.className = "fbox";
+		div1.setAttribute("style","align-items:center;");
 		optbox.append(div1);
 
 		var input6 = document.createElement("input");
@@ -276,9 +296,11 @@
 		div3.append(label1);
 
 		var div2 = document.createElement("div");
+		div2.className="optinfobox";
 		div1.append(input6, input7, div3, input5, div2);
 
 		var ul1 = document.createElement("ul");
+		ul1.className="fbox optinfos"
 		div2.append(ul1);
 		var li1 = document.createElement("li");
 		var li2 = document.createElement("li");
@@ -290,28 +312,33 @@
 		input1.id = "op_sg_name" + cnt;
 		input1.setAttribute("onchange", "getoptInfo(this)");
 
-		li1.append(document.createTextNode("이름"), input1);
+		var div4 = document.createElement("div");
+		div4.append(document.createTextNode("이름"));
+		
+		li1.append(div4, input1);
 
 		var input2 = document.createElement("input");
 		input2.setAttribute("type", "number");
 		input2.name = "sg_price";
 		input2.id = "op_sg_price" + cnt;
 		input2.setAttribute("onchange", "getoptInfo(this)");
+		input2.placeholder="원";
 
-		li2.append(document.createTextNode("가격"), input2, document
-				.createTextNode("원"));
-
-		var ul2 = document.createElement("ul");
-		ul2.className = "fbox";
-		li3.append(ul2);
+		var div5 = document.createElement("div");
+		div5.append(document.createTextNode("가격"));
+		
+		li2.append(div5, input2);
 
 		var li4 = document.createElement("li");
 		var input3 = document.createElement("input");
 		input3.setAttribute("type", "number");
 		input3.setAttribute("onchange", "checkSgCount(this)");
 		input3.name = "sg_count";
+		
+		var div6 = document.createElement("div");
+		div6.append(document.createTextNode("판매 수량"));
 
-		li4.append(document.createTextNode("판매 수량"), input3);
+		li4.append(div6, input3);
 
 		var li5 = document.createElement("li");
 		var input4 = document.createElement("input");
@@ -320,11 +347,12 @@
 		input4.setAttribute("value", "0");
 		input4.setAttribute("onchange", "checkSgCount(this)");
 
-		li5.append(document.createTextNode("구매 제한"), input4);
+		var div7 = document.createElement("div");
+		div7.append(document.createTextNode("구매 제한"));
+		
+		li5.append(div7, input4);
 
-		ul2.append(li4, li5);
-
-		ul1.append(li1, li2, li3);
+		ul1.append(li1, li2,li4, li5);
 
 		var span1 = document.createElement("span");
 		span1.className = "material-symbols-outlined icons";
@@ -600,17 +628,6 @@
 				t.focus();
 			}
 		}
-		var cnt = document.getElementById("dislist").childElementCount;
-
-		if ((t.id).indexOf("sg_name")) {
-			var nametag = document.getElementsByName(t.id);
-
-			nametag[0].innerText = t.value;
-		} else if ((t.id).indexOf("sg_price")) {
-			var pricetag = document.getElementsByName(t.id);
-
-			pricetag[0].innerText = t.value;
-		}
 	}
 
 	function selectIt(t) {
@@ -790,4 +807,9 @@
 		}
 	}
 
+	function checkAllform(e){
+		
+		console.log('check');
+		return false;
+	}
 </script>

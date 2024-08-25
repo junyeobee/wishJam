@@ -47,10 +47,6 @@ ul {
 	display: flex;
 }
 
-.bordbox {
-	border: 1px solid gray;
-}
-
 .editbox {
 	border: 1px solid gray;
 	padding: 15px;
@@ -298,10 +294,14 @@ ul {
 	align-items: center;
 	border: 1.5px solid #ff8632;
 	border-radius: 6px;
+	
+	align-items: center;
+	margin: 3px 5px;
+	position: relative;
 }
 
 .catebs div select {
-	padding: 15px 20px;
+	padding: 15px 20px 15px 0;
 	font-size: 18px;
 	width: 100%;
 	text-align: center;
@@ -310,12 +310,19 @@ ul {
 	appearance: none;
 }
 
+.catebs div select:focus {
+	outline: 0;
+}
+
 .catedrop {
-	padding: 13px 0;
+	padding: 13px 2px;
 	border-left:1px solid #ff8632;
 	background-color: #ff8632;
 	color: white;
 	border-radius: 0 3px 3px 0;
+	position: absolute;
+	right:0;
+	z-index: -1;
 }
 
 .goodstitle {
@@ -511,4 +518,165 @@ ul {
 .tradeselectway {
 	display: flex;
 	
+}
+
+#addplace {
+	flex-direction: column;
+	font-size: 18px;
+}
+
+.tradewishplace	{
+	margin: 10px 0;
+	align-items: center;
+}
+
+.tradewishtime {
+	align-items: center;
+	margin: 10px 0;
+}
+
+.tradedrop {
+	padding: 6px 0;
+	border-left:1px solid #ff8632;
+	background-color: #ff8632;
+	color: white;
+	border-radius: 0 3px 3px 0;
+	position: absolute;
+	right:0;
+	z-index: -1;
+}
+
+.maketd {
+	align-items: center;
+	border: 1.5px solid #ff8632;
+	border-radius: 6px;
+	width: 100px;
+	margin: 3px 5px;
+	position: relative;
+}
+
+.maketd select{
+    text-align: center;
+    background-color: transparent;
+    border: 0;
+    appearance: none;
+    padding: 9px 18px 9px 0px;
+    width: 100%;
+    font-size: 15px;
+}
+
+.maketd select:focus {
+	outline:0;
+}
+
+.makedr {
+	align-items: center;
+	border: 1.5px solid #ff8632;
+	border-radius: 6px;
+	width: 100px;
+	margin: 3px 5px;
+	position: relative;
+}
+
+.makedr select{
+    text-align: center;
+    background-color: transparent;
+    border: 0;
+    appearance: none;
+    padding: 9px 18px 9px 0px;
+    width: 100%;
+    font-size: 15px;
+}
+
+.makedr select:focus {
+	outline:0;
+}
+
+.wishtimeselect {
+	flex-direction: column;
+}
+
+.wishtimes {
+	align-items: center;
+}
+
+.discntoptions {
+	margin-bottom: 100px;
+}
+
+.discnttitle {
+	text-align: left;
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.bordbox {
+	flex-direction: column;
+}
+
+.saleboxes {
+	width: 400px;
+    font-size: 20px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.disinfos {
+	margin-left: 20px;
+}
+
+.disratebox {
+	align-items: center;
+	margin: 10px;
+}
+
+.disratebox div {
+	margin-right: 10px;
+}
+
+#dislist li {
+	margin: 2px 0;
+}
+
+.disinfos li {
+	margin: 0 10px;
+}
+
+.buttonbox {
+	position: fixed;
+    bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 900px;
+}
+
+.buttonbox input:hover {
+	cursor: pointer;
+	background-color:#ff4900;
+	border-color: #ff4900;
+	color: white;
+}
+
+.buttonbox input {
+	width: 50%;
+	border: 1px solid #dbdbdb;
+	height: 50px;
+	background-color: white;
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.buttonflex {
+	justify-content: center;
+}
+
+.discntcheck {
+	margin-left: 10px;
+}
+
+.discntcheck input {
+	    width: 18px;
 }

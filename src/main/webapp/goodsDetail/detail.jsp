@@ -25,7 +25,8 @@ if (sddto == null) {
 } else {
 
 ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
-%>
+ArrayList<String> cates = ddao.getCategoryName(sellidx);
+%> 
 
 <!DOCTYPE html>
 <html>
@@ -87,8 +88,8 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 						for (int i = 0; i < sglist.size(); i++) {
 						%>
 						<div class="fclear oneopt">
-							<img class="boximg lfloat" src="<%=sglist.get(i).getSg_img()%>">
-							<div id="sg_idx<%=i%>_name" style="font-size: 20px;"><%=sglist.get(i).getSg_name()%></div>
+							<img class="boximg lfloat" src="<%=sglist.get(i).getSg_img()%>" alt="상품 이미지">
+							<div id="sg_idx<%=i%>_name" style="font-size: 20px;"><%=sglist.get(i).getSg_name()!=null?sglist.get(i).getSg_name():"상품 이름"%></div>
 							<div class="fbox" style="justify-content: space-evenly;">
 								<div class="disbox"
 									style="display:<%=sglist.get(i).getSg_discnt() == 1 ? "block" : "none"%>">할인중</div>
@@ -146,9 +147,19 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 		</section>
 		<div class="headInfo" id="scrollH1">
 			<div>
-				<div class="titles"><%=sddto.getS_title()%></div>
+				<div class="titles"><%=sddto.getS_title()!=null?sddto.getS_title():"제목"%></div>
+				<div class="catelist fbox">
+					<div class="catetitle">카테고리</div>
+					<%
+						if(cates!=null){
+						 for(int i=0; i<cates.size();i++){%>
+						<div class="cateone"><%=cates.get(i) %></div>
+						<% if(i<cates.size()-1){ %>
+						<span class="material-symbols-rounded">chevron_right</span>
+					<%}}}%>
+				</div>
 				<div>
-					<img src="<%=sddto.getS_img()%>">
+					<img src="<%=sddto.getS_img()%>" alt="썸네일 이미지">
 				</div>
 				<table>
 					<tr>
@@ -166,6 +177,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 
 						DateFormat datef = new SimpleDateFormat("yyyy-mm-dd");
 
+						if(sddto.getS_start()!=null && sddto.getS_end()!=null){
 						String tm_s = datef.format(sddto.getS_end());
 						int tm = Integer.parseInt(tm_s.substring(0, 4));
 
@@ -178,7 +190,7 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 						<td colspan="3"><div
 								style="display: flex; justify-content: space-between;"><%=sddto.getS_start()%><span>~</span><%=sddto.getS_end()%></div></td>
 						<%
-						}
+						}}
 						%>
 					</tr>
 					<tr>
@@ -195,8 +207,10 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
  %>
 							<div>배송 판매</div>
 							<div>현장 판매</div> <%
- }
+ }else {
  %>
+ <div></div>
+ <% }%>
 						</td>
 					</tr>
 					<% if(sddto.getS_type() == 2||sddto.getS_type() ==3){
@@ -236,21 +250,23 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 		</article>
 		<section class="explain fullsize" id="explain">
 			<article>
-				<div class="contentbox"><%=sddto.getS_content()%></div>
+				<div class="contentbox"><%=sddto.getS_content()!=null?sddto.getS_content():"게시글 내용"%></div>
 			</article>
 			<article>
 				<div>
 					<ul class="fbox fcenter hashli">
 						<%
-						if (sddto.getS_hash() != null) {
+						if (sddto.getS_hash() != null&&sddto.getS_hash().contains("#")) {
 							String hash_arr[] = (sddto.getS_hash()).split("#");
 							for (int i = 1; i < hash_arr.length; i++) {
 						%>
 						<li>#<%=hash_arr[i]%></li>
 						<%
 						}
-						}
+						}else {
 						%>
+						<li>#추천 키워드</li>
+						<%} %>
 					</ul>
 				</div>
 			</article>
@@ -259,10 +275,10 @@ ArrayList<S_goodsDTO> sglist = sgdao.viewGoods(sellidx);
 				<form name="likefm"
 					<%=isFav == true ? "onsubmit='return false;'" : ""%>>
 					<div class="profilebox">
-						<img src="../img/img1.jpg" class="pfimg pointerC"
+						<img src="<%=sddto.getM_img()%>" alt="작성자 이미지" class="pfimg pointerC"
 							onclick="goprofilepage();">
 						<div class="profbox">
-							<span class="pointerC proftxt" onclick="goprofilepage()"><%=sddto.getM_nick()%></span>
+							<span class="pointerC proftxt" onclick="goprofilepage()"><%=sddto.getM_nick()!=null?sddto.getM_nick():"작성자 닉네임"%></span>
 						</div>
 						<input type="hidden" name="s_idx" value="<%=sellidx%>"> <input
 							type="hidden" name="m_idx" value="<%=m_idx%>"> <input

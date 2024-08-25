@@ -20,6 +20,7 @@ public class DetailDTO {
 	private String s_img;
 	private int s_stat;
 	private String m_nick;
+	private String m_img;
 	
 	public DetailDTO() {}
 	
@@ -45,7 +46,7 @@ public class DetailDTO {
 
 	public DetailDTO(int s_idx, int m_idx, int c_idx, String s_title, String s_content, String s_hash, int s_view,
 			int s_jjim, Date s_start, Date s_end, int s_discnt, int s_type, String s_tradeT, String s_img, int s_stat,
-			String m_nick) {
+			String m_nick, String m_img) {
 		super();
 		this.s_idx = s_idx;
 		this.m_idx = m_idx;
@@ -63,6 +64,7 @@ public class DetailDTO {
 		this.s_img = s_img;
 		this.s_stat = s_stat;
 		this.m_nick = m_nick;
+		this.m_img = m_img;
 	}
 
 	public int getS_idx() {
@@ -191,6 +193,14 @@ public class DetailDTO {
 
 	public void setM_nick(String m_nick) {
 		this.m_nick = m_nick;
+	}
+
+	public String getM_img() {
+		return m_img;
+	}
+
+	public void setM_img(String m_img) {
+		this.m_img = m_img;
 	}
 	
 }

@@ -15,7 +15,7 @@ public class DetailDAO {
 	public DetailDTO viewSellDetail(int sellidx) {
 		try {
 			conn = com.db.wishJam.DbConn.getConn();
-			String sql = "select sell.*, m_nick from sell, member where sell.m_idx=member.m_idx and s_idx=?";
+			String sql = "select sell.*, m_nick, m_img from sell, member, mypage where sell.m_idx=member.m_idx and mypage.m_idx=sell.m_idx and s_idx=?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, sellidx);
 			rs = ps.executeQuery();
@@ -37,9 +37,10 @@ public class DetailDAO {
 				String s_img = rs.getString("s_img");
 				int s_stat = rs.getInt("s_stat");
 				String m_nick = rs.getString("m_nick");
+				String m_img = rs.getString("m_img");
 
 				DetailDTO dto = new DetailDTO(s_idx, m_idx, c_idx, s_title, s_content, s_hash, s_view, s_jjim, s_start,
-						s_end, s_discnt, s_type, s_tradeT, s_img, s_stat, m_nick);
+						s_end, s_discnt, s_type, s_tradeT, s_img, s_stat, m_nick, m_img);
 
 				return dto;
 			} else {
@@ -152,7 +153,7 @@ public class DetailDAO {
 			}
 		}
 	}
-	
+
 	public int addBuyit(int num, int m_idx, int sg_idx, int ct_count) {
 		try {
 			conn = com.db.wishJam.DbConn.getConn();
@@ -182,24 +183,60 @@ public class DetailDAO {
 
 	public int getLastnum() {
 		try {
-				conn=com.db.wishJam.DbConn.getConn();
-				String sql = "select max(ct_idx) from cart";
-				ps=conn.prepareStatement(sql);
-				rs=ps.executeQuery();
-				
-				int lastnum=0;
-				
-				if(rs.next()) {
-					lastnum = rs.getInt(1);	
-				}return lastnum+1;
+			conn = com.db.wishJam.DbConn.getConn();
+			String sql = "select max(ct_idx) from cart";
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			int lastnum = 0;
+
+			if (rs.next()) {
+				lastnum = rs.getInt(1);
+			}
+			return lastnum + 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
 		} finally {
 			try {
-					if(rs!=null)rs.close();
-					if(ps!=null)ps.close();
-					if(conn!=null) conn.close();
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+			}
+		}
+	}
+
+	public ArrayList<String> getCategoryName(int s_idx) {
+		try {
+				ArrayList<String> cates = new ArrayList<String>(); 
+				
+				conn=com.db.wishJam.DbConn.getConn();
+				String sql = "select bc.c_name as c1, category.c_name as c2 from category, (select c_big,c_name from category, sell"
+						+ " where sell.c_idx=category.c_idx and s_idx=4)bc where bc.c_big=category.c_big and c_small is null";
+				ps=conn.prepareStatement(sql);
+				rs=ps.executeQuery();
+				
+				if(rs.next()) {
+					String c1 = rs.getString("c1");
+					String c2 = rs.getString("c2");
+					
+					cates.add(c1);
+					cates.add(c2);
+				}
+				
+				return cates;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if(rs!=null) rs.close();
+				if(ps!=null) ps.close();
+				if(conn!=null)conn.close();
 			} catch (Exception e2) {
 			}
 		}
