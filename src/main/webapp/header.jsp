@@ -79,7 +79,7 @@ function showfuncBox(){
 		margin-top:20px;
 	}
 	.dd:hover{
-		background-color: #ff9400;
+		background-color: #ff4900;
 	}
 	.dd:hover a{
 		color:white;

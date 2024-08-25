@@ -25,7 +25,6 @@ section {
 	width: 960px;
 	margin: 0 auto;
 	font-family: 'Cafe24Ohsquare';
-	border: 1px solid red;
 	position:relative;
 }
 
@@ -166,6 +165,7 @@ section {
 	position: absolute;
 	top: 25%;
 	gap: 1.2rem !important;
+	
 }
 
 .profilewrap {
@@ -280,7 +280,7 @@ section {
 				} else if (m_idx != 0 && m_idx == ownerId) { // 로그인한 m_idx = 마이페이지 주인 m_idx 같음
 
 				mmdto = mdao.memberGet(ownerId);
-				System.out.println("됨됨됨");
+			
 				%>
 				<h2 class="title">마이페이지</h2>
 
@@ -334,7 +334,7 @@ section {
 			<div class="container">
 				<%
 				int idx = m_idx != 0 ? 0 : m_idx;
-				List<MypageDTO> buylist = mdao.buyList(ownerId);
+				ArrayList<MypageDTO> buylist = mdao.buyList(ownerId);
 				for (MypageDTO goods : buylist) {
 
 					if (goods == null) {

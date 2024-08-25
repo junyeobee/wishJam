@@ -107,9 +107,9 @@ public class MypageDAO {
 	
 	
 	
-	public List<MypageDTO> buyList(int m_idx){
+	public ArrayList<MypageDTO> buyList(int m_idx){
 		
-	List<MypageDTO> bl = new ArrayList();
+	ArrayList<MypageDTO> bl = new ArrayList<MypageDTO>();
 	
 	try {
 		

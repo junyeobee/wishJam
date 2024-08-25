@@ -79,7 +79,7 @@
 }
 
 section a {
-	text-decoration: none;
+	text-dwishration: none;
 	color: black;
 }
 
@@ -113,7 +113,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup,
 }
 
 a, a:hover, a:focus, a:active, a:link {
-	text-decoration: none;
+	text-dwishration: none;
 	color: inherit;
 	font-size: 16px;
 }
@@ -179,7 +179,7 @@ a, a:hover, a:focus, a:active, a:link {
 }
 
 
-.eco-card-wrap{
+.wish-card-wrap{
 width:1200px;
 heigth:600px;
 margin-top:80px;
@@ -197,24 +197,24 @@ margin-top:80px;
 
 
 
-.eco-card {
+.wish-card {
 	overflow: hidden;
 	border-radius: 20px;
 	background-color: #fff;
 	box-shadow: 0 2px 18px 0 rgba(0, 0, 0, 0.09);
 }
 
-.eco-card .img {
+.wish-card .img {
 	position: relative;
 }
 
-.eco-card .img:before {
+.wish-card .img:before {
 	content: '';
 	display: block;
 	padding-bottom: 72.1428%;
 }
 
-.eco-card .img img {
+.wish-card .img img {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -224,54 +224,54 @@ margin-top:80px;
 	object-fit: cover;
 }
 
-.eco-card .txt {
+.wish-card .txt {
 	display: flex;
 	flex-direction: column;
 	padding: 32px 0;
 	text-align: center;
 }
 
-.eco-card .txt span {
+.wish-card .txt span {
 	font-size: 16px;
 	font-family: 'Pretendard-Regular';
 }
 
-.eco-card .txt strong {
+.wish-card .txt strong {
 	margin-top: 8px;
 	font-weight: 700;
 	font-size: 18px;
 	font-family: 'Pretendard-Regular';
 }
 
-.eco-card-swiper .swiper-slide {
+.wish-card-swiper .swiper-slide {
 	width: calc(280px + 24px);
 	padding: 0 12px;
 	height:430px;
 }
 
 @media ( min-width : 1904px) {
-	.eco-product .eco-card-swiper .swiper-wrapper {
+	.wish-product .wish-card-swiper .swiper-wrapper {
 		justify-content: center;
 	}
 }
 
-.eco-product .inner {
+.wish-product .inner {
 	overflow: hidden;
 	margin: 0 -22px -18px;
 	padding: 0 22px 18px;
 }
 
-.eco-activity .inner {
+.wish-activity .inner {
 	overflow: hidden;
 	margin: 0 -22px -18px;
 	padding: 0 22px 18px;
 }
 
-.eco-purpose .inner {
+.wish-purpose .inner {
 	padding: 0 12px;
 }
 
-.eco-purpose .section {
+.wish-purpose .section {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -285,38 +285,38 @@ margin-top:80px;
 	text-align: center;
 }
 
-.eco-purpose .section .icon {
+.wish-purpose .section .icon {
 	display: block;
 	width: 102px;
 	height: auto;
 	margin-bottom: 0;
 }
 
-.eco-purpose .section .heading {
+.wish-purpose .section .heading {
 	font-size: 20px;
 }
 
-.eco-purpose .section p {
+.wish-purpose .section p {
 	margin-top: 16px;
 	font-size: 16px;
 }
 
-.eco-purpose .section:nth-child(1) .icon {
+.wish-purpose .section:nth-child(1) .icon {
 	width: 114px;
 }
 
-.eco-purpose .section+.section {
+.wish-purpose .section+.section {
 	margin-top: 32px;
 }
 
-.eco-purpose .accordion {
+.wish-purpose .accordion {
 	max-width: 320px;
 	margin: 40px auto 0;
 	border-radius: 10px;
 	background-color: #fafafa;
 }
 
-.eco-purpose .accordion .toggle {
+.wish-purpose .accordion .toggle {
 	display: flex;
 	align-items: center;
 	position: relative;
@@ -328,16 +328,16 @@ margin-top:80px;
 	cursor: pointer;
 }
 
-.eco-purpose .accordion .toggle:before {
+.wish-purpose .accordion .toggle:before {
 	content: '';
 	width: 24px;
 	height: 24px;
 	margin: 2px 4px 0 0;
-	background: url(./../img/esg/eco_purpose_accordion_toggle_info.png)
+	background: url(./../img/esg/wish_purpose_accordion_toggle_info.png)
 		no-repeat 0 0/100% 100%;
 }
 
-.eco-purpose .accordion .toggle:after {
+.wish-purpose .accordion .toggle:after {
 	content: '';
 	position: absolute;
 	top: 50%;
@@ -345,20 +345,20 @@ margin-top:80px;
 	width: 24px;
 	height: 24px;
 	margin-top: -12px;
-	background: url(./../img/esg/eco_purpose_accordion_toggle_chevron.png)
+	background: url(./../img/esg/wish_purpose_accordion_toggle_chevron.png)
 		no-repeat 0 0/100% 100%;
 }
 
-.eco-purpose .accordion .toggle.active:after {
+.wish-purpose .accordion .toggle.active:after {
 	transform: rotate(180deg);
 }
 
-.eco-purpose .accordion .detail {
+.wish-purpose .accordion .detail {
 	display: none;
 	padding: 0 42px 42px;
 }
 
-.eco-purpose .accordion .detail ul li {
+.wish-purpose .accordion .detail ul li {
 	position: relative;
 	margin-top: 8px;
 	padding-left: 10px;
@@ -366,11 +366,11 @@ margin-top:80px;
 	font-size: 14px;
 }
 
-.eco-purpose .accordion .detail ul li:first-child {
+.wish-purpose .accordion .detail ul li:first-child {
 	margin-top: 0;
 }
 
-.eco-purpose .accordion .detail ul li:before {
+.wish-purpose .accordion .detail ul li:before {
 	content: '';
 	position: absolute;
 	top: 10px;
@@ -381,12 +381,12 @@ margin-top:80px;
 	background-color: currentColor;
 }
 
- .eco-card-wrap {
+ .wish-card-wrap {
             display: flex;          
             overflow: hidden;      
         }
 
-        .eco-card-swiper {
+        .wish-card-swiper {
             display: flex;          
             flex-direction: row;   
             width: 100%;           
@@ -544,13 +544,13 @@ margin-top:80px;
 
 
 
-<div class="eco-card-wrap">
-		<div class="eco-card-swiper swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
+<div class="wish-card-wrap">
+		<div class="wish-card-swiper swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
 			<ul class="swiper-wrapper" id="swiper-wrapper-99cd55f6df77898a" aria-live="polite"
 				style="transform: translate3d(100px, 0px, 0px); transition-duration: 0ms;">
 				<li class="swiper-slide swiper-slide-active" role="group"
 					aria-label="1 / 3">
-					<div class="eco-card">
+					<div class="wish-card">
 						<div class="img">
 							<img
 								src="https://www.woowayouths.com/assets/img/esg/eco_activity_01.png"
@@ -564,7 +564,7 @@ margin-top:80px;
 				</li>
 				<li class="swiper-slide swiper-slide-next" role="group"
 					aria-label="2 / 3">
-					<div class="eco-card">
+					<div class="wish-card">
 						<div class="img">
 							<img
 								src="https://static.jejuair.net/cms/images/event_scrn/20240625151251671.jpg"
@@ -577,7 +577,7 @@ margin-top:80px;
 					</div>
 				</li>
 				<li class="swiper-slide" role="group" aria-label="3 / 3">
-					<div class="eco-card">
+					<div class="wish-card">
 						<div class="img">
 							<img
 								src="https://web-resource.tamburins.com/store/exhibition/30bda177-a8aa-4fad-a2f2-fdeba340b361/popup_balm_01.jpg"
@@ -593,8 +593,6 @@ margin-top:80px;
 			<span class="swiper-notification" aria-live="assertive"
 				aria-atomic="true"></span>
 		</div>
-
-
                 </div>
             </div>
             </section>
