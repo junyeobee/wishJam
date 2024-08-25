@@ -55,6 +55,7 @@ int s_idx = sdao.getLastidx();
 								}
 								%>
 							</select><span class="material-symbols-rounded catedrop">arrow_drop_down</span></div></div>
+							
 							<div class="catebs"><label>소분류</label><div class="fbox makedb">
 							<%
 							ArrayList<CategoryDTO> clist = cgdao.list_C();
@@ -82,8 +83,8 @@ int s_idx = sdao.getLastidx();
 						</div>
 						<input type="hidden" name="c_idx"
 						value="<%=clist.get(0).getC_idx()%>">
-					<li>제목<input type="text" name="s_title">
-					<li>상세 설명
+					<li class="goodstitle fbox"><div>제목<span class="necess">*</span></div><input type="text" class="titleinput" name="s_title"></li>
+					<li class="detailinfo fbox"><div class="detailsign">상세 설명<span class="necess">*</span></div>
 						<div class="editor">
 							<div>
 								<ul class="txtfunc">
@@ -193,8 +194,10 @@ int s_idx = sdao.getLastidx();
 
 						</div>
 					</li>
-					<li>
-						<div>
+					<li class="sellperiod fbox">
+					<div class="periodtitle">판매 기간<span class="necess">*</span></div>
+					<div class="fbox">
+						<div class="selectperiod">
 							<input type="radio" name="termbtn" value="every"
 								onclick="addterm(this.value)" checked><label>상시
 								판매</label> <input type="radio" name="termbtn" value="term"
@@ -297,22 +300,22 @@ int s_idx = sdao.getLastidx();
 								}
 								%>
 							</select>
-						</div> <input type="hidden" name="s_start" id="s_start"
+						</div></div> <input type="hidden" name="s_start" id="s_start"
 						value="<%=y + "-" + ms + "-" + ds%>"> <input type="hidden"
 						name="s_end" id="s_end"
 						value="<%=(y + 99) + "-" + ms + "-" + ds%>">
 					</li>
-					<li>
-						<div class="fbox fcenter">
-							해시태그
+					<li class="sethash">
+						<div class="fbox fcenter hashtitlebox">
+							<div class="hashtitle">해시태그<span class="necess">*</span></div>
 							<div class="kwbox fbox" onclick="clickBox()">
 								<div class="fbox" id="kw"></div>
 								<div class="kweditbox" id="kweditbox" contenteditable="true"
 									onkeypress="EnterforInput(event)"></div>
 							</div>
 						</div>
-						<div class="fbox" style="justify-content: center;">
-							<span>추천</span>
+						<div class="fbox recommbox">
+							<div>추천</div>
 							<ul class="fbox fcenter" id="recomm">
 								<%
 								String kw[] = clist.get(0).getC_hash().split("#");
@@ -327,15 +330,16 @@ int s_idx = sdao.getLastidx();
 						</div> <input type="hidden" name="s_hash" value=""> <input
 						type="hidden" name="hashkw" value="<%=clist.get(0).getC_hash()%>">
 					</li>
-					<li>
+					<li class="optionselectbox fbox">
 						<article id="optsbox">
-							<div class="fbox" style="justify-content: space-between;">
-								<span>대표 상품 선택</span><label>옵션 등록</label> <input type="button"
+						<div class="optionselecttitle">옵션 등록<span class="necess">*</span></div>
+							<div class="fbox optionselectopt">
+								<span>대표 상품 선택</span> <input type="button"
 									value="옵션 추가" onclick="addOpt(<%=s_idx%>)">
 							</div>
 							<div class="fbox optbox">
 								<div class="fbox">
-									<input type="radio" name="select_main" class="main_op"
+									<input type="radio" name="select_main" selected class="main_op"
 										onclick="selectMainopt(this)"> <input type="hidden"
 										name="sg_main" value="0">
 									<div id="option_img1" class="options fbox"
@@ -343,7 +347,7 @@ int s_idx = sdao.getLastidx();
 										<label>이미지 등록</label>
 									</div>
 									<input type="hidden" id="sg_img1" name="sg_img" value="이미지없음">
-									<div>
+									<div class="optinfobox">
 										<ul>
 											<li>이름 <input type="text" name="sg_name"
 												id="op_sg_name1" onchange="getoptInfo(this)"></li>
@@ -363,7 +367,7 @@ int s_idx = sdao.getLastidx();
 									onclick="deleteOpt(this)">close</span>
 							</div>
 						</article>
-						<div style="text-align: left;">대표 상품으로 등록된 상품의 가격이 노출됩니다.</div>
+						<div style="text-align: left; margin-left: 5px;">대표 상품으로 등록된 상품의 가격이 노출됩니다.</div>
 					</li>
 					<li>
 						<div>
