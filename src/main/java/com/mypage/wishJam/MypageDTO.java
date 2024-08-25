@@ -37,9 +37,116 @@ public class MypageDTO {
 	//private int m_point;
 	
 	
+	//Buylist
+	
+	private int by_idx;
+	private int sg_idx;
+	private String sg_name ;
+	private int by_count;
+	private int by_price ;
+	private String by_addr ;
+	private String by_wish ;
+	private String by_sudan;
+	private Date by_date;
 	
 	
-    public String getM_grade() {
+	
+	
+	
+
+	 public MypageDTO(int by_idx, int by_count, int by_price, int sg_idx, String by_addr, String sg_name,String by_wish, String by_sudan, Date by_date) {
+this.by_idx = by_idx;
+this.by_count = by_count;
+this.by_price = by_price;
+this.sg_idx = sg_idx;
+this.by_addr = by_addr;
+this.sg_name = sg_name;
+this.by_wish = by_wish;
+this.by_sudan = by_sudan;
+this.by_date = by_date;
+}
+
+	public int getBy_idx() {
+		return by_idx;
+	}
+
+
+	public void setBy_idx(int by_idx) {
+		this.by_idx = by_idx;
+	}
+
+
+	public String getSg_name() {
+		return sg_name;
+	}
+
+
+	public void setSg_name(String sg_name) {
+		this.sg_name = sg_name;
+	}
+
+
+	public int getBy_count() {
+		return by_count;
+	}
+
+
+	public void setBy_count(int by_count) {
+		this.by_count = by_count;
+	}
+
+
+	public int getBy_price() {
+		return by_price;
+	}
+
+
+	public void setBy_price(int by_price) {
+		this.by_price = by_price;
+	}
+
+
+	public String getBy_addr() {
+		return by_addr;
+	}
+
+
+	public void setBy_addr(String by_addr) {
+		this.by_addr = by_addr;
+	}
+
+
+	public String getBy_wish() {
+		return by_wish;
+	}
+
+
+	public void setBy_wish(String by_wish) {
+		this.by_wish = by_wish;
+	}
+
+
+	public String getBy_sudan() {
+		return by_sudan;
+	}
+
+
+	public void setBy_sudan(String by_sudan) {
+		this.by_sudan = by_sudan;
+	}
+
+
+	public Date getBy_date() {
+		return by_date;
+	}
+
+
+	public void setBy_date(Date by_date) {
+		this.by_date = by_date;
+	}
+
+
+	public String getM_grade() {
 		return m_grade;
 	}
 
@@ -97,6 +204,7 @@ public class MypageDTO {
 		this.m_addr = m_addr;
 		this.m_email = m_email;
 	}
+	
     public String getS_title() {
 		return s_title;
 	}

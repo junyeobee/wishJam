@@ -43,7 +43,7 @@ if(sellerProducts !=null){
 
 
 section {
-	font-family: 'Cafe24Ohsquareair';
+
 	width: 960px;
 	height: 1500px;
 	margin: 0 auto;
@@ -65,15 +65,6 @@ section {
     gap: 1.2rem !important;
 }
 
-.item {
-	font-family: 'Cafe24Ohsquareair';
-   width: 215px;
-	height: 245px;
-    text-align: center; /* 텍스트 중앙 정렬 */
-    position: relative;
-	border-radius: 20px;
-	
-}
 
 .img {
     cursor: pointer; /* 클릭할 수 있음을 나타내는 커서 */
@@ -87,15 +78,95 @@ section {
 }
 
 .rank {
-    display: block; /* 순위를 블록으로 표시 */
-    font-weight: bold; /* 강조 */
-    margin-bottom: 5px; /* 순위와 이미지 사이의 여백 */
-     font-family: 'Cafe24Ohsquareair';
+    line-height: 25px;
+    width: 25px;
+    height: 25px;
+    background-color: black;
+    border-radius: 5px;
+    display: block;
+    color: white;
+    text-align: center;
+    margin: 3px;
+    position: absolute;
+    top: 5px;
+    left: 3px;
 }
+
 .seller_pf{
 width:35px;
 height:35px;
  font-family: 'Cafe24Ohsquareair'; 	
+}
+
+.container {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	padding-top: 15px;
+	gap: 1.2rem !important;
+	row-gap: 1.2rem !important;
+	margin-bottom:50px;
+}
+
+.item {
+	gap: 1.2rem !important;
+	width: 223px;
+	height: 340px;	
+	position: relative;
+	border-radius: 20px;
+	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.09);
+}
+
+.inner {
+	width: 100%;
+	font-family: 'Pretendard-Regular';
+	height: 140px;
+	background-color:#fff;
+	position: absolute;
+	border-radius: 0 0 20px 20px;
+	position: absolute;
+	bottom: 0;
+	padding-top:10px;
+}
+
+.inner div {
+	margin-bottom: 10px;
+	margin-left:6px;
+}
+
+
+.img img {
+	width: 100%;
+	height: 240px;
+	object-fit: cover;
+	border-radius: 20px 20px 0 0;
+	
+}
+
+
+.price{
+font-family: 'Pretendard-Regular';
+ font-weight: 700;
+}
+
+.writer {
+	font-size: 14px;
+	color: #747474;
+}
+
+
+.discount{
+display:inline;
+font-weight:bold;
+color:orange;
+}
+
+h3{
+ 	font-family: 'Cafe24Ohsquare';
+     height: 15px;
+    line-height: 15px;
+    	display: table-cell;
+	vertical-align: middle;
 }
 
 </style>
@@ -134,21 +205,29 @@ height:35px;
         <%
             }
         %>
+        
                 <div class="item">  
-                
-               
                     <span class="rank"><%= rank%></span> 
-                    <div class="img" onclick="location.href='/wishJam/goodsDetail/detail.jsp'">				
-                        <img src="<%= goods.getS_img() %>" alt="썸네일">
-                    </div>
+                    <div class="img" onclick="godetail('<%=goods.getS_idx()%>');">
+									<img src="<%=goods.getS_img()%>" alt="썸네일">
+								</div>
+
+								<div class="inner">
+									<div><%=goods.getS_title()%></div>
+									<div><%=goods.getSg_price()%></div>
+								</div>
                 </div>
+                
         <%
+        
+        
         		rank++;
         	if(rank>4){
         		
         		rank=1;
             }
-        }     
+        } //for    
+        
         
         // 마지막 작가의 상품 목록 닫기
         if (!currentNick.isEmpty()) {

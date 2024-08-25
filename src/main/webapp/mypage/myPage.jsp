@@ -46,6 +46,7 @@ section {
 
 #mypage_wrap div {
 	margin-bottom: 10px;
+
 }
 
 
@@ -59,9 +60,10 @@ section {
 
 .container {
 	width: 100%;
-	height: 360px;
+	height: 380px;
 	display: flex;
 	overflow: hidden;
+	padding:0 10px;
 	gap: 1.2rem !important; 
 }
 
@@ -72,7 +74,7 @@ section {
 
 .item {
 	gap: 1.2rem !important;
-	width: 223px;
+	width: 210px;
 	height: 340px;
 	
 	position: relative;
@@ -170,8 +172,8 @@ section {
 
 .profilewrap {
 	display: flex;
-	flex-direction: column; /* 세로 방향으로 정렬 */
-	align-items: center; /* 수평 가운데 정렬 */
+	flex-direction: column; 
+	align-items: center; 
 	justify-content: center; /* 수직 가운데 정렬 */
 	text-align: center; /* 텍스트 가운데 정렬 */
 	margin: 0 auto; /* 부모 요소의 가운데 정렬을 위해 자동 마진 */
@@ -181,7 +183,7 @@ section {
 }
 
 .custom-underline {
-	width: 100%; /* 전체 너비 */
+	width: 960px; /* 전체 너비 */
 	height: 4px; /* 원하는 두께 */
 	background-color: black; /* 원하는 색상 */
 	margin: 20px 0; /* 위아래 여백 조정 */
@@ -201,6 +203,31 @@ section {
     color: #ff4900; /* 호버 시 글자 색상 변경 */
 }
 
+.reviewbt{
+	width: 210px;
+    border: none;
+    border-radius: 5px;
+    height: 36px;
+    border: 1px solid #ff4900;
+    background-color: #Fff;
+    color: #ff4900;
+    transition: 0.5s;
+    font-family: 'Pretendard-Regular';
+    
+}
+
+.reviewbt:hover{
+background-color:#ff4900;
+color:#fff;
+}
+
+.buyitem_wrap{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+	heigth:390px;
+}
+
 </style>
 </head>
 
@@ -212,9 +239,7 @@ section {
 	<Script>
 		//현재 로그인 한 상태로 왔는지 체크하는 로직입니다. 헤더에서 받은 m_idx값이 만약 0이라면(헤더에서 세션이 없으면 0으로 세팅되도록 설정되어있습니다.) 해당 페이지 사용못하도록 구현했습니다
 		//윤나님 파이팅하세용 
-		var m_idx =
-	<%=m_idx%>
-		;
+		var m_idx = <%=m_idx%>;
 		if (m_idx === 0) {
 			//alert('로그인을 하세요');
 			// window.history.back();
@@ -302,18 +327,44 @@ section {
 					<div class="introduce"><%=mmdto.getProfile()%></div>
 
 				</article>
-				<article class="buylist">
+			<article class="buylist">
+			<h3>구매내역</h3>
+			<div class="custom-underline"></div>
 
-					<h3>구매내역</h3>
-					<div class="custom-underline"></div>
-				
-					<div id="celllist_wrap">
-						<div class="mypage_item"></div>
-						<div class="mypage_item"></div>
-						<div class="mypage_item"></div>
-						<div class="mypage_item rightbox"></div>
+			<div class="container">
+				<%
+				int idx = m_idx != 0 ? 0 : m_idx;
+				ArrayList<MypageDTO> buylist = mdao.buyList_front(m_idx);
+				for (MypageDTO goods : buylist) {
+
+					if (goods == null) {
+				%>
+				<p>구매 내역이 없습니다.
+				<p>
+					<%
+					} else {
+					%>
+				<div class="buyitem_wrap">
+				<div class="item">
+					<div class="img" onclick="window.open('/wishJam/mypage/buyList.jsp?s_idx=<%=goods.getS_idx()%>','buylist','width=920px,height=700px,top=460,left=320')";>
+						<img src="<%=goods.getS_img()%>" alt="썸네일">
 					</div>
-				</article>
+					<div class="inner">
+						<div><%=goods.getS_title()%></div>
+						<div><%=goods.getSg_price()%></div>
+					</div>
+				</div>
+				<div>
+					<input type="button" value="리뷰 작성하기" class="reviewbt" onclick="window.open('/wishJam/goodsDetail/makeReview.jsp?s_idx=<%=goods.getS_idx()%>','review','width=620px,height=700px,top=460,left=520')";/>
+				</div>
+				</div>
+				<%
+				}
+				}
+				%>
+			</div>
+		</article>
+		
 
 				<%
 				}
@@ -349,7 +400,6 @@ section {
 					<div class="img" onclick="godetail('<%=goods.getS_idx()%>');">
 						<img src="<%=goods.getS_img()%>" alt="썸네일">
 					</div>
-
 					<div class="inner">
 						<div><%=goods.getS_title()%></div>
 						<div><%=goods.getSg_price()%></div>
@@ -361,10 +411,6 @@ section {
 				%>
 			</div>
 		</article>
-
-
-
-
 	</section>
 </body>
 </html>

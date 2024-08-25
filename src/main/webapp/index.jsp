@@ -100,17 +100,18 @@ article, aside, details, figcaption, figure, footer, header, hgroup,
 .resquick_content {
 	font-family: 'Cafe24Ohsquareair';
 	font-size: 13px;
-	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	margin-top: 60px;
+	margin-bottom: 500px;
+	height:600px;
 }
 
 .resquick_service {
 	margin-top: 60px;
-}
+}	
 
 a, a:hover, a:focus, a:active, a:link {
 	text-dwishration: none;
@@ -129,7 +130,6 @@ a, a:hover, a:focus, a:active, a:link {
 	letter-spacing: -1px;
 	width: 1200px;
 	height: 300px;
-	margin: 0 auto;
 	background: #fff;
 	text-align: center;
 	color: black;
@@ -137,6 +137,7 @@ a, a:hover, a:focus, a:active, a:link {
 	display: block;
 	border-radius: 20px;
 	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.09);
+	margin:300px 0;
 }
 
 .resquick_content>h2 {
@@ -151,7 +152,8 @@ a, a:hover, a:focus, a:active, a:link {
 
 .resquick_content>a {
 	border: 1.5px solid #ff4900;
-	border-radius: 5px; padding : 2% 10%;
+	border-radius: 5px;
+	 padding : 2% 10%;
 	position: relative;
 	z-index: 1;
 	-webkit-transition: all 0.4s;
@@ -161,6 +163,7 @@ a, a:hover, a:focus, a:active, a:link {
 	transition: all 0.4s;
 	color: #ff4900;
 	padding: 2% 10%;
+	  text-decoration: none;
 }
 
 .resquick_content>a:after {
@@ -403,6 +406,7 @@ margin-top:80px;
             margin-right: 20px;    
         }
 </style>
+
 </head>
 <body>
 	<%@ include file="header.jsp"%>
@@ -533,7 +537,7 @@ margin-top:80px;
 			<article class="resquick_content resquick_service">
 				<h2>위시잼의 인기 베스트작가 작품들을 소개합니다🧡</h2>
 
-				<a href="#">구경하러 가기 ></a>
+				<a href="/wishJam/bestwriter/bestWriter.jsp">구경하러 가기 ></a>
 			</article>
 
 	

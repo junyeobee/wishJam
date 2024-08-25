@@ -36,9 +36,6 @@ article {
 	margin-bottom: 50px;
 }
 
-article div {
-	margin-right: 20px;
-}
 
 h2 {
 	font-family: 'Cafe24Ohsquare';
@@ -64,6 +61,8 @@ h3 {
 	font-family: 'Cafe24Ohsquare';
 	display: table-cell;
 	vertical-align: middle;
+	    height: 15px;
+    line-height: 15px;
 }
 
 
@@ -122,9 +121,10 @@ text-align:center;
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
-	padding-top: 30px;
+	padding-top: 15px;
 	gap: 1.2rem !important;
 	row-gap: 1.2rem !important;
+	margin-bottom:50px;
 }
 
 .item {

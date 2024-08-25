@@ -10,7 +10,7 @@
 
 .footer {
 font-family: 'Pretendard-Regular';
-  background-color: #f8f9fa; /* 배경색 */
+  background-color: #fff0f5; /* 배경색 */
     padding: 40px 20px; /* 패딩 */
     color: #333; /* 텍스트 색상 */
     width: 100%; /* 폭을 100%로 설정 */

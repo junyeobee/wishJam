@@ -21,6 +21,7 @@ public class BestsellerDAO {
 	public List<BestsellerDTO> bestSeller(String seller) {
 
 		try {
+			
 			con = com.db.wishJam.DbConn.getConn();
 
 			String sql = "select member.m_nick, sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx where member.m_nick=? and rownum<=4 order by s_jjim desc";
@@ -73,7 +74,7 @@ public class BestsellerDAO {
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 
-			String sql = "select member.m_nick, sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx where member.m_nick=? and rownum<=4 order by s_jjim desc ";
+			String sql = "select member.m_nick, sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx where member.m_nick=? and  sell.s_stat = 0 and s_goods.sg_main = 1 and rownum<=4 order by s_jjim desc";
 
 			ps = con.prepareStatement(sql);
 
@@ -122,10 +123,7 @@ public List<BestsellerDTO> bestSellersOne(String nick) {
 		try {
 			con = com.db.wishJam.DbConn.getConn();
 
-			String sql = "select member.m_nick, sell.*, s_goods.* "
-					+ "from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx "
-					+ "where member.m_nick=? "
-					+ "order by s_jjim desc ";
+			String sql = "select member.m_nick, sell.*, s_goods.* from sell join s_goods on sell.s_idx = s_goods.s_idx join member on member.m_idx=sell.m_idx where member.m_nick=?   and  sell.s_stat = 0 and s_goods.sg_main = 1  order by s_jjim   ";
 
 			ps = con.prepareStatement(sql);
 

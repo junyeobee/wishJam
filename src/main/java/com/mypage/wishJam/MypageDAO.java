@@ -1,6 +1,7 @@
 package com.mypage.wishJam;
 import java.io.*;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.*;
@@ -199,7 +200,82 @@ public class MypageDAO {
 	
 	
 	
+	//구매 내역
 	
+	public ArrayList<MypageDTO> buyList_front(int m_idx){
+		
+		ArrayList<MypageDTO> bl = new ArrayList<MypageDTO>();
+		
+		try {
+			
+			con = com.db.wishJam.DbConn.getConn();
+			
+			String sql = "SELECT sell.s_idx, sell.s_title, sell.s_img, sell.m_idx,s_goods.sg_price FROM sell JOIN s_goods ON sell.s_idx = s_goods.s_idx WHERE sell.m_idx = ? AND ROWNUM <= 4";
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, m_idx); 
+			rs=ps.executeQuery();
+			
+			while(rs.next()) {
+				int s_idx= (rs.getInt("s_idx"));
+				String s_title = rs.getString("s_title");
+				int sg_price = rs.getInt("sg_price");
+				String s_img = rs.getString("s_img");
+				bl.add(new MypageDTO(s_idx,s_title,sg_price,s_img));
+			
+			
+		} }catch (Exception e) {
+			e.printStackTrace();
+				
+		}
+		
+		return bl;
+		}
+		
+	
+	
+	//구매 목록 출력
+	public ArrayList<MypageDTO> realbuyList(int s_idx){
+		
+		ArrayList<MypageDTO> bl = new ArrayList<MypageDTO>();
+		
+		
+		try {
+			con = com.db.wishJam.DbConn.getConn();	
+			
+			String sql="SELECT bl.by_idx, sg.sg_idx, sg.sg_name,bl.by_count, bl.by_price, bl.by_addr, bl.by_wish, bl.by_sudan, bl.by_date FROM buylist bl JOIN s_goods sg ON bl.sg_idx = sg.sg_idx JOIN sell s ON sg.s_idx = s.s_idx WHERE sg.s_idx = ?";
+					
+			
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, s_idx);
+			rs=ps.executeQuery();
+			
+			while(rs.next()) {
+				int by_idx= (rs.getInt("by_idx"));
+				int by_count = rs.getInt("by_count");
+				int by_price = rs.getInt("by_price");
+				int sg_idx = rs.getInt("sg_idx");
+				String by_addr = rs.getString("by_addr");
+				String sg_name = rs.getString("sg_name");
+				String by_wish = rs.getString("by_wish");
+				String by_sudan = rs.getString("by_sudan");
+				Date by_date = rs.getDate("by_date");
+				bl.add(new MypageDTO(by_idx,by_count,by_price,sg_idx,by_addr,sg_name,by_wish,by_sudan,by_date));
+				}
+			
+			
+	
+			
+		} catch (Exception e) {
+		e.printStackTrace();
+		}
+		return bl;
+
+	}
+	
+	
+	
+	
+
 	
 	
 	
