@@ -9,7 +9,8 @@ public class PayDTO {
 	private String m_addr;	 // 회원주소
 	
 	// cart
-	private int ct_idx;
+	private String ct_idx;
+	private int sg_idx;
 	private int ct_count;
 	
 	// s_goods
@@ -25,9 +26,11 @@ public class PayDTO {
 		
 	}
 
-	public PayDTO(String m_name, String m_tel, String m_email, String m_addr, int ct_count, int sg_price,
+	public PayDTO(String ct_idx, int sg_idx, String m_name, String m_tel, String m_email, String m_addr, int ct_count, int sg_price,
 			int sg_discnt, String sg_name, String sg_img, double s_discnt) {
 		super();
+		this.ct_idx = ct_idx;
+		this.sg_idx = sg_idx;
 		this.m_name = m_name;
 		this.m_tel = m_tel;
 		this.m_email = m_email;
@@ -38,6 +41,14 @@ public class PayDTO {
 		this.sg_name = sg_name;
 		this.sg_img = sg_img;
 		this.s_discnt = s_discnt;
+	}
+	
+	public int getSg_idx() {
+		return sg_idx;
+	}
+
+	public void setSg_idx(int sg_idx) {
+		this.sg_idx = sg_idx;
 	}
 
 	public String getM_name() {
@@ -72,11 +83,11 @@ public class PayDTO {
 		this.m_addr = m_addr;
 	}
 
-	public int getCt_idx() {
+	public String getCt_idx() {
 		return ct_idx;
 	}
 
-	public void setCt_idx(int ct_idx) {
+	public void setCt_idx(String ct_idx) {
 		this.ct_idx = ct_idx;
 	}
 

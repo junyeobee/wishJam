@@ -6,18 +6,26 @@
 <link rel="stylesheet" href="/wishJam/css/allFonts.css" />
 <meta charset="UTF-8">
 <title>배송지 변경</title>
-<style>
+	<style>
+		body {
+			background-color: #fdf5e6;
+			display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    min-height: 90vh;
+		    margin: 0;
+		}
+		
         fieldset {
-            border: 2px solid #f5e6d6;
+            border: 2px solid #faf9f6;
             border-radius: 8px;
             padding: 20px;
-            width: 100%;
-            height: 100%;
-            max-width: 500px;
-            max-height: 250px;
-            background-color: #fdf5e6;
+            width: 500px;
+            height: 190px;
+            background-color: #faf9f6;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             box-sizing: border-box;
+            margin: auto;
             font-family: 'Cafe24Ohsquareair';
         }
 
@@ -25,20 +33,14 @@
             font-size: 1.2em;
             font-weight: bold;
             padding: 0 10px;
-            color: #333;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-            color: #555;
-            font-family: 'Pretendard-Regular';
+            color: #ff4500;
         }
         
 		.button-container {
             text-align: right;
+            padding-top: 8px;
             padding-right: 25px;
+            padding-bottom: 13px;
         }
         
         input[type="text"] {
@@ -48,6 +50,7 @@
             border-radius: 4px;
             box-sizing: border-box;
             margin-bottom: 12px;
+            font-family: 'Pretendard-Regular';
         }
 		
         input[type="submit"] {
@@ -71,8 +74,8 @@
 	<form name="addrUpdate" action="addrUpdate.jsp">
 	   <fieldset>
 	      <legend>배송지 변경</legend>
-	      <label>주소</label>
-	      <input type="text" name="useraddr">
+	      <div class="button-container"></div>
+	      <input type="text" name="useraddr" placeholder="예시: 서울특별시 강남구 xx로 xx길 12-3">
 	      <div class="button-container">
 	      	<input type="submit" value="주소변경">
 	      </div>

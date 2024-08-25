@@ -275,7 +275,7 @@
 <body>
 <%@ include file="../header.jsp" %>
 <div class="pay_wrap">
-	<form class="pay_form" id="pay_form" name="pay_form" action="/wishJam/" method="get">
+	<form class="pay_form" id="pay_form" name="pay_form" action="pay_ok.jsp" method="post">
 	<h2>상품주문</h2>
 	<div class="pay_box">
 		<%
@@ -312,16 +312,21 @@
 				%>
 				<div class="pay_product">
 					<img src="<%=plist.get(i).getSg_img() %>" class="product_img">
+					<input type="hidden" id="ct_idx" name="ct_idx" value="<%=plist.get(i).getCt_idx() %>">
 					<span class="product_name"><%=plist.get(i).getSg_name() %></span>
+					<input type="hidden" id="sg_idx" name="sg_idx" value="<%=plist.get(i).getSg_idx()%>">
 					<span class="product_count"><%=plist.get(i).getCt_count() %> 개</span>
+					<input type="hidden" id="by_count" name="by_count" value="<%=plist.get(i).getCt_count()%>">
 					<% 
 						if(plist.get(i).getSg_discnt() == 1){
 					%>
 					<span class="product_cost"><%=formatter.format(plist.get(i).getSg_price()-(plist.get(i).getSg_price()*plist.get(i).getS_discnt())) %>원
+					<input type="hidden" id="by_price" name="by_price" value="<%=(int)(plist.get(i).getCt_count()*(plist.get(i).getSg_price()-(plist.get(i).getSg_price()*plist.get(i).getS_discnt()))) %>">
 					<%
 						} else {
 					%>
 					<span class="product_cost"><%=formatter.format(plist.get(i).getSg_price()) %>원
+					<input type="hidden" id="by_price" name="by_price" value="<%=plist.get(i).getCt_count()*plist.get(i).getSg_price()%>">
 					<%
 						}
 					%>
@@ -385,7 +390,8 @@
 					<div class="user_box" style="border-bottom: 1px solid rgb(244, 244, 244); padding-bottom: 30px;">
 						<span class="u_title">배송지</span>
 						<div class="lbox">
-							<div class="user_info" id="p_addr" ><%= m_addr %></div>
+							<div class="user_info" id="m_addr" ><%= m_addr %></div>
+							<input type="hidden" id="by_addr" name="by_addr">
 							<div style="padding-bottom: 25px;"></div>
 							<button class="user_btn" onclick="upd_addr();">수정</button>
 						</div>
@@ -403,7 +409,7 @@
 								</select>
 							</div>
 							<div style="padding-top: 10px">
-								<input type="hidden" class="shipin" id="shipinfo_ins" style="width: 400px; height: 25px; border-radius: 3px; border: 2px solid #c0c0c0;">
+								<input type="hidden" class="shipin" id="by_wish" name="by_wish" style="width: 400px; height: 25px; border-radius: 3px; border: 2px solid #c0c0c0;" value="요청없음">
 							</div>
 						</div>
 					</div>
@@ -418,21 +424,21 @@
 						<div class="lbox">
 							<div class="section_flex" style="border:2px solid #ffe4e1; padding-bottom: 10px; padding-top: 10px;">
 								<label class="payment_box">
-									<input type="radio" name="pay_code" id="pay_card" value="신용카드" >
+									<input type="radio" name="by_sudan" id="pay_card" value="신용카드" >
 							        <div>
 							        	<img id="pay_card_img" class="payment_img" src="../img/pay_card_off.png">
 							            <p>신용카드</p>
 							        </div>
 								</label>
 								<label class="payment_box">
-									<input type="radio" name="pay_code" id="pay_phone" value="휴대폰결제" >
+									<input type="radio" name="by_sudan" id="pay_phone" value="휴대폰결제" >
 							        <div>
 							        	<img id="pay_phone_img" class="payment_img" src="../img/pay_phone_off.png">
 							            <p>휴대폰결제</p>
 							        </div>
 								</label>
 								<label class="payment_box">
-									<input type="radio" name="pay_code" id="pay_bank" value="무통장입금" >
+									<input type="radio" name="by_sudan" id="pay_bank" value="무통장입금" >
 							        <div>
 							        	<img id="pay_bank_img" class="payment_img" src="../img/pay_bank_off.png">
 							            <p>무통장입금</p>
@@ -488,6 +494,7 @@
 			</div>
 		</div>
 	</div>
+	<input type="hidden" id="m_idx" name="m_idx" value="<%=m_idx%>">
 	<div style="margin-top:50px;">
 		<button class="pay_btn" id="paybtn">결제하기</button>
 	</div>
@@ -505,21 +512,23 @@
 <script>
 
 	document.getElementById('shipinfo').addEventListener('change', function() {
-	    var selectedValue = this.value;
+	    let selectedValue = this.value;
 	    if (selectedValue === '1') {	
-	    	document.getElementById('shipinfo_ins').value = "";
-	    	document.getElementById('shipinfo_ins').type = 'text';
+	    	document.getElementById('by_wish').value = "";
+	    	document.getElementById('by_wish').type = 'text';
 	    } else{
-	    	document.getElementById('shipinfo_ins').type = 'hidden';
-	    	document.getElementById('shipinfo_ins').value = document.getElementById('shipinfo').options[selectedValue].text;
+	    	document.getElementById('by_wish').type = 'hidden';
+	    	document.getElementById('by_wish').value = document.getElementById('shipinfo').options[selectedValue].text;
 	    }
 	});
 
 	document.getElementById("paybtn").addEventListener('click', (event) => {
-		var notick_1 = document.getElementById("notick_1");
-		var notick_2 = document.getElementById("notick_2");
-        var paybtns = document.getElementsByName("pay_code");
-        var isSelected = false;
+		let notick_1 = document.getElementById("notick_1");
+		let notick_2 = document.getElementById("notick_2");
+		let addrcontent = document.getElementById("m_addr").innerHTML;
+		let by_addr = document.getElementById("by_addr");
+        let paybtns = document.getElementsByName("by_sudan");
+        let isSelected = false;
 
         for (var i = 0; i < paybtns.length; i++) {
             if (paybtns[i].checked) {
@@ -535,7 +544,9 @@
 			window.alert("개인정보 및 결제규정에 동의해주세요.");
 			event.preventDefault();
 		} else {
-			window.alert("구매가 완료되었습니다.");
+			by_addr.value = addrcontent;
+			notick_1.remove();
+			notick_2.remove();
 			document.getElementById("pay_form").submit();
 		}
 		

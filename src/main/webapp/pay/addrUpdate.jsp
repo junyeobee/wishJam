@@ -9,9 +9,9 @@
 		%>
 			<script>
 	         window.alert('배송지가 변경되었습니다.');
-	         let pAddrElement = opener.document.getElementById('p_addr');
-	           if (pAddrElement) {
-	               pAddrElement.innerHTML = '<%= useraddr %>';
+	         let mAddrElement = opener.document.getElementById('m_addr');
+	           if (mAddrElement) {
+	               mAddrElement.innerHTML = '<%= useraddr %>';
 	           }
 	         window.self.close();
 	     	</script>
