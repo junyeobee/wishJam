@@ -338,7 +338,7 @@ int s_idx = sdao.getLastidx();
 									value="옵션 추가" onclick="addOpt(<%=s_idx%>)">
 							</div>
 							<div class="fbox optbox">
-								<div class="fbox">
+								<div class="fbox" style="align-items: center;">
 									<input type="radio" name="select_main" selected class="main_op"
 										onclick="selectMainopt(this)"> <input type="hidden"
 										name="sg_main" value="0">
@@ -348,18 +348,15 @@ int s_idx = sdao.getLastidx();
 									</div>
 									<input type="hidden" id="sg_img1" name="sg_img" value="이미지없음">
 									<div class="optinfobox">
-										<ul>
-											<li>이름 <input type="text" name="sg_name"
+										<ul class="fbox optinfos">
+											<li><div>이름</div> <input type="text" name="sg_name"
 												id="op_sg_name1" onchange="getoptInfo(this)"></li>
-											<li>가격 <input type="number" name="sg_price"
-												id="op_sg_price1" onchange="getoptInfo(this)">원
+											<li><div>가격</div> <input type="number" name="sg_price"
+												id="op_sg_price1" placeholder="원" onchange="getoptInfo(this)">
 											</li>
-											<li>
-												<ul class="fbox">
-													<li>판매 수량 <input type="number" name="sg_count" onchange="checkSgCount(this)"></li>
-													<li>구매 제한 <input type="number" name="sg_limit" value="0" onchange="checkSgCount(this)"></li>
-												</ul>
-											</li>
+											<li><div>판매 수량</div> <input type="number" name="sg_count" onchange="checkSgCount(this)"></li>
+											<li><div>구매 제한</div> <input type="number" name="sg_limit" value="0" onchange="checkSgCount(this)"></li>
+												
 										</ul>
 									</div>
 								</div>
@@ -367,15 +364,72 @@ int s_idx = sdao.getLastidx();
 									onclick="deleteOpt(this)">close</span>
 							</div>
 						</article>
-						<div style="text-align: left; margin-left: 5px;">대표 상품으로 등록된 상품의 가격이 노출됩니다.</div>
+						<div style="text-align: left; margin-left: 5px; font-size: 15px;">대표 상품으로 등록된 상품의 가격이 노출됩니다.</div>
 					</li>
-					<li>
+					<li class="howtradeway">
 						<div>
-							판매 방법 <input type="checkbox" id="delivery" name="delivery"
-								value="1" onchange="tradeway()">배송 <input
-								type="checkbox" id="place" name="delivery" value="2"
-								onclick="addPlace()" onchange="tradeway()">현장 거래 <input
-								type="hidden" name="s_type" value="0">
+							<div class="optionselecttitle">판매 방법<span class="necess">*</span>
+							</div>
+							<div class="tradecheckbox fbox">
+								<div class="tradeselectway">
+									<div class="tradelabel"><input type="checkbox" id="delivery" name="delivery"
+									value="1" onchange="tradeway()">배송</div>
+									<div class="tradelabel"><input
+									type="checkbox" id="place" name="delivery" value="2"
+									onclick="addPlace()" onchange="tradeway()">현장 거래</div>
+									<input
+									type="hidden" name="s_type" value="0">
+								</div>
+								<div id="addplace" style="display: none;">
+								<div>
+									거래 희망 장소
+									<div>
+										<select id="whereT" onchange="tradeTime()">
+											<option>물감동</option>
+											<option>붓동</option>
+											<option>도화지동</option>
+											<option>연필동</option>
+										</select>
+									</div>
+								</div>
+								<div>
+									거래 가능 시간
+									<div>
+										<ul>
+											<li><select name="apT" onchange="tradeTime()">
+													<option value="오전">오전</option>
+													<option value="오후">오후</option>
+											</select><select name="whenT" onchange="tradeTime()">
+													<%
+													for (int i = 1; i <= 12; i++) {
+													%>
+													<option value="<%=i%>"><%=i%></option>
+													<%
+													}
+													%>
+											</select>시부터
+										</ul>
+										<ul>
+											<li><select name="apT2" oninput="tradeTime()">
+													<option value="오전">오전</option>
+													<option value="오후">오후</option>
+											</select><select name="whenT2" oninput="tradeTime()">
+													<%
+													for (int i = 1; i <= 12; i++) {
+													%>
+													<option value="<%=i%>"><%=i%></option>
+													<%
+													}
+													%>
+											</select>시까지
+										</ul>
+									</div>
+									<input type="hidden" name="s_tradeT" id="s_tradeT" value="">
+								</div>
+							</div>
+					
+							</div>
+								
 							<div id="addplace" style="display: none;">
 								<div>
 									거래 희망 장소
