@@ -203,16 +203,16 @@ if (rp % pageSize == 0) {
 					<div id="moreImg" class="moreImg fbox">
 
 						<%
-						}
+						
 
 						if (rlist.get(i).getR_img() != null) {
 
-						for (int j = 0; j < gal.length/* (gal.length>4?gal.length:gal.length-1) */; j++) {
+						for (int j = 0; j < gal.length; j++) {
 							if(!gal[j].equals(" ")){
 						%>
 						<img src="<%=gal[j]%>" class="moreboximg">
 						<%
-						}}}
+						}}}}
 						%>
 					</div>
 				</div>

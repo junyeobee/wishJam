@@ -556,8 +556,8 @@ padding-top: 4px;
     right: 0px;
     display: none;
     width: 30px;
-    height: 101px;
-    padding-top: 79px;
+    /* height: 101px; */
+    padding-top: 78px;
     text-align: center;
 }
 
@@ -567,8 +567,8 @@ padding-top: 4px;
     left:0;
     display: none;
     width: 30px;
-    height: 101px;
-    padding-top: 79px;
+   /*  height: 101px; */
+    padding-top: 78px;
     text-align: center;
 }
 
