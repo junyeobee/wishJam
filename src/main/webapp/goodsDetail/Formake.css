@@ -569,6 +569,40 @@ ul {
 	outline:0;
 }
 
+.maketerm {width: 70px;
+	align-items: center;
+	border: 1.5px solid #ff8632;
+	border-radius: 6px;
+	
+	align-items: center;
+	margin: 3px 5px;
+	position: relative;}
+
+.maketerm select {
+	text-align: center;
+    background-color: transparent;
+    border: 0;
+    appearance: none;
+    padding: 5px 26px 5px 0px;
+    width: 100%;
+    font-size: 15px;
+}
+
+.maketerm select:focus {
+	outline:0;
+}
+
+.termdrop {
+	padding: 2px 2px;
+	border-left: 1px solid #ff8632;
+    background-color: #ff8632;
+    color: white;
+    border-radius: 0 3px 3px 0;
+    position: absolute;
+    right: 0;
+    z-index: -1;
+}
+
 .makefont {
 	width: 70px;
 	align-items: center;
@@ -672,11 +706,7 @@ ul {
 }
 
 #dislist li {
-	margin: 2px 0;
-}
-
-.disinfos li {
-	margin: 0 10px;
+	margin: 2px 5px 2px 0;
 }
 
 .buttonbox {

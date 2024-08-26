@@ -13,6 +13,8 @@
 
 <%
 int s_idx = sdao.getLastidx();
+
+String[] place = {"연희동","공덕동","신수동","서교동","합정동","망원동"};
 %>
 <!DOCTYPE html>
 <html>
@@ -225,8 +227,8 @@ int s_idx = sdao.getLastidx();
 									판매</label> <input type="radio" name="termbtn" value="term"
 									onclick="addterm(this.value)"><label>기간 판매</label>
 							</div>
-							<div id="duebox" class="fbox fcenter" style="display: none;">
-								<select name="s_year" onchange="sellterm()">
+							<div id="duebox" style="display: none;">
+								<div class="fbox fcenter" style="align-items:center;"><div class="maketerm"><select name="s_year" onchange="sellterm()">
 									<%
 									Calendar now = Calendar.getInstance();
 									int y = now.get(Calendar.YEAR);
@@ -248,37 +250,13 @@ int s_idx = sdao.getLastidx();
 									}
 									%>
 									<option>2024</option>
-								</select> <select name="s_month" id="monthselect">
-									<%-- <%
-								for (int i = 1; i <= 12; i++) {
-									if (i == m) {
-								%>
-								<option selected value="<%=i < 10 ? ("0" + i) : i%>"><%=i%></option>
-								<%
-								} else {
-								%>
-								<option value="<%=i < 10 ? ("0" + i) : i%>"><%=i%></option>
-								<%
-								}
-								}
-								%> --%>
+								</select><span class="material-symbols-rounded termdrop">arrow_drop_down</span></div> <div class="maketerm"><select name="s_month" id="monthselect">
+								
 									<option selected value="<%=m%>"><%=m%></option>
-								</select> <select name="s_date" id="dayselect">
-									<%-- <%
-								for (int i = 1; i <= 31; i++) {
-									if (i == d) {
-								%>
-								<option selected value="<%=i < 10 ? ("0" + i) : i%>"><%=i%></option>
-								<%
-								} else {
-								%>
-								<option value="<%=i < 10 ? ("0" + i) : i%>"><%=i%></option>
-								<%
-								}
-								}
-								%> --%>
+								</select><span class="material-symbols-rounded termdrop">arrow_drop_down</span></div> <div class="maketerm"><select name="s_date" id="dayselect">
+							
 									<option selected value="<%=d%>"><%=d%></option>
-								</select> ~ <select name="e_year" onchange="sellterm()">
+								</select><span class="material-symbols-rounded termdrop">arrow_drop_down</span></div> ~ <div class="maketerm"><select name="e_year" id="yearselect2" onchange="sellterm()">
 									<%
 									for (int i = y; i < y + 10; i++) {
 										if (i == y) {
@@ -292,7 +270,7 @@ int s_idx = sdao.getLastidx();
 									}
 									}
 									%>
-								</select> <select name="e_month" id="monthselect2"
+								</select><span class="material-symbols-rounded termdrop">arrow_drop_down</span></div><div class="maketerm"><select name="e_month" id="monthselect2"
 									onchange="selectMM(this)">
 									<%
 									for (int i = 1; i <= 12; i++) {
@@ -307,7 +285,7 @@ int s_idx = sdao.getLastidx();
 									}
 									}
 									%>
-								</select> <select name="e_date" id="dayselectM" onchange="selectD(this)">
+								</select><span class="material-symbols-rounded termdrop">arrow_drop_down</span></div><div class="maketerm"><select name="e_date" id="dayselectM" onchange="selectD(this)">
 									<%
 									for (int i = 1; i <= 31; i++) {
 										if (i == d + 1) {
@@ -321,8 +299,8 @@ int s_idx = sdao.getLastidx();
 									}
 									}
 									%>
-								</select>
-							</div>
+								</select><span class="material-symbols-rounded termdrop">arrow_drop_down</span></div>
+							</div></div>
 						</div> <input type="hidden" name="s_start" id="s_start"
 						value="<%=y + "-" + ms + "-" + ds%>"> <input type="hidden"
 						name="s_end" id="s_end"
@@ -419,10 +397,10 @@ int s_idx = sdao.getLastidx();
 										<div class="maketd fbox">
 											<select class="tradeselector" id="whereT"
 												onchange="tradeTime()">
-												<option>물감동</option>
-												<option>붓동</option>
-												<option>도화지동</option>
-												<option>연필동</option>
+												<% for(int i=0; i<place.length;i++){ %>
+												<option><%=place[i] %></option>
+												
+												<% }%>
 											</select><span class="material-symbols-rounded tradedrop">arrow_drop_down</span>
 										</div>
 									</div>

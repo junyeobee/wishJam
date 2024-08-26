@@ -49,16 +49,16 @@
 		
 			var getname = dbox[i].parentElement.nextElementSibling;
 			var getprice = getname.nextElementSibling;
-			var namelabel = getname.substring(0,10);l
-			var pricelabel = getname.substring(0,10);l
+			var namelabel = getname.id.substr(0,11);
+			var pricelabel = getprice.id.substr(0,12);
+			
+			console.log(namelabel);
 			
 			var nametag = document.getElementById(namelabel);
-			
-			t.innerText = nametag.value;
+			getname.innerText = nametag.value;
 			
 			var pricetag = document.getElementById(pricelabel);
-
-			t2.innerText = pricetag.value;
+			getprice.innerText = pricetag.value;
 
 		}
 	}
@@ -518,12 +518,16 @@
 		var ods = document.getElementById("dayselect");
 		var nds = document.getElementById("dayselectM");
 		var od = parseInt(ods.options[ods.selectedIndex].value);
+		
+		var nys = document.getElementById("yearselect2");
+		var ny = parseInt(nys.options[nys.selectedIndex].value);
 
+		if(ny==2024){
 		if (om > nm) {
-			window.alert('판매 시작 월 이후 숫자를 선택해주세요.');
+			window.alert('판매 시작 월 이후 날짜를 선택해주세요.');
 			t.options[om-1].selected = true;
 			nds.options[od].selected = true;
-		}
+		}}
 
 		var fm = document.makeSellfm;
 		var start = document.makeSellfm.s_start;
@@ -547,10 +551,14 @@
 		var od = parseInt(ods.options[ods.selectedIndex].value);
 		var nd = parseInt(t.options[t.selectedIndex].value);
 
+		var nys = document.getElementById("yearselect2");
+		var ny = parseInt(nys.options[nys.selectedIndex].value);
+
+		if(ny==2024){
 		if (om == nm && od > nd) {
-			window.alert('판매 시작 일 이후 숫자를 선택해주세요.');
+			window.alert('판매 시작 일 이후 날짜를 선택해주세요.');
 			t.options[od].selected = true;
-		}
+		}}
 
 		var fm = document.makeSellfm;
 		var start = document.makeSellfm.s_start;
