@@ -801,9 +801,11 @@
 			
 			if(t.value<1){
 				window.alert('최소 판매수량은 1입니다.');
+				t.value=1;
 				t.focus();
 			} else if(t.value<sglimit.value){
 				window.alert('판매수량은 1인 구매 제한 수량보다 적을 수 없습니다.');
+				t.value=parseInt(t.value)+1;
 				t.focus();
 			}
 		} else if(t.name=="sg_limit"){
@@ -811,14 +813,40 @@
 			
 			if(sgcount.value!=""&sgcount.value<t.value){
 				window.alert('1인 구매 제한 수량은 판매 수량보다 많을 수 없습니다.');
+				t.value-=1;
 				t.focus();
 			}
 		}
 	}
 
 	function checkAllform(e){
+		var fm = document.makeSellfm;
 		
-		console.log('check');
-		return false;
+		var opname = fm.sg_name;
+		var opprice = fm.sg_price;
+		var opcount = fm.sg_count;
+		var cnt = document.getElementById("optsbox").childElementCount;
+		
+			
+		if(fm.s_img.value==""){
+			window.alert('썸네일 이미지를 등록해주세요.');return false;
+		} else if(fm.s_title.value==""){
+			window.alert('제목을 등록해주세요.');return false;
+		} else if(fm.s_content.value==""){
+			window.alert('상품 설명을 등록해주세요.');return false;
+		} else if(fm.s_type.value==0){
+			window.alert('판매 방법을 선택해주세요.');return false;
+		} else {
+			if(cnt>3){
+			for(var i=0; i<opname.length; i++){
+				if(opname[i].value=="" ||opprice[i].value==""||opcount[i].value=="0"){
+					window.alert('옵션 상품의 정보를 모두 등록해주세요.');return false;
+				}}
+			}else {
+				if(opname.value=="" ||opprice.value==""||opcount.value=="0"){
+					window.alert('옵션 상품의 정보를 모두 등록해주세요.');return false;
+				}
+			}
+		}
 	}
 </script>

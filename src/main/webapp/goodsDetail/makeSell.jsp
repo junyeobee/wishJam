@@ -41,7 +41,7 @@ String[] place = {"연희동","공덕동","신수동","서교동","합정동","�
 					<li class="fbox thumbli">
 						<div id="thumb_img" class="thumbs fbox"
 							onclick="openImgpop(<%=s_idx%>,this.id)">
-							<label>썸네일 이미지 등록</label>
+							<label>썸네일 이미지 등록<span class="necess">*</span></label>
 						</div> <span style="font-size: 14px;">지나치게 선정적이거나 폭력적인 이미지 사용은
 							지양해 주시길 바랍니다.</span> <input type="hidden" name="s_img">
 					</li>
@@ -304,12 +304,12 @@ String[] place = {"연희동","공덕동","신수동","서교동","합정동","�
 						</div> <input type="hidden" name="s_start" id="s_start"
 						value="<%=y + "-" + ms + "-" + ds%>"> <input type="hidden"
 						name="s_end" id="s_end"
-						value="<%=(y + 99) + "-" + ms + "-" + ds%>">
+						value="<%=(y + 99) + "-" + ms + "-" + (Integer.parseInt(ds)+1)%>">
 					</li>
 					<li class="sethash">
 						<div class="fbox fcenter hashtitlebox">
 							<div class="hashtitle">
-								해시태그<span class="necess">*</span>
+								해시태그
 							</div>
 							<div class="kwbox fbox" onclick="clickBox()">
 								<div class="fbox" id="kw"></div>

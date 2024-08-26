@@ -523,6 +523,7 @@ ul {
 #addplace {
 	flex-direction: column;
 	font-size: 18px;
+	display: none;
 }
 
 .tradewishplace	{
