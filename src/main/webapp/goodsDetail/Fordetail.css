@@ -642,11 +642,13 @@ padding-top: 4px;
 	padding: 3px 10px;
 	color: #cc3202;
 	background-color: #ffebd3;
+	margin: 3px 0;
 }
 
 .tinfo {
-	align-items: center;
-	justify-content: space-between;
+	align-items: start;
+    justify-content: space-between;
+    flex-direction: column;
 	
 }
 

@@ -49,14 +49,16 @@
 		
 			var getname = dbox[i].parentElement.nextElementSibling;
 			var getprice = getname.nextElementSibling;
-			console.log(getname);console.log(getname.name);
-			//var nametag = document.getElementById(t.name);
+			var namelabel = getname.substring(0,10);l
+			var pricelabel = getname.substring(0,10);l
 			
-			//t.innerText = nametag.value;
+			var nametag = document.getElementById(namelabel);
 			
-			//var pricetag = document.getElementById(t2.name);
+			t.innerText = nametag.value;
+			
+			var pricetag = document.getElementById(pricelabel);
 
-			//t2.innerText = pricetag.value;
+			t2.innerText = pricetag.value;
 
 		}
 	}
@@ -147,11 +149,10 @@
 		if (tid == "content_img") {
 			var cnt = document.getElementsByTagName("img").length + 1;
 			window.open('sellImgUp.jsp?s_idx=' + idx + '&select_id=' + tid + '&imgcnt=' + cnt, 'sellImgUp',
-					'width=700, height=600');
+					'width=400, height=300');
 		} else {
-			window
-					.open('sellImgUp.jsp?s_idx=' + idx + '&select_id=' + tid, 'sellImgUp',
-							'width=700, height=600');
+			window.open('sellImgUp.jsp?s_idx=' + idx + '&select_id=' + tid, 'sellImgUp',
+							'width=400, height=300');
 		}
 	}
 
@@ -248,13 +249,13 @@
 		li2.append(input2);
 
 		var li3 = document.createElement("li");
-		li3.setAttribute("name", "op_sg_name" + cnt);
+		li3.setAttribute("id", "op_sg_name" + cnt+"id");
 
 		var li4 = document.createElement("li");
-		li4.setAttribute("name", "op_sg_price" + cnt);
+		li4.setAttribute("id", "op_sg_price" + cnt+"id");
 
 		var li5 = document.createElement("li");
-		li5.setAttribute("name", "op_sg_dcprice" + cnt);
+		li5.setAttribute("id", "op_sg_dcprice" + cnt+"id");
 
 		ul1.append(li2, li3, li4, li5);
 	}

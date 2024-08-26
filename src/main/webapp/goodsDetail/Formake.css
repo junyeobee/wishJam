@@ -301,7 +301,7 @@ ul {
 }
 
 .catebs div select {
-	padding: 15px 20px 15px 0;
+	padding: 10px 20px 10px 0;
 	font-size: 18px;
 	width: 100%;
 	text-align: center;
@@ -315,7 +315,7 @@ ul {
 }
 
 .catedrop {
-	padding: 13px 2px;
+	padding: 9px 2px;
 	border-left:1px solid #ff8632;
 	background-color: #ff8632;
 	color: white;
@@ -569,6 +569,42 @@ ul {
 	outline:0;
 }
 
+.makefont {
+	width: 70px;
+	align-items: center;
+	border: 1.5px solid #ff8632;
+	border-radius: 6px;
+	
+	align-items: center;
+	margin: 3px 5px;
+	position: relative;
+}
+
+.makefont select {
+	text-align: center;
+    background-color: transparent;
+    border: 0;
+    appearance: none;
+    padding: 5px 26px 5px 0px;
+    width: 100%;
+    font-size: 15px;
+}
+
+.makefont select:focus {
+	outline:0;
+}
+
+.fontdrop {
+	padding: 2px 2px;
+	border-left: 1px solid #ff8632;
+    background-color: #ff8632;
+    color: white;
+    border-radius: 0 3px 3px 0;
+    position: absolute;
+    right: 0;
+    z-index: -1;
+}
+
 .makedr {
 	align-items: center;
 	border: 1.5px solid #ff8632;
@@ -679,4 +715,28 @@ ul {
 
 .discntcheck input {
 	    width: 18px;
+}
+
+.fontli {
+	display: flex;
+}
+
+.txtfunc li {
+	display: flex;
+	align-items: center;
+}
+
+.txtliinput {
+	padding: 5px 10px;
+    border-radius: 6px;
+    margin-right: 5px;
+    border: 1px solid #ff4900;
+    color: #ff4900;
+    font-weight: bold;
+}
+
+.txtliinput:hover {
+	background-color: #ff8632;
+	color: white;
+	font-weight: bold;
 }

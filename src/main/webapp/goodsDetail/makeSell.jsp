@@ -104,23 +104,28 @@ int s_idx = sdao.getLastidx();
 						<div class="editor">
 							<div>
 								<ul class="txtfunc">
-									<li><select id="f-size">
+									<li class="fontli"><div class="fbox makefont"><select id="f-size">
 											<%
 											for (int i = 8; i < 39; i++) {
+												if(i==18){%>
+												<option selected value="<%=i%>"><%=i%></option>
+												<%
+												}else{
 											%>
 											<option value="<%=i%>"><%=i%></option>
 											<%
-											}
+											}}
 											%>
-									</select> <input type="button" value="FS" name="styleFS"
+									</select><span class="material-symbols-rounded fontdrop">arrow_drop_down</span></div>
+									<input class="txtliinput" type="button" class="" value="FS" name="styleFS"
 										onclick="styleSelected(this.value)"></li>
-									<li><input type="button" value="B" name="styleB"
+									<li><input class="txtliinput" type="button" value="B" name="styleB"
 										onclick="styleSelected(this.value)"></li>
-									<li><input type="button" value="I" name="styleI"
+									<li><input class="txtliinput" type="button" value="I" name="styleI"
 										onclick="styleSelected(this.value)"></li>
-									<li><input type="button" value="UL" name="styleUL"
+									<li><input class="txtliinput" type="button" value="UL" name="styleUL"
 										onclick="styleSelected(this.value)"></li>
-									<li><input type="button" value="C" name="styleC"
+									<li><input class="txtliinput" type="button" value="C" name="styleC"
 										onclick="openColorpicker(this.value)">
 										<div class="cPalette" id="cw1" style="display: none;">
 											<div class="fbox">
@@ -163,7 +168,7 @@ int s_idx = sdao.getLastidx();
 												%>
 											</div>
 										</div></li>
-									<li><input type="button" value="BC" name="styleBC"
+									<li><input  class="txtliinput" type="button" value="BC" name="styleBC"
 										onclick="openColorpicker(this.value)">
 										<div class="cPalette" id="cw2" style="display: none;">
 											<div class="fbox">
@@ -196,7 +201,7 @@ int s_idx = sdao.getLastidx();
 												%>
 											</div>
 										</div></li>
-									<li><input id="content_img" type="button" value="이미지"
+									<li><input id="content_img" class="txtliinput" type="button" value="이미지"
 										onclick="openImgpop(<%=s_idx%>,this.id)"></li>
 								</ul>
 							</div>
@@ -491,9 +496,9 @@ int s_idx = sdao.getLastidx();
 													<li><input type="checkbox" id="dcbox_ck1"
 														onclick="selectIt(this)" name="discnt_box"><input
 														type="hidden" name="sg_discnt" value="0"></li>
-													<li name="op_sg_name1"></li>
-													<li name="op_sg_price1"></li>
-													<li name="op_sg_dcprice1"></li>
+													<li id="op_sg_name1id"></li>
+													<li id="op_sg_price1id"></li>
+													<li id="op_sg_dcprice1id"></li>
 												</ul>
 											</div>
 										</li>

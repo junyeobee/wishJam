@@ -361,7 +361,7 @@ color:#fff;
 					</div>
 				</div>
 				<div>
-					<input type="button" value="리뷰 작성하기" class="reviewbt" onclick="window.open('/wishJam/goodsDetail/makeReview.jsp?s_idx=<%=goods.getS_idx()%>','review','width=620px,height=700px,top=460,left=520')";/>
+					<input type="button" value="리뷰 작성하기" class="reviewbt" onclick="window.open('/wishJam/goodsDetail/makeReview.jsp?s_idx=<%=goods.getS_idx()%>&m_idx=<%=m_idx %>','review','width=620px,height=700px,top=460,left=520')";/>
 				</div>
 				</div>
 				<%

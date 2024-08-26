@@ -4,14 +4,14 @@
 <jsp:useBean id="mrdao" class="com.wishJam.detail.DetailDAO"></jsp:useBean>
 
 <%
-Object m_idx_s = session.getAttribute("m_idx");
+String m_idx_s = request.getParameter("m_idx");
 String s_idx_s = request.getParameter("s_idx");
 
 int m_idx = 0;
 int s_idx = 0;
 
 if (m_idx_s != null) {
-	m_idx = (Integer) m_idx_s;
+	m_idx = Integer.parseInt(m_idx_s);
 }
 if (s_idx_s != null) {
 	s_idx = Integer.parseInt(s_idx_s);
